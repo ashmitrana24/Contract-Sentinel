@@ -12,8 +12,12 @@ build/
 venv/
 env/
 
-# Data – never commit generated or raw data
+# Data & Storage – never commit generated data, raw datasets, or uploaded files
+data/
 datagen/data/
+storage/
+scratch/
+*.pdf
 
 # IDE / OS
 .vscode/
