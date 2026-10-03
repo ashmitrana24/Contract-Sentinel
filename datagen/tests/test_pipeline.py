@@ -124,3 +124,19 @@ def test_pipeline_verify(tmp_path: Path) -> None:
     _write_labels(labels, tmp_path)
     result = verify_dataset(tmp_path)
     assert result, "Verifier failed on freshly generated dataset."
+
+
+def test_pipeline_expected_clauses_sidecar(tmp_path: Path) -> None:
+    """Check that expected_clauses.json sidecar is exported and maps doc_ids to clauses."""
+    labels = run_pipeline(seed=42, n_sources=4, out_dir=tmp_path)
+    expected_file = tmp_path / "expected_clauses.json"
+    assert expected_file.exists()
+    data = json.loads(expected_file.read_text(encoding="utf-8"))
+    for lbl in labels:
+        assert lbl.doc_id in data
+        clauses = data[lbl.doc_id]
+        assert isinstance(clauses, list)
+        assert len(clauses) > 0
+        assert "id" in clauses[0]
+        assert "heading" in clauses[0]
+

@@ -1,0 +1,2091 @@
+[
+  {
+    "doc_id": "synth_0000_clean",
+    "source_id": "synth_0000",
+    "source_type": "synthetic",
+    "is_tampered": false,
+    "tamper_types": [],
+    "tamper_class": null,
+    "tamper_details": [],
+    "seed": 667779376,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "69445a36c89a65e1e5e813218e9e7664c573634b2b77fe1bee713a66a02a032a",
+    "split": "test"
+  },
+  {
+    "doc_id": "synth_0000_v0",
+    "source_id": "synth_0000",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "clause_insert"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "clause_insert",
+        "page": null,
+        "clause_id": "13.99",
+        "original_value": "<none>",
+        "tampered_value": "Waiver of Rights",
+        "subtype": "risky_clause_inserted",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 667779376,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "7b0743cf92f4e3478f5d9f3a685ac7eda967bcf1854efdaa05c5dbf280f444aa",
+    "split": "test"
+  },
+  {
+    "doc_id": "synth_0000_v1",
+    "source_id": "synth_0000",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "date_shift"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "date_shift",
+        "page": null,
+        "clause_id": null,
+        "original_value": "2025-02-07",
+        "tampered_value": "2022-09-30",
+        "subtype": "termination_before_effective",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 667779376,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "17a7fd51cc3e1a41870f3d27b47b2c45fb86f79ead935c69ce4757d007a1d68c",
+    "split": "test"
+  },
+  {
+    "doc_id": "synth_0001_clean",
+    "source_id": "synth_0001",
+    "source_type": "synthetic",
+    "is_tampered": false,
+    "tamper_types": [],
+    "tamper_class": null,
+    "tamper_details": [],
+    "seed": 1445662585,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "caebd916b188f161510a1e60796a0ef7782d26359c5d4bd1b63ff2179476bbf8",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0001_v0",
+    "source_id": "synth_0001",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "amount_both"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "amount_both",
+        "page": null,
+        "clause_id": "8",
+        "original_value": "Rs. 1,38,00,000 (Rupees One crore, thirty-eight lakh Only)",
+        "tampered_value": "Rs. 57,00,000 (Rupees Fifty-seven lakh Only)",
+        "subtype": "consistent_change",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 1445662585,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "97526686eec312898b583324a9fbe114ba1fde8d34dd25a4b02599bb150521b6",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0001_v1",
+    "source_id": "synth_0001",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "clause_insert"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "clause_insert",
+        "page": null,
+        "clause_id": "4.99",
+        "original_value": "<none>",
+        "tampered_value": "Waiver of Rights",
+        "subtype": "risky_clause_inserted",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 1445662585,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "ffa9f65a92d23d420d25289b1298eea254b7404002bf6c46452a09f4c19f7be6",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0002_clean",
+    "source_id": "synth_0002",
+    "source_type": "synthetic",
+    "is_tampered": false,
+    "tamper_types": [],
+    "tamper_class": null,
+    "tamper_details": [],
+    "seed": 398340369,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "fe2b5be86cc0b72a87ba2417e91b51b6fd548309d16aa46f26788ed39477a473",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0002_v0",
+    "source_id": "synth_0002",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "party_swap"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "party_swap",
+        "page": null,
+        "clause_id": "13",
+        "original_value": "Synergy Enterprises LLP",
+        "tampered_value": "Synergy",
+        "subtype": "name_substitution",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 398340369,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "bcf78d2928d48e71cdb91ed266fba4827feb87fcd62860f13230999f5ab0f1c6",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0002_v1",
+    "source_id": "synth_0002",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "xref_break"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "xref_break",
+        "page": null,
+        "clause_id": "11",
+        "original_value": "Clause 5",
+        "tampered_value": "Clause 96",
+        "subtype": "ghost_reference",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 398340369,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "0618ee395b9485f30e17bd9b2e3f340e70e38e62fe9b6414c8546e54284d8b2f",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0002_v2",
+    "source_id": "synth_0002",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "incremental_edit"
+    ],
+    "tamper_class": "file",
+    "tamper_details": [
+      {
+        "tamper_type": "incremental_edit",
+        "page": 1,
+        "clause_id": null,
+        "original_value": "Rs. 1,84,00,000",
+        "tampered_value": "Rs. 1,85,00,000",
+        "subtype": "incremental_redact_insert",
+        "dangling_xrefs": [],
+        "extra": {
+          "eof_count": 2
+        }
+      }
+    ],
+    "seed": 398340369,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "1c569122e3d2a4a2a64cfdd4e0dbac2116b7173b42f67085a37b1240243464d6",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0003_clean",
+    "source_id": "synth_0003",
+    "source_type": "synthetic",
+    "is_tampered": false,
+    "tamper_types": [],
+    "tamper_class": null,
+    "tamper_details": [],
+    "seed": 415393687,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "fedd9847a87553885c68e6c091b32a93e71cc37aaf6fa80d9b533179b93f38b4",
+    "split": "test"
+  },
+  {
+    "doc_id": "synth_0003_v0",
+    "source_id": "synth_0003",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "amount_both"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "amount_both",
+        "page": null,
+        "clause_id": "11",
+        "original_value": "Rs. 57,00,000 (Rupees Fifty-seven lakh Only)",
+        "tampered_value": "Rs. 28,00,000 (Rupees Twenty-eight lakh Only)",
+        "subtype": "consistent_change",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 415393687,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "26fd9828558303e9d72526ae5e64ee4dd1000dcf0f6f270b2ed94ae56147499c",
+    "split": "test"
+  },
+  {
+    "doc_id": "synth_0003_v1",
+    "source_id": "synth_0003",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "party_swap",
+      "date_shift"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "party_swap",
+        "page": null,
+        "clause_id": "9",
+        "original_value": "Nexus Dynamics Inc.",
+        "tampered_value": "Nexus",
+        "subtype": "name_substitution",
+        "dangling_xrefs": [],
+        "extra": {}
+      },
+      {
+        "tamper_type": "date_shift",
+        "page": null,
+        "clause_id": null,
+        "original_value": "2024-01-05",
+        "tampered_value": "2021-09-18",
+        "subtype": "termination_before_effective",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 415393687,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "1ad438f380acb861d0e5b384308071d8fa9ebf1f38642d4f70140a54bb771d4b",
+    "split": "test"
+  },
+  {
+    "doc_id": "synth_0003_v2",
+    "source_id": "synth_0003",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "date_shift"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "date_shift",
+        "page": null,
+        "clause_id": null,
+        "original_value": "2024-01-05",
+        "tampered_value": "2021-05-30",
+        "subtype": "termination_before_effective",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 415393687,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "e95733c2b3eab857921eb53cb8ae3691cd9ba96b105ef6c6a7c634bf225d7eca",
+    "split": "test"
+  },
+  {
+    "doc_id": "synth_0004_clean",
+    "source_id": "synth_0004",
+    "source_type": "synthetic",
+    "is_tampered": false,
+    "tamper_types": [],
+    "tamper_class": null,
+    "tamper_details": [],
+    "seed": 1477278577,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "ebe4a85bdb979d472111879a38cf26c9e388b24d8625f97a2d7c340734460c2d",
+    "split": "val"
+  },
+  {
+    "doc_id": "synth_0004_v0",
+    "source_id": "synth_0004",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "date_shift"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "date_shift",
+        "page": null,
+        "clause_id": null,
+        "original_value": "2024-09-25",
+        "tampered_value": "2020-11-02",
+        "subtype": "termination_before_effective",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 1477278577,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "163057c1f62dbf36dea983b9ca505fcfa818f0ccf27b65532bf45c26ed6d1bf0",
+    "split": "val"
+  },
+  {
+    "doc_id": "synth_0004_v1",
+    "source_id": "synth_0004",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "clause_delete"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "clause_delete",
+        "page": null,
+        "clause_id": "8",
+        "original_value": "Dispute Resolution",
+        "tampered_value": "<deleted>",
+        "subtype": "clause_removed",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 1477278577,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "86ef450df6682cb9c15df2520bb40f9d797260bf2d99c42fc36da6c56f0d9fcc",
+    "split": "val"
+  },
+  {
+    "doc_id": "synth_0004_v2",
+    "source_id": "synth_0004",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "amount_both"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "amount_both",
+        "page": null,
+        "clause_id": "5",
+        "original_value": "Rs. 12,00,000 (Rupees Twelve lakh Only)",
+        "tampered_value": "Rs. 1,48,00,000 (Rupees One crore, forty-eight lakh Only)",
+        "subtype": "consistent_change",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 1477278577,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "7b967eabff3eae988b54e4204f985d9ffc8ca7ec366a326fe707a505664a5b71",
+    "split": "val"
+  },
+  {
+    "doc_id": "synth_0005_clean",
+    "source_id": "synth_0005",
+    "source_type": "synthetic",
+    "is_tampered": false,
+    "tamper_types": [],
+    "tamper_class": null,
+    "tamper_details": [],
+    "seed": 186618211,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "a71050067bf60fc921428bfaf55dc97c5f2d6aaa553c01b3901ca77c24ab1c78",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0005_v0",
+    "source_id": "synth_0005",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "incremental_edit"
+    ],
+    "tamper_class": "file",
+    "tamper_details": [
+      {
+        "tamper_type": "incremental_edit",
+        "page": 1,
+        "clause_id": null,
+        "original_value": "Rs. 1,25,00,000",
+        "tampered_value": "Rs. 1,26,00,000",
+        "subtype": "incremental_redact_insert",
+        "dangling_xrefs": [],
+        "extra": {
+          "eof_count": 2
+        }
+      }
+    ],
+    "seed": 186618211,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "dfac70a0f826ca034e760c928360b4009435425cba1675af50ea4cdefc055905",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0005_v1",
+    "source_id": "synth_0005",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "clause_insert"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "clause_insert",
+        "page": null,
+        "clause_id": "4.99",
+        "original_value": "<none>",
+        "tampered_value": "Unilateral Termination",
+        "subtype": "risky_clause_inserted",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 186618211,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "e874f7c4d865a39b928846dc944858d90ea53a82be7e4ef6cbaf59027fc8f4d7",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0005_v2",
+    "source_id": "synth_0005",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "date_shift"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "date_shift",
+        "page": null,
+        "clause_id": null,
+        "original_value": "2028-09-16",
+        "tampered_value": "2021-12-21",
+        "subtype": "termination_before_effective",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 186618211,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "3c3f0a71fcdac1eeb41bb9a29b9af351a59464f0be219ac9f0ac434fe35834aa",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0006_clean",
+    "source_id": "synth_0006",
+    "source_type": "synthetic",
+    "is_tampered": false,
+    "tamper_types": [],
+    "tamper_class": null,
+    "tamper_details": [],
+    "seed": 536124280,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "d7e0c0aaa9cda10b9f469f29c8966164376c4dc740099db5ab66f25f9ebbaa27",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0006_v0",
+    "source_id": "synth_0006",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "clause_delete",
+      "amount_both"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "clause_delete",
+        "page": null,
+        "clause_id": "16",
+        "original_value": "Dispute Resolution",
+        "tampered_value": "<deleted>",
+        "subtype": "clause_removed",
+        "dangling_xrefs": [],
+        "extra": {}
+      },
+      {
+        "tamper_type": "amount_both",
+        "page": null,
+        "clause_id": "12",
+        "original_value": "Rs. 56,00,000 (Rupees Fifty-six lakh Only)",
+        "tampered_value": "Rs. 1,90,00,000 (Rupees One crore, ninety lakh Only)",
+        "subtype": "consistent_change",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 536124280,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "ded0acb202e9dfe708023c846e2f7f9b3179eec38b63b043ed38a698f2272f55",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0006_v1",
+    "source_id": "synth_0006",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "xref_break",
+      "party_swap"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "xref_break",
+        "page": null,
+        "clause_id": "10",
+        "original_value": "Clause 1",
+        "tampered_value": "Clause 110",
+        "subtype": "ghost_reference",
+        "dangling_xrefs": [],
+        "extra": {}
+      },
+      {
+        "tamper_type": "party_swap",
+        "page": null,
+        "clause_id": "5",
+        "original_value": "Summit Industries Corp.",
+        "tampered_value": "SIC",
+        "subtype": "name_substitution",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 536124280,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "a2b2d8b34ef47020354b72408306b34e9337e538b8048d2abf254799e6d36743",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0006_v2",
+    "source_id": "synth_0006",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "amount_both"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "amount_both",
+        "page": null,
+        "clause_id": "12",
+        "original_value": "Rs. 56,00,000 (Rupees Fifty-six lakh Only)",
+        "tampered_value": "Rs. 1,02,00,000 (Rupees One crore, two lakh Only)",
+        "subtype": "consistent_change",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 536124280,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "a0432ff73be2b971be3756c835f760e109008e66e4e4dd70c5a56653925be898",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0007_clean",
+    "source_id": "synth_0007",
+    "source_type": "synthetic",
+    "is_tampered": false,
+    "tamper_types": [],
+    "tamper_class": null,
+    "tamper_details": [],
+    "seed": 338444264,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "3978553f963e8b1426f02d34cfb05032b873c8e84bfe1be5a38c89acd8f2919f",
+    "split": "val"
+  },
+  {
+    "doc_id": "synth_0007_v0",
+    "source_id": "synth_0007",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "party_swap"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "party_swap",
+        "page": null,
+        "clause_id": "5",
+        "original_value": "Horizon Innovations Ltd.",
+        "tampered_value": "HIL",
+        "subtype": "name_substitution",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 338444264,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "061e07808dc5863705ac7b8b0c19b1df47449def119ccd6e39aa5b31d22e0041",
+    "split": "val"
+  },
+  {
+    "doc_id": "synth_0007_v1",
+    "source_id": "synth_0007",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "amount_figure_only",
+      "clause_delete"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "amount_figure_only",
+        "page": null,
+        "clause_id": "6",
+        "original_value": "Rs. 29,00,000",
+        "tampered_value": "Rs. 1,35,00,000",
+        "subtype": "figure_words_mismatch",
+        "dangling_xrefs": [],
+        "extra": {}
+      },
+      {
+        "tamper_type": "clause_delete",
+        "page": null,
+        "clause_id": "8",
+        "original_value": "Termination",
+        "tampered_value": "<deleted>",
+        "subtype": "clause_removed",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 338444264,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "e4c5dcc3991c2c128cfa3c0cf4ed63812328472d3887e9fe089ffa772db31342",
+    "split": "val"
+  },
+  {
+    "doc_id": "synth_0007_v2",
+    "source_id": "synth_0007",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "clause_delete"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "clause_delete",
+        "page": null,
+        "clause_id": "8",
+        "original_value": "Termination",
+        "tampered_value": "<deleted>",
+        "subtype": "clause_removed",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 338444264,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "3746f8b2fe7a23a72c2b698fe03f56dd9cb6c7cad75bf89b42e0f1276bebcb4a",
+    "split": "val"
+  },
+  {
+    "doc_id": "synth_0008_clean",
+    "source_id": "synth_0008",
+    "source_type": "synthetic",
+    "is_tampered": false,
+    "tamper_types": [],
+    "tamper_class": null,
+    "tamper_details": [],
+    "seed": 1553210608,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "2046e9ea5715171ce42f3ffee3a70efc3c2d36ae1ab3e03a2d5bc5699b6f00f9",
+    "split": "val"
+  },
+  {
+    "doc_id": "synth_0008_v0",
+    "source_id": "synth_0008",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "party_swap"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "party_swap",
+        "page": null,
+        "clause_id": "13",
+        "original_value": "Synergy Technologies LLP",
+        "tampered_value": "Synergy",
+        "subtype": "name_substitution",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 1553210608,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "e8ec1f42ef08874b99c1511dd76b2a43ee605f77c36eb86e29d899c208354aab",
+    "split": "val"
+  },
+  {
+    "doc_id": "synth_0008_v1",
+    "source_id": "synth_0008",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "amount_figure_only"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "amount_figure_only",
+        "page": null,
+        "clause_id": "15",
+        "original_value": "Rs. 43,00,000",
+        "tampered_value": "Rs. 1,20,00,000",
+        "subtype": "figure_words_mismatch",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 1553210608,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "8fd4bbe6ccef5725e8b2dcc327d6af51150655f4ae64ae0d25dc46bc6a297cda",
+    "split": "val"
+  },
+  {
+    "doc_id": "synth_0009_clean",
+    "source_id": "synth_0009",
+    "source_type": "synthetic",
+    "is_tampered": false,
+    "tamper_types": [],
+    "tamper_class": null,
+    "tamper_details": [],
+    "seed": 298737106,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "bfb12da160040f3ca0c0bb97c46baf92be1be4510e75c49b182c489a6a8c136d",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0009_v0",
+    "source_id": "synth_0009",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "amount_figure_only"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "amount_figure_only",
+        "page": null,
+        "clause_id": "3",
+        "original_value": "Rs. 42,00,000",
+        "tampered_value": "Rs. 1,03,00,000",
+        "subtype": "figure_words_mismatch",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 298737106,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "e1371fc2389318dda288d0afe98e17e09cf8ff4de9b4d61a661b677c610ae3dd",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0009_v1",
+    "source_id": "synth_0009",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "hidden_text"
+    ],
+    "tamper_class": "file",
+    "tamper_details": [
+      {
+        "tamper_type": "hidden_text",
+        "page": 0,
+        "clause_id": null,
+        "original_value": "<none>",
+        "tampered_value": "HIDDEN CLAUSE A: Notwithstanding any other provision herein, all intellectual property developed under this Agreement is irrevocably assigned to the Service Provider.",
+        "subtype": "white_tiny_text",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 298737106,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "671220941529901330d06ee2df70fe7b24d510ed3e8a44ad3e79a79fb1200cc9",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0010_clean",
+    "source_id": "synth_0010",
+    "source_type": "synthetic",
+    "is_tampered": false,
+    "tamper_types": [],
+    "tamper_class": null,
+    "tamper_details": [],
+    "seed": 978815630,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "6c49af187f61cc599ebea5a44c3f516c5c6b33727c36a4e93d8ebc904a6ac529",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0010_v0",
+    "source_id": "synth_0010",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "incremental_edit"
+    ],
+    "tamper_class": "file",
+    "tamper_details": [
+      {
+        "tamper_type": "incremental_edit",
+        "page": 0,
+        "clause_id": null,
+        "original_value": "2024-07-15",
+        "tampered_value": "2025-07-15",
+        "subtype": "incremental_redact_insert",
+        "dangling_xrefs": [],
+        "extra": {
+          "eof_count": 2
+        }
+      }
+    ],
+    "seed": 978815630,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "a2c6a8dab268cde1e02f6775fd49e39e63e29e78e24ce52240ac490059e5be3c",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0010_v1",
+    "source_id": "synth_0010",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "party_swap"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "party_swap",
+        "page": null,
+        "clause_id": "5",
+        "original_value": "Catalyst Industries Ltd.",
+        "tampered_value": "Catalyst",
+        "subtype": "name_substitution",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 978815630,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "b8d3b795ad03004aed152c2f59507a682c3bff43b7c16cbfb49d430fac76d1c4",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0010_v2",
+    "source_id": "synth_0010",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "date_shift",
+      "clause_insert"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "date_shift",
+        "page": null,
+        "clause_id": null,
+        "original_value": "2028-07-15",
+        "tampered_value": "2022-10-18",
+        "subtype": "termination_before_effective",
+        "dangling_xrefs": [],
+        "extra": {}
+      },
+      {
+        "tamper_type": "clause_insert",
+        "page": null,
+        "clause_id": "3.99",
+        "original_value": "<none>",
+        "tampered_value": "Unilateral Amendment",
+        "subtype": "risky_clause_inserted",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 978815630,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "d7dd61f72637b11e4b57930e10df2c5c29d0c84077da3aea01c3720897efa627",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0011_clean",
+    "source_id": "synth_0011",
+    "source_type": "synthetic",
+    "is_tampered": false,
+    "tamper_types": [],
+    "tamper_class": null,
+    "tamper_details": [],
+    "seed": 342703921,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "cdca616093f164808e6e57ad38f83422761b3a1e099b37abeaee927530bd951f",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0011_v0",
+    "source_id": "synth_0011",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "hidden_text"
+    ],
+    "tamper_class": "file",
+    "tamper_details": [
+      {
+        "tamper_type": "hidden_text",
+        "page": 2,
+        "clause_id": null,
+        "original_value": "<none>",
+        "tampered_value": "HIDDEN CLAUSE B: The Client waives all rights to dispute any invoice issued within thirty-six months of the termination of this Agreement.",
+        "subtype": "white_tiny_text",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 342703921,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "726db741d4461403849e0266bfd9232615862e4f5f45e8742e006f132ffe3d95",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0011_v1",
+    "source_id": "synth_0011",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "incremental_edit"
+    ],
+    "tamper_class": "file",
+    "tamper_details": [
+      {
+        "tamper_type": "incremental_edit",
+        "page": 1,
+        "clause_id": null,
+        "original_value": "2022-11-26",
+        "tampered_value": "2023-11-26",
+        "subtype": "incremental_redact_insert",
+        "dangling_xrefs": [],
+        "extra": {
+          "eof_count": 2
+        }
+      }
+    ],
+    "seed": 342703921,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "9324dd94cffae61e7590cd5059457f272aa361fd5c9544b6f7b7da667ad35cf7",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0012_clean",
+    "source_id": "synth_0012",
+    "source_type": "synthetic",
+    "is_tampered": false,
+    "tamper_types": [],
+    "tamper_class": null,
+    "tamper_details": [],
+    "seed": 433797840,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "cbed56ae8d64161ae97a60993e9aaac38a181fd66ce9d695d9081daa4195b1e1",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0012_v0",
+    "source_id": "synth_0012",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "clause_delete"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "clause_delete",
+        "page": null,
+        "clause_id": "2",
+        "original_value": "Dispute Resolution",
+        "tampered_value": "<deleted>",
+        "subtype": "clause_removed",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 433797840,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "6279f9ea00ce370d2e35f407e6fd6cf8b942e0c2e27099484714082301cd1867",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0012_v1",
+    "source_id": "synth_0012",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "xref_break"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "xref_break",
+        "page": null,
+        "clause_id": "4",
+        "original_value": "Clause 1",
+        "tampered_value": "Clause 196",
+        "subtype": "ghost_reference",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 433797840,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "f355b1a91fd8fa480ae0b2b05cbe02642d8c41d719188f36733f77e01436c0f6",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0012_v2",
+    "source_id": "synth_0012",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "amount_figure_only"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "amount_figure_only",
+        "page": null,
+        "clause_id": "9",
+        "original_value": "Rs. 60,00,000",
+        "tampered_value": "Rs. 1,21,00,000",
+        "subtype": "figure_words_mismatch",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 433797840,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "42f20a3c70b7d560dd033c0e5fbe0ec38a04d4d9cc5bb812011787d4ff5b5553",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0013_clean",
+    "source_id": "synth_0013",
+    "source_type": "synthetic",
+    "is_tampered": false,
+    "tamper_types": [],
+    "tamper_class": null,
+    "tamper_details": [],
+    "seed": 1193887545,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "b342e0869b0659b5a34b81417095314291054fedd8d1b5388fa7acbb29e15e2d",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0013_v0",
+    "source_id": "synth_0013",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "party_swap"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "party_swap",
+        "page": null,
+        "clause_id": "7",
+        "original_value": "Delta Consulting LLP",
+        "tampered_value": "DCL",
+        "subtype": "name_substitution",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 1193887545,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "ac3cb41683da0608374b4029c413493aa314fa611e3e25df626d9b6991c5839c",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0013_v1",
+    "source_id": "synth_0013",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "xref_break"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "xref_break",
+        "page": null,
+        "clause_id": "3",
+        "original_value": "Clause 2",
+        "tampered_value": "Clause 65",
+        "subtype": "ghost_reference",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 1193887545,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "3d759963e52f1c7861e77b246f575a4f71f865da0edff8126470d95e7ac6c82c",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0013_v2",
+    "source_id": "synth_0013",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "clause_insert"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "clause_insert",
+        "page": null,
+        "clause_id": "6.99",
+        "original_value": "<none>",
+        "tampered_value": "Indemnity Without Cap",
+        "subtype": "risky_clause_inserted",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 1193887545,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "3915f5f13aca2531aabb3665849d6df7600fb3e3d0c171eaab9bf9d4f0cf47e4",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0014_clean",
+    "source_id": "synth_0014",
+    "source_type": "synthetic",
+    "is_tampered": false,
+    "tamper_types": [],
+    "tamper_class": null,
+    "tamper_details": [],
+    "seed": 1566942273,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "83ff154d01be18d1c5a79adac0254ce20ce79e6807bbacce8f409401f5b84d94",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0014_v0",
+    "source_id": "synth_0014",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "date_shift"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "date_shift",
+        "page": null,
+        "clause_id": null,
+        "original_value": "2027-09-26",
+        "tampered_value": "2023-06-26",
+        "subtype": "termination_before_effective",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 1566942273,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "b2fc0b3ebca9f831e919f5da3c210c35ed3b8556928c67e741202ee5523a0de3",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0014_v1",
+    "source_id": "synth_0014",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "party_swap"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "party_swap",
+        "page": null,
+        "clause_id": "4",
+        "original_value": "Meridian Services LLP",
+        "tampered_value": "MSL",
+        "subtype": "name_substitution",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 1566942273,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "87b725f2f32ff186cf2a435551d27bc3fff37a0682e9af28d7207da7e1d14ae6",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0015_clean",
+    "source_id": "synth_0015",
+    "source_type": "synthetic",
+    "is_tampered": false,
+    "tamper_types": [],
+    "tamper_class": null,
+    "tamper_details": [],
+    "seed": 1589915144,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "4ac2e29e83cee1daca4bfad6d5095243ba37c467124607fca21a85a152159cfe",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0015_v0",
+    "source_id": "synth_0015",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "clause_delete"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "clause_delete",
+        "page": null,
+        "clause_id": "7",
+        "original_value": "Notices",
+        "tampered_value": "<deleted>",
+        "subtype": "clause_removed",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 1589915144,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "d113c12aef9bbed124db7e0462b0f8fa647694bf8568b5f4ffd1ad4a7214ffca",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0015_v1",
+    "source_id": "synth_0015",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "clause_delete"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "clause_delete",
+        "page": null,
+        "clause_id": "5",
+        "original_value": "Dispute Resolution",
+        "tampered_value": "<deleted>",
+        "subtype": "clause_removed",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 1589915144,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "370039d25fc7ab503f1885930c6dc4d6838a649bbaf53e6d147e2f14774dc899",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0015_v2",
+    "source_id": "synth_0015",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "clause_delete"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "clause_delete",
+        "page": null,
+        "clause_id": "4",
+        "original_value": "Intellectual Property",
+        "tampered_value": "<deleted>",
+        "subtype": "clause_removed",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 1589915144,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "02ae52b3a7fab3d574cc690b448ec23b57c66f3345dadddf8bb9fbf50dff1113",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0016_clean",
+    "source_id": "synth_0016",
+    "source_type": "synthetic",
+    "is_tampered": false,
+    "tamper_types": [],
+    "tamper_class": null,
+    "tamper_details": [],
+    "seed": 899825838,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "b6e208d39f23ebd354ba08a8623469ff5deb598c05be99b75ce7ce622e1b6d67",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0016_v0",
+    "source_id": "synth_0016",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "xref_break"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "xref_break",
+        "page": null,
+        "clause_id": "10",
+        "original_value": "Clause 2",
+        "tampered_value": "Clause 415",
+        "subtype": "ghost_reference",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 899825838,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "f2898a0aacf7b7bfa080100338750edabb229bc83e740914c32448e1df9e4703",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0016_v1",
+    "source_id": "synth_0016",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "party_swap",
+      "incremental_edit"
+    ],
+    "tamper_class": "file",
+    "tamper_details": [
+      {
+        "tamper_type": "party_swap",
+        "page": null,
+        "clause_id": "6",
+        "original_value": "Horizon Networks Pvt. Ltd.",
+        "tampered_value": "Horizon",
+        "subtype": "name_substitution",
+        "dangling_xrefs": [],
+        "extra": {}
+      },
+      {
+        "tamper_type": "incremental_edit",
+        "page": 1,
+        "clause_id": null,
+        "original_value": "Rs. 20,00,000",
+        "tampered_value": "Rs. 21,00,000",
+        "subtype": "incremental_redact_insert",
+        "dangling_xrefs": [],
+        "extra": {
+          "eof_count": 2
+        }
+      }
+    ],
+    "seed": 899825838,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "ec8640708df4b1516e407fccc10abf22cb0f365a1c17df2fd10ed1ff61f13072",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0016_v2",
+    "source_id": "synth_0016",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "xref_break"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "xref_break",
+        "page": null,
+        "clause_id": "4",
+        "original_value": "Clause 3",
+        "tampered_value": "Clause 803",
+        "subtype": "ghost_reference",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 899825838,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "a73066f590ed51bab587c499a2fbb396d0e513519455f04fbde37ac7d59cd7da",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0017_clean",
+    "source_id": "synth_0017",
+    "source_type": "synthetic",
+    "is_tampered": false,
+    "tamper_types": [],
+    "tamper_class": null,
+    "tamper_details": [],
+    "seed": 306671447,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "67be5b646a0983b7eb083a7159e64b274b22b949677e6ae221bde3fb1e43d7de",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0017_v0",
+    "source_id": "synth_0017",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "party_swap"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "party_swap",
+        "page": null,
+        "clause_id": "3",
+        "original_value": "Horizon Systems Corp.",
+        "tampered_value": "Horizon",
+        "subtype": "name_substitution",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 306671447,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "73b38e5c290e092979762d3a2c120fb4bd49a9f37dfed0aeb223dd9afc30ca06",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0017_v1",
+    "source_id": "synth_0017",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "clause_insert"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "clause_insert",
+        "page": null,
+        "clause_id": "3.99",
+        "original_value": "<none>",
+        "tampered_value": "Non-Compete with No Geographic Limit",
+        "subtype": "risky_clause_inserted",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 306671447,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "27d42d3abb5d67479e8467d459f61c6dedde5938172b6c71e5c5c0b1cd0f9e5e",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0018_clean",
+    "source_id": "synth_0018",
+    "source_type": "synthetic",
+    "is_tampered": false,
+    "tamper_types": [],
+    "tamper_class": null,
+    "tamper_details": [],
+    "seed": 1051454923,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "055c818c307d8fa8adc854583d340d02e0ccd97ae0d7867bc47dc776cef95455",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0018_v0",
+    "source_id": "synth_0018",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "party_swap"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "party_swap",
+        "page": null,
+        "clause_id": "5",
+        "original_value": "Catalyst Associates Ltd.",
+        "tampered_value": "Catalyst",
+        "subtype": "name_substitution",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 1051454923,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "9e223da8cd99d79b8c3427ccbe51d54242710ba55aa40ab3d401e203e43eb51f",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0018_v1",
+    "source_id": "synth_0018",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "date_shift"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "date_shift",
+        "page": null,
+        "clause_id": null,
+        "original_value": "2023-04-19",
+        "tampered_value": "2020-08-26",
+        "subtype": "termination_before_effective",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 1051454923,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "e203734012b76231019792af81042915795ba051988f02c3691dc4d83cf463a0",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0019_clean",
+    "source_id": "synth_0019",
+    "source_type": "synthetic",
+    "is_tampered": false,
+    "tamper_types": [],
+    "tamper_class": null,
+    "tamper_details": [],
+    "seed": 1985392498,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "9477f55bf59df7f8b3c328964d7d4a6a8823a91ff86c5b7bb6e7e0a4d6122f2f",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0019_v0",
+    "source_id": "synth_0019",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "amount_both",
+      "hidden_text"
+    ],
+    "tamper_class": "file",
+    "tamper_details": [
+      {
+        "tamper_type": "amount_both",
+        "page": null,
+        "clause_id": "4",
+        "original_value": "Rs. 77,00,000 (Rupees Seventy-seven lakh Only)",
+        "tampered_value": "Rs. 29,00,000 (Rupees Twenty-nine lakh Only)",
+        "subtype": "consistent_change",
+        "dangling_xrefs": [],
+        "extra": {}
+      },
+      {
+        "tamper_type": "hidden_text",
+        "page": 1,
+        "clause_id": null,
+        "original_value": "<none>",
+        "tampered_value": "HIDDEN CLAUSE B: The Client waives all rights to dispute any invoice issued within thirty-six months of the termination of this Agreement.",
+        "subtype": "white_tiny_text",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 1985392498,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "51f568eabd5f82ebd39c990d2af9f49c6b7e8df54c4f4519d34b950a4ee9473e",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0019_v1",
+    "source_id": "synth_0019",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "amount_figure_only"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "amount_figure_only",
+        "page": null,
+        "clause_id": "13",
+        "original_value": "Rs. 77,00,000",
+        "tampered_value": "Rs. 1,34,00,000",
+        "subtype": "figure_words_mismatch",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 1985392498,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "e4df672436abad0ac01bae51f3b9936337464fc5e9cd2b1604344512e6a1db1f",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0019_v2",
+    "source_id": "synth_0019",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "xref_break"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "xref_break",
+        "page": null,
+        "clause_id": "6",
+        "original_value": "Clause 2",
+        "tampered_value": "Clause 736",
+        "subtype": "ghost_reference",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 1985392498,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "4d70cf2cd782a0387f20fb42b115118016238ea8fe1b4762414d8d77b634aba7",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0020_clean",
+    "source_id": "synth_0020",
+    "source_type": "synthetic",
+    "is_tampered": false,
+    "tamper_types": [],
+    "tamper_class": null,
+    "tamper_details": [],
+    "seed": 1159417075,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "9214b89b0822ae88dff88346f71cc988f7b09308f456898149363a20a5e174a0",
+    "split": "test"
+  },
+  {
+    "doc_id": "synth_0020_v0",
+    "source_id": "synth_0020",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "date_shift",
+      "incremental_edit"
+    ],
+    "tamper_class": "file",
+    "tamper_details": [
+      {
+        "tamper_type": "date_shift",
+        "page": null,
+        "clause_id": null,
+        "original_value": "2027-12-13",
+        "tampered_value": "2023-02-20",
+        "subtype": "termination_before_effective",
+        "dangling_xrefs": [],
+        "extra": {}
+      },
+      {
+        "tamper_type": "incremental_edit",
+        "page": 1,
+        "clause_id": null,
+        "original_value": "Rs. 85,00,000",
+        "tampered_value": "Rs. 86,00,000",
+        "subtype": "incremental_redact_insert",
+        "dangling_xrefs": [],
+        "extra": {
+          "eof_count": 2
+        }
+      }
+    ],
+    "seed": 1159417075,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "da834de02f8060c15df1ca96e48781c6d429d4f75722de0d6a0b09c534203b91",
+    "split": "test"
+  },
+  {
+    "doc_id": "synth_0020_v1",
+    "source_id": "synth_0020",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "clause_delete"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "clause_delete",
+        "page": null,
+        "clause_id": "8",
+        "original_value": "Severability",
+        "tampered_value": "<deleted>",
+        "subtype": "clause_removed",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 1159417075,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "589e8d1fa3b144bc5ad2a8980d45105788983626f8710e312b83898c359485cf",
+    "split": "test"
+  },
+  {
+    "doc_id": "synth_0021_clean",
+    "source_id": "synth_0021",
+    "source_type": "synthetic",
+    "is_tampered": false,
+    "tamper_types": [],
+    "tamper_class": null,
+    "tamper_details": [],
+    "seed": 1392783743,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "1f9aebf54403edc037b60119e6622d40bdb8fb8b6308205107ec059df87a124f",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0021_v0",
+    "source_id": "synth_0021",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "clause_insert"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "clause_insert",
+        "page": null,
+        "clause_id": "3.99",
+        "original_value": "<none>",
+        "tampered_value": "Waiver of Rights",
+        "subtype": "risky_clause_inserted",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 1392783743,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "a28daf03e90339aef8ce47dea8e3361a77f49bd48b62b38039cb82b3d3b70de9",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0021_v1",
+    "source_id": "synth_0021",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "amount_figure_only"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "amount_figure_only",
+        "page": null,
+        "clause_id": "4",
+        "original_value": "Rs. 1,13,00,000",
+        "tampered_value": "Rs. 1,34,00,000",
+        "subtype": "figure_words_mismatch",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 1392783743,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "ba06e3edf1fe58abb6c2863029f57c6d26b06185f3b407c73bfaea07f811ec61",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0022_clean",
+    "source_id": "synth_0022",
+    "source_type": "synthetic",
+    "is_tampered": false,
+    "tamper_types": [],
+    "tamper_class": null,
+    "tamper_details": [],
+    "seed": 983753977,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "99576770badd357bdbfae1f3b586ae97a3db9c319e1892e644deaf0b8aff3814",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0022_v0",
+    "source_id": "synth_0022",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "date_shift",
+      "incremental_edit"
+    ],
+    "tamper_class": "file",
+    "tamper_details": [
+      {
+        "tamper_type": "date_shift",
+        "page": null,
+        "clause_id": null,
+        "original_value": "2025-01-28",
+        "tampered_value": "2021-01-26",
+        "subtype": "termination_before_effective",
+        "dangling_xrefs": [],
+        "extra": {}
+      },
+      {
+        "tamper_type": "incremental_edit",
+        "page": 1,
+        "clause_id": null,
+        "original_value": "Rs. 28,00,000",
+        "tampered_value": "Rs. 29,00,000",
+        "subtype": "incremental_redact_insert",
+        "dangling_xrefs": [],
+        "extra": {
+          "eof_count": 2
+        }
+      }
+    ],
+    "seed": 983753977,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "5b3b9ef7cb81adb69962e80f90d2602f62a30d1c0ff48592e374dff10bea3b50",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0022_v1",
+    "source_id": "synth_0022",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "party_swap"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "party_swap",
+        "page": null,
+        "clause_id": "3",
+        "original_value": "Vanguard Enterprises LLP",
+        "tampered_value": "VEL",
+        "subtype": "name_substitution",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 983753977,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "ba58fc4338289ff012b10f3202f6b8a2747d1e3d380a55fc749e7bdace4483cc",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0023_clean",
+    "source_id": "synth_0023",
+    "source_type": "synthetic",
+    "is_tampered": false,
+    "tamper_types": [],
+    "tamper_class": null,
+    "tamper_details": [],
+    "seed": 1354860540,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "057bb967520a7a88e6fbd6fad3af699766f049977d3afbeb78cd375ba5897375",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0023_v0",
+    "source_id": "synth_0023",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "incremental_edit"
+    ],
+    "tamper_class": "file",
+    "tamper_details": [
+      {
+        "tamper_type": "incremental_edit",
+        "page": 0,
+        "clause_id": null,
+        "original_value": "Rs. 1,36,00,000",
+        "tampered_value": "Rs. 1,37,00,000",
+        "subtype": "incremental_redact_insert",
+        "dangling_xrefs": [],
+        "extra": {
+          "eof_count": 2
+        }
+      }
+    ],
+    "seed": 1354860540,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "1085dfd1fb4223e7f5b794ddc043009bd196eb4e53f17191becada65f32e704c",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0023_v1",
+    "source_id": "synth_0023",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "xref_break"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "xref_break",
+        "page": null,
+        "clause_id": "6",
+        "original_value": "Clause 2",
+        "tampered_value": "Clause 292",
+        "subtype": "ghost_reference",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 1354860540,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "ad61fab5e41e2f0e141032907bd770e8a3e390bcea7c47353642e3ca1dd4f7d8",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0023_v2",
+    "source_id": "synth_0023",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "hidden_text"
+    ],
+    "tamper_class": "file",
+    "tamper_details": [
+      {
+        "tamper_type": "hidden_text",
+        "page": 3,
+        "clause_id": null,
+        "original_value": "<none>",
+        "tampered_value": "HIDDEN CLAUSE F: The Client agrees to indemnify the Service Provider for all costs including legal fees on a full indemnity basis arising from any third-party claim.",
+        "subtype": "white_tiny_text",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 1354860540,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "e51b6611c2123978f3f87554334f449592bf59e1bef04f2acebb30f8369a7c9a",
+    "split": "train"
+  },
+  {
+    "doc_id": "synth_0024_clean",
+    "source_id": "synth_0024",
+    "source_type": "synthetic",
+    "is_tampered": false,
+    "tamper_types": [],
+    "tamper_class": null,
+    "tamper_details": [],
+    "seed": 1149938334,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "e330c2c8c10bd3f969e57a266183938ab5e6ede2396bd01b8bc4e7cac88522ab",
+    "split": "val"
+  },
+  {
+    "doc_id": "synth_0024_v0",
+    "source_id": "synth_0024",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "clause_delete",
+      "date_shift"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "clause_delete",
+        "page": null,
+        "clause_id": "5",
+        "original_value": "Notices",
+        "tampered_value": "<deleted>",
+        "subtype": "clause_removed",
+        "dangling_xrefs": [],
+        "extra": {}
+      },
+      {
+        "tamper_type": "date_shift",
+        "page": null,
+        "clause_id": null,
+        "original_value": "2028-07-22",
+        "tampered_value": "2021-08-29",
+        "subtype": "termination_before_effective",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 1149938334,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "91b67f66160bd410e49ee5b5fd4261976da392ef51e37fdd41f923372b70fdf8",
+    "split": "val"
+  },
+  {
+    "doc_id": "synth_0024_v1",
+    "source_id": "synth_0024",
+    "source_type": "synthetic",
+    "is_tampered": true,
+    "tamper_types": [
+      "clause_delete"
+    ],
+    "tamper_class": "content",
+    "tamper_details": [
+      {
+        "tamper_type": "clause_delete",
+        "page": null,
+        "clause_id": "2",
+        "original_value": "Confidentiality",
+        "tampered_value": "<deleted>",
+        "subtype": "clause_removed",
+        "dangling_xrefs": [],
+        "extra": {}
+      }
+    ],
+    "seed": 1149938334,
+    "generator_version": "datagen-0.1.0",
+    "sha256": "bf6d32de292819e0968557d7e9d7749330bd666cc22dbb7975516f8b7edf0ef8",
+    "split": "val"
+  }
+]

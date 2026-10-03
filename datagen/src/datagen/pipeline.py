@@ -111,6 +111,7 @@ def _generate_variants(
     seed: int,
     out_dir: Path,
     n_variants: int,
+    expected_clauses_out: dict[str, list[dict[str, str]]] | None = None,
 ) -> list[DocLabel]:
     """Generate clean + tampered PDFs for one source contract.
 
@@ -123,6 +124,11 @@ def _generate_variants(
     clean_bytes = render_contract_to_bytes(source_contract, is_tampered=False)
     clean_path = out_dir / f"{clean_id}.pdf"
     clean_path.write_bytes(clean_bytes)
+
+    if expected_clauses_out is not None:
+        expected_clauses_out[clean_id] = [
+            {"id": c.id, "heading": c.heading} for c in source_contract.clauses
+        ]
 
     labels.append(
         DocLabel(
@@ -209,6 +215,11 @@ def _generate_variants(
         variant_id = f"{source_contract.id}_v{variant_idx}"
         variant_path = out_dir / f"{variant_id}.pdf"
         variant_path.write_bytes(pdf_bytes)
+
+        if expected_clauses_out is not None:
+            expected_clauses_out[variant_id] = [
+                {"id": c.id, "heading": c.heading} for c in working_contract.clauses
+            ]
 
         tamper_types = [d.tamper_type for d in all_details]
         # Determine dominant tamper class
@@ -302,6 +313,7 @@ def run_pipeline(
 
     # --- Generate PDFs ---
     all_labels: list[DocLabel] = []
+    all_expected_clauses: dict[str, list[dict[str, str]]] = {}
 
     for contract, source_type in all_sources:
         contract_seed = master_rng.randint(0, 2**31)
@@ -313,6 +325,7 @@ def run_pipeline(
                 seed=contract_seed,
                 out_dir=out_dir,
                 n_variants=n_variants,
+                expected_clauses_out=all_expected_clauses,
             )
             all_labels.extend(labels)
         except Exception as exc:
@@ -325,12 +338,16 @@ def run_pipeline(
     )
 
     # --- Write labels ---
-    _write_labels(all_labels, out_dir)
+    _write_labels(all_labels, out_dir, all_expected_clauses)
     return all_labels
 
 
-def _write_labels(labels: list[DocLabel], out_dir: Path) -> None:
-    """Write labels.jsonl and labels.json."""
+def _write_labels(
+    labels: list[DocLabel],
+    out_dir: Path,
+    expected_clauses: dict[str, list[dict[str, str]]] | None = None,
+) -> None:
+    """Write labels.jsonl, labels.json, and optional expected_clauses.json sidecar."""
     jsonl_path = out_dir / "labels.jsonl"
     json_path = out_dir / "labels.json"
 
@@ -340,5 +357,10 @@ def _write_labels(labels: list[DocLabel], out_dir: Path) -> None:
 
     with json_path.open("w", encoding="utf-8") as f:
         json.dump([label.model_dump() for label in labels], f, indent=2, default=str)
+
+    if expected_clauses:
+        expected_path = out_dir / "expected_clauses.json"
+        with expected_path.open("w", encoding="utf-8") as f:
+            json.dump(expected_clauses, f, indent=2)
 
     logger.info("Labels written to %s", out_dir)
