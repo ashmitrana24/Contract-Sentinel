@@ -14,6 +14,7 @@ All findings carry revision numbers, changed pages, and before/after token snipp
 
 from __future__ import annotations
 
+import difflib
 import hashlib
 import logging
 import re
@@ -78,15 +79,39 @@ def _tokenize(text: str) -> list[str]:
 
 
 def _token_diff(before: list[str], after: list[str]) -> tuple[list[str], list[str]]:
-    """Simple Myers-like diff returning (removed, added) token lists.
-
-    Uses a set-based approach for efficiency; order is preserved in output.
-    """
-    before_set = set(before)
-    after_set = set(after)
-    removed = [t for t in before if t not in after_set]
-    added = [t for t in after if t not in before_set]
+    """Sequence-based diff returning (removed, added) token lists preserving order and repetitions."""
+    matcher = difflib.SequenceMatcher(None, before, after)
+    removed: list[str] = []
+    added: list[str] = []
+    for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+        if tag in ("replace", "delete"):
+            removed.extend(before[i1:i2])
+        if tag in ("replace", "insert"):
+            added.extend(after[j1:j2])
     return removed, added
+
+
+def _is_widget_change(page_old: pymupdf.Page, page_new: pymupdf.Page) -> bool:
+    """Return True if all differences on page are confined to AcroForm widget rectangles."""
+    try:
+        w_rects = [pymupdf.Rect(w.rect) for w in page_new.widgets()] + [
+            pymupdf.Rect(w.rect) for w in page_old.widgets()
+        ]
+        if not w_rects:
+            return False
+
+        def get_non_widget_tokens(p: pymupdf.Page) -> list[str]:
+            words = []
+            for w in p.get_text("words"):
+                r = pymupdf.Rect(w[:4])
+                if any(r.intersects(wr) for wr in w_rects):
+                    continue
+                words.append(w[4])
+            return words
+
+        return get_non_widget_tokens(page_old) == get_non_widget_tokens(page_new)
+    except Exception:
+        return False
 
 
 def _escalate_severity(removed: list[str], added: list[str]) -> Severity:
@@ -234,6 +259,10 @@ def detect_incremental(
                 new_hash = _page_content_hash(new_page)
 
                 if old_hash == new_hash:
+                    continue
+
+                if _is_widget_change(old_page, new_page):
+                    # Form field update via incremental revision (standard PDF operation)
                     continue
 
                 # Content changed — compute text diff

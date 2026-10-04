@@ -1,277 +1,86 @@
 {
-  "summary": {
-    "total_documents": 19,
-    "clean_documents": 7,
+  "train_val": {
+    "split_name": "Train/Val",
+    "total_documents": 259,
+    "tp": 33,
+    "fp": 0,
+    "fn": 0,
+    "tn": 226,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "recall_per_type": {
+      "incremental_edit": {
+        "tp": 10,
+        "total": 10,
+        "recall": 1.0
+      },
+      "hidden_text": {
+        "tp": 24,
+        "total": 24,
+        "recall": 1.0
+      }
+    },
+    "clean_documents": 85,
     "clean_false_positive_rate": 0.0,
-    "overall_precision": 0.6316,
-    "overall_recall": 1.0,
-    "overall_f1": 0.7742
+    "clean_false_positives": 0,
+    "content_documents": 141,
+    "content_false_positive_rate": 0.0,
+    "content_false_positives": 0,
+    "incremental_total": 10,
+    "incremental_page_match_rate": 1.0,
+    "incremental_page_matches": 10,
+    "incremental_evidence_tampered_value_rate": 1.0,
+    "incremental_evidence_matches": 10,
+    "latency_stats": {
+      "mean_ms": 18.04,
+      "p50_ms": 6.99,
+      "p95_ms": 78.48,
+      "p99_ms": 154.94
+    },
+    "misses": [],
+    "false_positives": []
   },
-  "per_category": {
-    "post_signature_modification": {
-      "tp": 1,
-      "fp": 0,
-      "fn": 0,
-      "precision": 1.0,
-      "recall": 1.0,
-      "f1": 1.0
+  "test": {
+    "split_name": "Held-out Test",
+    "total_documents": 44,
+    "tp": 6,
+    "fp": 0,
+    "fn": 0,
+    "tn": 38,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "recall_per_type": {
+      "incremental_edit": {
+        "tp": 2,
+        "total": 2,
+        "recall": 1.0
+      },
+      "hidden_text": {
+        "tp": 4,
+        "total": 4,
+        "recall": 1.0
+      }
     },
-    "hidden_text": {
-      "tp": 4,
-      "fp": 1,
-      "fn": 0,
-      "precision": 0.8,
-      "recall": 1.0,
-      "f1": 0.8889
+    "clean_documents": 15,
+    "clean_false_positive_rate": 0.0,
+    "clean_false_positives": 0,
+    "content_documents": 23,
+    "content_false_positive_rate": 0.0,
+    "content_false_positives": 0,
+    "incremental_total": 2,
+    "incremental_page_match_rate": 1.0,
+    "incremental_page_matches": 2,
+    "incremental_evidence_tampered_value_rate": 1.0,
+    "incremental_evidence_matches": 2,
+    "latency_stats": {
+      "mean_ms": 27.3,
+      "p50_ms": 7.39,
+      "p95_ms": 106.17,
+      "p99_ms": 188.85
     },
-    "signature_invalid": {
-      "tp": 1,
-      "fp": 0,
-      "fn": 0,
-      "precision": 1.0,
-      "recall": 1.0,
-      "f1": 1.0
-    },
-    "incremental_edit": {
-      "tp": 2,
-      "fp": 2,
-      "fn": 0,
-      "precision": 0.5,
-      "recall": 1.0,
-      "f1": 0.6667
-    },
-    "metadata_anomaly": {
-      "tp": 2,
-      "fp": 3,
-      "fn": 0,
-      "precision": 0.4,
-      "recall": 1.0,
-      "f1": 0.5714
-    },
-    "active_content": {
-      "tp": 2,
-      "fp": 1,
-      "fn": 0,
-      "precision": 0.6667,
-      "recall": 1.0,
-      "f1": 0.8
-    }
-  },
-  "latency_stats": {
-    "count": 19,
-    "mean_ms": 10.23,
-    "p50_ms": 2.47,
-    "p95_ms": 33.27,
-    "p99_ms": 88.58
-  },
-  "document_results": [
-    {
-      "doc_id": "clean_plain",
-      "is_tampered": false,
-      "expected": [],
-      "detected": [],
-      "finding_count": 0,
-      "duration_ms": 3.2685999758541584
-    },
-    {
-      "doc_id": "clean_headers",
-      "is_tampered": false,
-      "expected": [],
-      "detected": [],
-      "finding_count": 0,
-      "duration_ms": 5.905000027269125
-    },
-    {
-      "doc_id": "clean_links",
-      "is_tampered": false,
-      "expected": [],
-      "detected": [],
-      "finding_count": 0,
-      "duration_ms": 2.610500028822571
-    },
-    {
-      "doc_id": "clean_highlights",
-      "is_tampered": false,
-      "expected": [],
-      "detected": [],
-      "finding_count": 0,
-      "duration_ms": 2.2862000041641295
-    },
-    {
-      "doc_id": "clean_forms",
-      "is_tampered": false,
-      "expected": [],
-      "detected": [],
-      "finding_count": 0,
-      "duration_ms": 2.5545000098645687
-    },
-    {
-      "doc_id": "clean_word",
-      "is_tampered": false,
-      "expected": [],
-      "detected": [],
-      "finding_count": 0,
-      "duration_ms": 2.418799966108054
-    },
-    {
-      "doc_id": "clean_signed",
-      "is_tampered": false,
-      "expected": [],
-      "detected": [
-        "incremental_edit",
-        "metadata_anomaly"
-      ],
-      "finding_count": 2,
-      "duration_ms": 102.40219999104738
-    },
-    {
-      "doc_id": "tampered_incremental_text",
-      "is_tampered": true,
-      "expected": [
-        "incremental_edit"
-      ],
-      "detected": [
-        "incremental_edit"
-      ],
-      "finding_count": 1,
-      "duration_ms": 6.252699997276068
-    },
-    {
-      "doc_id": "tampered_incremental_amount",
-      "is_tampered": true,
-      "expected": [
-        "incremental_edit"
-      ],
-      "detected": [
-        "incremental_edit",
-        "hidden_text"
-      ],
-      "finding_count": 2,
-      "duration_ms": 5.152600002475083
-    },
-    {
-      "doc_id": "tampered_hidden_white",
-      "is_tampered": true,
-      "expected": [
-        "hidden_text"
-      ],
-      "detected": [
-        "hidden_text"
-      ],
-      "finding_count": 1,
-      "duration_ms": 2.4554000119678676
-    },
-    {
-      "doc_id": "tampered_hidden_sub1pt",
-      "is_tampered": true,
-      "expected": [
-        "hidden_text"
-      ],
-      "detected": [
-        "hidden_text"
-      ],
-      "finding_count": 1,
-      "duration_ms": 2.380999969318509
-    },
-    {
-      "doc_id": "tampered_hidden_occluded",
-      "is_tampered": true,
-      "expected": [
-        "hidden_text"
-      ],
-      "detected": [
-        "hidden_text"
-      ],
-      "finding_count": 1,
-      "duration_ms": 2.4086000048555434
-    },
-    {
-      "doc_id": "tampered_hidden_offpage",
-      "is_tampered": true,
-      "expected": [
-        "hidden_text"
-      ],
-      "detected": [
-        "hidden_text"
-      ],
-      "finding_count": 1,
-      "duration_ms": 2.283699985127896
-    },
-    {
-      "doc_id": "tampered_active_js",
-      "is_tampered": true,
-      "expected": [
-        "active_content"
-      ],
-      "detected": [
-        "active_content"
-      ],
-      "finding_count": 1,
-      "duration_ms": 2.2258000099100173
-    },
-    {
-      "doc_id": "tampered_active_launch",
-      "is_tampered": true,
-      "expected": [
-        "active_content"
-      ],
-      "detected": [
-        "active_content"
-      ],
-      "finding_count": 1,
-      "duration_ms": 2.096200012601912
-    },
-    {
-      "doc_id": "tampered_meta_future",
-      "is_tampered": true,
-      "expected": [
-        "metadata_anomaly"
-      ],
-      "detected": [
-        "metadata_anomaly"
-      ],
-      "finding_count": 2,
-      "duration_ms": 2.431000000797212
-    },
-    {
-      "doc_id": "tampered_meta_reversed",
-      "is_tampered": true,
-      "expected": [
-        "metadata_anomaly"
-      ],
-      "detected": [
-        "metadata_anomaly"
-      ],
-      "finding_count": 1,
-      "duration_ms": 2.473499975167215
-    },
-    {
-      "doc_id": "tampered_sig_byte_corrupt",
-      "is_tampered": true,
-      "expected": [
-        "signature_invalid"
-      ],
-      "detected": [
-        "signature_invalid",
-        "metadata_anomaly",
-        "active_content"
-      ],
-      "finding_count": 3,
-      "duration_ms": 25.58699995279312
-    },
-    {
-      "doc_id": "tampered_sig_post_edit",
-      "is_tampered": true,
-      "expected": [
-        "post_signature_modification"
-      ],
-      "detected": [
-        "incremental_edit",
-        "post_signature_modification",
-        "metadata_anomaly"
-      ],
-      "finding_count": 4,
-      "duration_ms": 17.17479998478666
-    }
-  ]
+    "misses": [],
+    "false_positives": []
+  }
 }

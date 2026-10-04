@@ -380,3 +380,107 @@ def make_metadata_pdf(kind: str) -> bytes:
     doc.save(buf)
     doc.close()
     return buf.getvalue()
+
+
+def make_filled_acroform_incremental_pdf() -> bytes:
+    """AcroForm fields filled in via an incremental update."""
+    doc = fitz.open()
+    p = doc.new_page(width=595, height=842)
+    p.insert_text((50, 100), "Contract with filled form field.")
+    widget = fitz.Widget()
+    widget.rect = fitz.Rect(150, 88, 350, 108)
+    widget.field_type = mupdf.PDF_WIDGET_TYPE_TEXT
+    widget.field_name = "full_name"
+    p.add_widget(widget)
+
+    tfd, tpath = tempfile.mkstemp(suffix=".pdf")
+    os.close(tfd)
+    try:
+        doc.save(tpath)
+        doc.close()
+
+        doc2 = fitz.open(tpath)
+        for w in doc2[0].widgets():
+            if w.field_name == "full_name":
+                w.field_value = "Jane Doe"
+                w.update()
+        doc2.save(tpath, incremental=True, encryption=mupdf.PDF_ENCRYPT_KEEP)
+        doc2.close()
+        return Path(tpath).read_bytes()
+    finally:
+        Path(tpath).unlink(missing_ok=True)
+
+
+def make_ocr_scanned_pdf() -> bytes:
+    """Scanned-style page (image plus invisible OCR text layer)."""
+    doc = fitz.open()
+    page = doc.new_page(width=595, height=842)
+    pix = fitz.Pixmap(fitz.csGRAY, (0, 0, 500, 700), 0)
+    pix.clear_with(240)
+    page.insert_image(fitz.Rect(50, 50, 550, 750), stream=pix.tobytes("png"))
+    page.insert_text(
+        (60, 100),
+        "This is OCR recognized text over the scan.",
+        fontsize=11,
+        render_mode=3,
+    )
+    buf = io.BytesIO()
+    doc.save(buf)
+    doc.close()
+    return buf.getvalue()
+
+
+def make_white_on_dark_header_pdf() -> bytes:
+    """White text on a dark filled header band."""
+    doc = fitz.open()
+    page = doc.new_page(width=595, height=842)
+    page.draw_rect(fitz.Rect(0, 0, 595, 80), color=(0.1, 0.1, 0.2), fill=(0.1, 0.1, 0.2))
+    page.insert_text((50, 50), "CONFIDENTIAL AGREEMENT", fontsize=14, color=(1, 1, 1))
+    buf = io.BytesIO()
+    doc.save(buf)
+    doc.close()
+    return buf.getvalue()
+
+
+def make_linearized_pdf() -> bytes:
+    """Linearized (fast web view) PDF."""
+    doc = fitz.open()
+    p = doc.new_page(width=595, height=842)
+    p.insert_text((50, 100), "Linearized web-optimized document.")
+    buf = io.BytesIO()
+    doc.save(buf)
+    doc.close()
+
+    pdf = pikepdf.open(io.BytesIO(buf.getvalue()))
+    out = io.BytesIO()
+    pdf.save(out, linearize=True)
+    pdf.close()
+    return out.getvalue()
+
+
+def make_resaved_pdf() -> bytes:
+    """PDF fully re-saved (rewritten) by PyMuPDF."""
+    doc = fitz.open()
+    p = doc.new_page(width=595, height=842)
+    p.insert_text((50, 100), "Document resaved and rewritten by PyMuPDF.")
+    b1 = io.BytesIO()
+    doc.save(b1)
+    doc.close()
+
+    doc2 = fitz.open(stream=b1.getvalue(), filetype="pdf")
+    b2 = io.BytesIO()
+    doc2.save(b2, garbage=4, deflate=True, clean=True)
+    doc2.close()
+    return b2.getvalue()
+
+
+def make_footnote_pdf() -> bytes:
+    """Small 6 pt footnote text."""
+    doc = fitz.open()
+    page = doc.new_page(width=595, height=842)
+    page.insert_text((50, 100), "Main contract clause with reference[1].", fontsize=11)
+    page.insert_text((50, 800), "[1] Small 6 pt footnote text explaining jurisdiction.", fontsize=6.0)
+    buf = io.BytesIO()
+    doc.save(buf)
+    doc.close()
+    return buf.getvalue()
