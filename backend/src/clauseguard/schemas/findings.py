@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import json
 from enum import StrEnum
-from typing import Annotated
+from typing import Annotated, Any
 
 from pydantic import BaseModel, Field, field_validator, model_validator
 
@@ -45,6 +45,10 @@ class Finding(BaseModel):
         ge=0.0,
         le=1.0,
         description="Model confidence, 0-1 or null if rule-based",
+    )
+    details: dict[str, Any] = Field(
+        default_factory=dict,
+        description="Detector-specific extra data (revision numbers, diffs, etc.)",
     )
 
     @field_validator("confidence", mode="before")

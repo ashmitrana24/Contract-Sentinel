@@ -19,6 +19,8 @@ dependencies = [
     "PyMuPDF>=1.28.2",
     "redis>=8.1.0",
     "python-multipart>=0.0.32",
+    "pikepdf>=8.0.0",
+    "pyhanko>=0.20.0",
 ]
 
 [project.optional-dependencies]
@@ -33,7 +35,7 @@ packages = ["src/clauseguard"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-pythonpath = ["src"]
+pythonpath = ["src", "."]
 addopts = "-v --tb=short -p no:warnings"
 markers = [
     "unit: fast unit tests (no services required)",
@@ -41,10 +43,13 @@ markers = [
     "dataset: requires data/generated to be present",
 ]
 
+[tool.pyright]
+extraPaths = ["src", "."]
+
 [tool.ruff]
 line-length = 100
 target-version = "py311"
-src = ["src"]
+src = ["src", "."]
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "UP", "B", "C4", "T20", "RUF"]
@@ -52,6 +57,7 @@ ignore = ["E501", "RUF001", "RUF002", "RUF003", "B008"]
 
 [tool.ruff.lint.per-file-ignores]
 "src/clauseguard/bench/*" = ["T201"]
+"src/clauseguard/forensics/run.py" = ["T201"]
 "tests/*" = ["T201"]
 
 [tool.ruff.lint.isort]

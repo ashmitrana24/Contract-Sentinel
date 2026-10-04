@@ -22,8 +22,10 @@ from datetime import UTC, datetime, timedelta
 from sqlalchemy import delete, select
 
 from clauseguard.config import Settings, get_settings
-from clauseguard.db.models import Clause, Document, Job, Page
+from clauseguard.db.models import AnalysisRun, Clause, Document, FindingRow, Job, Page
 from clauseguard.db.session import get_session
+from clauseguard.forensics.models import ForensicsSettings
+from clauseguard.forensics.run import analyze
 from clauseguard.parsing.parse_document import ParseError, parse_document
 from clauseguard.queue import backoff as qb
 from clauseguard.queue import streams as qs
@@ -170,11 +172,22 @@ def _execute_parsing(
     if parsed.page_count > cfg.max_pages:
         raise ParseError(f"PDF page count {parsed.page_count} exceeds limit {cfg.max_pages}")
 
+    # Structure forensics (Module 3)
+    forensics_report = None
+    if cfg.forensics_enabled:
+        try:
+            f_settings = ForensicsSettings(budget_seconds=cfg.forensics_budget_seconds)
+            forensics_report = analyze(pdf_bytes, f_settings)
+        except Exception as exc:
+            logger.warning("Forensics analysis failed on document %s: %s", document_id, exc)
+
     # Idempotent write: atomic replace in single transaction
     with get_session() as session:
-        # Delete existing pages and clauses (handles duplicate delivery / re-parse cleanly)
+        # Delete existing pages, clauses, findings, and analysis_runs (handles re-parse cleanly)
         session.execute(delete(Page).where(Page.document_id == document_id))
         session.execute(delete(Clause).where(Clause.document_id == document_id))
+        session.execute(delete(FindingRow).where(FindingRow.document_id == document_id))
+        session.execute(delete(AnalysisRun).where(AnalysisRun.document_id == document_id))
 
         # Insert pages
         page_entities = [
@@ -208,6 +221,36 @@ def _execute_parsing(
             for c in parsed.clauses
         ]
         session.add_all(clause_entities)
+
+        # Insert forensics findings and analysis run
+        if forensics_report is not None:
+            finding_entities = [
+                FindingRow(
+                    document_id=document_id,
+                    module=f.module,
+                    type=f.type,
+                    severity=f.severity.value if hasattr(f.severity, "value") else str(f.severity),
+                    page=f.page,
+                    clause_ref=f.clause_ref,
+                    bbox=list(f.bbox) if f.bbox else None,
+                    evidence=f.evidence,
+                    explanation=f.explanation,
+                    confidence=f.confidence,
+                    details=f.details,
+                )
+                for f in forensics_report.findings
+            ]
+            session.add_all(finding_entities)
+
+            run_entity = AnalysisRun(
+                document_id=document_id,
+                module="pdf_forensics",
+                version=forensics_report.version,
+                status=forensics_report.status,
+                duration_ms=round(forensics_report.total_duration_ms),
+                detector_status={"detectors": [d.model_dump() for d in forensics_report.detectors]},
+            )
+            session.add(run_entity)
 
         # Update document metadata and OCR flag
         d = session.get(Document, document_id)

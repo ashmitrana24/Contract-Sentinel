@@ -12,6 +12,7 @@ from datetime import datetime
 from sqlalchemy import (
     Boolean,
     DateTime,
+    Float,
     ForeignKey,
     Index,
     Integer,
@@ -46,6 +47,12 @@ class Document(Base):
     jobs: Mapped[list[Job]] = relationship("Job", back_populates="document", lazy="select")
     pages: Mapped[list[Page]] = relationship("Page", back_populates="document", lazy="select")
     clauses: Mapped[list[Clause]] = relationship("Clause", back_populates="document", lazy="select")
+    findings: Mapped[list[FindingRow]] = relationship(
+        "FindingRow", back_populates="document", lazy="select"
+    )
+    analysis_runs: Mapped[list[AnalysisRun]] = relationship(
+        "AnalysisRun", back_populates="document", lazy="select"
+    )
 
 
 class Job(Base):
@@ -129,4 +136,67 @@ class Clause(Base):
     __table_args__ = (
         UniqueConstraint("document_id", "order_idx", name="uq_clauses_doc_order"),
         Index("ix_clauses_document_id", "document_id"),
+    )
+
+
+class FindingRow(Base):
+    """One forensics finding stored in the database."""
+
+    __tablename__ = "findings"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    document_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("documents.id", ondelete="CASCADE"), nullable=False
+    )
+    module: Mapped[str] = mapped_column(String(64), nullable=False)
+    type: Mapped[str] = mapped_column(String(64), nullable=False)
+    severity: Mapped[str] = mapped_column(String(16), nullable=False)
+    page: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    clause_ref: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    bbox: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
+    evidence: Mapped[str] = mapped_column(Text, nullable=False)
+    explanation: Mapped[str] = mapped_column(Text, nullable=False)
+    confidence: Mapped[float | None] = mapped_column(Float, nullable=True)
+    details: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, server_default=func.now()
+    )
+
+    document: Mapped[Document] = relationship("Document", back_populates="findings")
+
+    __table_args__ = (
+        Index("ix_findings_document_id", "document_id"),
+        Index("ix_findings_document_module", "document_id", "module"),
+        Index("ix_findings_document_severity", "document_id", "severity"),
+    )
+
+
+class AnalysisRun(Base):
+    """Record of one forensics analysis run for a document."""
+
+    __tablename__ = "analysis_runs"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    document_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("documents.id", ondelete="CASCADE"), nullable=False
+    )
+    module: Mapped[str] = mapped_column(String(64), nullable=False)
+    version: Mapped[str] = mapped_column(String(32), nullable=False)
+    status: Mapped[str] = mapped_column(String(16), nullable=False)  # ok|partial|error
+    duration_ms: Mapped[int] = mapped_column(Integer, nullable=False)
+    error: Mapped[str | None] = mapped_column(Text, nullable=True)
+    detector_status: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, server_default=func.now()
+    )
+
+    document: Mapped[Document] = relationship("Document", back_populates="analysis_runs")
+
+    __table_args__ = (
+        UniqueConstraint("document_id", "module", "version", name="uq_analysis_runs_doc_mod_ver"),
+        Index("ix_analysis_runs_document_id", "document_id"),
     )

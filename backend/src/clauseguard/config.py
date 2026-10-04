@@ -87,6 +87,16 @@ class Settings(BaseSettings):
         description="If avg chars/page falls below this, set needs_ocr=true",
     )
 
+    # --- Forensics ---
+    forensics_enabled: bool = Field(
+        default=True,
+        description="Whether to run PDF forensics analysis after parsing",
+    )
+    forensics_budget_seconds: float = Field(
+        default=20.0,
+        description="Per-document time budget for forensics analysis (seconds)",
+    )
+
 
 _settings: Settings | None = None
 

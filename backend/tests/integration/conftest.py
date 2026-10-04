@@ -22,10 +22,10 @@ def clean_db() -> Generator[None, None, None]:
     """Truncate all application tables before each integration test."""
     engine = _get_engine()
     with engine.begin() as conn:
-        conn.execute(text("TRUNCATE TABLE clauses, pages, jobs, documents CASCADE"))
+        conn.execute(text("TRUNCATE TABLE findings, analysis_runs, clauses, pages, jobs, documents CASCADE"))
     yield
     with engine.begin() as conn:
-        conn.execute(text("TRUNCATE TABLE clauses, pages, jobs, documents CASCADE"))
+        conn.execute(text("TRUNCATE TABLE findings, analysis_runs, clauses, pages, jobs, documents CASCADE"))
 
 
 @pytest.fixture

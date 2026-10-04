@@ -40,6 +40,42 @@ class DocumentResponse(BaseModel):
     latest_job_id: uuid.UUID | None
     latest_job_status: str | None
     clause_count: int
+    finding_count: int = 0
+
+
+class FindingResponse(BaseModel):
+    id: uuid.UUID
+    document_id: uuid.UUID
+    module: str
+    type: str
+    severity: str
+    page: int | None
+    clause_ref: str | None
+    bbox: list[float] | None
+    evidence: str
+    explanation: str
+    confidence: float | None
+    details: dict
+    created_at: str
+
+
+class PaginatedFindings(BaseModel):
+    total: int
+    limit: int
+    offset: int
+    items: list[FindingResponse]
+
+
+class AnalysisRunResponse(BaseModel):
+    id: uuid.UUID
+    document_id: uuid.UUID
+    module: str
+    version: str
+    status: str
+    duration_ms: int
+    error: str | None
+    detector_status: dict
+    created_at: str
 
 
 class PageResponse(BaseModel):

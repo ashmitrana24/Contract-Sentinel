@@ -305,3 +305,55 @@ python -m clauseguard.bench.ingest_bench \
   --concurrency 5 \
   --max-docs 30
 ```
+
+---
+
+## 7. Module 3: PDF Structure Forensics
+
+Module 3 inspects the binary structure of uploaded PDF files for post-creation edits, invisible/hidden text, digital signature alterations, and metadata anomalies, reporting detected issues as standardized `Finding` objects.
+
+### 7.1 Detectors
+
+1. **Incremental Edits** (`clauseguard.forensics.incremental`):
+   - Scans raw binary streams for `%%EOF` markers and validates each prefix slice.
+   - Computes token-level page text diffs across consecutive revisions.
+   - Detects modified numeric amounts, altered dates, and party changes, escalating critical findings.
+   - Verifies trailer `/ID` consistency.
+2. **Text Hiding** (`clauseguard.forensics.text_hiding`):
+   - Uses PyMuPDF's `get_texttrace()` to detect `type=3` invisible text, sub-1pt font sizes, and off-page text.
+   - Uses `get_drawings()` to compute WCAG 2.0 contrast against dynamic effective background fills.
+   - Identifies text occluded under opaque white-out redaction rectangles.
+   - Conservative: ignores legitimate footnotes ($\ge 6\text{pt}$), dark headers with white text, and scanned document OCR layers.
+3. **Signature Integrity** (`clauseguard.forensics.signatures`):
+   - Evaluates digital signatures using pyHanko without enforcing certificate trust chains.
+   - Validates cryptographic byte-range digest integrity (`signature_invalid` on byte alteration).
+   - Performs DocMDP difference analysis to catch post-signature content changes (`post_signature_modification`).
+4. **Metadata Anomalies** (`clauseguard.forensics.metadata`):
+   - Checks `ModDate` vs `CreationDate` for reversed dates or large discrepancies.
+   - Identifies future timestamps and missing dates.
+   - Detects traces from known online PDF editor tools (e.g. iLovePDF, Smallpdf).
+5. **Active Content & Annotation Overlays** (`clauseguard.forensics.active_content`):
+   - Uses pikepdf to detect embedded JavaScript actions, `/OpenAction`, and `/Launch` execution commands.
+   - Detects oversized annotation rectangles masking page text.
+
+### 7.2 CLI & Standalone Analysis
+
+Analyze any PDF from the command line:
+```bash
+python -m clauseguard.forensics.run /path/to/contract.pdf
+```
+Outputs a complete, pretty-printed `ForensicsReport` JSON.
+
+### 7.3 API Endpoints
+
+- `GET /v1/documents/{id}/findings?severity=high&limit=50&offset=0` — Retrieve paginated findings for a document.
+- `GET /v1/documents/{id}/analysis` — Retrieve forensics execution run details and detector statuses.
+- `GET /v1/documents/{id}` — Includes `finding_count` in response.
+
+### 7.4 Evaluation Benchmark
+
+Run the evaluation suite against generated or synthetic datasets:
+```bash
+python -m eval.forensics_eval --synthetic --out eval/results/eval_report.json
+```
+Computes per-category Precision, Recall, F1, False Positive Rate on clean documents, and latency percentiles.

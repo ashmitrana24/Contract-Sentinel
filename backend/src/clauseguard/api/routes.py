@@ -25,17 +25,20 @@ from sqlalchemy.orm import Session
 
 from clauseguard.api.deps import get_cfg, get_db, get_store
 from clauseguard.config import Settings
-from clauseguard.db.models import Clause, Document, Job, Page
+from clauseguard.db.models import AnalysisRun, Clause, Document, FindingRow, Job, Page
 from clauseguard.db.session import check_connection as pg_check
 from clauseguard.queue import streams as qs
 from clauseguard.schemas.api import (
+    AnalysisRunResponse,
     ClauseResponse,
     DocumentResponse,
     ErrorResponse,
+    FindingResponse,
     HealthResponse,
     JobStatusResponse,
     PageResponse,
     PaginatedClauses,
+    PaginatedFindings,
     PaginatedPages,
     UploadResponse,
 )
@@ -254,6 +257,10 @@ def get_document(
         select(func.count()).where(Clause.document_id == document_id)
     ).scalar_one()
 
+    finding_count = db.execute(
+        select(func.count()).where(FindingRow.document_id == document_id)
+    ).scalar_one()
+
     return DocumentResponse(
         document_id=doc.id,
         sha256=doc.sha256,
@@ -267,7 +274,106 @@ def get_document(
         latest_job_id=latest_job.id if latest_job else None,
         latest_job_status=latest_job.status if latest_job else None,
         clause_count=clause_count,
+        finding_count=finding_count,
     )
+
+
+# ---------------------------------------------------------------------------
+# GET /v1/documents/{document_id}/findings
+# ---------------------------------------------------------------------------
+
+
+@router.get("/v1/documents/{document_id}/findings", response_model=PaginatedFindings)
+def get_findings(
+    document_id: uuid.UUID,
+    db: Session = Depends(get_db),
+    severity: str | None = Query(None, description="Filter by severity: low|medium|high|critical"),
+    module: str | None = Query(None, description="Filter by module: pdf_forensics"),
+    limit: Annotated[int, Query(ge=1, le=500)] = 50,
+    offset: Annotated[int, Query(ge=0)] = 0,
+) -> PaginatedFindings:
+    _assert_doc_exists(db, document_id)
+
+    query = select(FindingRow).where(FindingRow.document_id == document_id)
+    count_query = select(func.count()).where(FindingRow.document_id == document_id)
+
+    if severity:
+        query = query.where(FindingRow.severity == severity.lower())
+        count_query = count_query.where(FindingRow.severity == severity.lower())
+    if module:
+        query = query.where(FindingRow.module == module)
+        count_query = count_query.where(FindingRow.module == module)
+
+    total = db.execute(count_query).scalar_one()
+    rows = (
+        db.execute(
+            query.order_by(FindingRow.created_at, FindingRow.id)
+            .limit(limit)
+            .offset(offset)
+        )
+        .scalars()
+        .all()
+    )
+
+    return PaginatedFindings(
+        total=total,
+        limit=limit,
+        offset=offset,
+        items=[
+            FindingResponse(
+                id=f.id,
+                document_id=f.document_id,
+                module=f.module,
+                type=f.type,
+                severity=f.severity,
+                page=f.page,
+                clause_ref=f.clause_ref,
+                bbox=list(f.bbox) if f.bbox else None,
+                evidence=f.evidence,
+                explanation=f.explanation,
+                confidence=f.confidence,
+                details=f.details or {},
+                created_at=f.created_at.isoformat(),
+            )
+            for f in rows
+        ],
+    )
+
+
+# ---------------------------------------------------------------------------
+# GET /v1/documents/{document_id}/analysis
+# ---------------------------------------------------------------------------
+
+
+@router.get("/v1/documents/{document_id}/analysis", response_model=list[AnalysisRunResponse])
+def get_analysis_runs(
+    document_id: uuid.UUID,
+    db: Session = Depends(get_db),
+) -> list[AnalysisRunResponse]:
+    _assert_doc_exists(db, document_id)
+    rows = (
+        db.execute(
+            select(AnalysisRun)
+            .where(AnalysisRun.document_id == document_id)
+            .order_by(AnalysisRun.created_at.desc())
+        )
+        .scalars()
+        .all()
+    )
+    return [
+        AnalysisRunResponse(
+            id=r.id,
+            document_id=r.document_id,
+            module=r.module,
+            version=r.version,
+            status=r.status,
+            duration_ms=r.duration_ms,
+            error=r.error,
+            detector_status=r.detector_status or {},
+            created_at=r.created_at.isoformat(),
+        )
+        for r in rows
+    ]
 
 
 # ---------------------------------------------------------------------------
