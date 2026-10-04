@@ -70,3 +70,24 @@ This document records the architectural and design decisions made while implemen
 - A failure or malformed structure in one detector (e.g. invalid ASN.1 signature structure) must never crash the entire analysis.
 - Unhandled detector exceptions set `DetectorStatus.status = "error"` and mark the report `partial`, while allowing all remaining detectors to complete.
 - Budget checks between detectors prevent catastrophic slowdowns on complex or adversarial PDFs.
+
+---
+
+## D-06: AcroForm Incremental Edit Distinction & Widget Exclusion
+
+**Decision**: When analyzing consecutive PDF revisions for incremental modifications, text changes confined to AcroForm interactive form field rectangles (`page.widgets()`) are treated as normal form completion rather than unauthorized document tampering.
+
+**Rationale**:
+- Standard enterprise workflow involves saving filled form fields into existing contract templates via incremental updates.
+- PyMuPDF's `page.get_text()` extracts text rendered inside widget appearance streams, which previously caused form field text to be falsely flagged as body text replacement (`HIGH` severity).
+- `_is_widget_change(page_old, page_new)` checks if non-widget text remains identical across revisions. When true, the modification is flagged at `LOW` severity (standard non-content update), ensuring zero false alarms on legitimately filled forms.
+
+---
+
+## D-07: Sequence-Preserving Token Diffing via `difflib.SequenceMatcher`
+
+**Decision**: Replaced set-based token subtraction with `difflib.SequenceMatcher` in `_token_diff()`.
+
+**Rationale**:
+- Set subtraction discarded repeated tokens and collapsed context words (e.g. if currency identifier `Rs.` was already present in an earlier clause on the page, set diff omitted `Rs.` from `added`, producing only the numeric amount `90,00,000`).
+- Sequence matching preserves contiguous phrase order and exact token repetitions, enabling 100% ground-truth tampered value string matching in forensic evidence strings without false positives.
