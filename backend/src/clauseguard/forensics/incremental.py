@@ -91,14 +91,26 @@ def _token_diff(before: list[str], after: list[str]) -> tuple[list[str], list[st
     return removed, added
 
 
-def _is_widget_change(page_old: pymupdf.Page, page_new: pymupdf.Page) -> bool:
-    """Return True if all differences on page are confined to AcroForm widget rectangles."""
+def _check_widget_changes(
+    page_old: pymupdf.Page, page_new: pymupdf.Page
+) -> tuple[bool, list[dict[str, Any]]]:
+    """Check if changes are confined to AcroForm widgets, and track overwritten fields.
+
+    Returns (is_widget_change, overwritten_widgets).
+    If any non-widget text changed, returns (False, []).
+    If all text changes are confined to widgets:
+      - If every changed widget was empty/whitespace before, returns (True, []).
+      - If any changed widget already held a non-empty value, returns (True, overwritten_widgets)
+        with field_name, old_value, new_value, and rect.
+    """
     try:
-        w_rects = [pymupdf.Rect(w.rect) for w in page_new.widgets()] + [
-            pymupdf.Rect(w.rect) for w in page_old.widgets()
+        old_widgets_list = list(page_old.widgets())
+        new_widgets_list = list(page_new.widgets())
+        w_rects = [pymupdf.Rect(w.rect) for w in new_widgets_list] + [
+            pymupdf.Rect(w.rect) for w in old_widgets_list
         ]
         if not w_rects:
-            return False
+            return False, []
 
         def get_non_widget_tokens(p: pymupdf.Page) -> list[str]:
             words = []
@@ -109,9 +121,36 @@ def _is_widget_change(page_old: pymupdf.Page, page_new: pymupdf.Page) -> bool:
                 words.append(w[4])
             return words
 
-        return get_non_widget_tokens(page_old) == get_non_widget_tokens(page_new)
+        if get_non_widget_tokens(page_old) != get_non_widget_tokens(page_new):
+            return False, []
+
+        # All changes are confined to widgets. Compare earlier vs later values.
+        old_by_name: dict[str, str] = {}
+        for w in old_widgets_list:
+            name = w.field_name or f"xref_{w.xref}"
+            old_by_name[name] = w.field_value or ""
+
+        overwritten: list[dict[str, Any]] = []
+        for w in new_widgets_list:
+            name = w.field_name or f"xref_{w.xref}"
+            new_val = w.field_value or ""
+            if name in old_by_name:
+                old_val = old_by_name[name]
+                if old_val != new_val:
+                    # If the widget already held a non-empty value before, this is an overwrite
+                    if old_val.strip():
+                        overwritten.append(
+                            {
+                                "field_name": name,
+                                "old_value": old_val,
+                                "new_value": new_val,
+                                "rect": tuple(float(c) for c in w.rect),
+                            }
+                        )
+
+        return True, overwritten
     except Exception:
-        return False
+        return False, []
 
 
 def _escalate_severity(removed: list[str], added: list[str]) -> Severity:
@@ -261,8 +300,36 @@ def detect_incremental(
                 if old_hash == new_hash:
                     continue
 
-                if _is_widget_change(old_page, new_page):
-                    # Form field update via incremental revision (standard PDF operation)
+                is_widget, overwritten_widgets = _check_widget_changes(old_page, new_page)
+                if is_widget:
+                    if not overwritten_widgets:
+                        # Form field update of blank fields via incremental revision (standard benign PDF operation)
+                        continue
+                    # Overwriting an already-filled widget is a content change
+                    changed_pages.append(pg_idx + 1)
+                    rem_tokens: list[str] = []
+                    add_tokens: list[str] = []
+                    widget_snippets: list[str] = []
+                    widget_bbox = None
+                    for ow in overwritten_widgets:
+                        fn = ow["field_name"]
+                        ov = ow["old_value"]
+                        nv = ow["new_value"]
+                        rem_tokens.extend(ov.split())
+                        add_tokens.extend(nv.split())
+                        widget_snippets.append(f"field '{fn}': '{ov}' -> '{nv}'")
+                        if widget_bbox is None and "rect" in ow:
+                            widget_bbox = ow["rect"]
+
+                    page_diffs.append(
+                        {
+                            "page": pg_idx + 1,
+                            "removed": rem_tokens[:_DIFF_TOKENS_CAP],
+                            "added": add_tokens[:_DIFF_TOKENS_CAP],
+                            "widget_snippets": widget_snippets,
+                            "bbox": widget_bbox,
+                        }
+                    )
                     continue
 
                 # Content changed — compute text diff
@@ -313,14 +380,17 @@ def detect_incremental(
                 snippets: list[str] = []
                 for pd in page_diffs[:5]:
                     pg_no = pd["page"]
-                    removed_snip = " ".join(pd.get("removed", [])[:5])
-                    added_snip = " ".join(pd.get("added", [])[:5])
-                    if removed_snip or added_snip:
-                        snippets.append(
-                            f"Page {pg_no}: '{removed_snip}' -> '{added_snip}'"
-                        )
+                    if pd.get("widget_snippets"):
+                        snippets.append(f"Page {pg_no}: {'; '.join(pd['widget_snippets'])}")
                     else:
-                        snippets.append(f"Page {pg_no}: content changed")
+                        removed_snip = " ".join(pd.get("removed", [])[:5])
+                        added_snip = " ".join(pd.get("added", [])[:5])
+                        if removed_snip or added_snip:
+                            snippets.append(
+                                f"Page {pg_no}: '{removed_snip}' -> '{added_snip}'"
+                            )
+                        else:
+                            snippets.append(f"Page {pg_no}: content changed")
 
                 evidence = (
                     f"Revision {i + 2} of {len(revisions)} changed page(s) "
@@ -355,8 +425,8 @@ def detect_incremental(
                     )
 
                 # Get bbox for first changed page/token if possible
-                bbox = None
-                if changed_pages:
+                bbox = page_diffs[0].get("bbox") if page_diffs else None
+                if bbox is None and changed_pages:
                     try:
                         first_pg = doc_new[changed_pages[0] - 1]
                         blocks = first_pg.get_text("dict").get("blocks", [])

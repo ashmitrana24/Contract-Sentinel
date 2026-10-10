@@ -60,9 +60,9 @@ def test_clean_pdf_pipeline_has_zero_findings(
     analysis_resp = client.get(f"/v1/documents/{doc_id}/analysis")
     assert analysis_resp.status_code == 200
     runs = analysis_resp.json()
-    assert len(runs) == 1
-    assert runs[0]["module"] == "pdf_forensics"
-    assert runs[0]["status"] == "ok"
+    forensics_runs = [r for r in runs if r["module"] == "pdf_forensics"]
+    assert len(forensics_runs) == 1
+    assert forensics_runs[0]["status"] == "ok"
 
 
 def test_tampered_pdf_pipeline_stores_and_returns_findings(

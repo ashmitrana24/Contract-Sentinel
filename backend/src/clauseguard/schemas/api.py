@@ -41,6 +41,7 @@ class DocumentResponse(BaseModel):
     latest_job_status: str | None
     clause_count: int
     finding_count: int = 0
+    finding_counts_by_module: dict[str, int] = Field(default_factory=dict)
 
 
 class FindingResponse(BaseModel):

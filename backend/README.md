@@ -376,3 +376,96 @@ python eval/forensics_eval.py --data data/generated
 | **Latency (p95)** | 78.48 ms | 106.17 ms |
 | **Misses (False Negatives)** | **0** | **0** |
 | **False Positives** | **0** | **0** |
+
+---
+
+## 8. Module 4: Consistency Checks
+
+Module 4 checks whether a contract contradicts **itself**: verifying agreement between written words and numbers, internal chronological order, consistent party naming, resolvable cross-references, and coherent clause numbering. It reads the parsed document structure from Module 2 and generates structured `Finding` objects.
+
+### 8.1 Detectors & Consistency Rules
+
+1. **Words vs. Figures** (`clauseguard.consistency.pairs`):
+   - **`FIG001` (`figure_words_mismatch`, `CRITICAL` / `HIGH`)**: Compares numeric amounts written in digits against amounts written in words within parenthetical definitions (`$50,000 (Fifty Thousand Dollars)`) or within adjacent 120-character sentence windows. Supports both Western and Indian numbering notation (Lakh and Crore). Escalates to `CRITICAL` if discrepancy $\ge 20\%$.
+2. **Date Order & Term Lengths** (`clauseguard.consistency.dates`):
+   - **`DATE001` (`effective_date_conflict`, `HIGH`)**: Conflicting effective dates stated across preamble recitals and operational clauses.
+   - **`DATE002` (`date_order_conflict`, `CRITICAL`)**: Termination or expiration date precedes the effective commencement date.
+   - **`DATE003` (`term_length_conflict`, `MEDIUM`)**: Stated term duration (e.g. "for a period of 12 months") contradicts the computed calendar duration between effective and termination dates.
+   - **`DATE004` (`governing_law_year_conflict`, `MEDIUM`)**: Referenced statutory act year post-dates execution or effective date.
+3. **Party Name Variations** (`clauseguard.consistency.parties`):
+   - **`PRT001` (`party_name_variant`, `HIGH`)**: Uses `rapidfuzz` token ratio matching ($\ge 85\%$) to detect altered entity names across clauses (e.g., swapping "Stellar Systems Pvt. Ltd." with "Stellar Networks Pvt. Ltd.").
+   - **`PRT002` (`party_case_mismatch`, `LOW`)**: Capitalization variations for formal corporate names.
+   - **`PRT003` (`party_name_variant`, `MEDIUM`)**: Undefined party acronyms or initials used without formal introduction.
+   - **`PRT004` (`party_name_variant`, `MEDIUM`)**: Single-token short names used in operational or possessive contexts without being defined as aliases.
+4. **Cross-Reference Resolution** (`clauseguard.consistency.references`):
+   - **`XRF001` (`dangling_reference`, `HIGH` / `MEDIUM`)**: Cross-references pointing to non-existent clauses (`Section 14`, `Clause 9.3`), supporting multi-target ranges (`Sections 4.1 to 4.3`) and lists (`Clauses 2, 5 and 7`). Whitelists external statutory citations (e.g., `U.S.C.`, `C.F.R.`, `FD&C Act`, `Bankruptcy Code`) and external defined agreements (`Section 3.1 of the Merger Agreement`).
+5. **Clause Numbering Structure** (`clauseguard.consistency.numbering`):
+   - **`NUM001` (`numbering_gap`, `MEDIUM`)**: Detects missing integer clause indices (e.g., `1, 2, 4, 5` skipping `3`).
+   - **`NUM002` (`duplicate_clause_number`, `HIGH`)**: Flags duplicated clause numbers, with multi-schedule disambiguation for legitimate annexure numbering restarts.
+
+### 8.2 CLI Usage
+
+Run consistency checks directly on any PDF or parsed document:
+```bash
+python -m clauseguard.consistency.run /path/to/contract.pdf
+```
+
+Example JSON output snippet:
+```json
+{
+  "document_id": "synth_0001_v1",
+  "overall_status": "ok",
+  "duration_ms": 11.45,
+  "findings": [
+    {
+      "module": "consistency",
+      "type": "figure_words_mismatch",
+      "severity": "critical",
+      "page": 1,
+      "clause_ref": "3",
+      "evidence": "Rs. 25,00,000 (Rupees Twenty lakh Only)",
+      "explanation": "Amount figure Rs. 25,00,000 (numeric value 2500000.0) does not match words 'Rupees Twenty lakh Only' (numeric value 2000000.0). Difference: 25.0%.",
+      "details": {
+        "rule_id": "FIG001",
+        "figure_value": 2500000.0,
+        "words_value": 2000000.0,
+        "discrepancy_pct": 25.0
+      }
+    }
+  ],
+  "detector_statuses": {
+    "numbers": {"status": "ok", "duration_ms": 2.1},
+    "dates": {"status": "ok", "duration_ms": 1.4},
+    "parties": {"status": "ok", "duration_ms": 3.8},
+    "references": {"status": "ok", "duration_ms": 2.2},
+    "numbering": {"status": "ok", "duration_ms": 1.1}
+  }
+}
+```
+
+### 8.3 Benchmark Results (303 Documents across Train/Val & Test)
+
+Run the consistency benchmark:
+```bash
+python eval/consistency_eval.py --data data/generated
+```
+
+| Metric | Target | Train/Val Split (259 Docs) | Held-Out Test Split (44 Docs) |
+|---|:---:|:---:|:---:|
+| **Recall (`amount_figure_only`)** | $\ge 90\%$ | **95.0%** (19 / 20) | **100.0%** (3 / 3) |
+| **Recall (`date_shift`)** | $\ge 70\%$ | **100.0%** (20 / 20) | **100.0%** (1 / 1) |
+| **Recall (`party_swap`)** | $\ge 70\%$ | **96.2%** (25 / 26) | **66.7%** (2 / 3) |
+| **Recall (`xref_break`)** | $\ge 90\%$ | **96.5%** (28 / 29) | **100.0%** (3 / 3) |
+| **Overall Content Recall** | — | **95.8%** (92 / 96) | **90.0%** (9 / 10) |
+| **FPR (Clean Synthetic)** | $\le 2.0\%$ | **0.00%** (0 / 69) | **0.00%** (0 / 9) |
+| **FPR (Clean CUAD Commercial)** | $\le 5.0\%$ | **12.5%** (2 / 16) | **0.00%** (0 / 6) |
+| **Latency (p50)** | $< 100$ ms | 11.45 ms | 23.21 ms |
+| **Latency (p95)** | $< 500$ ms | 138.36 ms | 286.01 ms |
+| **1 MB Text Performance** | $< 2.0$ s | **1.21 s** | **1.21 s** |
+
+### 8.4 Known Limitations
+
+- **Both Amount Tampering (`amount_both`)**: When an attacker simultaneously alters both the numerical figure and the written words to identical fraudulent amounts, the contract remains internally consistent and cannot be detected via self-consistency alone (detected upstream via Module 3 forensic byte diffing).
+- **Redacted SEC Exhibits**: Historical SEC EDGAR filings containing heavy confidentiality redaction markers (e.g. `Sections 2.3, , 4.4.2 [***]`) may occasionally report dangling references where entire clause sections were redacted prior to regulatory filing.
+- **Single-Party Cover Filings**: Bankruptcy court cover sheets preceding the actual agreement where fewer than 2 legal entities are named in the initial header gracefully skip party checking to avoid generating false positives.
+

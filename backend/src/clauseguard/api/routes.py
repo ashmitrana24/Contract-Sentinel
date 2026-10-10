@@ -261,6 +261,13 @@ def get_document(
         select(func.count()).where(FindingRow.document_id == document_id)
     ).scalar_one()
 
+    module_counts_res = db.execute(
+        select(FindingRow.module, func.count())
+        .where(FindingRow.document_id == document_id)
+        .group_by(FindingRow.module)
+    ).all()
+    finding_counts_by_module = {str(m): int(c) for m, c in module_counts_res}
+
     return DocumentResponse(
         document_id=doc.id,
         sha256=doc.sha256,
@@ -275,6 +282,7 @@ def get_document(
         latest_job_status=latest_job.status if latest_job else None,
         clause_count=clause_count,
         finding_count=finding_count,
+        finding_counts_by_module=finding_counts_by_module,
     )
 
 

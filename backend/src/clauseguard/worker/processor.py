@@ -22,6 +22,8 @@ from datetime import UTC, datetime, timedelta
 from sqlalchemy import delete, select
 
 from clauseguard.config import Settings, get_settings
+from clauseguard.consistency import ConsistencySettings
+from clauseguard.consistency import analyze as analyze_consistency
 from clauseguard.db.models import AnalysisRun, Clause, Document, FindingRow, Job, Page
 from clauseguard.db.session import get_session
 from clauseguard.forensics.models import ForensicsSettings
@@ -181,6 +183,17 @@ def _execute_parsing(
         except Exception as exc:
             logger.warning("Forensics analysis failed on document %s: %s", document_id, exc)
 
+    # Consistency checks (Module 4)
+    consistency_report = None
+    consistency_error = None
+    if cfg.consistency_enabled:
+        try:
+            c_settings = ConsistencySettings(budget_seconds=cfg.consistency_budget_seconds)
+            consistency_report = analyze_consistency(parsed, c_settings)
+        except Exception as exc:
+            logger.warning("Consistency analysis failed on document %s: %s", document_id, exc)
+            consistency_error = str(exc)
+
     # Idempotent write: atomic replace in single transaction
     with get_session() as session:
         # Delete existing pages, clauses, findings, and analysis_runs (handles re-parse cleanly)
@@ -251,6 +264,50 @@ def _execute_parsing(
                 detector_status={"detectors": [d.model_dump() for d in forensics_report.detectors]},
             )
             session.add(run_entity)
+
+        # Insert consistency findings and analysis run
+        if consistency_report is not None:
+            c_finding_entities = [
+                FindingRow(
+                    document_id=document_id,
+                    module=f.module,
+                    type=f.type,
+                    severity=f.severity.value if hasattr(f.severity, "value") else str(f.severity),
+                    page=f.page,
+                    clause_ref=f.clause_ref,
+                    bbox=list(f.bbox) if f.bbox else None,
+                    evidence=f.evidence,
+                    explanation=f.explanation,
+                    confidence=f.confidence,
+                    details=f.details,
+                )
+                for f in consistency_report.findings
+            ]
+            session.add_all(c_finding_entities)
+
+            c_run_entity = AnalysisRun(
+                document_id=document_id,
+                module="consistency",
+                version=consistency_report.version,
+                status=consistency_report.status,
+                duration_ms=round(consistency_report.total_duration_ms),
+                detector_status={
+                    "detectors": [d.model_dump() for d in consistency_report.detectors],
+                    "stats": consistency_report.stats,
+                },
+            )
+            session.add(c_run_entity)
+        elif consistency_error is not None:
+            c_run_entity = AnalysisRun(
+                document_id=document_id,
+                module="consistency",
+                version="1.0.0",
+                status="error",
+                duration_ms=0,
+                error=consistency_error[:2048],
+                detector_status={"error": consistency_error},
+            )
+            session.add(c_run_entity)
 
         # Update document metadata and OCR flag
         d = session.get(Document, document_id)

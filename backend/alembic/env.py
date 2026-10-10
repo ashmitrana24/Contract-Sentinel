@@ -12,8 +12,9 @@ import sys
 from logging.config import fileConfig
 from pathlib import Path
 
-from alembic import context
 from sqlalchemy import engine_from_config, pool
+
+from alembic import context
 
 # Add the src/ directory to sys.path so we can import clauseguard.
 _backend_dir = Path(__file__).parent.parent
@@ -21,8 +22,8 @@ _src_dir = _backend_dir / "src"
 if str(_src_dir) not in sys.path:
     sys.path.insert(0, str(_src_dir))
 
-from clauseguard.db.base import Base  # noqa: E402
 import clauseguard.db.models  # noqa: E402, F401  # ensure models are registered
+from clauseguard.db.base import Base  # noqa: E402
 
 config = context.config
 

@@ -97,6 +97,16 @@ class Settings(BaseSettings):
         description="Per-document time budget for forensics analysis (seconds)",
     )
 
+    # --- Consistency ---
+    consistency_enabled: bool = Field(
+        default=True,
+        description="Whether to run Module 4 consistency analysis after parsing",
+    )
+    consistency_budget_seconds: float = Field(
+        default=10.0,
+        description="Per-document time budget for consistency analysis (seconds)",
+    )
+
 
 _settings: Settings | None = None
 

@@ -1,0 +1,554 @@
+{
+  "train_val": {
+    "split_name": "Train/Val",
+    "total_documents": 259,
+    "recall_per_type": {
+      "amount_figure_only": {
+        "total": 20,
+        "flagged": 19,
+        "recall": 0.95,
+        "type_correct": 19,
+        "type_correctness_rate": 0.95,
+        "localized": 13,
+        "localization_rate": 0.65
+      },
+      "date_shift": {
+        "total": 20,
+        "flagged": 20,
+        "recall": 1.0,
+        "type_correct": 20,
+        "type_correctness_rate": 1.0,
+        "localized": 20,
+        "localization_rate": 1.0
+      },
+      "party_swap": {
+        "total": 26,
+        "flagged": 25,
+        "recall": 0.9615,
+        "type_correct": 25,
+        "type_correctness_rate": 0.9615,
+        "localized": 24,
+        "localization_rate": 0.9231
+      },
+      "clause_delete": {
+        "total": 20,
+        "flagged": 5,
+        "recall": 0.25,
+        "type_correct": 4,
+        "type_correctness_rate": 0.2,
+        "localized": 2,
+        "localization_rate": 0.1
+      },
+      "xref_break": {
+        "total": 29,
+        "flagged": 28,
+        "recall": 0.9655,
+        "type_correct": 28,
+        "type_correctness_rate": 0.9655,
+        "localized": 28,
+        "localization_rate": 0.9655
+      }
+    },
+    "clean_synthetic": {
+      "total": 69,
+      "false_positives": 0,
+      "fpr": 0.0
+    },
+    "clean_cuad": {
+      "total": 16,
+      "false_positives": 2,
+      "fpr": 0.125
+    },
+    "expected_undetectable": {
+      "amount_both": {
+        "total": 19,
+        "flagged": 0,
+        "flag_rate": 0.0
+      },
+      "clause_insert": {
+        "total": 16,
+        "flagged": 3,
+        "flag_rate": 0.1875
+      },
+      "incremental_edit": {
+        "total": 9,
+        "flagged": 1,
+        "flag_rate": 0.1111
+      },
+      "hidden_text": {
+        "total": 20,
+        "flagged": 18,
+        "flag_rate": 0.9
+      },
+      "metadata_anomaly": {
+        "total": 0,
+        "flagged": 0,
+        "flag_rate": 0.0
+      },
+      "active_content": {
+        "total": 0,
+        "flagged": 0,
+        "flag_rate": 0.0
+      },
+      "signature_invalid": {
+        "total": 0,
+        "flagged": 0,
+        "flag_rate": 0.0
+      },
+      "post_signature_modification": {
+        "total": 0,
+        "flagged": 0,
+        "flag_rate": 0.0
+      }
+    },
+    "latency_stats": {
+      "mean_ms": 33.64,
+      "p50_ms": 11.45,
+      "p95_ms": 138.36,
+      "p99_ms": 490.42
+    },
+    "misses_by_type": {
+      "amount_figure_only": [
+        {
+          "doc_id": "synth_0041_v1",
+          "tamper_types": [
+            "amount_figure_only",
+            "amount_both"
+          ],
+          "tamper_details": [
+            {
+              "tamper_type": "amount_figure_only",
+              "page": null,
+              "clause_id": "11",
+              "original_value": "Rs. 37,00,000",
+              "tampered_value": "Rs. 11,00,000",
+              "subtype": "figure_words_mismatch",
+              "dangling_xrefs": [],
+              "extra": {}
+            },
+            {
+              "tamper_type": "amount_both",
+              "page": null,
+              "clause_id": "11",
+              "original_value": "Rs. 11,00,000 (Rupees Thirty-seven lakh Only)",
+              "tampered_value": "Rs. 35,00,000 (Rupees Thirty-five lakh Only)",
+              "subtype": "consistent_change",
+              "dangling_xrefs": [],
+              "extra": {}
+            }
+          ]
+        }
+      ],
+      "date_shift": [],
+      "party_swap": [
+        {
+          "doc_id": "cuad_ADAMSGOLFINC_03_21_2005-EX-10.17-ENDORSEMENT AGREEMENT_v1",
+          "tamper_types": [
+            "party_swap"
+          ],
+          "tamper_details": [
+            {
+              "tamper_type": "party_swap",
+              "page": null,
+              "clause_id": "11",
+              "original_value": "ADAMS GOLF",
+              "tampered_value": "ADAMS Group Corp.",
+              "subtype": "name_substitution",
+              "dangling_xrefs": [],
+              "extra": {}
+            }
+          ]
+        }
+      ],
+      "clause_delete": [
+        {
+          "doc_id": "synth_0010_v2",
+          "tamper_types": [
+            "clause_delete"
+          ],
+          "tamper_details": [
+            {
+              "tamper_type": "clause_delete",
+              "page": null,
+              "clause_id": "7",
+              "original_value": "Force Majeure",
+              "tampered_value": "<deleted>",
+              "subtype": "clause_removed",
+              "dangling_xrefs": [],
+              "extra": {}
+            }
+          ]
+        },
+        {
+          "doc_id": "synth_0011_v2",
+          "tamper_types": [
+            "clause_delete",
+            "clause_insert"
+          ],
+          "tamper_details": [
+            {
+              "tamper_type": "clause_delete",
+              "page": null,
+              "clause_id": "11",
+              "original_value": "Termination",
+              "tampered_value": "<deleted>",
+              "subtype": "clause_removed",
+              "dangling_xrefs": [],
+              "extra": {}
+            },
+            {
+              "tamper_type": "clause_insert",
+              "page": null,
+              "clause_id": "3.99",
+              "original_value": "<none>",
+              "tampered_value": "Penalty Clause",
+              "subtype": "risky_clause_inserted",
+              "dangling_xrefs": [],
+              "extra": {}
+            }
+          ]
+        },
+        {
+          "doc_id": "synth_0012_v0",
+          "tamper_types": [
+            "clause_delete"
+          ],
+          "tamper_details": [
+            {
+              "tamper_type": "clause_delete",
+              "page": null,
+              "clause_id": "3",
+              "original_value": "Entire Agreement",
+              "tampered_value": "<deleted>",
+              "subtype": "clause_removed",
+              "dangling_xrefs": [],
+              "extra": {}
+            }
+          ]
+        },
+        {
+          "doc_id": "synth_0015_v1",
+          "tamper_types": [
+            "clause_delete",
+            "clause_insert"
+          ],
+          "tamper_details": [
+            {
+              "tamper_type": "clause_delete",
+              "page": null,
+              "clause_id": "14",
+              "original_value": "Insurance",
+              "tampered_value": "<deleted>",
+              "subtype": "clause_removed",
+              "dangling_xrefs": [],
+              "extra": {}
+            },
+            {
+              "tamper_type": "clause_insert",
+              "page": null,
+              "clause_id": "3.99",
+              "original_value": "<none>",
+              "tampered_value": "Governing Law Overriding Clause",
+              "subtype": "risky_clause_inserted",
+              "dangling_xrefs": [],
+              "extra": {}
+            }
+          ]
+        },
+        {
+          "doc_id": "synth_0022_v1",
+          "tamper_types": [
+            "clause_delete"
+          ],
+          "tamper_details": [
+            {
+              "tamper_type": "clause_delete",
+              "page": null,
+              "clause_id": "13",
+              "original_value": "Representations and Warranties",
+              "tampered_value": "<deleted>",
+              "subtype": "clause_removed",
+              "dangling_xrefs": [],
+              "extra": {}
+            }
+          ]
+        }
+      ],
+      "xref_break": [
+        {
+          "doc_id": "synth_0063_v0",
+          "tamper_types": [
+            "xref_break"
+          ],
+          "tamper_details": [
+            {
+              "tamper_type": "xref_break",
+              "page": null,
+              "clause_id": "10",
+              "original_value": "Clause 9",
+              "tampered_value": "Clause 639",
+              "subtype": "ghost_reference",
+              "dangling_xrefs": [],
+              "extra": {}
+            }
+          ]
+        }
+      ]
+    },
+    "cuad_clean_fp_docs": [
+      {
+        "doc_id": "cuad_AtnInternationalInc_20191108_10-Q_EX-10.1_11878541_EX-10.1_Maintenance Agreement_clean",
+        "findings": [
+          {
+            "type": "dangling_reference",
+            "severity": "medium",
+            "clause_ref": "3.48",
+            "page": 39,
+            "evidence": "Target '222' referenced in: PNI restrictions contained in Section 222. Accordingly, Vendor\nshall: P",
+            "explanation": "Cross-reference to '222' in clause(s) 3.48 cannot be resolved: no clause with identifier '222' exists in the contract."
+          }
+        ]
+      },
+      {
+        "doc_id": "cuad_DovaPharmaceuticalsInc_20181108_10-Q_EX-10.2_11414857_EX-10.2_Promotion Agreement_clean",
+        "findings": [
+          {
+            "type": "dangling_reference",
+            "severity": "medium",
+            "clause_ref": "12.5",
+            "page": 26,
+            "evidence": "Target '2.3' referenced in: ion or termination, including\nSections 2.3, , 4.4.2, 5.7, 5.9, 6.3.6, 6.",
+            "explanation": "Cross-reference to '2.3' in clause(s) 12.5 cannot be resolved: no clause with identifier '2.3' exists in the contract."
+          }
+        ]
+      }
+    ]
+  },
+  "test": {
+    "split_name": "Held-out Test",
+    "total_documents": 44,
+    "recall_per_type": {
+      "amount_figure_only": {
+        "total": 3,
+        "flagged": 3,
+        "recall": 1.0,
+        "type_correct": 3,
+        "type_correctness_rate": 1.0,
+        "localized": 1,
+        "localization_rate": 0.3333
+      },
+      "date_shift": {
+        "total": 1,
+        "flagged": 1,
+        "recall": 1.0,
+        "type_correct": 1,
+        "type_correctness_rate": 1.0,
+        "localized": 1,
+        "localization_rate": 1.0
+      },
+      "party_swap": {
+        "total": 3,
+        "flagged": 2,
+        "recall": 0.6667,
+        "type_correct": 2,
+        "type_correctness_rate": 0.6667,
+        "localized": 2,
+        "localization_rate": 0.6667
+      },
+      "clause_delete": {
+        "total": 7,
+        "flagged": 0,
+        "recall": 0.0,
+        "type_correct": 0,
+        "type_correctness_rate": 0.0,
+        "localized": 0,
+        "localization_rate": 0.0
+      },
+      "xref_break": {
+        "total": 3,
+        "flagged": 3,
+        "recall": 1.0,
+        "type_correct": 3,
+        "type_correctness_rate": 1.0,
+        "localized": 3,
+        "localization_rate": 1.0
+      }
+    },
+    "clean_synthetic": {
+      "total": 9,
+      "false_positives": 0,
+      "fpr": 0.0
+    },
+    "clean_cuad": {
+      "total": 6,
+      "false_positives": 0,
+      "fpr": 0.0
+    },
+    "expected_undetectable": {
+      "amount_both": {
+        "total": 3,
+        "flagged": 0,
+        "flag_rate": 0.0
+      },
+      "clause_insert": {
+        "total": 4,
+        "flagged": 0,
+        "flag_rate": 0.0
+      },
+      "incremental_edit": {
+        "total": 2,
+        "flagged": 0,
+        "flag_rate": 0.0
+      },
+      "hidden_text": {
+        "total": 3,
+        "flagged": 3,
+        "flag_rate": 1.0
+      },
+      "metadata_anomaly": {
+        "total": 0,
+        "flagged": 0,
+        "flag_rate": 0.0
+      },
+      "active_content": {
+        "total": 0,
+        "flagged": 0,
+        "flag_rate": 0.0
+      },
+      "signature_invalid": {
+        "total": 0,
+        "flagged": 0,
+        "flag_rate": 0.0
+      },
+      "post_signature_modification": {
+        "total": 0,
+        "flagged": 0,
+        "flag_rate": 0.0
+      }
+    },
+    "latency_stats": {
+      "mean_ms": 75.75,
+      "p50_ms": 23.21,
+      "p95_ms": 286.01,
+      "p99_ms": 655.32
+    },
+    "misses_by_type": {
+      "amount_figure_only": [],
+      "date_shift": [],
+      "party_swap": [
+        {
+          "doc_id": "cuad_BONTONSTORESINC_04_20_2018-EX-99.3-AGENCY AGREEMENT_v1",
+          "tamper_types": [
+            "party_swap"
+          ],
+          "tamper_details": [
+            {
+              "tamper_type": "party_swap",
+              "page": null,
+              "clause_id": "14.2",
+              "original_value": "The Bon-Ton Stores, Inc.",
+              "tampered_value": "The Group Corp.",
+              "subtype": "name_substitution",
+              "dangling_xrefs": [],
+              "extra": {}
+            }
+          ]
+        }
+      ],
+      "clause_delete": [
+        {
+          "doc_id": "synth_0009_v1",
+          "tamper_types": [
+            "clause_delete"
+          ],
+          "tamper_details": [
+            {
+              "tamper_type": "clause_delete",
+              "page": null,
+              "clause_id": "4",
+              "original_value": "Insurance",
+              "tampered_value": "<deleted>",
+              "subtype": "clause_removed",
+              "dangling_xrefs": [],
+              "extra": {}
+            }
+          ]
+        },
+        {
+          "doc_id": "synth_0013_v0",
+          "tamper_types": [
+            "clause_delete"
+          ],
+          "tamper_details": [
+            {
+              "tamper_type": "clause_delete",
+              "page": null,
+              "clause_id": "3",
+              "original_value": "Term",
+              "tampered_value": "<deleted>",
+              "subtype": "clause_removed",
+              "dangling_xrefs": [],
+              "extra": {}
+            }
+          ]
+        },
+        {
+          "doc_id": "synth_0013_v1",
+          "tamper_types": [
+            "clause_delete"
+          ],
+          "tamper_details": [
+            {
+              "tamper_type": "clause_delete",
+              "page": null,
+              "clause_id": "8",
+              "original_value": "Amendments",
+              "tampered_value": "<deleted>",
+              "subtype": "clause_removed",
+              "dangling_xrefs": [],
+              "extra": {}
+            }
+          ]
+        },
+        {
+          "doc_id": "synth_0032_v0",
+          "tamper_types": [
+            "clause_delete"
+          ],
+          "tamper_details": [
+            {
+              "tamper_type": "clause_delete",
+              "page": null,
+              "clause_id": "5",
+              "original_value": "Termination",
+              "tampered_value": "<deleted>",
+              "subtype": "clause_removed",
+              "dangling_xrefs": [],
+              "extra": {}
+            }
+          ]
+        },
+        {
+          "doc_id": "synth_0053_v2",
+          "tamper_types": [
+            "clause_delete"
+          ],
+          "tamper_details": [
+            {
+              "tamper_type": "clause_delete",
+              "page": null,
+              "clause_id": "8",
+              "original_value": "Confidentiality",
+              "tampered_value": "<deleted>",
+              "subtype": "clause_removed",
+              "dangling_xrefs": [],
+              "extra": {}
+            }
+          ]
+        }
+      ],
+      "xref_break": []
+    },
+    "cuad_clean_fp_docs": []
+  }
+}
