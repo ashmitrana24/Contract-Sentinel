@@ -69,14 +69,36 @@ _SUBLEVEL_RE = re.compile(
 )
 
 # Keyword patterns: "Section 4", "Clause 4.2", "Article IV"
+# (Exhibits and Schedules are handled separately by _SCHEDULE_RE)
 _KEYWORD_RE = re.compile(
     r"""
-    ^(?:Section|Clause|Article|Part|Schedule|Annex|Exhibit|Appendix)\s+
+    ^(?:Section|Clause|Article|Part)\s+
     (?P<id>[IVXLCDM]+|\d+(?:\.\d+)*)
     (?=\s|$|[.:]?)
     """,
     re.VERBOSE | re.IGNORECASE,
 )
+
+# SEC filing headers: "EX-10.3", "Exhibit 10.16", "EXHIBIT 10.1", "EX-4"
+_SEC_FILING_RE = re.compile(
+    r"^(?:\d+\s+)?(?:EX-\d+(?:\.\d+)?|EXHIBIT\s+\d+(?:\.\d+)?)\b",
+    re.IGNORECASE,
+)
+
+# Schedule / Exhibit / Annex / Appendix headers:
+# "Schedule A", "Exhibit B", "Schedule 1", "Annex I", "Appendix A"
+_SCHEDULE_RE = re.compile(
+    r"""
+    ^(?P<type>Schedule|Exhibit|Annex|Appendix)\s+
+    (?P<id>[A-Z]|\d+|[IVXLCDM]+)
+    (?:\s*[-:—–.]\s*|\s+|$)
+    (?P<title>.*)
+    """,
+    re.VERBOSE | re.IGNORECASE,
+)
+
+# Table of Contents lines with dot leaders: "24. ACKNOWLEDGMENTS..............70"
+_TOC_LINE_RE = re.compile(r"\.{3,}\s*\d+\s*$")
 
 # Lettered sub-items: "(a)" "(i)" "(ii)" "(1)" at line start
 _LETTER_ITEM_RE = re.compile(r"^\([a-z]{1,4}\)\s", re.IGNORECASE)
@@ -174,14 +196,23 @@ def _is_date_like(num_str: str) -> bool:
     return False
 
 
-def _detect_heading(line: str) -> tuple[str, str] | None:
-    """Return (clause_id, remainder_heading) if line is a clause heading, else None.
+def _detect_heading(line: str) -> tuple[str, str, bool] | None:
+    """Return (clause_id, remainder_heading, is_schedule) if line is a clause heading, else None.
 
     Remainder heading is the text after the clause number on the same line
     (may be empty if heading is on the next line).
+    is_schedule indicates whether this heading introduces an exhibit, schedule, or appendix.
     """
     stripped = line.strip()
     if not stripped:
+        return None
+
+    # Skip SEC exhibit and filing headers like "EX-10.3", "Exhibit 10.16", "EX-4"
+    if _SEC_FILING_RE.match(stripped):
+        return None
+
+    # Skip Table of Contents entries with dot leaders
+    if _TOC_LINE_RE.search(stripped):
         return None
 
     # Skip lettered sub-items
@@ -192,6 +223,15 @@ def _detect_heading(line: str) -> tuple[str, str] | None:
     if _PAGE_NUMBER_RE.match(stripped):
         return None
 
+    # --- Schedule / Exhibit / Annex / Appendix headers ---
+    m_sch = _SCHEDULE_RE.match(stripped)
+    if m_sch:
+        stype = m_sch.group("type").title()
+        sid = m_sch.group("id").upper()
+        sch_id = f"{stype} {sid}"
+        title = m_sch.group("title").strip().lstrip("-:—–. ")
+        return sch_id, title, True
+
     # --- Numeric with trailing dot: "1." "1.1." "4.2." ---
     m = _NUMERIC_RE.match(stripped)
     if m:
@@ -199,7 +239,13 @@ def _detect_heading(line: str) -> tuple[str, str] | None:
         if _is_date_like(num_id):
             return None
         remainder = stripped[m.end():].strip()
-        return num_id, remainder
+        # If remainder is an SEC filing header like "Exhibit 10.17", ignore
+        if _SEC_FILING_RE.match(remainder):
+            return None
+        # If remainder is a multi-item Table of Contents line (e.g. "Interpretation 3 2. Commencement 4"), ignore
+        if re.search(r"\b\d+\s+[2-9]\.\s+[A-Z]", remainder):
+            return None
+        return num_id, remainder, False
 
     # --- Sub-level without trailing dot: "1.1" "4.2.3" ---
     m2 = _SUBLEVEL_RE.match(stripped)
@@ -212,15 +258,21 @@ def _detect_heading(line: str) -> tuple[str, str] | None:
         # (to avoid matching decimal numbers inside sentences)
         if remainder and not _CAP_RE.match(remainder):
             return None
-        return num_id, remainder
+        return num_id, remainder, False
 
     # --- Keyword: "Section 4", "Clause 1.2" ---
     m3 = _KEYWORD_RE.match(stripped)
     if m3:
         raw_id = m3.group("id")
         clause_id = _normalise_keyword_id(raw_id)
-        remainder = stripped[m3.end():].strip().lstrip(".:")
-        return clause_id, remainder
+        remainder = stripped[m3.end():].strip()
+        if remainder:
+            if remainder.startswith((",", ";", ")", "]")):
+                return None
+            clean_rem = remainder.lstrip("-:—–. ")
+            if clean_rem and not _CAP_RE.match(clean_rem):
+                return None
+        return clause_id, remainder.lstrip(".:-—– "), False
 
     return None
 
@@ -250,6 +302,48 @@ def _collect_repeated_lines(all_lines: list[_Line], n_pages: int, threshold: flo
 
     min_pages = max(2, int(threshold * n_pages))
     return {t for t, c in counts.items() if c >= min_pages}
+
+
+def _split_embedded_headings(text: str) -> list[str]:
+    """Split lines that have embedded Article or Section headings within body text.
+
+    Handles contracts where headings are not on their own line:
+    1. Sentences ending with period/parenthesis followed by an Article or Section heading:
+       "...end of term. ARTICLE V TERMINATION..." -> "...end of term.\\nARTICLE V TERMINATION..."
+    2. Article headings immediately followed by a nested section on the same line:
+       "ARTICLE VI REGISTRATION RIGHTS Section 6.1 Demand Registration" ->
+       "ARTICLE VI REGISTRATION RIGHTS\\nSection 6.1 Demand Registration"
+       "ARTICLE 3 - RELATIONSHIP OF PARTIES 3.1 The Company" ->
+       "ARTICLE 3 - RELATIONSHIP OF PARTIES\\n3.1 The Company"
+    3. Inline Section definitions:
+       "...shall survive. Section 8.12 Severability..." ->
+       "...shall survive.\\nSection 8.12 Severability..."
+    """
+    if not text.strip():
+        return [text]
+
+    # Break after period/paren/quote before ARTICLE or Section heading
+    t = re.sub(
+        r'([.;!?)"\u201d\u2019])\s+(?=(?:ARTICLE\s+[IVXLCDM\d]+|Section\s+\d+(?:\.\d+)*)\b)',
+        r"\1\n",
+        text,
+        flags=re.IGNORECASE,
+    )
+    # Break between ARTICLE ... and nested Section / dotted number
+    t = re.sub(
+        r"(\bARTICLE\s+[IVXLCDM\d]+[^\n.;]{0,60}?)\s+(?=(?:Section\s+\d+|\d+\.\d+\s+[A-Z]))",
+        r"\1\n",
+        t,
+        flags=re.IGNORECASE,
+    )
+    # Break before inline Section N.N
+    t = re.sub(
+        r'([.;!?)"\u201d\u2019])\s+(?=Section\s+\d+(?:\.\d+)*\b)',
+        r"\1\n",
+        t,
+        flags=re.IGNORECASE,
+    )
+    return [ln for ln in t.split("\n") if ln.strip()]
 
 
 # ---------------------------------------------------------------------------
@@ -282,8 +376,10 @@ def segment_clauses(pages: list[PageModel]) -> list[ClauseModel]:
     # Collect all lines with page number
     all_lines: list[_Line] = []
     for page in pages:
-        for line in page.text.split("\n"):
-            all_lines.append(_Line(page_no=page.page_no, text=line))
+        for raw_line in page.text.split("\n"):
+            sub_lines = _split_embedded_headings(raw_line)
+            for line in sub_lines:
+                all_lines.append(_Line(page_no=page.page_no, text=line))
 
     # Detect repeated headers/footers to strip
     repeated = _collect_repeated_lines(all_lines, n_pages)
@@ -302,7 +398,9 @@ def segment_clauses(pages: list[PageModel]) -> list[ClauseModel]:
     preamble_lines: list[str] = []
     in_preamble = True
     current: _ClauseDraft | None = None
-    pending_heading: tuple[str, str] | None = None  # (clause_id, partial_heading)
+    # pending_heading: (effective_id, partial_heading, parent_id, level)
+    pending_heading: tuple[str, str, str | None, int] | None = None
+    current_schedule: str | None = None
 
     for i, ln in enumerate(filtered_lines):
         text = ln.text
@@ -315,7 +413,7 @@ def segment_clauses(pages: list[PageModel]) -> list[ClauseModel]:
             # Not a heading line.
             if pending_heading is not None:
                 # We had a number-only line before; this line might be the heading
-                pid, _ = pending_heading
+                pid, _, pparent, plevel = pending_heading
                 # Accept as heading if starts with capital or is substantial
                 if stripped and (_CAP_RE.match(stripped) or len(stripped) > 3):
                     heading_text = stripped
@@ -328,8 +426,8 @@ def segment_clauses(pages: list[PageModel]) -> list[ClauseModel]:
                         heading=heading_text,
                         page_start=ln.page_no,
                         page_end=ln.page_no,
-                        level=_id_level(pid),
-                        parent_clause_id=_parent_id(pid),
+                        level=plevel,
+                        parent_clause_id=pparent,
                         kind="clause",
                     )
                     in_preamble = False
@@ -350,7 +448,22 @@ def segment_clauses(pages: list[PageModel]) -> list[ClauseModel]:
                 preamble_lines.append(text)
         else:
             # It IS a heading line.
-            clause_id, remainder = result
+            clause_id, remainder, is_schedule = result
+
+            seen_ids = {d.clause_id for d in drafts} | ({current.clause_id} if current else set())
+            if is_schedule:
+                current_schedule = clause_id
+                effective_id = clause_id
+                parent_id = None
+                level = 1
+            elif current_schedule is not None and clause_id in seen_ids:
+                effective_id = f"{current_schedule}.{clause_id}"
+                parent_id = current_schedule
+                level = _id_level(clause_id) + 1
+            else:
+                effective_id = clause_id
+                parent_id = _parent_id(clause_id)
+                level = _id_level(clause_id)
 
             if pending_heading is not None:
                 # Discard previous pending (was a false positive)
@@ -361,27 +474,27 @@ def segment_clauses(pages: list[PageModel]) -> list[ClauseModel]:
                     preamble_lines.append(prev_ln.text)
                 pending_heading = None
 
-            if remainder:
-                # Heading is on the same line: start clause immediately
+            if remainder or is_schedule:
+                # Heading is on the same line (or schedule starts): start clause immediately
                 if current is not None:
                     drafts.append(current)
                 current = _ClauseDraft(
-                    clause_id=clause_id,
+                    clause_id=effective_id,
                     heading=remainder,
                     page_start=ln.page_no,
                     page_end=ln.page_no,
-                    level=_id_level(clause_id),
-                    parent_clause_id=_parent_id(clause_id),
+                    level=level,
+                    parent_clause_id=parent_id,
                     kind="clause",
                 )
                 in_preamble = False
             else:
                 # Number-only line; defer until we see the heading on the next line
-                pending_heading = (clause_id, "")
+                pending_heading = (effective_id, "", parent_id, level)
 
     # Flush pending
     if pending_heading is not None:
-        pid, _ = pending_heading
+        pid, _, _, _ = pending_heading
         if current is not None:
             current.lines.append(f"{pid}.")
         elif in_preamble:

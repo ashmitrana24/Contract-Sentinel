@@ -164,3 +164,146 @@ No numbered sections appear here.
     assert clauses[0].kind == "unsegmented"
     assert clauses[0].clause_id == "U"
     assert "A simple letter" in clauses[0].text
+
+
+@pytest.mark.unit
+def test_clauses_ignores_sec_exhibit_and_filing_headers() -> None:
+    doc_text = """Exhibit 10.16
+EX-10.3
+1                                                                    Exhibit 10.17
+MASTER SERVICES AGREEMENT
+Between Alpha and Beta.
+
+1. Definitions
+All terms defined.
+
+2. Services
+Services specified here.
+"""
+    pages = [_make_page(doc_text)]
+    clauses = segment_clauses(pages)
+
+    clause_ids = [c.clause_id for c in clauses]
+    assert "10.16" not in clause_ids
+    assert "10.3" not in clause_ids
+    assert "10.17" not in clause_ids
+    # Clause 1 should be the Definitions clause, not the 1 Exhibit 10.17 line
+    c1 = next(c for c in clauses if c.clause_id == "1")
+    assert "Definitions" in c1.heading
+
+
+@pytest.mark.unit
+def test_clauses_ignores_toc_dot_leaders() -> None:
+    doc_text = """TABLE OF CONTENTS
+1. Definitions................................................1
+2. Term and Termination.......................................5
+
+1. Definitions
+Definitions body text here.
+
+2. Term and Termination
+Termination body text here.
+"""
+    pages = [_make_page(doc_text)]
+    clauses = segment_clauses(pages)
+
+    # Should only have Preamble, Clause 1, Clause 2 (not duplicate TOC entries)
+    clause_ids = [c.clause_id for c in clauses if c.clause_id != "0"]
+    assert clause_ids == ["1", "2"]
+
+
+@pytest.mark.unit
+def test_clauses_restarted_numbering_inside_schedules_scoped() -> None:
+    doc_text = """1. Definitions
+Agreement definitions.
+
+2. Obligations
+Obligations of the parties.
+
+Schedule A Statement of Work
+1. Deliverables
+Supplier deliverables under this schedule.
+
+2. Timelines
+Project timelines.
+"""
+    pages = [_make_page(doc_text)]
+    clauses = segment_clauses(pages)
+
+    clause_ids = [c.clause_id for c in clauses]
+    assert "1" in clause_ids
+    assert "2" in clause_ids
+    assert "Schedule A" in clause_ids
+    assert "Schedule A.1" in clause_ids
+    assert "Schedule A.2" in clause_ids
+
+    c_s1 = next(c for c in clauses if c.clause_id == "Schedule A.1")
+    assert c_s1.parent_clause_id == "Schedule A"
+    assert "Deliverables" in c_s1.heading
+
+
+def test_clauses_roman_article_with_nested_sections():
+    """ARTICLE V with Section 5.1 and 5.2 nested under it produces clauses for all."""
+    doc_text = """
+    AGREEMENT
+    ARTICLE V
+    TERMINATION
+    Section 5.1 Early Termination.
+    Either party may terminate early upon notice.
+    5.2 Notice.
+    Written notice must be provided within 30 days.
+    ARTICLE VI
+    GOVERNING LAW
+    Section 6.1 Jurisdiction.
+    Courts of Delaware have jurisdiction.
+    """
+    pages = [_make_page(doc_text)]
+    clauses = segment_clauses(pages)
+    clause_ids = [c.clause_id for c in clauses]
+
+    assert "5" in clause_ids
+    assert "5.1" in clause_ids
+    assert "5.2" in clause_ids
+    assert "6" in clause_ids
+    assert "6.1" in clause_ids
+
+    c_51 = next(c for c in clauses if c.clause_id == "5.1")
+    assert c_51.parent_clause_id == "5"
+
+
+def test_clauses_article_with_inline_sections():
+    """Embedded ARTICLE VI and Section 6.1 in line-wrapped commercial filings."""
+    doc_text = """
+    Preamble text.
+    ARTICLE VI REGISTRATION RIGHTS Section 6.1 Demand Registration.
+    (a) If the Company receives a written request.
+    Section 6.2 Piggyback Registration.
+    (a) If the Company proposes to register.
+    """
+    pages = [_make_page(doc_text)]
+    clauses = segment_clauses(pages)
+    clause_ids = [c.clause_id for c in clauses]
+
+    assert "6" in clause_ids
+    assert "6.1" in clause_ids
+    assert "6.2" in clause_ids
+
+
+def test_clauses_article_with_nested_dotted_number_same_line():
+    """ARTICLE 3 - RELATIONSHIP OF PARTIES 3.1 The Company..."""
+    doc_text = """
+    ARTICLE 3 - RELATIONSHIP OF PARTIES 3.1 The Company shall operate.
+    3.2 Management.
+    ARTICLE 4 - OFFICE LOCATION 4.1 The Company headquarters.
+    """
+    pages = [_make_page(doc_text)]
+    clauses = segment_clauses(pages)
+    clause_ids = [c.clause_id for c in clauses]
+
+    assert "3" in clause_ids
+    assert "3.1" in clause_ids
+    assert "3.2" in clause_ids
+    assert "4" in clause_ids
+    assert "4.1" in clause_ids
+
+

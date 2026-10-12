@@ -40,17 +40,26 @@ def test_matching_amount_pairs_produce_no_findings():
     assert stats["pairs_mismatched"] == 0
 
 
-def test_mismatching_amount_pairs_produce_high_finding():
+def test_mismatching_amount_pairs_produce_critical_when_ge_20_percent():
     doc = _make_doc("The service fee shall be Rs. 28,00,000 (Rupees Ten Lakh Only) payable on completion.")
     index = build_text_index(doc)
     findings, stats = detect_pairs(index, ConsistencySettings())
     assert len(findings) == 1
     f = findings[0]
     assert f.type == "figure_words_mismatch"
-    assert f.severity == Severity.HIGH
+    assert f.severity == Severity.CRITICAL
     assert f.clause_ref == "4.2"
     assert "28,00,000" in f.evidence
     assert "Ten Lakh" in f.evidence
+    assert stats["pairs_mismatched"] == 1
+
+
+def test_mismatching_amount_pairs_produce_high_when_under_20_percent():
+    doc = _make_doc("The service fee shall be Rs. 10,00,000 (Rupees Nine Lakh Only) payable on completion.")
+    index = build_text_index(doc)
+    findings, stats = detect_pairs(index, ConsistencySettings())
+    assert len(findings) == 1
+    assert findings[0].severity == Severity.HIGH
     assert stats["pairs_mismatched"] == 1
 
 
@@ -59,7 +68,7 @@ def test_mismatching_words_before_figures():
     index = build_text_index(doc)
     findings, stats = detect_pairs(index, ConsistencySettings())
     assert len(findings) == 1
-    assert findings[0].severity == Severity.HIGH
+    assert findings[0].severity == Severity.CRITICAL
     assert stats["pairs_mismatched"] == 1
 
 
@@ -68,7 +77,7 @@ def test_mismatching_percentage_pairs():
     index = build_text_index(doc)
     findings, stats = detect_pairs(index, ConsistencySettings())
     assert len(findings) == 1
-    assert findings[0].severity == Severity.HIGH
+    assert findings[0].severity == Severity.CRITICAL
     assert stats["pairs_mismatched"] == 1
 
 
@@ -79,6 +88,14 @@ def test_mismatching_quantity_pairs_produce_medium_finding():
     assert len(findings) == 1
     assert findings[0].severity == Severity.MEDIUM
     assert stats["pairs_mismatched"] == 1
+
+
+def test_ocr_glued_percent_artifact_not_mismatched():
+    doc = _make_doc("The Company shall pay HDI thirty percent (3016) of the Net Sales in excess of Eleven Thousand Dollars ($11,000).")
+    index = build_text_index(doc)
+    findings, stats = detect_pairs(index, ConsistencySettings())
+    assert len(findings) == 0
+    assert stats["pairs_verified"] == 2
 
 
 def test_matching_quantity_pairs():

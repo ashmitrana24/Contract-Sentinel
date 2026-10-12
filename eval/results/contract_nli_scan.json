@@ -1,0 +1,79 @@
+{
+  "total_analyzed": 123,
+  "flagged_count": 4,
+  "flag_rate": 3.25,
+  "finding_type_counts": {
+    "figure_words_mismatch": 2,
+    "dangling_reference": 2,
+    "duplicate_clause_number": 1
+  },
+  "flagged_docs": [
+    {
+      "doc_id": "ContractNLI_Test_014 (Please fill in your contact details, sign on the last page an fax this document )",
+      "index": 14,
+      "first_line": "Please fill in your contact details, sign on the last page an fax this document ",
+      "text_length": 8418,
+      "findings": [
+        {
+          "type": "figure_words_mismatch",
+          "severity": "critical",
+          "clause_ref": "12",
+          "evidence": "000 (ten thousand Euro) in snippet: 't of \u20ac10 000 (ten thousand Euro) for each such use o'",
+          "explanation": "The amount in figures (000 = 0) does not match the amount in words (ten thousand Euro = 10000) in clause 12."
+        }
+      ]
+    },
+    {
+      "doc_id": "ContractNLI_Test_054 (NON-DISCLOSURE AND NON-USE AGREEMENT (First Amendment, January 2008))",
+      "index": 54,
+      "first_line": "NON-DISCLOSURE AND NON-USE AGREEMENT (First Amendment, January 2008)",
+      "text_length": 10089,
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "3",
+          "evidence": "Target '31' referenced in: ety Data Sheets as defined in Article 31 of REACH, (ii) relevant expos",
+          "explanation": "Cross-reference to '31' in clause(s) 3 cannot be resolved: no clause with identifier '31' exists in the contract."
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "4",
+          "evidence": "Target '119' referenced in:  Committee in compliance with Article 119 of REACH on electronic public",
+          "explanation": "Cross-reference to '119' in clause(s) 4 cannot be resolved: no clause with identifier '119' exists in the contract."
+        }
+      ]
+    },
+    {
+      "doc_id": "ContractNLI_Test_055 (LAST MAN STANDS INTERNATIONAL NON-DISCLOSURE AGREEMENT)",
+      "index": 55,
+      "first_line": "LAST MAN STANDS INTERNATIONAL NON-DISCLOSURE AGREEMENT",
+      "text_length": 6143,
+      "findings": [
+        {
+          "type": "duplicate_clause_number",
+          "severity": "medium",
+          "clause_ref": "1",
+          "evidence": "Clause 1 appears 2 times: 'Last Man Stands, (the \"Disclosing Party\"); and' (page 1), 'In consideration of the disclosure of Proprietary Information by the Disclosing Party, the Receiving Party hereby agrees: (i) to hold the Proprietary Information in strict confidence and to take all reasonable prec",
+          "explanation": "Duplicate clause number: clause 1 is used multiple times in the document (2 occurrences)."
+        }
+      ]
+    },
+    {
+      "doc_id": "ContractNLI_Test_056 (MUTUAL NON-DISCLOSURE AGREEMENT)",
+      "index": 56,
+      "first_line": "MUTUAL NON-DISCLOSURE AGREEMENT",
+      "text_length": 5810,
+      "findings": [
+        {
+          "type": "figure_words_mismatch",
+          "severity": "medium",
+          "clause_ref": "4",
+          "evidence": "five (2) in snippet: 'l expire five (2) years from the date'",
+          "explanation": "The amount in words (five = 5) does not match the amount in figures (2 = 2) in clause 4."
+        }
+      ]
+    }
+  ]
+}

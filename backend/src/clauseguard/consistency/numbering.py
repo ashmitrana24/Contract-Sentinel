@@ -91,10 +91,22 @@ def detect_clause_numbering(
     # -----------------------------------------------------------------------
     # 1. Duplicate top-level clause numbers (MEDIUM)
     # -----------------------------------------------------------------------
+    # Suppress in documents that are amendments or restatements (legitimately restate original sections)
+    full_text = "\n".join(p.text for p in doc.pages) if doc.pages else ""
+    is_amendment_or_restated = bool(
+        re.search(
+            r"\b(?:amendment(?:\s+no\.?\s*\d+)?|amend(?:s|ed|ing)?\s+agreement|restated|restatement|addendum|supplement\s+to)\b",
+            full_text[:4000],
+            re.IGNORECASE,
+        )
+    )
+
     duplicate_nums = [n for n, cls in sorted(top_level_clauses.items()) if len(cls) >= 2]
     # If 2 or more distinct clause numbers repeat, this is a multi-part or multi-schedule
     # document (where each schedule, annex, or exhibit restarts numbering from 1), not accidental duplicates.
-    if len(duplicate_nums) < 2:
+    if is_amendment_or_restated:
+        stats["skipped_reason"] = "amendment_or_restated_document"
+    elif len(duplicate_nums) < 2:
         for num in duplicate_nums:
             clauses = top_level_clauses[num]
             stats["duplicates_detected"] += 1

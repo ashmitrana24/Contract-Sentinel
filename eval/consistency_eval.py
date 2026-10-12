@@ -142,27 +142,37 @@ def evaluate_split(
             type_correct_map[t_type] = type_correct
 
             gt_clause = str(detail.get("clause_id") or "").strip()
+            gt_page = detail.get("page")
             gt_dangling = [str(x).strip() for x in detail.get("dangling_xrefs", [])]
 
-            localized = False
+            clause_loc = False
+            page_loc = False
             for f in matching_findings:
                 f_clause = str(f.clause_ref or "").strip()
-                if gt_clause and f_clause == gt_clause:
-                    localized = True
-                    break
-                # For clause_delete / xref_break, also match if dangling target matches
+                if gt_clause and (f_clause == gt_clause or f_clause.endswith(f".{gt_clause}")):
+                    clause_loc = True
                 if gt_dangling and f_clause in gt_dangling:
-                    localized = True
-                    break
+                    clause_loc = True
                 if gt_clause and f.details and str(f.details.get("missing_target") or "").strip() == gt_clause:
-                    localized = True
-                    break
+                    clause_loc = True
+
+                if gt_page is not None and f.page == gt_page:
+                    page_loc = True
+                elif gt_page is None and f.page is not None and f.page > 0:
+                    page_loc = True
 
             # If no clause label was provided in ground truth, don't penalize localization
             if not gt_clause and not gt_dangling:
-                localized = type_correct
+                clause_loc = type_correct
+            if not matching_findings:
+                page_loc = False
 
-            localized_map[t_type] = localized
+            localized_map[t_type] = clause_loc
+            if "clause_localized_map" not in locals():
+                clause_localized_map: dict[str, bool] = {}
+                page_localized_map: dict[str, bool] = {}
+            clause_localized_map[t_type] = clause_loc
+            page_localized_map[t_type] = page_loc
 
         results.append({
             "doc_id": doc_id,
@@ -185,6 +195,8 @@ def evaluate_split(
             ],
             "type_correct_map": type_correct_map,
             "localized_map": localized_map,
+            "clause_localized_map": clause_localized_map if "clause_localized_map" in locals() else localized_map,
+            "page_localized_map": page_localized_map if "page_localized_map" in locals() else localized_map,
             "duration_ms": dur_ms,
         })
 
@@ -195,7 +207,8 @@ def evaluate_split(
         total = len(relevant_docs)
         flagged = sum(1 for r in relevant_docs if r["is_flagged"])
         type_correct = sum(1 for r in relevant_docs if r["type_correct_map"].get(t_type, False))
-        localized = sum(1 for r in relevant_docs if r["localized_map"].get(t_type, False))
+        clause_loc = sum(1 for r in relevant_docs if r.get("clause_localized_map", {}).get(t_type, False))
+        page_loc = sum(1 for r in relevant_docs if r.get("page_localized_map", {}).get(t_type, False))
 
         recall_per_type[t_type] = {
             "total": total,
@@ -203,8 +216,10 @@ def evaluate_split(
             "recall": round(flagged / total, 4) if total > 0 else 1.0,
             "type_correct": type_correct,
             "type_correctness_rate": round(type_correct / total, 4) if total > 0 else 1.0,
-            "localized": localized,
-            "localization_rate": round(localized / total, 4) if total > 0 else 1.0,
+            "localized": clause_loc,
+            "localization_rate": round(clause_loc / total, 4) if total > 0 else 1.0,
+            "page_localized": page_loc,
+            "page_localization_rate": round(page_loc / total, 4) if total > 0 else 1.0,
         }
 
     # 2. False positive rate on clean documents (separate synthetic vs CUAD)
@@ -301,13 +316,14 @@ def _print_evaluation_table(eval_result: dict[str, Any]) -> None:
           f"p95={eval_result['latency_stats']['p95_ms']}ms, "
           f"mean={eval_result['latency_stats']['mean_ms']}ms")
     print("\n--- CONTENT TAMPER DETECTION ---")
-    print(f"{'Tamper Type':<22} {'Total':<6} {'Flagged':<8} {'Recall':<10} {'Type Corr.':<12} {'Localized':<10}")
-    print("-" * 75)
+    print(f"{'Tamper Type':<20} {'Total':<6} {'Flagged':<8} {'Recall':<9} {'Type Corr.':<11} {'Clause Loc.':<12} {'Page Loc.':<10}")
+    print("-" * 80)
     for t_type, stats in eval_result["recall_per_type"].items():
         rec_str = f"{stats['recall']*100:.1f}%"
         type_str = f"{stats['type_correctness_rate']*100:.1f}%"
         loc_str = f"{stats['localization_rate']*100:.1f}%"
-        print(f"{t_type:<22} {stats['total']:<6} {stats['flagged']:<8} {rec_str:<10} {type_str:<12} {loc_str:<10}")
+        page_str = f"{stats.get('page_localization_rate', stats['localization_rate'])*100:.1f}%"
+        print(f"{t_type:<20} {stats['total']:<6} {stats['flagged']:<8} {rec_str:<9} {type_str:<11} {loc_str:<12} {page_str:<10}")
 
     print("\n--- CLEAN DOCUMENT FALSE POSITIVES ---")
     cs = eval_result["clean_synthetic"]

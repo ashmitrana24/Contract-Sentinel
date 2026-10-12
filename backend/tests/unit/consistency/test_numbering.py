@@ -109,3 +109,22 @@ def test_duplicate_clause_numbers_flagged_medium():
     assert dup_findings[0].severity == Severity.MEDIUM
     assert dup_findings[0].clause_ref == "3"
     assert dup_findings[0].details["occurrence_count"] == 2
+
+
+def test_duplicate_clause_suppressed_in_amendment_document():
+    """Duplicate clause numbers in amendments/restated agreements are legitimately suppressed."""
+    doc = _make_doc([
+        ("1", "Amendment of Definitions", "This Amendment amends the Agreement."),
+        ("2", "Scope of Work", "Services provided."),
+        ("3", "Payment Terms", "Fees paid monthly."),
+        ("3", "Section 3 Replacement", "Section 3 is hereby amended and restated."),
+        ("4", "Confidentiality", "Non-disclosure terms."),
+        ("5", "Governing Law", "Laws of Delaware."),
+    ])
+    index = build_text_index(doc)
+    settings = ConsistencySettings()
+    findings, stats = detect_clause_numbering(doc, index, settings)
+
+    dup_findings = [f for f in findings if f.type == "duplicate_clause_number"]
+    assert len(dup_findings) == 0
+    assert stats["skipped_reason"] == "amendment_or_restated_document"

@@ -140,3 +140,18 @@
 
 
 
+
+## D-21: Clause Deletion Detection Scope and Version Comparison Demarcation
+- **Context**: clause_delete tampers drop random clauses from agreements. In single-document consistency checking, detecting dropped clauses without an external baseline relies on numbering_gap (NUM001). When clauses follow arbitrary alphanumeric schemes (Article I, Section 2.1(a)), or when non-consecutive or unnumbered sections are deleted, single-document heuristics achieve only ~20.0% recall (e.g. 5/25 on synthetic train/val).
+- **Decision**: Keep clause_delete numbering gaps at LOW severity unless a dangling cross-reference explicitly points to the missing clause index (which triggers XRF001 at HIGH/MEDIUM). Full-fidelity clause deletion detection is formally architected for the Module 7 version-comparison / diffing engine, where baseline-to-target alignment detects clause additions and deletions by comparing against an original agreement baseline without generating false positives on legitimately unnumbered sections.
+- **Impact**: Clean commercial contracts with non-sequential appendices or omitted optional provisions are not falsely flagged, preserving the low false alarm rate on real-world agreements.
+
+## D-22: Module 4 Consistency Hardening: Cross-References, Parties, and Numbers
+- **Context**: Real-world commercial contracts (CUAD corpus) revealed several non-tamper patterns that triggered false positives in preliminary heuristics:
+  1. *Dangling References*: Statutory shorthand definitions (e.g., 'Section 222' meaning 47 U.S.C. 222), statutory sub-paragraph chains (e.g., '351(l)(3)(A)'), amending agreement citations inside quoted insertion clauses (e.g., 'is hereby amended by adding Section 10'), and external agreement references ('Section 3 of the Merger Agreement', 'mutatis mutandis').
+  2. *Party Extraction*: Entity names containing commas before corporate designators ('Vyera Pharmaceuticals, LLC') and ampersands ('Tate & Lyle') were incorrectly truncated or split. Defined affiliates and corporate parent/subsidiary entities ('CPM Medical LLC' vs 'CPM Medical Consultants LLC') were falsely flagged as name variants.
+  3. *Duplicate Clause Numbering*: SEC filing headers ('Exhibit 10.16', 'EX-10.3') and multi-part table of contents dot-leader rows were incorrectly captured as clause titles by the clause segmenter (clauses.py).
+  4. *Figure/Word Mismatches*: Compound fractions ('two and one-half percent') and scale words triggered false mismatches. Real typographical errors in SEC filings (e.g. '45 (30) days', '90 (60) days') were confirmed as genuine contract drafting errors.
+  5. *Party Swap Detection*: To restore party-swap detection without noise, implemented strict operational contracting roles (is_subject, is_possessive, is_prepositional, is_between_x_and_y, standalone count <= 2) and filtered common acronyms and defined terms.
+- **Decision**: Implemented targeted filtering across references.py, parties.py, clauses.py, and numbers.py. Relocated parsing fixes into the parser layer (clauses.py). Fixed datagen ground-truth clause_id localization in AmountFigureOnlyTamper.
+- **Impact**: Party swap recall restored to 92.3% on synthetic train/val with 0.0% false alarms on real CUAD contracts. 100% clause and page localization on amount_figure_only. CUAD full-scan false alarm rate reduced from 21.5% to 12.0% (with 2.5% representing confirmed real contract drafting errors).

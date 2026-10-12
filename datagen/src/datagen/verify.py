@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import hashlib
 import logging
+import re
 from pathlib import Path
 
 import pymupdf as fitz  # PyMuPDF
@@ -69,43 +70,52 @@ def _check_label(label: DocLabel, pdf_path: Path) -> list[str]:
         return failures
 
     # 4. Tampered document checks (per tamper type)
-    for detail in label.tamper_details:
+    for detail_idx, detail in enumerate(label.tamper_details):
         tt = detail.tamper_type
 
+        # Check if overwritten by a later tamper in combined tampers
+        is_overwritten = any(
+            later.original_value and detail.tampered_value and detail.tampered_value in later.original_value
+            for later in label.tamper_details[detail_idx + 1 :]
+        )
+
         if tt == TamperType.AMOUNT_FIGURE_ONLY:
-            if detail.tampered_value and detail.tampered_value not in text:
+            if not is_overwritten and detail.tampered_value and detail.tampered_value not in text:
                 failures.append(
                     f"amount_figure_only: tampered figure '{detail.tampered_value}' not in text."
                 )
-            # Note: we do NOT check original_value absence because the original
-            # figure may appear in other clauses that were not tampered.
 
         elif tt == TamperType.AMOUNT_BOTH:
-            if detail.tampered_value:
-                # tampered_value is "figure (words)" string
-                # check the figure part at minimum
+            if not is_overwritten and detail.tampered_value:
                 figure_part = detail.tampered_value.split(" (")[0]
                 if figure_part not in text:
                     failures.append(f"amount_both: tampered figure '{figure_part}' not in text.")
 
         elif tt == TamperType.DATE_SHIFT:
-            if detail.tampered_value and detail.tampered_value not in text:
+            if not is_overwritten and detail.tampered_value and detail.tampered_value not in text:
                 failures.append(f"date_shift: tampered date '{detail.tampered_value}' not in text.")
 
         elif tt == TamperType.PARTY_SWAP:
-            if detail.tampered_value and detail.tampered_value not in text:
+            if not is_overwritten and detail.tampered_value and detail.tampered_value not in text:
                 failures.append(
                     f"party_swap: tampered party '{detail.tampered_value}' not in text."
                 )
 
         elif tt == TamperType.CLAUSE_DELETE:
-            if detail.original_value and detail.original_value in text:
-                failures.append(
-                    f"clause_delete: deleted heading '{detail.original_value}' still in text."
+            if detail.original_value:
+                cid_esc = re.escape(detail.clause_id) if detail.clause_id else r"\d+"
+                heading_esc = re.escape(detail.original_value)
+                pat = re.compile(
+                    rf"(?:^|\n)\s*(?:(?:Section|Clause|Article|ARTICLE|SECTION)\s+)?{cid_esc}[\.\:\s\-\u2013]+\s*{heading_esc}\b",
+                    re.IGNORECASE,
                 )
+                if pat.search(text):
+                    failures.append(
+                        f"clause_delete: deleted heading '{detail.original_value}' still in text."
+                    )
 
         elif tt == TamperType.XREF_BREAK:
-            if detail.tampered_value and detail.tampered_value not in text:
+            if not is_overwritten and detail.tampered_value and detail.tampered_value not in text:
                 failures.append(
                     f"xref_break: ghost reference '{detail.tampered_value}' not in text."
                 )
@@ -130,6 +140,87 @@ def _check_label(label: DocLabel, pdf_path: Path) -> list[str]:
                 failures.append(
                     f"hidden_text: injected sentence start not found in text: '{detail.tampered_value[:20]}'"
                 )
+
+        # 4b. Verifier check for detail.page and detail.clause_id accuracy
+        val_for_loc: str | None = None
+        if tt == TamperType.AMOUNT_BOTH and detail.tampered_value:
+            val_for_loc = detail.tampered_value.split(" (")[0]
+        elif tt == TamperType.HIDDEN_TEXT:
+            val_for_loc = detail.tampered_value[:20] if detail.tampered_value else HIDDEN_TEXT_MARKER
+        elif detail.tampered_value:
+            val_for_loc = detail.tampered_value
+
+        # Check page match if recorded
+        if detail.page is not None:
+            doc_obj = fitz.open(str(pdf_path))
+            try:
+                num_pages = len(doc_obj)
+                if detail.page < 0 or detail.page >= num_pages:
+                    failures.append(
+                        f"{tt}: recorded page {detail.page} out of bounds (doc has {num_pages} pages)."
+                    )
+                elif val_for_loc:
+                    val_norm = " ".join(val_for_loc.split())
+                    target_page_text = " ".join(doc_obj[detail.page].get_text().split())
+                    if val_norm not in target_page_text:
+                        actual_pages = [
+                            p_idx
+                            for p_idx, p in enumerate(doc_obj)
+                            if val_norm in " ".join(p.get_text().split())
+                        ]
+                        failures.append(
+                            f"{tt}: tampered value '{val_for_loc}' not found on recorded page {detail.page} "
+                            f"(actually appears on page(s): {actual_pages})."
+                        )
+            finally:
+                doc_obj.close()
+
+        # Check clause_id match if recorded
+        if detail.clause_id is not None and val_for_loc and tt != TamperType.CLAUSE_DELETE:
+            val_pat = re.compile(r"\s+".join(re.escape(w) for w in val_for_loc.split()))
+            matches = list(val_pat.finditer(text))
+            if matches:
+                import re as re_mod
+                heading_pat = re_mod.compile(
+                    r"(?:^|\n)\s*(?:(?:Section|Clause|Article|ARTICLE|SECTION)\s+)?"
+                    r"([0-9]+(?:\.[0-9]+)*|[IVXLCDM]+)[\.\:\s\-\u2013]\s*([A-Za-z].*?)(?=\n|$)",
+                    re_mod.IGNORECASE,
+                )
+                headings = list(heading_pat.finditer(text))
+                target_cid = detail.clause_id.strip()
+                found_in_clause = False
+                found_cids: list[str] = []
+
+                for m in matches:
+                    pos = m.start()
+                    active_h = None
+                    for h in headings:
+                        if h.start() <= pos:
+                            active_h = h
+                        else:
+                            break
+                    if active_h:
+                        h_cid = active_h.group(1).rstrip(".")
+                        found_cids.append(h_cid)
+                        if (
+                            h_cid == target_cid
+                            or h_cid.startswith(f"{target_cid}.")
+                            or target_cid.startswith(f"{h_cid}.")
+                            or ("." in target_cid and "." in h_cid and target_cid.split(".")[0] == h_cid.split(".")[0])
+                        ):
+                            found_in_clause = True
+                            break
+                    else:
+                        found_cids.append("preamble")
+                        if target_cid.lower() in {"preamble", "title", "0"}:
+                            found_in_clause = True
+                            break
+
+                if not found_in_clause:
+                    failures.append(
+                        f"{tt}: tampered value '{val_for_loc}' appears under clause(s) {found_cids}, "
+                        f"not recorded clause_id '{detail.clause_id}'."
+                    )
 
     return failures
 

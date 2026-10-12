@@ -104,6 +104,8 @@ _CURRENCIES: dict[str, str] = {
 
 _IGNORABLE_TOKENS = {
     "and",
+    "a",
+    "an",
     "only",
     "cents",
     "cents.",
@@ -154,16 +156,37 @@ def _clean_word_tokens(raw: str) -> tuple[list[str], str | None, bool]:
     text = text.replace("-", " ")
     text = re.sub(r"[^\w\s]", " ", text)
 
+    # Normalize verbal fractions into decimal representations
+    text = re.sub(r"\band\s+(?:a\s+|one\s+)?half\b", " point five ", text)
+    text = re.sub(r"\band\s+(?:a\s+|one\s+)?quarter\b", " point two five ", text)
+    text = re.sub(r"\band\s+three\s+quarters?\b", " point seven five ", text)
+    text = re.sub(r"\b(?:a\s+|one\s+)?half\b", " zero point five ", text)
+    text = re.sub(r"\b(?:a\s+|one\s+)?quarter\b", " zero point two five ", text)
+    text = re.sub(r"\bthree\s+quarters?\b", " zero point seven five ", text)
+
     tokens = [t for t in text.split() if t]
     filtered_tokens = [t for t in tokens if t not in _IGNORABLE_TOKENS]
     return filtered_tokens, currency, is_percent
+
+
+_FRACTIONS: dict[str, Decimal] = {
+    "half": Decimal("0.5"),
+    "halves": Decimal("0.5"),
+    "quarter": Decimal("0.25"),
+    "quarters": Decimal("0.25"),
+    "fourth": Decimal("0.25"),
+    "fourths": Decimal("0.25"),
+    "third": Decimal(1) / Decimal(3),
+    "thirds": Decimal(1) / Decimal(3),
+}
 
 
 def words_to_decimal(words_str: str) -> ParsedNumber | None:
     """Parse an English words representation of a number into a ParsedNumber.
 
     Handles units, teens, tens, hundreds, thousands, lakhs, crores, millions,
-    billions, optional 'and', and trailing 'only'. Returns None on invalid words.
+    billions, optional 'and', trailing 'only', fractions ('half', 'quarter'),
+    and decimals ('point'). Returns None on invalid words.
     """
     if not words_str or not isinstance(words_str, str):
         return None
@@ -172,11 +195,21 @@ def words_to_decimal(words_str: str) -> ParsedNumber | None:
     if not tokens:
         return None
 
-    # Handle decimal point words: e.g. "ten point five"
+    # Handle decimal point words: e.g. "ten point five", "four point five million"
     if "point" in tokens:
         point_idx = tokens.index("point")
         int_tokens = tokens[:point_idx]
         frac_tokens = tokens[point_idx + 1 :]
+
+        # Extract trailing scale word if present (e.g. "point five million")
+        scale_multiplier = Decimal(1)
+        clean_frac_tokens = []
+        for ft in frac_tokens:
+            if ft in _SCALES:
+                scale_multiplier = Decimal(_SCALES[ft])
+            else:
+                clean_frac_tokens.append(ft)
+        frac_tokens = clean_frac_tokens
 
         int_part = Decimal(0)
         if int_tokens:
@@ -196,7 +229,7 @@ def words_to_decimal(words_str: str) -> ParsedNumber | None:
         if not frac_str:
             return None
         try:
-            val = int_part + Decimal(f"0.{frac_str}")
+            val = (int_part + Decimal(f"0.{frac_str}")) * scale_multiplier
             return ParsedNumber(
                 value=val,
                 raw=words_str.strip(),
@@ -207,30 +240,43 @@ def words_to_decimal(words_str: str) -> ParsedNumber | None:
         except InvalidOperation:
             return None
 
-    # Validate all tokens are numbers or scale words
+    # Validate all tokens are numbers, scale words, or fraction words
     for t in tokens:
-        if t not in _UNITS and t not in _TENS and t != "hundred" and t not in _SCALES:
+        if t not in _UNITS and t not in _TENS and t != "hundred" and t not in _SCALES and t not in _FRACTIONS:
             return None
 
     # Evaluate hierarchy: scale words multiply current group
     total = Decimal(0)
     current_group = Decimal(0)
+    prev_unit: Decimal | None = None
 
     for t in tokens:
         if t in _UNITS:
-            current_group += Decimal(_UNITS[t])
+            u_val = Decimal(_UNITS[t])
+            current_group += u_val
+            prev_unit = u_val
         elif t in _TENS:
             current_group += Decimal(_TENS[t])
+            prev_unit = None
         elif t == "hundred":
             if current_group == Decimal(0):
                 current_group = Decimal(1)
             current_group *= Decimal(100)
+            prev_unit = None
+        elif t in _FRACTIONS:
+            frac = _FRACTIONS[t]
+            if prev_unit is not None:
+                current_group = current_group - prev_unit + (prev_unit * frac)
+            else:
+                current_group += frac
+            prev_unit = None
         elif t in _SCALES:
             scale_val = Decimal(_SCALES[t])
             if current_group == Decimal(0):
                 current_group = Decimal(1)
             total += current_group * scale_val
             current_group = Decimal(0)
+            prev_unit = None
 
     total += current_group
 

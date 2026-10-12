@@ -1,0 +1,401 @@
+{
+  "total_analyzed": 200,
+  "flagged_count": 23,
+  "flag_rate": 0.115,
+  "errors": 0,
+  "target_met": false,
+  "finding_type_counts": {
+    "dangling_reference": 29,
+    "party_name_variant": 9,
+    "duplicate_clause_number": 2,
+    "figure_words_mismatch": 4,
+    "term_length_conflict": 1
+  },
+  "flagged_docs": [
+    {
+      "file": "ABILITYINC_06_15_2020-EX-4.25-SERVICES AGREEMENT.txt",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "2.4",
+          "evidence": "Target '6.6' referenced in: ten notice in accordance with Section 6.6. 3.5 Effect of Termination. U"
+        }
+      ]
+    },
+    {
+      "file": "ASPIRITYHOLDINGSLLC_05_07_2012-EX-10.6-OUTSOURCING AGREEMENT.txt",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "0",
+          "evidence": "Target '1.01' referenced in: I DEFINITIONS    1            Section 1.01 Defined Terms    1 (and 1 other occurrence(s))"
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "1.02",
+          "evidence": "Target '6.01' referenced in: I CONDITIONS    25            Section 6.01 Conditions of the Contractor' (and 1 other occurrence(s))"
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "1.02",
+          "evidence": "Target '6.02' referenced in: tractor's Obligations    25   Section 6.02 Conditions of the Company's O"
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "7.01",
+          "evidence": "Target '8.01' referenced in:  TERMINATION    36            Section 8.01 Effective Date of this Agreem (and 1 other occurrence(s))"
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "7.01",
+          "evidence": "Target '8.04' referenced in: Notice of Termination    37   Section 8.04 Termination After Initial Clo"
+        }
+      ]
+    },
+    {
+      "file": "AtnInternationalInc_20191108_10-Q_EX-10.1_11878541_EX-10.1_Maintenance Agreement.txt",
+      "findings": [
+        {
+          "type": "party_name_variant",
+          "severity": "medium",
+          "clause_ref": "1.1",
+          "evidence": "Found 'AT&T Corp' (expected party 'AT&T Mobility LLC') in: r Services Agreement between Vendor and AT&T Corp. pursuant to which Vendor is responsibl"
+        },
+        {
+          "type": "party_name_variant",
+          "severity": "medium",
+          "clause_ref": "Exhibit C.5.1",
+          "evidence": "Found 'AT&T Mobility LLC By AT&T Services, Inc' (expected party 'AT&T Mobility LLC') in: ast Party signs.\n\nCommnet Wireless, LLC AT&T Mobility LLC By AT&T Services, Inc., its authorized representative"
+        }
+      ]
+    },
+    {
+      "file": "DigitalCinemaDestinationsCorp_20111220_S-1_EX-10.10_7346719_EX-10.10_Affiliate Agreement.txt",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "0",
+          "evidence": "Target '10.1' referenced in: the meaning assigned to it in Section 10.1.     \"Derived Works\" has the  (and 2 other occurrence(s))"
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "0",
+          "evidence": "Target '3.1' referenced in: the meaning assigned to it in Section 3.1.     \"Equipment\" means (a) th (and 2 other occurrence(s))"
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "0",
+          "evidence": "Target '6.1' referenced in: the meaning assigned to it in Section 6.1.     \"Flight\" has the meaning (and 3 other occurrence(s))"
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "0",
+          "evidence": "Target '8.1' referenced in: the meaning assigned to it in Section 8.1.     \"Inventory\" means any ad (and 3 other occurrence(s))"
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "0",
+          "evidence": "Target '12.1' referenced in: the meaning assigned to it in Section 12.1.     \"NCM Quality Standards\"  (and 1 other occurrence(s))"
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "0",
+          "evidence": "Target '5.1' referenced in: the meaning assigned to it in Section 5.1.     \"Pre-Feature Program\" me (and 2 other occurrence(s))"
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "3.5",
+          "evidence": "Target '13.1' referenced in: subject to the provisions of  Section 13.1 (Confidential Treatment). Net (and 2 other occurrence(s))"
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "3.12",
+          "evidence": "Target '4.1' referenced in: E AND SUPPORT; MAKE GOODS     Section 4.1 Maintenance Obligation.     ("
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "9",
+          "evidence": "Target '11.1' referenced in: AL RIGHTS AND OBLIGATIONS     Section 11.1 Assistance. Each Party, upon "
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "13.2",
+          "evidence": "Target '14.1' referenced in: RTICLE XIV  MISCELLANEOUS     Section 14.1 Notices. All notices, consent"
+        }
+      ]
+    },
+    {
+      "file": "EcoScienceSolutionsInc_20171117_8-K_EX-10.1_10956472_EX-10.1_Endorsement Agreement.txt",
+      "findings": [
+        {
+          "type": "duplicate_clause_number",
+          "severity": "medium",
+          "clause_ref": "10",
+          "evidence": "Clause 10 appears 2 times: 'Termination for Cause' (page 3), 'Notices. All notices provided for herein shall be given in writing by hand delivery, courier service, or by certified mail return receipt "
+        }
+      ]
+    },
+    {
+      "file": "EuromediaHoldingsCorp_20070215_10SB12G_EX-10.B(01)_525118_EX-10.B(01)_Content License Agreement.txt",
+      "findings": [
+        {
+          "type": "party_name_variant",
+          "severity": "medium",
+          "clause_ref": "25",
+          "evidence": "Found 'Rogers Communications Inc' (expected party 'Rogers Cable Communications Inc') in: FAX: (416) 935-4600   with a copy to:   Rogers Communications Inc. 333 Bloor Street East Toronto, Ontario"
+        }
+      ]
+    },
+    {
+      "file": "FuseMedicalInc_20190321_10-K_EX-10.43_11575454_EX-10.43_Distributor Agreement.txt",
+      "findings": [
+        {
+          "type": "figure_words_mismatch",
+          "severity": "medium",
+          "clause_ref": "5.3",
+          "evidence": "thirty (45) in snippet: 's within thirty (45) days of the date of'"
+        },
+        {
+          "type": "party_name_variant",
+          "severity": "medium",
+          "clause_ref": "Schedule 4",
+          "evidence": "Found 'CPM Medical LLC' (expected party 'CPM Medical Consultants LLC') in: rector\n\nName (please print)\n\nSIGNED by\n\nCPM Medical LLC\n\n) ) ) ) )\n\nDirector/Secretary\n\nName (p"
+        }
+      ]
+    },
+    {
+      "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.txt",
+      "findings": [
+        {
+          "type": "party_name_variant",
+          "severity": "medium",
+          "clause_ref": "4",
+          "evidence": "Found 'PSS, Inc' (expected party 'PSS, PSS Merger Corp') in: ereto    in any way, until such time as PSS, Inc. (\"PSS\") has published the financial   "
+        }
+      ]
+    },
+    {
+      "file": "IntegrityFunds_20200121_485BPOS_EX-99.E UNDR CONTR_11948727_EX-99.E UNDR CONTR_Service Agreement.txt",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "0",
+          "evidence": "Target '1.1' referenced in: ON 1. SERVICES AS UNDERWRITER Section 1.1 Integrity will act as princip"
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "1.7",
+          "evidence": "Target '2.1' referenced in: SECTION 2. DUTIES OF THE FUND Section 2.1 The Fund agrees at its own ex"
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "1.7",
+          "evidence": "Target '3.1' referenced in: EPRESENTATIONS AND WARRANTIES Section 3.1 The Fund represents to Integr"
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "4.3",
+          "evidence": "Target '5.1' referenced in: EFFECTIVENESS OF REGISTRATION Section 5.1 None of the Shares shall be o"
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "4.3",
+          "evidence": "Target '6.1' referenced in: ECTION 6. NOTICE TO INTEGRITY Section 6.1 The Fund agrees to advise Int"
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "4.3",
+          "evidence": "Target '7.1' referenced in:  SECTION 7. TERM OF AGREEMENT Section 7.1 This Agreement shall continue"
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "4.3",
+          "evidence": "Target '8.1' referenced in: ct). SECTION 8. MISCELLANEOUS Section 8.1 The Fund recognizes that gove"
+        }
+      ]
+    },
+    {
+      "file": "INTERNATIONALFASTFOODCORP_04_04_1997-EX-99-FRANCHISE AGREEMENT.txt",
+      "findings": [
+        {
+          "type": "figure_words_mismatch",
+          "severity": "medium",
+          "clause_ref": "10.1",
+          "evidence": "fifty-five (45) in snippet: 'within fifty-five (45) days after the end'"
+        }
+      ]
+    },
+    {
+      "file": "LohaCompanyltd_20191209_F-1_EX-10.16_11917878_EX-10.16_Supply Agreement.txt",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "9",
+          "evidence": "Target '12.1' referenced in: t the documents stipulated in Clause 12.1. The remaining 20% of the sys"
+        }
+      ]
+    },
+    {
+      "file": "LUCIDINC_04_15_2011-EX-10.9-DISTRIBUTOR AGREEMENT.txt",
+      "findings": [
+        {
+          "type": "figure_words_mismatch",
+          "severity": "medium",
+          "clause_ref": "6",
+          "evidence": "sixty (90) in snippet: 'value by sixty ( 90 )  day irrevocable le'"
+        }
+      ]
+    },
+    {
+      "file": "MetLife, Inc. - Remarketing Agreement.txt",
+      "findings": [
+        {
+          "type": "party_name_variant",
+          "severity": "medium",
+          "clause_ref": "5",
+          "evidence": "Found 'MetLife Group, Inc' (expected party 'MetLife, Inc') in: di, Chief Counsel -General Corporate of MetLife Group, Inc., an affiliate of the Company, shall ha"
+        }
+      ]
+    },
+    {
+      "file": "MSCIINC_02_28_2008-EX-10.10-.txt",
+      "findings": [
+        {
+          "type": "party_name_variant",
+          "severity": "medium",
+          "clause_ref": "6.3",
+          "evidence": "Found 'MSCl Inc' (expected party 'MSCI Inc') in: aw Facsimile: (212) 507-3334\n\nTo MSCI:\n\nMSCl Inc. 88 Pine Street New York, New York 1000"
+        }
+      ]
+    },
+    {
+      "file": "NEONSYSTEMSINC_03_01_1999-EX-10.5-DISTRIBUTOR AGREEMENT_Amendment.txt",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "6",
+          "evidence": "Target '13.1' referenced in: lowing sentence to the end of Section 13.1:\nNotwithstanding the foregoin"
+        }
+      ]
+    },
+    {
+      "file": "PareteumCorp_20081001_8-K_EX-99.1_2654808_EX-99.1_Hosting Agreement.txt",
+      "findings": [
+        {
+          "type": "duplicate_clause_number",
+          "severity": "medium",
+          "clause_ref": "1",
+          "evidence": "Clause 1 appears 2 times: 'ELEPHANT TALK wishes to become a full Mobile Virtual Network Enabler (hereinafter: \"MVNE\") providing mobile telecommunications services to legal entities partnering with ELE"
+        }
+      ]
+    },
+    {
+      "file": "PfHospitalityGroupInc_20150923_10-12G_EX-10.1_9266710_EX-10.1_Franchise Agreement1.txt",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "14.3.3",
+          "evidence": "Target '8.6' referenced in: ust satisfy the conditions in Sections 8.6, 14.3.2(a) [Transfer of Entir"
+        }
+      ]
+    },
+    {
+      "file": "PLAYAHOTELS_RESORTSNV_03_14_2017-EX-10.22-STRATEGIC ALLIANCE AGREEMENT (Hyatt Ziva Cancun).txt",
+      "findings": [
+        {
+          "type": "party_name_variant",
+          "severity": "medium",
+          "clause_ref": "3",
+          "evidence": "Found 'Hyatt Franchising Latin America Hyatt Hotels Corporation' (expected party 'Hyatt') in: the Parties are as follows:\n\nFor Hyatt: Hyatt Franchising Latin America Hyatt Hotels Corporation Hyatt Cen"
+        }
+      ]
+    },
+    {
+      "file": "STWRESOURCESHOLDINGCORP_08_06_2014-EX-10.1-COOPERATION AGREEMENT.txt",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "0",
+          "evidence": "Target '112' referenced in: e CRA groundwater rights from Sections 112 and 71 of COFS property; and   WHERE (and 1 other occurrence(s))"
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "0",
+          "evidence": "Target '71' referenced in: e CRA groundwater rights from Sections 112 and 71 of COFS property; and   WHERE"
+        }
+      ]
+    },
+    {
+      "file": "TomOnlineInc_20060501_20-F_EX-4.46_749700_EX-4.46_Co-Branding Agreement.txt",
+      "findings": [
+        {
+          "type": "figure_words_mismatch",
+          "severity": "medium",
+          "clause_ref": "14.5",
+          "evidence": "three (7) in snippet: 'ally, or three (7) days after deposit'"
+        }
+      ]
+    },
+    {
+      "file": "TRANSPHORM,INC_02_14_2020-EX-10.12(1)-JOINT VENTURE AGREEMENT.txt",
+      "findings": [
+        {
+          "type": "party_name_variant",
+          "severity": "medium",
+          "clause_ref": "1",
+          "evidence": "Found 'Transphorm Japan, Inc' (expected party 'Transphorm, Inc') in: at term in the SPA.\n\n1.48 \"TPH-J\" means Transphorm Japan, Inc., a kabushiki kaisha incorporated in Ja"
+        }
+      ]
+    },
+    {
+      "file": "VERTICALNETINC_04_01_2002-EX-10.19-MAINTENANCE AND SUPPORT AGREEMENT.txt",
+      "findings": [
+        {
+          "type": "term_length_conflict",
+          "severity": "medium",
+          "clause_ref": "8",
+          "evidence": "Stated term: 'for a period of one year'; Start: 2001-10-01, End: 2003-03-31 (span: 546 days)"
+        }
+      ]
+    },
+    {
+      "file": "WELLSFARGOMORTGAGEBACKEDSECURITIES2006-6TRUST_05_11_2006-EX-10.3-Yield Maintenance Agreement.txt",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "0",
+          "evidence": "Target '14' referenced in: ny definition or provision in Section 14 to the extent it         rela (and 1 other occurrence(s))"
+        }
+      ]
+    }
+  ]
+}

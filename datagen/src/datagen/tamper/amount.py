@@ -102,9 +102,11 @@ class AmountFigureOnlyTamper(ContentTamper):
         old_figure = old_amount.figure
         new_figure = new_amount.figure
         patched = False
+        patched_clause = None
         for clause in contract.clauses:
             if old_figure in clause.text:
                 clause.text = clause.text.replace(old_figure, new_figure, 1)
+                patched_clause = clause
                 patched = True
                 break
 
@@ -116,7 +118,7 @@ class AmountFigureOnlyTamper(ContentTamper):
 
         detail = TamperDetail(
             tamper_type=TamperType.AMOUNT_FIGURE_ONLY,
-            clause_id=kf.clause_id,
+            clause_id=patched_clause.id if patched_clause else kf.clause_id,
             original_value=old_figure,
             tampered_value=new_figure,
             subtype="figure_words_mismatch",
@@ -148,10 +150,12 @@ class AmountBothTamper(ContentTamper):
         new_words = new_amount.words
 
         patched = False
+        patched_clause = None
         for clause in contract.clauses:
             if old_figure in clause.text:
                 clause.text = clause.text.replace(old_figure, new_figure, 1)
                 clause.text = clause.text.replace(old_words, new_words, 1)
+                patched_clause = clause
                 patched = True
                 break
 
@@ -162,7 +166,7 @@ class AmountBothTamper(ContentTamper):
 
         detail = TamperDetail(
             tamper_type=TamperType.AMOUNT_BOTH,
-            clause_id=kf.clause_id,
+            clause_id=patched_clause.id if patched_clause else kf.clause_id,
             original_value=original_str,
             tampered_value=tampered_str,
             subtype="consistent_change",

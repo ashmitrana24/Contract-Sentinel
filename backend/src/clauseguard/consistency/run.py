@@ -39,6 +39,62 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 
+def compute_segmentation_reliability(
+    doc: ParsedDocument,
+    refs_stats: dict[str, Any],
+    numbering_stats: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Compute document-level segmentation reliability score.
+
+    A genuine tamper corrupts 1 or 2 references in an otherwise well-formed contract.
+    Mis-segmentation, OCR corruption, or unsegmented schedules break many references
+    simultaneously across the agreement.
+    """
+    total_refs = refs_stats.get("references_found", 0) - refs_stats.get("external_ignored", 0)
+    dangling_count = refs_stats.get("dangling_detected", 0)
+    resolved_fraction = (total_refs - dangling_count) / total_refs if total_refs > 0 else 1.0
+    dangling_share = dangling_count / total_refs if total_refs > 0 else 0.0
+    clause_count = len(doc.clauses)
+    is_unsegmented = clause_count < 2 or any(c.kind == "unsegmented" for c in doc.clauses)
+
+    is_unreliable = False
+    reasons: list[str] = []
+
+    # Threshold chosen from data:
+    # On synthetic clean & tampered contracts: max dangling_count = 2 (avg = 0.41, 0 on clean).
+    # On mis-segmented CUAD contracts: dangling_count ranges from 3 to 96 with dangling_share >= 15%.
+    if dangling_count >= 3 and dangling_share >= 0.15:
+        is_unreliable = True
+        reasons.append(
+            f"High dangling reference count ({dangling_count}) and share ({dangling_share:.1%})"
+        )
+    elif dangling_count >= 2 and resolved_fraction < 0.50 and clause_count < 8:
+        is_unreliable = True
+        reasons.append(
+            f"Low resolved fraction ({resolved_fraction:.1%}) with few parsed clauses ({clause_count})"
+        )
+    elif is_unsegmented:
+        is_unreliable = True
+        reasons.append("Document is unsegmented fallback")
+
+    # Reliability score on 0.0 .. 1.0 scale
+    score = 1.0
+    if is_unreliable:
+        score = max(0.1, round(resolved_fraction * min(1.0, clause_count / 10.0), 2))
+    elif total_refs > 0:
+        score = round(resolved_fraction, 2)
+
+    return {
+        "reliability_score": score,
+        "is_unreliable": is_unreliable,
+        "resolved_fraction": round(resolved_fraction, 3),
+        "dangling_share": round(dangling_share, 3),
+        "dangling_count": dangling_count,
+        "clause_count": clause_count,
+        "reasons": reasons,
+    }
+
+
 def analyze(
     doc: ParsedDocument,
     settings: ConsistencySettings | None = None,
@@ -127,6 +183,38 @@ def analyze(
                     stats={"error": str(exc)},
                 )
             )
+
+    # -----------------------------------------------------------------------
+    # Segmentation Reliability Gate:
+    # If the document has low segmentation reliability (mass dangling references),
+    # report all its dangling_reference and numbering findings at LOW tagged 'uncertain'.
+    # -----------------------------------------------------------------------
+    reliability = compute_segmentation_reliability(
+        doc,
+        refs_stats,
+        aggregated_stats.get("numbering", {}),
+    )
+    aggregated_stats["segmentation_reliability"] = reliability
+
+    if reliability["is_unreliable"]:
+        updated_raw: list[Finding] = []
+        for f in raw_findings:
+            if f.type in ("dangling_reference", "numbering_gap", "duplicate_clause_number"):
+                new_details = dict(f.details or {})
+                new_details["uncertain"] = True
+                new_details["segmentation_reliability"] = reliability
+                updated_raw.append(
+                    f.model_copy(
+                        update={
+                            "severity": Severity.LOW,
+                            "explanation": f"[Uncertain - low segmentation reliability]: {f.explanation}",
+                            "details": new_details,
+                        }
+                    )
+                )
+            else:
+                updated_raw.append(f)
+        raw_findings = updated_raw
 
     # -----------------------------------------------------------------------
     # Post-processing: Cap findings per type per document at 50 with summary finding

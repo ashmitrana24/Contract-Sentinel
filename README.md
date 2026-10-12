@@ -75,6 +75,60 @@ Conservative file-level inspection engine for contract PDF documents:
 - **Evaluation Benchmark**: Evaluated on Module 1 labeled dataset (`labels.jsonl`) achieving **100.0% precision, 100.0% recall, 0.0% clean false positive rate**, and 100% incremental edit localization.
 - **Benign Baseline Suite**: 17 dedicated benchmark test cases yielding zero false alarms on standard enterprise contracts.
 
+### [Module 4: Contract Consistency Engine (`backend/src/clauseguard/consistency/`)](file:///c:/Users/Loq/Desktop/Projects/legal-doc/backend/README.md)
+Deterministic semantic and structural consistency verification engine analyzing internal contract logic across amounts, dates, parties, numbering, and cross-references:
+
+#### Final Severity Classification Table
+
+| Finding Type | Condition / Context | Severity | Behavioral Rationale |
+|---|---|---|---|
+| `figure_words_mismatch` | Currency amounts or percentages with difference $\ge 20\%$ | **CRITICAL** | Major economic discrepancy indicating fraud or catastrophic drafting error. |
+| `figure_words_mismatch` | Currency amounts or percentages with difference $< 20\%$ | **HIGH** | Minor economic variance or calculation/rounding discrepancy. |
+| `figure_words_mismatch` | Plain quantities (days, months, years, notice periods, units) | **MEDIUM** | Standard drafting typo or operational quantity mismatch. |
+| `figure_words_mismatch` | Low-confidence or ambiguous textual number phrases | **LOW** | Minor linguistic ambiguity; non-critical parse. |
+| `date_order_inverted` | Effective date strictly after termination date | **HIGH** | Inverted contract term validity; logically impossible timeline. |
+| `dangling_reference` | Target clause number missing from contract numbering (reliable doc) | **MEDIUM** | Broken internal cross-reference to non-existent section. |
+| `dangling_reference` | Sub-clause reference (`Section 4.3(a)`, `10.1(a)(i)`) where parent exists | *(Suppressed)* | Resolves to parent clause; exact dotted numbers must match. |
+| `dangling_reference` | Statutory / regulatory citations (`Section 409A`, `12(g)`, `REACH`, `Code`) | *(Suppressed)* | External statutory reference with statutory context keywords. |
+| `dangling_reference` / `numbering_gap` | Document fails segmentation reliability gate | **LOW ("uncertain")** | Document structure unreliable; demoted to avoid false alarm floods. |
+| `undefined_party` | Undefined entity in an operative contracting role (`shall`, `consent of X`) | **MEDIUM** | Unidentified party assuming contractual obligations or rights. |
+| `undefined_party` | Single-token / first-token short forms in notice or signature blocks | **LOW** | Legitimate trade name or administrative shorthand. |
+| `duplicate_clause_number`| Duplicate clause identifier in a standard agreement | **MEDIUM** | Ambiguous clause numbering or section collision. |
+| `duplicate_clause_number`| Document is an amendment or restatement ("amendment", "restated") | *(Suppressed)* | Legitimate restatement of original agreement sections. |
+| `numbering_gap` | Non-sequential clause numbering gap | **LOW** | Potential omitted clause or formatting irregularity. |
+
+#### Evaluation Results (Fresh Synthetic Dataset: `data/generated_seed4242`)
+
+| Tamper Type / Baseline | Evaluated | Flagged | Recall / Rate | Target | Status |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `amount_figure_only` | 33 | 33 | **100.0%** | $\ge 90.0\%$ | **MET** |
+| `date_shift` | 34 | 34 | **100.0%** | $\ge 90.0\%$ | **MET** |
+| `party_swap` | 47 | 43 | **91.5%** | $\ge 85.0\%$ | **MET** |
+| `xref_break` | 32 | 32 | **100.0%** | $\ge 90.0\%$ | **MET** |
+| `clause_delete` | 52 | 20 | **38.5%** | $\ge 80.0\%$ | **MISSED** (Semantic limitation) |
+| Clean Synthetic False Positive Rate | 120 | 0 | **0.00%** | $\le 2.0\%$ | **MET** |
+
+*Expected Undetectable by Internal Consistency Alone*:
+- `amount_both`: 0/34 flagged (0.0%) — coherent words and figures require external ground-truth comparison.
+- `clause_insert`: 6/38 flagged (15.8%) — cleanly inserted clauses without numbering gaps leave no internal trace.
+- `incremental_edit`: 1/31 flagged (3.2%) — detected via Module 3 PDF structure forensics.
+- `hidden_text`: 35/38 flagged (92.1%) — detected primarily via typography and structural heuristics.
+
+#### Real-World Generalization & Unseen Evaluation
+
+| Corpus / Split | Documents | Flagged (MEDIUM+) | Genuine Defects | False Alarms | False Alarm Rate | Target | Status |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **ContractNLI Test NDAs** *(Zero-Tuning)* | **123** | **4** (3.25%) | **1** (0.81%) | **3** (2.44%) | **2.44%** | $\le 5.0\%$ | **MET** |
+| **CUAD v1 Unseen Contracts** *(Post-Tuning Optimistic)* | 310 | 85 (27.42%) | ~15 | ~70 | 22.58% | $\le 5.0\%$ | **MISSED** (OCR noise / SEC filings) |
+
+*Genuine defect caught in real contract*: In `MUTUAL NON-DISCLOSURE AGREEMENT` (`ContractNLI_Test_056`), caught a real drafting conflict: *"shall expire five (2) years from the date hereof"*.
+
+#### Known Limitations
+
+1. **Messy OCR Filings**: Complex SEC EDGAR Exhibit-10 filings containing scanning artifacts, multi-column tables, line-wrapped headers, or unescaped exhibit cross-references can confuse clause segmentation and trigger false dangling references or party variant warnings.
+2. **Unsegmented Structures**: Contracts with nested schedules, Roman numeral articles containing non-standard indentation, or unnumbered bullet agreements may not yield reliable clause trees.
+3. **Fewer Genuine-Tamper Types Detectable via Consistency**: Pure semantic consistency checks can only identify *internal contradictions* (word-digit clashes, inverted dates, unknown parties, broken references). Tampers that modify both words and numbers consistently, or insert/delete entire self-contained clauses without numbering disruption, leave zero internal inconsistency trace and must be caught via Module 3 PDF structural forensics or comparative redlining.
+
 ---
 
 ## Quickstart

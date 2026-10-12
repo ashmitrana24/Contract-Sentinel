@@ -13,6 +13,7 @@ Detects mismatches between written words and figures:
 from __future__ import annotations
 
 import re
+from decimal import Decimal
 
 from clauseguard.consistency.models import (
     CONSISTENCY_MODULE,
@@ -32,7 +33,8 @@ _NUMBER_WORD_TOKENS = {
     "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen",
     "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety",
     "hundred", "thousand", "lakh", "lakhs", "lac", "crore", "crores", "million", "billion",
-    "and", "only", "rs", "inr", "rupees", "rupee", "usd", "dollars", "dollar", "eur", "euros", "euro",
+    "point", "half", "halves", "quarter", "quarters", "fourth", "fourths", "third", "thirds",
+    "and", "a", "an", "only", "rs", "inr", "rupees", "rupee", "usd", "dollars", "dollar", "eur", "euros", "euro",
     "gbp", "pounds", "pound", "percent", "percentage",
 }
 
@@ -148,6 +150,12 @@ def detect_pairs(
                 # Pattern A: WORDS (FIGURE)
                 fig_inside = parse_figure(inside_raw)
                 if fig_inside is not None:
+                    # Skip if the token immediately preceding the parenthetical figure is a conjunction or preposition
+                    # e.g. "lesser of (1) zero and (2)" -> (2) is a list item preceded by "and"
+                    last_tok = tokens[-1].lower().strip(",.-/\"'")
+                    if last_tok in ("and", "or", "to"):
+                        continue
+
                     words_before: ParsedNumber | None = None
                     words_candidate_str = ""
                     if _is_number_token(tokens[-1]):
@@ -167,16 +175,39 @@ def detect_pairs(
                                 break
 
                     if words_before is not None:
+                        # Guard: skip if words are a fragment of compound fractional expression
+                        # e.g. '1/100th of one percent (0.001%)' should not trigger.
+                        _ws_idx = before_raw.rfind(words_candidate_str)
+                        _pre_frag = before_raw[max(0, _ws_idx - 35) : _ws_idx].lower() if _ws_idx >= 0 else ""
+                        if "/" in _pre_frag or re.search(r"(?:hundredths?|tenths?|thousandths?|half|halves|quarters?|fraction|\d+(?:st|nd|rd|th)s?)\s+of\s*$", _pre_frag):
+                            stats["pairs_unparseable"] += 1
+                            continue
+                        # Check for OCR artifact / glued neighbouring number (e.g. "thirty percent (3016)" where % was read as 16, or footnote 16 glued to 30)
+                        m_glue = re.match(r"^(\d+)(?:16|l6|0/0)$", inside_raw)
+                        if m_glue and Decimal(m_glue.group(1)) == words_before.value:
+                            stats["pairs_verified"] += 1
+                            continue
+
                         stats["pairs_found"] += 1
-                        if words_before.value != fig_inside.value:
+                        wb_val = words_before.value
+                        if fig_inside.is_percentage and not words_before.is_percentage and wb_val <= 1:
+                            wb_val = wb_val * 100
+                        diff_a = abs(wb_val - fig_inside.value)
+                        # Allow slight rounding tolerance (<= 0.01) for fractional percentages (e.g. two-thirds = 66.666...% vs 66.67%)
+                        if diff_a > Decimal("0.01"):
                             stats["pairs_mismatched"] += 1
-                            is_high = (
+                            is_fin_or_pct = (
                                 fig_inside.is_currency
                                 or words_before.is_currency
                                 or fig_inside.is_percentage
                                 or words_before.is_percentage
                             )
-                            sev = Severity.HIGH if is_high else Severity.MEDIUM
+                            if is_fin_or_pct:
+                                ref_val = max(wb_val, fig_inside.value)
+                                pct_diff = diff_a / ref_val if ref_val > 0 else Decimal(1)
+                                sev = Severity.CRITICAL if pct_diff >= Decimal("0.20") else Severity.HIGH
+                            else:
+                                sev = Severity.MEDIUM
 
                             match_span_end = min(len(sentence), m.end() + 20)
                             snippet = sentence[
@@ -230,15 +261,24 @@ def detect_pairs(
 
                         if fig_before is not None:
                             stats["pairs_found"] += 1
-                            if fig_before.value != words_inside.value:
+                            wi_val = words_inside.value
+                            if fig_before.is_percentage and not words_inside.is_percentage and wi_val <= 1:
+                                wi_val = wi_val * 100
+                            diff_b = abs(fig_before.value - wi_val)
+                            if diff_b > Decimal("0.01"):
                                 stats["pairs_mismatched"] += 1
-                                is_high = (
+                                is_fin_or_pct = (
                                     fig_before.is_currency
                                     or words_inside.is_currency
                                     or fig_before.is_percentage
                                     or words_inside.is_percentage
                                 )
-                                sev = Severity.HIGH if is_high else Severity.MEDIUM
+                                if is_fin_or_pct:
+                                    ref_val = max(fig_before.value, wi_val)
+                                    pct_diff = diff_b / ref_val if ref_val > 0 else Decimal(1)
+                                    sev = Severity.CRITICAL if pct_diff >= Decimal("0.20") else Severity.HIGH
+                                else:
+                                    sev = Severity.MEDIUM
 
                                 match_span_end = min(len(sentence), m.end() + 20)
                                 snippet = sentence[

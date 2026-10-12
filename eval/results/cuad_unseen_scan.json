@@ -1,0 +1,1372 @@
+{
+  "total_analyzed": 310,
+  "flagged_count": 85,
+  "flag_rate": 27.42,
+  "finding_type_counts": {
+    "duplicate_clause_number": 7,
+    "dangling_reference": 65,
+    "figure_words_mismatch": 13,
+    "party_name_variant": 22,
+    "numbering_gap": 15,
+    "date_order_conflict": 10,
+    "term_length_conflict": 1
+  },
+  "flagged_docs": [
+    {
+      "title": "ASHWORTHINC_01_29_1999-EX-10.(D)-PROMOTION AGREEMENT AND NANTZ COMMUNICATIONS, INC.",
+      "findings": [
+        {
+          "type": "duplicate_clause_number",
+          "severity": "medium",
+          "clause_ref": "2",
+          "evidence": "Clause 2 appears 2 times: 'TERM.  Except as otherwise provided herein, this Agreement shall commence      effective June 1, 1998, and shall continue for a term of three (3) years      expiring May 31, 2001 (the \"Term\").' (page 1), 'ASHWORTH APPAREL AND PRODUCTS.  Subject to any restrictions, contrac",
+          "explanation": "Duplicate clause number: clause 2 is used multiple times in the document (2 occurrences)."
+        }
+      ]
+    },
+    {
+      "title": "LIGHTBRIDGECORP_11_23_2015-EX-10.26-STRATEGIC ALLIANCE AGREEMENT",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "6.3",
+          "evidence": "Target '11.1' referenced in: ess in the manner provided in Section 11.1.",
+          "explanation": "Cross-reference to '11.1' in clause(s) 6.3 cannot be resolved: no clause with identifier '11.1' exists in the contract."
+        }
+      ]
+    },
+    {
+      "title": "LinkPlusCorp_20050802_8-K_EX-10_3240252_EX-10_Affiliate Agreement",
+      "findings": [
+        {
+          "type": "figure_words_mismatch",
+          "severity": "critical",
+          "clause_ref": "3.3.3",
+          "evidence": "twenty-percent (25%) in snippet: 'b) twenty-percent (25%) of the Net Proceeds'",
+          "explanation": "The amount in words (twenty-percent = 20) does not match the amount in figures (25% = 25) in clause 3.3.3."
+        },
+        {
+          "type": "figure_words_mismatch",
+          "severity": "critical",
+          "clause_ref": "3.3.4",
+          "evidence": "twenty-percent (25%) in snippet: 'b) twenty-percent (25%) of the Net Proceeds'",
+          "explanation": "The amount in words (twenty-percent = 20) does not match the amount in figures (25% = 25) in clause 3.3.4."
+        },
+        {
+          "type": "party_name_variant",
+          "severity": "medium",
+          "clause_ref": "7.5",
+          "evidence": "Found 'LINK PLUS CORPORATION                       AXIOMETRIC, LLC' (expected party 'Link Plus Corporation') in: ic have executed this Agreement below.\n\nLINK PLUS CORPORATION                       AXIOMETRIC, LLC\n\nBy:                                   ",
+          "explanation": "Party name variant 'LINK PLUS CORPORATION                       AXIOMETRIC, LLC' differs from defined party 'Link Plus Corporation' (similarity 100.0%)."
+        }
+      ]
+    },
+    {
+      "title": "CHINARECYCLINGENERGYCORP_11_14_2013-EX-10.6-Cooperation Agreement",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "3",
+          "evidence": "Target '1' referenced in: ng service fee (stipulated in section 1 of Item III ) plus 85% of the",
+          "explanation": "Cross-reference to '1' in clause(s) 3 cannot be resolved: no clause with identifier '1' exists in the contract."
+        }
+      ]
+    },
+    {
+      "title": "AULAMERICANUNITTRUST_04_24_2020-EX-99.8.77-SERVICING AGREEMENT",
+      "findings": [
+        {
+          "type": "party_name_variant",
+          "severity": "medium",
+          "clause_ref": "19",
+          "evidence": "Found 'Title Nationwide Fund Management LLC' (expected party 'Nationwide Fund Management LLC') in: is received by Nationwide. Accepted by: Name Title Nationwide Fund Management LLC Date: Accepted and Agreed to: By: Name:",
+          "explanation": "Party name variant 'Title Nationwide Fund Management LLC' differs from defined party 'Nationwide Fund Management LLC' (similarity 90.9%)."
+        }
+      ]
+    },
+    {
+      "title": "VIOLINMEMORYINC_12_12_2012-EX-10.14-SPONSORSHIP AGREEMENT",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "2",
+          "evidence": "Target '13' referenced in: rdance with the provisions of Section 13(o) of this Agreement (the \"Term\"",
+          "explanation": "Cross-reference to '13' in clause(s) 2 cannot be resolved: no clause with identifier '13' exists in the contract."
+        }
+      ]
+    },
+    {
+      "title": "Apollo Endosurgery - Manufacturing and Supply Agreement",
+      "findings": [
+        {
+          "type": "figure_words_mismatch",
+          "severity": "medium",
+          "clause_ref": "2",
+          "evidence": "ten (90) in snippet: 's within ten (90) days from the date'",
+          "explanation": "The amount in words (ten = 10) does not match the amount in figures (90 = 90) in clause 2."
+        }
+      ]
+    },
+    {
+      "title": "MJBIOTECH,INC_12_06_2018-EX-99.01-JOINT VENTURE AGREEMENT",
+      "findings": [
+        {
+          "type": "party_name_variant",
+          "severity": "medium",
+          "clause_ref": null,
+          "evidence": "Found 'Simply Herbals, Inc' (expected party 'SIMPLY HERBALS, Nervanah Herbal Medicine Company of _______________________________TN 37660') in: _________\n\nCEO: MJ Syndicated, Inc CEO: Simply Herbals, Inc.\n\nMJ Syndicated, Inc.\n\nPer: __/s/ Maxin",
+          "explanation": "Party name variant 'Simply Herbals, Inc' differs from defined party 'SIMPLY HERBALS, Nervanah Herbal Medicine Company of _______________________________TN 37660' (similarity 100.0%)."
+        }
+      ]
+    },
+    {
+      "title": "IDREAMSKYTECHNOLOGYLTD_07_03_2014-EX-10.39-Cooperation Agreement on Mobile Game Business",
+      "findings": [
+        {
+          "type": "duplicate_clause_number",
+          "severity": "medium",
+          "clause_ref": "6",
+          "evidence": "Clause 6 appears 2 times: 'Performance Bond' (page 11), 'It shall establish efficient information safety and confidentiality management policies and technical protective measures, and accept the management, supervision and inspection of relevant competent authority of the relevant business of Dazzle",
+          "explanation": "Duplicate clause number: clause 6 is used multiple times in the document (2 occurrences)."
+        }
+      ]
+    },
+    {
+      "title": "THERAVANCEBIOPHARMA,INC_05_08_2020-EX-10.2-SERVICE AGREEMENT",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "15.2",
+          "evidence": "Target '2' referenced in:  notice period referred to at clause 2 (or, if notice has already be",
+          "explanation": "Cross-reference to '2' in clause(s) 15.2 cannot be resolved: no clause with identifier '2' exists in the contract."
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "15.2",
+          "evidence": "Target '18' referenced in: out notice in accordance with clause 18. In that case the Company sha",
+          "explanation": "Cross-reference to '18' in clause(s) 15.2 cannot be resolved: no clause with identifier '18' exists in the contract."
+        }
+      ]
+    },
+    {
+      "title": "BerkshireHillsBancorpInc_20120809_10-Q_EX-10.16_7708169_EX-10.16_Endorsement Agreement",
+      "findings": [
+        {
+          "type": "figure_words_mismatch",
+          "severity": "critical",
+          "clause_ref": "3",
+          "evidence": "one (1%) in snippet: 'rate of one (1%) percent per month.'",
+          "explanation": "The amount in words (one = 1) does not match the amount in figures (1% = 1) in clause 3."
+        }
+      ]
+    },
+    {
+      "title": "DYNAMEXINC_06_06_1996-EX-10.4-TRANSPORTATION SERVICES AGREEMENT",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "15.1",
+          "evidence": "Target '17' referenced in: ault provisions as set out in paragraph 17, continue        to apply. (and 1 other occurrence(s))",
+          "explanation": "Cross-reference to '17' in clause(s) 15.1, 32.1 cannot be resolved: no clause with identifier '17' exists in the contract (referenced 2 times)."
+        }
+      ]
+    },
+    {
+      "title": "SFGFINANCIALCORP_05_12_2009-EX-10.1-SOFTWARE LICENSE AND MAINTENANCE AGREEMENT",
+      "findings": [
+        {
+          "type": "figure_words_mismatch",
+          "severity": "medium",
+          "clause_ref": "5",
+          "evidence": "Six (6,000,000) in snippet: 'ceipt of Six (6,000,000) Million shares of L'",
+          "explanation": "The amount in words (Six = 6) does not match the amount in figures (6,000,000 = 6000000) in clause 5."
+        },
+        {
+          "type": "figure_words_mismatch",
+          "severity": "high",
+          "clause_ref": "5",
+          "evidence": "one third (33%) in snippet: 'Licensee one third (33%) of the gross  amoun'",
+          "explanation": "The amount in words (one third = 0.3333333333333333333333333333) does not match the amount in figures (33% = 33) in clause 5."
+        }
+      ]
+    },
+    {
+      "title": "OTISWORLDWIDECORP_04_03_2020-EX-10.4-INTELLECTUAL PROPERTY AGREEMENT by and among UNITED TECHNOLOGIES CORPORATION, OTIS WORLDWIDE CORPORATION and CARRIER ~1",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "6.1",
+          "evidence": "Target '3' referenced in: vely, and (c) notwithstanding paragraph 3 of the UTC NDA, such informat",
+          "explanation": "Cross-reference to '3' in clause(s) 6.1 cannot be resolved: no clause with identifier '3' exists in the contract."
+        }
+      ]
+    },
+    {
+      "title": "SUCAMPOPHARMACEUTICALS,INC_11_04_2015-EX-10.2-STRATEGIC ALLIANCE AGREEMENT",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "8.01",
+          "evidence": "Target '27' referenced in: and applicable Law, including Articles 27-2 through 27-22 of the FIEL,  (and 1 other occurrence(s))",
+          "explanation": "Cross-reference to '27' in clause(s) 2.02, 8.01 cannot be resolved: no clause with identifier '27' exists in the contract (referenced 2 times)."
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "8.01",
+          "evidence": "Target '24' referenced in: e 24, 2015 in accordance with Article 24, Paragraph 1 of the FIEL, exc",
+          "explanation": "Cross-reference to '24' in clause(s) 8.01 cannot be resolved: no clause with identifier '24' exists in the contract."
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "3.02",
+          "evidence": "Target '167' referenced in: r Article 166, Paragraph 1 or Article 167, Paragraph 1 of the FIEL; (xi",
+          "explanation": "Cross-reference to '167' in clause(s) 3.02 cannot be resolved: no clause with identifier '167' exists in the contract."
+        }
+      ]
+    },
+    {
+      "title": "PHREESIA,INC_05_28_2019-EX-10.18-STRATEGIC ALLIANCE AGREEMENT",
+      "findings": [
+        {
+          "type": "numbering_gap",
+          "severity": "high",
+          "clause_ref": "25",
+          "evidence": "Missing clause 25 between clause 24 and clause 26 (cross-referenced by dangling reference to '25')",
+          "explanation": "Clause numbering gap: clause 25 is missing between clause 24 and clause 26, and a cross-reference specifically points to missing clause 25."
+        },
+        {
+          "type": "numbering_gap",
+          "severity": "high",
+          "clause_ref": "26",
+          "evidence": "Missing clause 26 between clause 25 and clause 27 (cross-referenced by dangling reference to '26')",
+          "explanation": "Clause numbering gap: clause 26 is missing between clause 25 and clause 27, and a cross-reference specifically points to missing clause 26."
+        }
+      ]
+    },
+    {
+      "title": "Array BioPharma Inc. - LICENSE, DEVELOPMENT AND COMMERCIALIZATION AGREEMENT",
+      "findings": [
+        {
+          "type": "numbering_gap",
+          "severity": "high",
+          "clause_ref": "15",
+          "evidence": "Missing clause 15 between clause 14 and clause 16 (cross-referenced by dangling reference to '15')",
+          "explanation": "Clause numbering gap: clause 15 is missing between clause 14 and clause 16, and a cross-reference specifically points to missing clause 15."
+        }
+      ]
+    },
+    {
+      "title": "MEDALISTDIVERSIFIEDREIT,INC_05_18_2020-EX-10.1-CONSULTING AGREEMENT",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "5",
+          "evidence": "Target '6' referenced in: y Work Product, as defined in Section 6 of this Agreement, developed ",
+          "explanation": "Cross-reference to '6' in clause(s) 5 cannot be resolved: no clause with identifier '6' exists in the contract."
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "7.3",
+          "evidence": "Target '3' referenced in: rmination. The obligations of Sections 3, 5, 6 and 7 shall survive any",
+          "explanation": "Cross-reference to '3' in clause(s) 7.3 cannot be resolved: no clause with identifier '3' exists in the contract."
+        }
+      ]
+    },
+    {
+      "title": "FOUNDATIONMEDICINE,INC_02_02_2015-EX-10.2-Collaboration Agreement",
+      "findings": [
+        {
+          "type": "duplicate_clause_number",
+          "severity": "medium",
+          "clause_ref": "17",
+          "evidence": "Clause 17 appears 2 times: 'Term and Termination  53  17.1 Commencement and Term  53  17.2 Termination  53  17.2.1 Termination for Breach  53  17.2.2 Insolvency  53  17.2.3 Termination by Roche without Cause  54  17.2.4 Termination by Roche for Frustration of Purpose  54  17.3 Consequences of Termin",
+          "explanation": "Duplicate clause number: clause 17 is used multiple times in the document (2 occurrences)."
+        }
+      ]
+    },
+    {
+      "title": "Microgenics Corporation - Collaborative Development and Commercialization Agreement",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "5.2",
+          "evidence": "Target '11' referenced in: NDEMNIFICATION  OBLIGATIONS  (ARTICLE 11),  IN  NO  EVENT WILL  EITHER (and 1 other occurrence(s))",
+          "explanation": "Cross-reference to '11' in clause(s) 5.2 cannot be resolved: no clause with identifier '11' exists in the contract (referenced 2 times)."
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "Appendix A",
+          "evidence": "Target 'H' referenced in: NS\n\nPrime Contract Provision\n\nClause\n\nH.2: Human Materials The acquis (and 6 other occurrence(s))",
+          "explanation": "Cross-reference to 'H' in clause(s) Appendix A cannot be resolved: no clause with identifier 'H' exists in the contract (referenced 7 times)."
+        }
+      ]
+    },
+    {
+      "title": "SigaTechnologiesInc_20190603_8-K_EX-10.1_11695818_EX-10.1_Promotion Agreement",
+      "findings": [
+        {
+          "type": "date_order_conflict",
+          "severity": "high",
+          "clause_ref": "Schedule 1",
+          "evidence": "Start date: 'May 31, 2019' (2019-05-31) in 'this \"Agreement\") is entered into as of May 31, 2019 (the \"Effective Date\") by and between S'; End date: 'June 22, 2015' (2015-06-22) in 'compositions containing the polymorphs June 22, 2015 March 23, 2031 RU 2578606 Russia Certai'",
+          "explanation": "Termination/expiration date (2015-06-22) is earlier than the effective/commencement date (2019-05-31) in clause Schedule 1."
+        },
+        {
+          "type": "date_order_conflict",
+          "severity": "high",
+          "clause_ref": "Schedule 1",
+          "evidence": "Start date: 'May 31, 2019' (2019-05-31) in 'this \"Agreement\") is entered into as of May 31, 2019 (the \"Effective Date\") by and between S'; End date: 'January 10, 2013' (2013-01-10) in 'and dosage unit forms containing ST-246 January 10, 2013 June 18, 2024 AU 2011232551 Australia C'",
+          "explanation": "Termination/expiration date (2013-01-10) is earlier than the effective/commencement date (2019-05-31) in clause Schedule 1."
+        },
+        {
+          "type": "date_order_conflict",
+          "severity": "high",
+          "clause_ref": "Schedule 1",
+          "evidence": "Start date: 'May 31, 2019' (2019-05-31) in 'this \"Agreement\") is entered into as of May 31, 2019 (the \"Effective Date\") by and between S'; End date: 'April 12, 2017' (2017-04-12) in 'irus infections and associated diseases April 12, 2017 June 18, 2024 FR 2887938 France Methods'",
+          "explanation": "Termination/expiration date (2017-04-12) is earlier than the effective/commencement date (2019-05-31) in clause Schedule 1."
+        }
+      ]
+    },
+    {
+      "title": "DIVERSINETCORP_03_01_2012-EX-4-RESELLER AGREEMENT",
+      "findings": [
+        {
+          "type": "figure_words_mismatch",
+          "severity": "medium",
+          "clause_ref": "0",
+          "evidence": "thirty (60) in snippet: 'roviding thirty (60) days' written notic'",
+          "explanation": "The amount in words (thirty = 30) does not match the amount in figures (60 = 60) in clause 0."
+        }
+      ]
+    },
+    {
+      "title": "BloomEnergyCorp_20180321_DRSA (on S-1)_EX-10_11240356_EX-10_Maintenance Agreement",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "Appendix A",
+          "evidence": "Target '352' referenced in: WHEREAS, pursuant to REPS Act Section 352(16), BE will be a \"Qualified Fuel (and 1 other occurrence(s))",
+          "explanation": "Cross-reference to '352' in clause(s) Appendix A cannot be resolved: no clause with identifier '352' exists in the contract (referenced 2 times)."
+        }
+      ]
+    },
+    {
+      "title": "HOLIDAYRVSUPERSTORESINC_04_15_2002-EX-10.13-ENDORSEMENT AGREEMENT",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "7",
+          "evidence": "Target '3B' referenced in: ated pursuant to the terms of Section 3B. In the event of such withdra",
+          "explanation": "Cross-reference to '3B' in clause(s) 7 cannot be resolved: no clause with identifier '3B' exists in the contract."
+        }
+      ]
+    },
+    {
+      "title": "RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement",
+      "findings": [
+        {
+          "type": "party_name_variant",
+          "severity": "medium",
+          "clause_ref": "1",
+          "evidence": "Found 'PennTex North Louisiana, LLC' (expected party 'PennTex North Louisiana Operating, LLC') in: ty Agreement dated April 14, 2015 among PennTex North Louisiana, LLC, Shipper, PennTex NLA Holdings, LLC and",
+          "explanation": "Party name variant 'PennTex North Louisiana, LLC' differs from defined party 'PennTex North Louisiana Operating, LLC' (similarity 100.0%)."
+        },
+        {
+          "type": "party_name_variant",
+          "severity": "medium",
+          "clause_ref": "Exhibit A",
+          "evidence": "Found 'PennTex North Louisiana LLC' (expected party 'PennTex North Louisiana Operating, LLC') in: Issued and Compiled by: [Contact name] [PennTex North Louisiana LLC] 11931 Wickchester Lane, Suite 300 Hous",
+          "explanation": "Party name variant 'PennTex North Louisiana LLC' differs from defined party 'PennTex North Louisiana Operating, LLC' (similarity 100.0%)."
+        }
+      ]
+    },
+    {
+      "title": "AURASYSTEMSINC_06_16_2010-EX-10.25-STRATEGIC ALLIANCE AGREEMENT",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "0",
+          "evidence": "Target '1' referenced in: nant and agree as follows:    Article 1:  Definitions",
+          "explanation": "Cross-reference to '1' in clause(s) 0 cannot be resolved: no clause with identifier '1' exists in the contract."
+        },
+        {
+          "type": "numbering_gap",
+          "severity": "high",
+          "clause_ref": "1",
+          "evidence": "Missing clause 1 between clause 0 and clause 2 (cross-referenced by dangling reference to '1')",
+          "explanation": "Clause numbering gap: clause 1 is missing between clause 0 and clause 2, and a cross-reference specifically points to missing clause 1."
+        }
+      ]
+    },
+    {
+      "title": "EhaveInc_20190515_20-F_EX-4.44_11678816_EX-4.44_License Agreement_ Reseller Agreement",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "10",
+          "evidence": "Target '1' referenced in: d those provisions set out in Section 1 as necessary to interpret the",
+          "explanation": "Cross-reference to '1' in clause(s) 10 cannot be resolved: no clause with identifier '1' exists in the contract."
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "12",
+          "evidence": "Target '32' referenced in: ction 65.11(7) of the BIA and section 32(6) of the CCAA. CHT shall have t",
+          "explanation": "Cross-reference to '32' in clause(s) 12 cannot be resolved: no clause with identifier '32' exists in the contract."
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "14",
+          "evidence": "Target '45' referenced in: e to time, and in particular, section 45 thereof. The determination ar",
+          "explanation": "Cross-reference to '45' in clause(s) 14 cannot be resolved: no clause with identifier '45' exists in the contract."
+        }
+      ]
+    },
+    {
+      "title": "ROCKYMOUNTAINCHOCOLATEFACTORY,INC_12_23_2019-EX-10.2-STRATEGIC ALLIANCE AGREEMENT",
+      "findings": [
+        {
+          "type": "figure_words_mismatch",
+          "severity": "critical",
+          "clause_ref": "6.1",
+          "evidence": "million dollars ($3,000,000) in snippet: 'hree (3) million dollars ($3,000,000) and (y) in the case'",
+          "explanation": "The amount in words (million dollars = 1000000) does not match the amount in figures ($3,000,000 = 3000000) in clause 6.1."
+        }
+      ]
+    },
+    {
+      "title": "InnerscopeHearingTechnologiesInc_20181109_8-K_EX-10.6_11419704_EX-10.6_Distributor Agreement",
+      "findings": [
+        {
+          "type": "party_name_variant",
+          "severity": "medium",
+          "clause_ref": "12",
+          "evidence": "Found 'Erchonia Medical Corporation' (expected party 'Erchonia Corporation') in: if any, being herein merged.\n\nDated: .\n\nErchonia Medical Corporation. By _____________________ Its _________",
+          "explanation": "Party name variant 'Erchonia Medical Corporation' differs from defined party 'Erchonia Corporation' (similarity 100.0%)."
+        }
+      ]
+    },
+    {
+      "title": "SmartRxSystemsInc_20180914_1-A_EX1A-6 MAT CTRCT_11351705_EX1A-6 MAT CTRCT_Distributor Agreement",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "10",
+          "evidence": "Target '6' referenced in: y in the event of a breach of Section 6 regarding Non-Disclosure of C",
+          "explanation": "Cross-reference to '6' in clause(s) 10 cannot be resolved: no clause with identifier '6' exists in the contract."
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "12.3",
+          "evidence": "Target '5' referenced in: . 13.4 Survival. The terms of Sections 5, 6, and 13-23 shall survive a",
+          "explanation": "Cross-reference to '5' in clause(s) 12.3 cannot be resolved: no clause with identifier '5' exists in the contract."
+        }
+      ]
+    },
+    {
+      "title": "CORALGOLDRESOURCES,LTD_05_28_2020-EX-4.1-CONSULTING AGREEMENT",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "13",
+          "evidence": "Target '6' referenced in: SURVIVAL OF TERMS\n13.l Sections 6 through 12, inclusive, and this Section ",
+          "explanation": "Cross-reference to '6' in clause(s) 13 cannot be resolved: no clause with identifier '6' exists in the contract."
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "13",
+          "evidence": "Target '7' referenced in: SURVIVAL OF TERMS\n13.l Sections 6 through 12, inclusive, and this Section ",
+          "explanation": "Cross-reference to '7' in clause(s) 13 cannot be resolved: no clause with identifier '7' exists in the contract."
+        },
+        {
+          "type": "numbering_gap",
+          "severity": "high",
+          "clause_ref": "6",
+          "evidence": "Missing clause 6 between clause 5 and clause 7 (cross-referenced by dangling reference to '6')",
+          "explanation": "Clause numbering gap: clause 6 is missing between clause 5 and clause 7, and a cross-reference specifically points to missing clause 6."
+        },
+        {
+          "type": "numbering_gap",
+          "severity": "high",
+          "clause_ref": "7",
+          "evidence": "Missing clause 7 between clause 6 and clause 8 (cross-referenced by dangling reference to '7')",
+          "explanation": "Clause numbering gap: clause 7 is missing between clause 6 and clause 8, and a cross-reference specifically points to missing clause 7."
+        }
+      ]
+    },
+    {
+      "title": "ARMSTRONGFLOORING,INC_01_07_2019-EX-10.2-INTELLECTUAL PROPERTY AGREEMENT",
+      "findings": [
+        {
+          "type": "date_order_conflict",
+          "severity": "high",
+          "clause_ref": "Schedule 1",
+          "evidence": "Start date: 'December 31, 2018' (2018-12-31) in 'REEMENT (this \"Agreement\"), dated as of December 31, 2018 (the \"Effective Date\") is entered into'; End date: '19-Dec- 2018' (2018-12-19) in 'on date Owner armstrongwoodproducts.com 19-Dec- 2018 AFI'",
+          "explanation": "Termination/expiration date (2018-12-19) is earlier than the effective/commencement date (2018-12-31) in clause Schedule 1."
+        }
+      ]
+    },
+    {
+      "title": "SoupmanInc_20150814_8-K_EX-10.1_9230148_EX-10.1_Franchise Agreement1",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "19.3",
+          "evidence": "Target '1' referenced in: in the territory described in Section 1 of this Agreement, and you ag",
+          "explanation": "Cross-reference to '1' in clause(s) 19.3 cannot be resolved: no clause with identifier '1' exists in the contract."
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "2.3",
+          "evidence": "Target '687.4' referenced in:  non-waiver provisions of GBL Sections 687.4 and 687.5 be satisfied).\n3",
+          "explanation": "Cross-reference to '687.4' in clause(s) 2.3 cannot be resolved: no clause with identifier '687.4' exists in the contract."
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "2.3",
+          "evidence": "Target '687.5' referenced in:  non-waiver provisions of GBL Sections 687.4 and 687.5 be satisfied).\n3",
+          "explanation": "Cross-reference to '687.5' in clause(s) 2.3 cannot be resolved: no clause with identifier '687.5' exists in the contract."
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "17.2",
+          "evidence": "Target 'A' referenced in: s   The recitals set forth in Paragraphs A through C of this Agreement are true an",
+          "explanation": "Cross-reference to 'A' in clause(s) 17.2 cannot be resolved: no clause with identifier 'A' exists in the contract."
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "17.2",
+          "evidence": "Target 'C' referenced in: s   The recitals set forth in Paragraphs A through C of this Agreement are true an",
+          "explanation": "Cross-reference to 'C' in clause(s) 17.2 cannot be resolved: no clause with identifier 'C' exists in the contract."
+        }
+      ]
+    },
+    {
+      "title": "BNLFINANCIALCORP_03_30_2007-EX-10.8-OUTSOURCING AGREEMENT",
+      "findings": [
+        {
+          "type": "figure_words_mismatch",
+          "severity": "medium",
+          "clause_ref": "15",
+          "evidence": "three (2) in snippet: 'mailed, three (2) days after deposit'",
+          "explanation": "The amount in words (three = 3) does not match the amount in figures (2 = 2) in clause 15."
+        }
+      ]
+    },
+    {
+      "title": "IOVANCEBIOTHERAPEUTICS,INC_08_03_2017-EX-10.1-STRATEGIC ALLIANCE AGREEMENT",
+      "findings": [
+        {
+          "type": "numbering_gap",
+          "severity": "high",
+          "clause_ref": "5",
+          "evidence": "Missing clause 5 between clause 4 and clause 6 (cross-referenced by dangling reference to '5')",
+          "explanation": "Clause numbering gap: clause 5 is missing between clause 4 and clause 6, and a cross-reference specifically points to missing clause 5."
+        }
+      ]
+    },
+    {
+      "title": "FIDELITYNATIONALINFORMATIONSERVICES,INC_08_05_2009-EX-10.3-INTELLECTUAL PROPERTY AGREEMENT",
+      "findings": [
+        {
+          "type": "party_name_variant",
+          "severity": "medium",
+          "clause_ref": "Exhibit A",
+          "evidence": "Found 'Equifax Asia Pacific Holdings, Inc' (expected party 'EQUIFAX INC') in: .                         Scotland\n\n\n\n\n\nEquifax Asia Pacific Holdings, Inc.                  Georgia Equifax Austr",
+          "explanation": "Party name variant 'Equifax Asia Pacific Holdings, Inc' differs from defined party 'EQUIFAX INC' (similarity 100.0%)."
+        },
+        {
+          "type": "party_name_variant",
+          "severity": "medium",
+          "clause_ref": "Exhibit M",
+          "evidence": "Found 'Equifax                           Credit Information Services, Inc' (expected party 'EQUIFAX INC') in: essing platform source code acquired by Equifax                           Credit Information Services, Inc. from Christopher T.                   ",
+          "explanation": "Party name variant 'Equifax                           Credit Information Services, Inc' differs from defined party 'EQUIFAX INC' (similarity 100.0%)."
+        }
+      ]
+    },
+    {
+      "title": "TRUENORTHENERGYCORP_02_08_2007-EX-10.1-DEVELOPMENT AGREEMENT",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "1",
+          "evidence": "Target '47' referenced in:  Heirs No. 1 well, located in Section 47, Township 4 South, Range 10 E",
+          "explanation": "Cross-reference to '47' in clause(s) 1 cannot be resolved: no clause with identifier '47' exists in the contract."
+        }
+      ]
+    },
+    {
+      "title": "OFGBANCORP_03_28_2007-EX-10.23-OUTSOURCING AGREEMENT",
+      "findings": [
+        {
+          "type": "party_name_variant",
+          "severity": "medium",
+          "clause_ref": "Exhibit A.4",
+          "evidence": "Found 'Oriental Financial Services Corp' (expected party 'Oriental Financial Group Inc') in: Oriental Financial Services Corp.",
+          "explanation": "Party name variant 'Oriental Financial Services Corp' differs from defined party 'Oriental Financial Group Inc' (similarity 88.4%)."
+        }
+      ]
+    },
+    {
+      "title": "DUOSTECHNOLOGIESGROUP,INC_04_21_2009-EX-10.1-STRATEGIC ALLIANCE AGREEMENT",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "2.1",
+          "evidence": "Target '2' referenced in:  of the services set forth in Section 2, ISA will sell or market the ",
+          "explanation": "Cross-reference to '2' in clause(s) 2.1 cannot be resolved: no clause with identifier '2' exists in the contract."
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "9.1.4",
+          "evidence": "Target '8' referenced in: H A BREACH BY EITHER PARTY OF SECTION 8, NEITHER PARTY WILL  BE LIABL (and 2 other occurrence(s))",
+          "explanation": "Cross-reference to '8' in clause(s) 9.1.4 cannot be resolved: no clause with identifier '8' exists in the contract (referenced 3 times)."
+        }
+      ]
+    },
+    {
+      "title": "ADIANUTRITION,INC_04_01_2005-EX-10.D2-RESELLER AGREEMENT",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "2.9",
+          "evidence": "Target '227.7202' referenced in: espectively, pursuant to DFAR Section 227.7202 and FAR Section 12.212, as ap",
+          "explanation": "Cross-reference to '227.7202' in clause(s) 2.9 cannot be resolved: no clause with identifier '227.7202' exists in the contract."
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "2.9",
+          "evidence": "Target '12.212' referenced in: DFAR Section 227.7202 and FAR Section 12.212, as applicable. Any use, modi",
+          "explanation": "Cross-reference to '12.212' in clause(s) 2.9 cannot be resolved: no clause with identifier '12.212' exists in the contract."
+        }
+      ]
+    },
+    {
+      "title": "MOVADOGROUPINC_04_30_2003-EX-10.28-ENDORSEMENT AGREEMENT",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "12",
+          "evidence": "Target '2520.104' referenced in: epartment of Labor Regulation Section 2520.104-24.",
+          "explanation": "Cross-reference to '2520.104' in clause(s) 12 cannot be resolved: no clause with identifier '2520.104' exists in the contract."
+        }
+      ]
+    },
+    {
+      "title": "EmeraldHealthBioceuticalsInc_20200218_1-A_EX1A-6 MAT CTRCT_11987205_EX1A-6 MAT CTRCT_Development Agreement",
+      "findings": [
+        {
+          "type": "party_name_variant",
+          "severity": "medium",
+          "clause_ref": "9",
+          "evidence": "Found 'Murray Emerald Health Sciences Inc' (expected party 'Emerald Health Sciences Inc') in: CEUTICALS INC., 1-A, 2/18/2020\n\n\n\n\n\nDr. Murray Emerald Health Sciences Inc.\n\n/s/Michael T. Murray, N.D By:/s/ Avta",
+          "explanation": "Party name variant 'Murray Emerald Health Sciences Inc' differs from defined party 'Emerald Health Sciences Inc' (similarity 88.5%)."
+        }
+      ]
+    },
+    {
+      "title": "CHEETAHMOBILEINC_04_22_2014-EX-10.43-Cooperation Agreement",
+      "findings": [
+        {
+          "type": "date_order_conflict",
+          "severity": "high",
+          "clause_ref": "3.1.1",
+          "evidence": "Start date: 'May 1, 2013' (2013-05-01) in 'is Agreement is effective on the day of May 1, 2013 and the effective term is the same as t'; End date: 'April 30, 2013' (2013-04-30) in 'UD0118, 151215UD0119) are terminated on April 30, 2013.'",
+          "explanation": "Termination/expiration date (2013-04-30) is earlier than the effective/commencement date (2013-05-01) in clause 3.1.1."
+        }
+      ]
+    },
+    {
+      "title": "ClickstreamCorp_20200330_1-A_EX1A-6 MAT CTRCT_12089935_EX1A-6 MAT CTRCT_Development Agreement",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "0",
+          "evidence": "Target '4' referenced in: rdance with the provisions of Section 4 of this Agreement, will conti",
+          "explanation": "Cross-reference to '4' in clause(s) 0 cannot be resolved: no clause with identifier '4' exists in the contract."
+        }
+      ]
+    },
+    {
+      "title": "HALITRON,INC_03_01_2005-EX-10.15-SPONSORSHIP AND DEVELOPMENT AGREEMENT",
+      "findings": [
+        {
+          "type": "duplicate_clause_number",
+          "severity": "medium",
+          "clause_ref": "4",
+          "evidence": "Clause 4 appears 2 times: 'COMPENSATION' (page 3), 'COMPENSATION' (page 8)",
+          "explanation": "Duplicate clause number: clause 4 is used multiple times in the document (2 occurrences)."
+        }
+      ]
+    },
+    {
+      "title": "INNOVIVA,INC_08_07_2014-EX-10.1-COLLABORATION AGREEMENT",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "16.1",
+          "evidence": "Target '1.17' referenced in: have the meaning set forth in Section 1.17.   1.27 \"Effective Date\" mean (and 1 other occurrence(s))",
+          "explanation": "Cross-reference to '1.17' in clause(s) 16.1 cannot be resolved: no clause with identifier '1.17' exists in the contract (referenced 2 times)."
+        }
+      ]
+    },
+    {
+      "title": "WestPharmaceuticalServicesInc_20200116_8-K_EX-10.1_11947529_EX-10.1_Supply Agreement",
+      "findings": [
+        {
+          "type": "party_name_variant",
+          "severity": "medium",
+          "clause_ref": "20",
+          "evidence": "Found 'A West Pharmaceutical Services, Inc' (expected party 'West Pharmaceutical Services, Inc') in: n Circle Jurong, Singapore 629046\n\n\nU.S.A West Pharmaceutical Services, Inc. 530 Herman O. West Drive Exton, PA 193",
+          "explanation": "Party name variant 'A West Pharmaceutical Services, Inc' differs from defined party 'West Pharmaceutical Services, Inc' (similarity 97.0%)."
+        },
+        {
+          "type": "party_name_variant",
+          "severity": "medium",
+          "clause_ref": "20",
+          "evidence": "Found 'ExxonMobil Chemical Company West Pharmaceutical Services, Inc' (expected party 'ExxonMobil Chemical Company') in: ing written notice to the other party.\n\nExxonMobil Chemical Company West Pharmaceutical Services, Inc. 22777 Springwoods Village Pkwy 530 W. ",
+          "explanation": "Party name variant 'ExxonMobil Chemical Company West Pharmaceutical Services, Inc' differs from defined party 'ExxonMobil Chemical Company' (similarity 100.0%)."
+        }
+      ]
+    },
+    {
+      "title": "EUROPEANMICROHOLDINGSINC_03_06_1998-EX-10.6-DISTRIBUTOR AGREEMENT",
+      "findings": [
+        {
+          "type": "date_order_conflict",
+          "severity": "high",
+          "clause_ref": "7.0",
+          "evidence": "Start date: 'November 5, 1997' (1997-11-05) in 's made and entered into effective as of November 5, 1997 (the \"effective Date), by and between W'; End date: 'September 30, 1997' (1997-09-30) in 'September 30, 1997 TRADEMARKS:'",
+          "explanation": "Termination/expiration date (1997-09-30) is earlier than the effective/commencement date (1997-11-05) in clause 7.0."
+        }
+      ]
+    },
+    {
+      "title": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "4",
+          "evidence": "Target 'd' referenced in: and claims stated in this sub-paragraph d. e. Theismann agrees to defen",
+          "explanation": "Cross-reference to 'd' in clause(s) 4 cannot be resolved: no clause with identifier 'd' exists in the contract."
+        }
+      ]
+    },
+    {
+      "title": "GOCALLINC_03_30_2000-EX-10.7-Promotion Agreement",
+      "findings": [
+        {
+          "type": "party_name_variant",
+          "severity": "medium",
+          "clause_ref": "14",
+          "evidence": "Found 'At PageMaster Corporation' (expected party 'PageMaster Corporation') in: shall have no liability to one another. At PageMaster Corporation's option, an additional agreement(s) ma",
+          "explanation": "Party name variant 'At PageMaster Corporation' differs from defined party 'PageMaster Corporation' (similarity 90.9%)."
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "7",
+          "evidence": "Target '6b' referenced in:  consistent with the terms of paragraph 6b of this Agreement.",
+          "explanation": "Cross-reference to '6b' in clause(s) 7 cannot be resolved: no clause with identifier '6b' exists in the contract."
+        }
+      ]
+    },
+    {
+      "title": "MEETGROUP,INC_06_29_2017-EX-10.1-COOPERATION AGREEMENT",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "3",
+          "evidence": "Target '1' referenced in: rary:   (i) The provisions of Sections 1, 2, and 3 of this Agreement s (and 1 other occurrence(s))",
+          "explanation": "Cross-reference to '1' in clause(s) 3 cannot be resolved: no clause with identifier '1' exists in the contract (referenced 2 times)."
+        }
+      ]
+    },
+    {
+      "title": "SimplicityEsportsGamingCompany_20181130_8-K_EX-10.1_11444071_EX-10.1_Franchise Agreement",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "0",
+          "evidence": "Target '3' referenced in:  in Exhibit A), as set out in Section 3 of this Agreement, for the pu",
+          "explanation": "Cross-reference to '3' in clause(s) 0 cannot be resolved: no clause with identifier '3' exists in the contract."
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "10.10",
+          "evidence": "Target '8' referenced in: rty except in accordance with Clause 8 of this Agreement. 10.11 Assi",
+          "explanation": "Cross-reference to '8' in clause(s) 10.10 cannot be resolved: no clause with identifier '8' exists in the contract."
+        }
+      ]
+    },
+    {
+      "title": "GluMobileInc_20070319_S-1A_EX-10.09_436630_EX-10.09_Content License Agreement2",
+      "findings": [
+        {
+          "type": "date_order_conflict",
+          "severity": "high",
+          "clause_ref": "2",
+          "evidence": "Start date: 'November 11, 2005' (2005-11-11) in 'Preamble AMENDMENT NO. 1 Dated as of November 11, 2005 Reference is hereby made to that certai'; End date: 'October 29, 2005' (2005-10-29) in 'to the KOH Video Clips shall expire on October 29, 2005, and Licensee's right and license to di'",
+          "explanation": "Termination/expiration date (2005-10-29) is earlier than the effective/commencement date (2005-11-11) in clause 2."
+        }
+      ]
+    },
+    {
+      "title": "PROFOUNDMEDICALCORP_08_29_2019-EX-4.5-SUPPLY AGREEMENT",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "0",
+          "evidence": "Target '6.6' referenced in: e meaning ascribed thereto in clause 6.6. \"Parties\" and \"Party\" have t",
+          "explanation": "Cross-reference to '6.6' in clause(s) 0 cannot be resolved: no clause with identifier '6.6' exists in the contract."
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "0",
+          "evidence": "Target '3' referenced in: y Customer in accordance with clause 3. \"Quality Agreement\" means th (and 1 other occurrence(s))",
+          "explanation": "Cross-reference to '3' in clause(s) 0, 4 cannot be resolved: no clause with identifier '3' exists in the contract (referenced 2 times)."
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "3.2",
+          "evidence": "Target '3.4' referenced in:  extent otherwise provided in clause 3.4. Only Purchase Orders as acce (and 2 other occurrence(s))",
+          "explanation": "Cross-reference to '3.4' in clause(s) 3.2, 7 cannot be resolved: no clause with identifier '3.4' exists in the contract (referenced 3 times)."
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "14.4",
+          "evidence": "Target '14' referenced in: or to the Effective Date 14.5 Clause 14 does not prohibit disclosure ",
+          "explanation": "Cross-reference to '14' in clause(s) 14.4 cannot be resolved: no clause with identifier '14' exists in the contract."
+        },
+        {
+          "type": "numbering_gap",
+          "severity": "high",
+          "clause_ref": "3",
+          "evidence": "Missing clause 3 between clause 2 and clause 4 (cross-referenced by dangling reference to '3')",
+          "explanation": "Clause numbering gap: clause 3 is missing between clause 2 and clause 4, and a cross-reference specifically points to missing clause 3."
+        },
+        {
+          "type": "numbering_gap",
+          "severity": "high",
+          "clause_ref": "14",
+          "evidence": "Missing clause 14 between clause 13 and clause 15 (cross-referenced by dangling reference to '14')",
+          "explanation": "Clause numbering gap: clause 14 is missing between clause 13 and clause 15, and a cross-reference specifically points to missing clause 14."
+        }
+      ]
+    },
+    {
+      "title": "BLUEHILLSBANCORP,INC_05_20_2014-EX-1.1-AGENCY AGREEMENT",
+      "findings": [
+        {
+          "type": "party_name_variant",
+          "severity": "medium",
+          "clause_ref": "20",
+          "evidence": "Found 'Blue Hills Bank   Blue Hills Bancorp, Inc' (expected party 'Blue Hills Bancorp, Inc') in: inding agreement.\n\nVery truly yours,\n\n  Blue Hills Bank   Blue Hills Bancorp, Inc.\n\nBy Its Authorized Representative:   B",
+          "explanation": "Party name variant 'Blue Hills Bank   Blue Hills Bancorp, Inc' differs from defined party 'Blue Hills Bancorp, Inc' (similarity 100.0%)."
+        }
+      ]
+    },
+    {
+      "title": "HC2HOLDINGS,INC_05_14_2020-EX-10.1-COOPERATION AGREEMENT",
+      "findings": [
+        {
+          "type": "party_name_variant",
+          "severity": "medium",
+          "clause_ref": "Exhibit B",
+          "evidence": "Found 'HC2 HC2 Holdings, Inc' (expected party 'HC2 Holdings, Inc') in: ng as MG Capital's legal advisor.\n\n\n\n\n\n\nAbout HC2 HC2 Holdings, Inc. is a publicly traded (NYSE: HCHC) dive",
+          "explanation": "Party name variant 'HC2 HC2 Holdings, Inc' differs from defined party 'HC2 Holdings, Inc' (similarity 100.0%)."
+        }
+      ]
+    },
+    {
+      "title": "COOLTECHNOLOGIES,INC_10_25_2017-EX-10.71-Strategic Alliance Agreement",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "0",
+          "evidence": "Target 'I' referenced in: do mutually agree as follows: ARTICLE I. SCOPE OF STRATEGIC ALLIANCE.",
+          "explanation": "Cross-reference to 'I' in clause(s) 0 cannot be resolved: no clause with identifier 'I' exists in the contract."
+        }
+      ]
+    },
+    {
+      "title": "Monsanto Company - SECOND A_R EXCLUSIVE AGENCY AND MARKETING AGREEMENT ",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "6.19",
+          "evidence": "Target '7' referenced in: Additional Obligations 39\nArticle 7 - [Reserved] 39 (and 1 other occurrence(s))",
+          "explanation": "Cross-reference to '7' in clause(s) 6.19 cannot be resolved: no clause with identifier '7' exists in the contract (referenced 2 times)."
+        },
+        {
+          "type": "numbering_gap",
+          "severity": "high",
+          "clause_ref": "7",
+          "evidence": "Missing clause 7 between clause 6 and clause 8 (cross-referenced by dangling reference to '7')",
+          "explanation": "Clause numbering gap: clause 7 is missing between clause 6 and clause 8, and a cross-reference specifically points to missing clause 7."
+        }
+      ]
+    },
+    {
+      "title": "ElPolloLocoHoldingsInc_20200306_10-K_EX-10.16_12041700_EX-10.16_Development Agreement",
+      "findings": [
+        {
+          "type": "numbering_gap",
+          "severity": "high",
+          "clause_ref": "1",
+          "evidence": "Missing clause 1 between clause 0 and clause 2 (cross-referenced by dangling reference to '1')",
+          "explanation": "Clause numbering gap: clause 1 is missing between clause 0 and clause 2, and a cross-reference specifically points to missing clause 1."
+        }
+      ]
+    },
+    {
+      "title": "SEASPINEHOLDINGSCORP_10_10_2018-EX-10.1-SUPPLY AGREEMENT",
+      "findings": [
+        {
+          "type": "party_name_variant",
+          "severity": "medium",
+          "clause_ref": "12.15",
+          "evidence": "Found 'INTEGRA LIFESCIENCES CORPORATION PCOMED, LLC' (expected party 'Integra LifeSciences Corporation') in: his Agreement as of the Effective Date. INTEGRA LIFESCIENCES CORPORATION PCOMED, LLC\n\nBy: /s/ Brian Larkin By: /s/ Steve Jac",
+          "explanation": "Party name variant 'INTEGRA LIFESCIENCES CORPORATION PCOMED, LLC' differs from defined party 'Integra LifeSciences Corporation' (similarity 100.0%)."
+        }
+      ]
+    },
+    {
+      "title": "BERKELEYLIGHTS,INC_06_26_2020-EX-10.12-COLLABORATION AGREEMENT",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "0",
+          "evidence": "Target '1.44' referenced in:  has the meaning set forth in Section 1.44 (\"Drug Approval Application\") (and 1 other occurrence(s))",
+          "explanation": "Cross-reference to '1.44' in clause(s) 0 cannot be resolved: no clause with identifier '1.44' exists in the contract (referenced 2 times)."
+        }
+      ]
+    },
+    {
+      "title": "ENTERPRISEPRODUCTSPARTNERSLP_07_08_1998-EX-10.3-TRANSPORTATION CONTRACT",
+      "findings": [
+        {
+          "type": "party_name_variant",
+          "severity": "medium",
+          "clause_ref": "4",
+          "evidence": "Found 'ENTERPRISE TRANSPORTATION COMPANY By Enterprise Products GP, LLC' (expected party 'ENTERPRISE TRANSPORTATION COMPANY') in: E.\n\nENTERPRISE PRODUCTS OPERATING L.P.  ENTERPRISE TRANSPORTATION COMPANY By Enterprise Products GP, LLC, its general partner (Shipper)\n\nBy: /s/",
+          "explanation": "Party name variant 'ENTERPRISE TRANSPORTATION COMPANY By Enterprise Products GP, LLC' differs from defined party 'ENTERPRISE TRANSPORTATION COMPANY' (similarity 100.0%)."
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "2",
+          "evidence": "Target '5069' referenced in: uant to applicable Texas law, Article 5069-1.04 Texas Rev. Civ. Stat., a",
+          "explanation": "Cross-reference to '5069' in clause(s) 2 cannot be resolved: no clause with identifier '5069' exists in the contract."
+        },
+        {
+          "type": "duplicate_clause_number",
+          "severity": "medium",
+          "clause_ref": "1",
+          "evidence": "Clause 1 appears 2 times: 'Shipper shall tender commodities to Carrier for transportation by Carrier in a specialized service designed to meet the distinct needs of Shipper in  interstate or foreign commerce between points in the United States.' (page 1), 'For each shipment under this contract, Ship",
+          "explanation": "Duplicate clause number: clause 1 is used multiple times in the document (2 occurrences)."
+        }
+      ]
+    },
+    {
+      "title": "HerImports_20161018_8-KA_EX-10.14_9765707_EX-10.14_Maintenance Agreement",
+      "findings": [
+        {
+          "type": "date_order_conflict",
+          "severity": "high",
+          "clause_ref": "0",
+          "evidence": "Start date: 'October 13, 2016' (2016-10-13) in '(the \"Agreement\") is entered into as of October 13, 2016, between Leader Act Ltd HK (\"LEADER\"),'; End date: 'May 28, 2016' (2016-05-28) in 'EAS, this previous agreement expired on May 28, 2016;   NOW THEREFORE, in consideration of t'",
+          "explanation": "Termination/expiration date (2016-05-28) is earlier than the effective/commencement date (2016-10-13) in clause 0."
+        }
+      ]
+    },
+    {
+      "title": "PROLONGINTERNATIONALCORP_03_23_1998-EX-10.16-SPONSORSHIP AGREEMENT",
+      "findings": [
+        {
+          "type": "figure_words_mismatch",
+          "severity": "medium",
+          "clause_ref": "4",
+          "evidence": "One (1998) in snippet: 's:  Year One (1998): $ [ * ] (four  equ'",
+          "explanation": "The amount in words (One = 1) does not match the amount in figures (1998 = 1998) in clause 4."
+        }
+      ]
+    },
+    {
+      "title": "SANDRIDGEENERGYINC_08_06_2009-EX-10.6-OPERATIONS AND MAINTENANCE AGREEMENT",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "1",
+          "evidence": "Target '171.0001' referenced in: et forth in V.T.C.A. Tax Code Section 171.0001 et. seq., as the same may be  (and 1 other occurrence(s))",
+          "explanation": "Cross-reference to '171.0001' in clause(s) 1 cannot be resolved: no clause with identifier '171.0001' exists in the contract (referenced 2 times)."
+        }
+      ]
+    },
+    {
+      "title": "NlsPharmaceuticsLtd_20200228_F-1_EX-10.14_12029046_EX-10.14_Development Agreement",
+      "findings": [
+        {
+          "type": "figure_words_mismatch",
+          "severity": "medium",
+          "clause_ref": "3.3",
+          "evidence": "thirty (45) in snippet: 'y within thirty (45) days following the'",
+          "explanation": "The amount in words (thirty = 30) does not match the amount in figures (45 = 45) in clause 3.3."
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "18",
+          "evidence": "Target 'a' referenced in: ucted by NLS under article 5, paragraphs a), b) and c) do not allow the ",
+          "explanation": "Cross-reference to 'a' in clause(s) 18 cannot be resolved: no clause with identifier 'a' exists in the contract."
+        }
+      ]
+    },
+    {
+      "title": "BellringBrandsInc_20190920_S-1_EX-10.12_11817081_EX-10.12_Manufacturing Agreement1",
+      "findings": [
+        {
+          "type": "party_name_variant",
+          "severity": "medium",
+          "clause_ref": "Schedule B",
+          "evidence": "Found 'PREMIER NUTRITION CORPORATION STREMICKS HERITAGE FOODS, LLC' (expected party 'PREMIER NUTRITION CORPORATION') in: n the day and year first above written. PREMIER NUTRITION CORPORATION STREMICKS HERITAGE FOODS, LLC\n\nBY: /s/ Darcy Davenport BY: /s/ Sam St",
+          "explanation": "Party name variant 'PREMIER NUTRITION CORPORATION STREMICKS HERITAGE FOODS, LLC' differs from defined party 'PREMIER NUTRITION CORPORATION' (similarity 100.0%)."
+        }
+      ]
+    },
+    {
+      "title": "BLUEFLYINC_03_27_2002-EX-10.27-e-business Hosting Agreement",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "14.7",
+          "evidence": "Target '8' referenced in: cept as expressly provided in Section 8, this Agreement does not crea",
+          "explanation": "Cross-reference to '8' in clause(s) 14.7 cannot be resolved: no clause with identifier '8' exists in the contract."
+        }
+      ]
+    },
+    {
+      "title": "MANUFACTURERSSERVICESLTD_06_05_2000-EX-10.14-OUTSOURCING AGREEMENT",
+      "findings": [
+        {
+          "type": "party_name_variant",
+          "severity": "medium",
+          "clause_ref": "1.0",
+          "evidence": "Found 'Manufacturers' Services Limited' (expected party 'MANUFACTURERS' SERVICES WESTERN U.S. OPERATIONS, INC') in: .12  \"MSL Related Companies\" shall mean Manufacturers' Services Limited       (Delaware, USA) and its Subsidiar",
+          "explanation": "Party name variant 'Manufacturers' Services Limited' differs from defined party 'MANUFACTURERS' SERVICES WESTERN U.S. OPERATIONS, INC' (similarity 100.0%)."
+        },
+        {
+          "type": "party_name_variant",
+          "severity": "medium",
+          "clause_ref": "5",
+          "evidence": "Found 'Manufacturers' Services Western      International Business Machines Corporation' (expected party 'MANUFACTURERS' SERVICES WESTERN U.S. OPERATIONS, INC') in: :                           Agreed To:\n\nManufacturers' Services Western      International Business Machines Corporation U.S. Operation",
+          "explanation": "Party name variant 'Manufacturers' Services Western      International Business Machines Corporation' differs from defined party 'MANUFACTURERS' SERVICES WESTERN U.S. OPERATIONS, INC' (similarity 87.4%)."
+        },
+        {
+          "type": "party_name_variant",
+          "severity": "medium",
+          "clause_ref": "16",
+          "evidence": "Found 'IBM Corporation                       Manufacturers' Services Western                                             US Operations, Inc' (expected party 'MANUFACTURERS' SERVICES WESTERN U.S. OPERATIONS, INC') in:          ACCEPTED AND AGREED TO:\n\n      IBM Corporation                       Manuf",
+          "explanation": "Party name variant 'IBM Corporation                       Manufacturers' Services Western                                             US Operations, Inc' differs from defined party 'MANUFACTURERS' SERVICES WESTERN U.S. OPERATIONS, INC' (similarity 90.6%)."
+        }
+      ]
+    },
+    {
+      "title": "LiquidmetalTechnologiesInc_20200205_8-K_EX-10.1_11968198_EX-10.1_Development Agreement",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "3.11",
+          "evidence": "Target '10' referenced in: tal or Customer, the terms of Section 10. The foregoing representation (and 1 other occurrence(s))",
+          "explanation": "Cross-reference to '10' in clause(s) 10.6, 3.11 cannot be resolved: no clause with identifier '10' exists in the contract (referenced 2 times)."
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "5.3",
+          "evidence": "Target 'iv' referenced in: s Agreement; iii. Comply with Section 9.2 and iv. transfer title and deliver t",
+          "explanation": "Cross-reference to 'iv' in clause(s) 5.3 cannot be resolved: no clause with identifier 'iv' exists in the contract."
+        }
+      ]
+    },
+    {
+      "title": "ScansourceInc_20190822_10-K_EX-10.39_11793959_EX-10.39_Distributor Agreement",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "2",
+          "evidence": "Target '6.0' referenced in: Section 6.0 (\"Payment\") of the Agreement ",
+          "explanation": "Cross-reference to '6.0' in clause(s) 2 cannot be resolved: no clause with identifier '6.0' exists in the contract."
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "2",
+          "evidence": "Target '6.7' referenced in: d by adding the following new Section 6.7: 6.7 [*****]",
+          "explanation": "Cross-reference to '6.7' in clause(s) 2 cannot be resolved: no clause with identifier '6.7' exists in the contract."
+        }
+      ]
+    },
+    {
+      "title": "MOELIS_CO_03_24_2014-EX-10.19-STRATEGIC ALLIANCE AGREEMENT",
+      "findings": [
+        {
+          "type": "figure_words_mismatch",
+          "severity": "medium",
+          "clause_ref": "4.3",
+          "evidence": "million (2) in snippet: 'ory, $3 million, (2) restructuring advis'",
+          "explanation": "The amount in words (million = 1000000) does not match the amount in figures (2 = 2) in clause 4.3."
+        }
+      ]
+    },
+    {
+      "title": "XYBERNAUTCORP_07_12_2002-EX-4-SPONSORSHIP AGREEMENT",
+      "findings": [
+        {
+          "type": "term_length_conflict",
+          "severity": "medium",
+          "clause_ref": "3",
+          "evidence": "Stated term: 'for a period of three (3) years'; Start: 2002-05-01, End: 2002-10-12 (span: 164 days)",
+          "explanation": "Stated contract term (3 years \u2248 1095 days) differs from actual date span (164 days between 2002-05-01 and 2002-10-12) by 931 days in clause 3."
+        }
+      ]
+    },
+    {
+      "title": "TALCOTTRESOLUTIONLIFEINSURANCECO-SEPARATEACCOUNTTWELVE_04_30_2020-EX-99.8(L)-SERVICE AGREEMENT",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "9",
+          "evidence": "Target '4' referenced in: ept to the extent provided in Section 4 that the Administrator is the (and 1 other occurrence(s))",
+          "explanation": "Cross-reference to '4' in clause(s) 9 cannot be resolved: no clause with identifier '4' exists in the contract (referenced 2 times)."
+        }
+      ]
+    },
+    {
+      "title": "ArmstrongFlooringInc_20190107_8-K_EX-10.2_11471795_EX-10.2_Intellectual Property Agreement",
+      "findings": [
+        {
+          "type": "date_order_conflict",
+          "severity": "high",
+          "clause_ref": "Schedule 1",
+          "evidence": "Start date: 'December 31, 2018' (2018-12-31) in 'REEMENT (this \"Agreement\"), dated as of December 31, 2018 (the \"Effective Date\") is entered into'; End date: '19-Dec- 2018' (2018-12-19) in 'on date Owner armstrongwoodproducts.com 19-Dec- 2018 AFI'",
+          "explanation": "Termination/expiration date (2018-12-19) is earlier than the effective/commencement date (2018-12-31) in clause Schedule 1."
+        },
+        {
+          "type": "numbering_gap",
+          "severity": "high",
+          "clause_ref": "8",
+          "evidence": "Missing clause 8 between clause 7 and clause 9 (cross-referenced by dangling reference to '8')",
+          "explanation": "Clause numbering gap: clause 8 is missing between clause 7 and clause 9, and a cross-reference specifically points to missing clause 8."
+        }
+      ]
+    },
+    {
+      "title": "WaterNowInc_20191120_10-Q_EX-10.12_11900227_EX-10.12_Distributor Agreement",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "7",
+          "evidence": "Target 'VIII' referenced in: osed in writing to Hydraspin.\nARTICLE VIII.\n\nINTELLECTUAL PROPERTY RIGHT",
+          "explanation": "Cross-reference to 'VIII' in clause(s) 7 cannot be resolved: no clause with identifier 'VIII' exists in the contract."
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "10",
+          "evidence": "Target 'XI' referenced in:  permitted by this Article X.\nARTICLE XI.\n\nMISCELLANEOUS 11.1 Notices.",
+          "explanation": "Cross-reference to 'XI' in clause(s) 10 cannot be resolved: no clause with identifier 'XI' exists in the contract."
+        }
+      ]
+    },
+    {
+      "title": "VNUE,INC_07_10_2015-EX-10.1-SPONSORSHIP AGREEMENT",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "5",
+          "evidence": "Target '2' referenced in:  provide the consideration in Section 2 regardless of whether the Eve",
+          "explanation": "Cross-reference to '2' in clause(s) 5 cannot be resolved: no clause with identifier '2' exists in the contract."
+        },
+        {
+          "type": "numbering_gap",
+          "severity": "high",
+          "clause_ref": "2",
+          "evidence": "Missing clause 2 between clause 1 and clause 3 (cross-referenced by dangling reference to '2')",
+          "explanation": "Clause numbering gap: clause 2 is missing between clause 1 and clause 3, and a cross-reference specifically points to missing clause 2."
+        }
+      ]
+    },
+    {
+      "title": "EcoScienceSolutionsInc_20180406_8-K_EX-10.1_11135398_EX-10.1_Sponsorship Agreement",
+      "findings": [
+        {
+          "type": "party_name_variant",
+          "severity": "medium",
+          "clause_ref": null,
+          "evidence": "Found 'EcoScience Solutions, Inc' (expected party 'Eco Science Solutions, Inc') in: EcoScience Solutions, Inc. (Sponsor) Address: 1135 Makawao Avenue",
+          "explanation": "Party name variant 'EcoScience Solutions, Inc' differs from defined party 'Eco Science Solutions, Inc' (similarity 98.0%)."
+        }
+      ]
+    },
+    {
+      "title": "GluMobileInc_20070319_S-1A_EX-10.09_436630_EX-10.09_Content License Agreement4",
+      "findings": [
+        {
+          "type": "date_order_conflict",
+          "severity": "high",
+          "clause_ref": "1",
+          "evidence": "Start date: 'February 19, 2007' (2007-02-19) in 'Preamble AMENDMENT NO. 3 Dated as of February 19, 2007 Reference is hereby made to that certai'; End date: 'December 31, 2006' (2006-12-31) in 'the Effective Date and shall expire on December 31, 2006 (the \"Term\"); provided, however, that w'",
+          "explanation": "Termination/expiration date (2006-12-31) is earlier than the effective/commencement date (2007-02-19) in clause 1."
+        }
+      ]
+    },
+    {
+      "title": "JOINTCORP_09_19_2014-EX-10.15-FRANCHISE AGREEMENT",
+      "findings": [
+        {
+          "type": "duplicate_clause_number",
+          "severity": "medium",
+          "clause_ref": "6",
+          "evidence": "Clause 6 appears 2 times: 'FEES AND COSTS.   6.1 Initial Franchise Fee.   You agree to pay us the initial franchise fee of Twenty-Nine Thousand and No/100 Dollars ($29,000.00) (the \"Initial Franchise Fee\") when you sign this Agreement. In recognition of the expenses we incur in furnishing assistance",
+          "explanation": "Duplicate clause number: clause 6 is used multiple times in the document (2 occurrences)."
+        },
+        {
+          "type": "numbering_gap",
+          "severity": "high",
+          "clause_ref": "11",
+          "evidence": "Missing clause 11 between clause 10 and clause 12 (cross-referenced by dangling reference to '11')",
+          "explanation": "Clause numbering gap: clause 11 is missing between clause 10 and clause 12, and a cross-reference specifically points to missing clause 11."
+        },
+        {
+          "type": "numbering_gap",
+          "severity": "high",
+          "clause_ref": "12",
+          "evidence": "Missing clause 12 between clause 11 and clause 13 (cross-referenced by dangling reference to '12')",
+          "explanation": "Clause numbering gap: clause 12 is missing between clause 11 and clause 13, and a cross-reference specifically points to missing clause 12."
+        }
+      ]
+    },
+    {
+      "title": "VnueInc_20150914_8-K_EX-10.1_9259571_EX-10.1_Promotion Agreement",
+      "findings": [
+        {
+          "type": "figure_words_mismatch",
+          "severity": "critical",
+          "clause_ref": "2",
+          "evidence": "and Five Thousand Dollars ($5,000,00) in snippet: 'er venue and Five Thousand Dollars ($5,000,00) for each Two (2) Ye'",
+          "explanation": "The amount in words (and Five Thousand Dollars = 5000) does not match the amount in figures ($5,000,00 = 500000) in clause 2."
+        }
+      ]
+    },
+    {
+      "title": "SteelVaultCorp_20081224_10-K_EX-10.16_3074935_EX-10.16_Affiliate Agreement",
+      "findings": [
+        {
+          "type": "duplicate_clause_number",
+          "severity": "medium",
+          "clause_ref": "1",
+          "evidence": "Clause 1 appears 2 times: 'Equidata provides certain personal credit, fraud detection, credit scoring services and credit monitoring for consumers, the  (\"Services\").    2.   Marketing Affiliate and Equidata wish to enter into an agreement under which Marketing Affiliate may market the Services.    ",
+          "explanation": "Duplicate clause number: clause 1 is used multiple times in the document (2 occurrences)."
+        }
+      ]
+    },
+    {
+      "title": "PlayboyEnterprisesInc_20090220_10-QA_EX-10.2_4091580_EX-10.2_Content License Agreement_ Marketing Agreement_ Sales-Purchase Agreement1",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "0",
+          "evidence": "Target '6.6' referenced in:  Inventory\"), as set forth in Section 6.6. During the Term, Client Inve (and 2 other occurrence(s))",
+          "explanation": "Cross-reference to '6.6' in clause(s) 0, 10.1 cannot be resolved: no clause with identifier '6.6' exists in the contract (referenced 3 times)."
+        }
+      ]
+    },
+    {
+      "title": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "1",
+          "evidence": "Target '3' referenced in:  has the meaning set forth in Section 3(a).   \"Local Advertising\" has th (and 3 other occurrence(s))",
+          "explanation": "Cross-reference to '3' in clause(s) 1 cannot be resolved: no clause with identifier '3' exists in the contract (referenced 4 times)."
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "1",
+          "evidence": "Target '9' referenced in: erein.   (e) Without limiting Section 9(d), Network shall indemnify, def",
+          "explanation": "Cross-reference to '9' in clause(s) 1 cannot be resolved: no clause with identifier '9' exists in the contract."
+        }
+      ]
+    },
+    {
+      "title": "MidwestEnergyEmissionsCorp_20080604_8-K_EX-10.2_3093976_EX-10.2_Content License Agreement",
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "clause_ref": "20",
+          "evidence": "Target 'o' referenced in:  operation of any other term, clause o provision and such invalid te",
+          "explanation": "Cross-reference to 'o' in clause(s) 20 cannot be resolved: no clause with identifier 'o' exists in the contract."
+        }
+      ]
+    }
+  ]
+}

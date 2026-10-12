@@ -155,3 +155,69 @@ def test_fewer_than_two_parties_skips_detector():
     assert len(findings) == 0
     assert stats["skipped_reason"] == "fewer_than_2_parties"
     assert stats["parties_found"] < 2
+
+
+def test_party_extraction_preserves_comma_suffix():
+    """Party extraction preserves leading name before comma ('Vyera Pharmaceuticals, LLC')."""
+    intro = (
+        'This Agreement is entered into by and between Vyera Pharmaceuticals, LLC, '
+        'a Delaware limited liability company ("Vyera"), and CytoDyn Inc., '
+        'a Delaware corporation ("CytoDyn").'
+    )
+    doc = _make_doc(
+        intro,
+        [
+            ("1", "Vyera Pharmaceuticals, LLC shall commercialize the products."),
+            ("2", "CytoDyn Inc. shall provide manufacturing assistance to Vyera Pharmaceuticals, LLC."),
+        ],
+    )
+    index = build_text_index(doc)
+    settings = ConsistencySettings()
+    findings, stats = detect_party_inconsistencies(doc, index, settings)
+
+    # Neither Vyera Pharmaceuticals, LLC nor CytoDyn Inc. should be flagged as variant
+    assert not any(f.type == "party_name_variant" for f in findings)
+    assert stats["parties_found"] == 2
+
+
+def test_ampersand_entity_name_not_split():
+    """Entities with ampersands like 'Tate & Lyle' are not split into partial names."""
+    intro = (
+        'This Joint Venture Agreement is entered into between TATE & LYLE FERMENTATION PRODUCTS LTD '
+        '("Tate & Lyle") and IGENE BIOTECHNOLOGY, INC. ("Igene").'
+    )
+    doc = _make_doc(
+        intro,
+        [
+            ("1", "Tate & Lyle Fermentation Products Ltd shall manufacture the product."),
+            ("2", "Igene Biotechnology, Inc. shall distribute in accordance with this Agreement."),
+        ],
+    )
+    index = build_text_index(doc)
+    settings = ConsistencySettings()
+    findings, stats = detect_party_inconsistencies(doc, index, settings)
+
+    # Tate & Lyle Fermentation Products Ltd should not trigger a variant against itself
+    assert not any(f.type == "party_name_variant" for f in findings)
+
+
+def test_affiliate_and_consistent_entity_not_flagged():
+    """Consistently used affiliate entities like CPM Medical Consultants LLC are not flagged as variants."""
+    intro = (
+        'This Agreement is entered into between CPM Medical LLC ("CPM") and Apex Health Inc. ("Apex").'
+    )
+    doc = _make_doc(
+        intro,
+        [
+            ("1", "CPM Medical LLC warrants the products to Apex Health Inc."),
+            ("2", "Consulting services shall be provided by affiliate CPM Medical Consultants LLC."),
+            ("3", "All invoices from CPM Medical Consultants LLC shall be approved by Apex Health Inc."),
+        ],
+    )
+    index = build_text_index(doc)
+    settings = ConsistencySettings()
+    findings, stats = detect_party_inconsistencies(doc, index, settings)
+
+    # CPM Medical Consultants LLC appears consistently and is identified as affiliate, so not flagged
+    assert not any(f.type == "party_name_variant" for f in findings)
+

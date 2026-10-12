@@ -111,3 +111,20 @@ def test_figures_garbage_input_returns_none():
     assert parse_figure("12.34.56") is None
     assert parse_figure("three days") is None
     assert parse_figure(None) is None
+
+
+def test_words_compound_fractions_and_decimals():
+    w_frac = words_to_decimal("Four and One-Half Million Dollars")
+    assert w_frac is not None
+    assert w_frac.value == Decimal("4500000")
+    assert w_frac.currency == "USD"
+
+    w_half = words_to_decimal("One-Half Million Dollars")
+    assert w_half is not None
+    assert w_half.value == Decimal("500000")
+
+    w_dec = words_to_decimal("Zero Point five percent")
+    assert w_dec is not None
+    assert w_dec.value == Decimal("0.5")
+    assert w_dec.is_percentage is True
+

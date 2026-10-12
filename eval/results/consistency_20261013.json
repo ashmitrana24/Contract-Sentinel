@@ -1,0 +1,817 @@
+{
+  "train_val": {
+    "split_name": "Train/Val",
+    "total_documents": 400,
+    "recall_per_type": {
+      "amount_figure_only": {
+        "total": 30,
+        "flagged": 30,
+        "recall": 1.0,
+        "type_correct": 30,
+        "type_correctness_rate": 1.0,
+        "localized": 30,
+        "localization_rate": 1.0,
+        "page_localized": 30,
+        "page_localization_rate": 1.0
+      },
+      "date_shift": {
+        "total": 32,
+        "flagged": 32,
+        "recall": 1.0,
+        "type_correct": 32,
+        "type_correctness_rate": 1.0,
+        "localized": 32,
+        "localization_rate": 1.0,
+        "page_localized": 32,
+        "page_localization_rate": 1.0
+      },
+      "party_swap": {
+        "total": 40,
+        "flagged": 36,
+        "recall": 0.9,
+        "type_correct": 32,
+        "type_correctness_rate": 0.8,
+        "localized": 0,
+        "localization_rate": 0.0,
+        "page_localized": 0,
+        "page_localization_rate": 0.0
+      },
+      "clause_delete": {
+        "total": 43,
+        "flagged": 17,
+        "recall": 0.3953,
+        "type_correct": 16,
+        "type_correctness_rate": 0.3721,
+        "localized": 0,
+        "localization_rate": 0.0,
+        "page_localized": 0,
+        "page_localization_rate": 0.0
+      },
+      "xref_break": {
+        "total": 25,
+        "flagged": 25,
+        "recall": 1.0,
+        "type_correct": 25,
+        "type_correctness_rate": 1.0,
+        "localized": 0,
+        "localization_rate": 0.0,
+        "page_localized": 25,
+        "page_localization_rate": 1.0
+      }
+    },
+    "clean_synthetic": {
+      "total": 99,
+      "false_positives": 0,
+      "fpr": 0.0
+    },
+    "clean_cuad": {
+      "total": 28,
+      "false_positives": 14,
+      "fpr": 0.5
+    },
+    "expected_undetectable": {
+      "amount_both": {
+        "total": 26,
+        "flagged": 0,
+        "flag_rate": 0.0
+      },
+      "clause_insert": {
+        "total": 30,
+        "flagged": 5,
+        "flag_rate": 0.1667
+      },
+      "incremental_edit": {
+        "total": 28,
+        "flagged": 1,
+        "flag_rate": 0.0357
+      },
+      "hidden_text": {
+        "total": 32,
+        "flagged": 30,
+        "flag_rate": 0.9375
+      },
+      "metadata_anomaly": {
+        "total": 0,
+        "flagged": 0,
+        "flag_rate": 0.0
+      },
+      "active_content": {
+        "total": 0,
+        "flagged": 0,
+        "flag_rate": 0.0
+      },
+      "signature_invalid": {
+        "total": 0,
+        "flagged": 0,
+        "flag_rate": 0.0
+      },
+      "post_signature_modification": {
+        "total": 0,
+        "flagged": 0,
+        "flag_rate": 0.0
+      }
+    },
+    "latency_stats": {
+      "mean_ms": 55.2,
+      "p50_ms": 13.17,
+      "p95_ms": 323.98,
+      "p99_ms": 724.87
+    },
+    "misses_by_type": {
+      "amount_figure_only": [],
+      "date_shift": [],
+      "party_swap": [
+        {
+          "doc_id": "synth_0027_v0",
+          "tamper_types": [
+            "party_swap"
+          ],
+          "tamper_details": [
+            {
+              "tamper_type": "party_swap",
+              "page": null,
+              "clause_id": "4",
+              "original_value": "Nexus Group Corp.",
+              "tampered_value": "Nexus",
+              "subtype": "name_substitution",
+              "dangling_xrefs": [],
+              "extra": {}
+            }
+          ]
+        },
+        {
+          "doc_id": "synth_0028_v0",
+          "tamper_types": [
+            "party_swap"
+          ],
+          "tamper_details": [
+            {
+              "tamper_type": "party_swap",
+              "page": null,
+              "clause_id": "9",
+              "original_value": "Nexus Solutions Ltd.",
+              "tampered_value": "NSL",
+              "subtype": "name_substitution",
+              "dangling_xrefs": [],
+              "extra": {}
+            }
+          ]
+        },
+        {
+          "doc_id": "synth_0029_v0",
+          "tamper_types": [
+            "party_swap"
+          ],
+          "tamper_details": [
+            {
+              "tamper_type": "party_swap",
+              "page": null,
+              "clause_id": "15",
+              "original_value": "Meridian Services LLP",
+              "tampered_value": "Meridian",
+              "subtype": "name_substitution",
+              "dangling_xrefs": [],
+              "extra": {}
+            }
+          ]
+        },
+        {
+          "doc_id": "cuad_ANIXABIOSCIENCESINC_06_09_2020-EX-10.1-COLLABORATION AGREEMENT_v0",
+          "tamper_types": [
+            "party_swap"
+          ],
+          "tamper_details": [
+            {
+              "tamper_type": "party_swap",
+              "page": null,
+              "clause_id": "1",
+              "original_value": "its biological activity",
+              "tampered_value": "its Group Corp.",
+              "subtype": "name_substitution",
+              "dangling_xrefs": [],
+              "extra": {}
+            }
+          ]
+        }
+      ],
+      "clause_delete": [
+        {
+          "doc_id": "synth_0019_v0",
+          "tamper_types": [
+            "clause_delete"
+          ],
+          "tamper_details": [
+            {
+              "tamper_type": "clause_delete",
+              "page": null,
+              "clause_id": "10",
+              "original_value": "Governing Law and Jurisdiction",
+              "tampered_value": "<deleted>",
+              "subtype": "clause_removed",
+              "dangling_xrefs": [],
+              "extra": {}
+            }
+          ]
+        },
+        {
+          "doc_id": "synth_0019_v1",
+          "tamper_types": [
+            "clause_delete"
+          ],
+          "tamper_details": [
+            {
+              "tamper_type": "clause_delete",
+              "page": null,
+              "clause_id": "2",
+              "original_value": "Severability",
+              "tampered_value": "<deleted>",
+              "subtype": "clause_removed",
+              "dangling_xrefs": [],
+              "extra": {}
+            }
+          ]
+        },
+        {
+          "doc_id": "synth_0034_v2",
+          "tamper_types": [
+            "clause_delete"
+          ],
+          "tamper_details": [
+            {
+              "tamper_type": "clause_delete",
+              "page": null,
+              "clause_id": "8",
+              "original_value": "Dispute Resolution",
+              "tampered_value": "<deleted>",
+              "subtype": "clause_removed",
+              "dangling_xrefs": [],
+              "extra": {}
+            }
+          ]
+        },
+        {
+          "doc_id": "synth_0035_v1",
+          "tamper_types": [
+            "clause_delete"
+          ],
+          "tamper_details": [
+            {
+              "tamper_type": "clause_delete",
+              "page": null,
+              "clause_id": "2",
+              "original_value": "Audit Rights",
+              "tampered_value": "<deleted>",
+              "subtype": "clause_removed",
+              "dangling_xrefs": [],
+              "extra": {}
+            }
+          ]
+        },
+        {
+          "doc_id": "synth_0042_v0",
+          "tamper_types": [
+            "clause_delete",
+            "amount_both"
+          ],
+          "tamper_details": [
+            {
+              "tamper_type": "clause_delete",
+              "page": null,
+              "clause_id": "5",
+              "original_value": "Data Protection",
+              "tampered_value": "<deleted>",
+              "subtype": "clause_removed",
+              "dangling_xrefs": [],
+              "extra": {}
+            },
+            {
+              "tamper_type": "amount_both",
+              "page": null,
+              "clause_id": "4",
+              "original_value": "Rs. 1,64,00,000 (Rupees One crore, sixty-four lakh Only)",
+              "tampered_value": "Rs. 69,00,000 (Rupees Sixty-nine lakh Only)",
+              "subtype": "consistent_change",
+              "dangling_xrefs": [],
+              "extra": {}
+            }
+          ]
+        }
+      ],
+      "xref_break": []
+    },
+    "cuad_clean_fp_docs": [
+      {
+        "doc_id": "cuad_AimmuneTherapeuticsInc_20200205_8-K_EX-10.3_11967170_EX-10.3_Development Agreement_clean",
+        "findings": [
+          {
+            "type": "numbering_gap",
+            "severity": "high",
+            "clause_ref": "1",
+            "page": 1,
+            "evidence": "Missing clause 1 between clause 0 and clause 2 (cross-referenced by dangling reference to '1')",
+            "explanation": "Clause numbering gap: clause 1 is missing between clause 0 and clause 2, and a cross-reference specifically points to missing clause 1."
+          }
+        ]
+      },
+      {
+        "doc_id": "cuad_AMBASSADOREYEWEARGROUPINC_11_17_1997-EX-10.28-ENDORSEMENT AGREEMENT_clean",
+        "findings": [
+          {
+            "type": "dangling_reference",
+            "severity": "medium",
+            "clause_ref": "21",
+            "page": 8,
+            "evidence": "Target '22' referenced in: eement, except as provided in paragraphs 8 and 22. 23. Additional Endorsers. If",
+            "explanation": "Cross-reference to '22' in clause(s) 21 cannot be resolved: no clause with identifier '22' exists in the contract."
+          },
+          {
+            "type": "dangling_reference",
+            "severity": "medium",
+            "clause_ref": "21",
+            "page": 8,
+            "evidence": "Target '14' referenced in: edial and other provisions of paragraph 14 of this Agreement.",
+            "explanation": "Cross-reference to '14' in clause(s) 21 cannot be resolved: no clause with identifier '14' exists in the contract."
+          },
+          {
+            "type": "numbering_gap",
+            "severity": "high",
+            "clause_ref": "14",
+            "page": 6,
+            "evidence": "Missing clause 14 between clause 13 and clause 15 (cross-referenced by dangling reference to '14')",
+            "explanation": "Clause numbering gap: clause 14 is missing between clause 13 and clause 15, and a cross-reference specifically points to missing clause 14."
+          },
+          {
+            "type": "numbering_gap",
+            "severity": "high",
+            "clause_ref": "22",
+            "page": 8,
+            "evidence": "Missing clause 22 between clause 21 and clause 23 (cross-referenced by dangling reference to '22')",
+            "explanation": "Clause numbering gap: clause 22 is missing between clause 21 and clause 23, and a cross-reference specifically points to missing clause 22."
+          }
+        ]
+      },
+      {
+        "doc_id": "cuad_AzulSa_20170303_F-1A_EX-10.3_9943903_EX-10.3_Maintenance Agreement1_clean",
+        "findings": [
+          {
+            "type": "dangling_reference",
+            "severity": "medium",
+            "clause_ref": "23.1",
+            "page": 21,
+            "evidence": "Target '20' referenced in: obligation; 23.3.5 Subject to Clause 20 (\"Confidentiality\"), it will ",
+            "explanation": "Cross-reference to '20' in clause(s) 23.1 cannot be resolved: no clause with identifier '20' exists in the contract."
+          },
+          {
+            "type": "numbering_gap",
+            "severity": "high",
+            "clause_ref": "20",
+            "page": 18,
+            "evidence": "Missing clause 20 between clause 19 and clause 21 (cross-referenced by dangling reference to '20')",
+            "explanation": "Clause numbering gap: clause 20 is missing between clause 19 and clause 21, and a cross-reference specifically points to missing clause 20."
+          }
+        ]
+      },
+      {
+        "doc_id": "cuad_AzulSa_20170303_F-1A_EX-10.3_9943903_EX-10.3_Maintenance Agreement2_clean",
+        "findings": [
+          {
+            "type": "dangling_reference",
+            "severity": "medium",
+            "clause_ref": "2",
+            "page": 1,
+            "evidence": "Target '12.1' referenced in: VOICING\nAND PAYMENT TERMS (i) Clause 12.1(ii) of the GMA shall be cancelled",
+            "explanation": "Cross-reference to '12.1' in clause(s) 2 cannot be resolved: no clause with identifier '12.1' exists in the contract."
+          },
+          {
+            "type": "dangling_reference",
+            "severity": "medium",
+            "clause_ref": "2",
+            "page": 1,
+            "evidence": "Target '12' referenced in: ] (ii) Any other provision of Clause 12 shall remain in full force an",
+            "explanation": "Cross-reference to '12' in clause(s) 2 cannot be resolved: no clause with identifier '12' exists in the contract."
+          }
+        ]
+      },
+      {
+        "doc_id": "cuad_BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT_clean",
+        "findings": [
+          {
+            "type": "dangling_reference",
+            "severity": "medium",
+            "clause_ref": "11.1",
+            "page": 6,
+            "evidence": "Target '13' referenced in:  including\nthose set forth in paragraphs 13 - 15, and (in the case of the sepa (and 2 other occurrence(s))",
+            "explanation": "Cross-reference to '13' in clause(s) 11.1, 14.1 cannot be resolved: no clause with identifier '13' exists in the contract (referenced 3 times)."
+          },
+          {
+            "type": "numbering_gap",
+            "severity": "high",
+            "clause_ref": "13",
+            "page": 1,
+            "evidence": "Missing clause 13 between clause 12 and clause 14 (cross-referenced by dangling reference to '13')",
+            "explanation": "Clause numbering gap: clause 13 is missing between clause 12 and clause 14, and a cross-reference specifically points to missing clause 13."
+          }
+        ]
+      },
+      {
+        "doc_id": "cuad_CardlyticsInc_20180112_S-1_EX-10.16_11002987_EX-10.16_Maintenance Agreement1_clean",
+        "findings": [
+          {
+            "type": "dangling_reference",
+            "severity": "medium",
+            "clause_ref": "2.1",
+            "page": 6,
+            "evidence": "Target 'B' referenced in: er as outlined\nin Schedule A, Section B. Upon delivery, Bank of Ameri",
+            "explanation": "Cross-reference to 'B' in clause(s) 2.1 cannot be resolved: no clause with identifier 'B' exists in the contract."
+          }
+        ]
+      },
+      {
+        "doc_id": "cuad_CYBERIANOUTPOSTINC_07_09_1998-EX-10.13-PROMOTION AGREEMENT_clean",
+        "findings": [
+          {
+            "type": "numbering_gap",
+            "severity": "high",
+            "clause_ref": "4",
+            "page": 1,
+            "evidence": "Missing clause 4 between clause 3 and clause 5 (cross-referenced by dangling reference to '4')",
+            "explanation": "Clause numbering gap: clause 4 is missing between clause 3 and clause 5, and a cross-reference specifically points to missing clause 4."
+          }
+        ]
+      },
+      {
+        "doc_id": "cuad_DovaPharmaceuticalsInc_20181108_10-Q_EX-10.2_11414857_EX-10.2_Promotion Agreement_clean",
+        "findings": [
+          {
+            "type": "numbering_gap",
+            "severity": "high",
+            "clause_ref": "2",
+            "page": 1,
+            "evidence": "Missing clause 2 between clause 1 and clause 3 (cross-referenced by dangling reference to '2')",
+            "explanation": "Clause numbering gap: clause 2 is missing between clause 1 and clause 3, and a cross-reference specifically points to missing clause 2."
+          }
+        ]
+      },
+      {
+        "doc_id": "cuad_ELANDIAINTERNATIONALINC_04_25_2007-EX-10.21-Outsourcing Agreement_clean",
+        "findings": [
+          {
+            "type": "dangling_reference",
+            "severity": "medium",
+            "clause_ref": "1.1",
+            "page": 1,
+            "evidence": "Target '14' referenced in: \ngenerally in accordance with section 14 . 1.5 Hours of Support The no (and 1 other occurrence(s))",
+            "explanation": "Cross-reference to '14' in clause(s) 1.1, 14.1 cannot be resolved: no clause with identifier '14' exists in the contract (referenced 2 times)."
+          }
+        ]
+      },
+      {
+        "doc_id": "cuad_ENTERTAINMENTGAMINGASIAINC_02_15_2005-EX-10.5-DISTRIBUTOR AGREEMENT_clean",
+        "findings": [
+          {
+            "type": "dangling_reference",
+            "severity": "medium",
+            "clause_ref": "3",
+            "page": 4,
+            "evidence": "Target '2' referenced in: right and license provided in Section 2 of this Agreement, Distributo",
+            "explanation": "Cross-reference to '2' in clause(s) 3 cannot be resolved: no clause with identifier '2' exists in the contract."
+          },
+          {
+            "type": "dangling_reference",
+            "severity": "medium",
+            "clause_ref": "3",
+            "page": 4,
+            "evidence": "Target '5' referenced in: h the parameters set forth in Sections 5 and 6 of this Agreement; 3.2.\nDistr",
+            "explanation": "Cross-reference to '5' in clause(s) 3 cannot be resolved: no clause with identifier '5' exists in the contract."
+          },
+          {
+            "type": "dangling_reference",
+            "severity": "medium",
+            "clause_ref": "3",
+            "page": 4,
+            "evidence": "Target '6' referenced in: h the parameters set forth in Sections 5 and 6 of this Agreement; 3.2.\nDistr",
+            "explanation": "Cross-reference to '6' in clause(s) 3 cannot be resolved: no clause with identifier '6' exists in the contract."
+          },
+          {
+            "type": "numbering_gap",
+            "severity": "high",
+            "clause_ref": "2",
+            "page": 2,
+            "evidence": "Missing clause 2 between clause 1 and clause 3 (cross-referenced by dangling reference to '2')",
+            "explanation": "Clause numbering gap: clause 2 is missing between clause 1 and clause 3, and a cross-reference specifically points to missing clause 2."
+          },
+          {
+            "type": "numbering_gap",
+            "severity": "high",
+            "clause_ref": "5",
+            "page": 6,
+            "evidence": "Missing clause 5 between clause 4 and clause 6 (cross-referenced by dangling reference to '5')",
+            "explanation": "Clause numbering gap: clause 5 is missing between clause 4 and clause 6, and a cross-reference specifically points to missing clause 5."
+          },
+          {
+            "type": "numbering_gap",
+            "severity": "high",
+            "clause_ref": "6",
+            "page": 1,
+            "evidence": "Missing clause 6 between clause 5 and clause 7 (cross-referenced by dangling reference to '6')",
+            "explanation": "Clause numbering gap: clause 6 is missing between clause 5 and clause 7, and a cross-reference specifically points to missing clause 6."
+          }
+        ]
+      },
+      {
+        "doc_id": "cuad_FuseMedicalInc_20190321_10-K_EX-10.43_11575454_EX-10.43_Distributor Agreement_clean",
+        "findings": [
+          {
+            "type": "figure_words_mismatch",
+            "severity": "medium",
+            "clause_ref": "Schedule 4",
+            "page": 3,
+            "evidence": "thirty (45) in snippet: 's within thirty (45) days of the date of'",
+            "explanation": "The amount in words (thirty = 30) does not match the amount in figures (45 = 45) in clause Schedule 4."
+          },
+          {
+            "type": "party_name_variant",
+            "severity": "medium",
+            "clause_ref": "24.1",
+            "page": 9,
+            "evidence": "Found 'CPM Medical LLC' (expected party 'CPM Medical Consultants LLC Source: FUSE') in:  Director\nName (please print) SIGNED by CPM Medical LLC ) ) ) ) ) Director/Secretary Name (plea",
+            "explanation": "Party name variant 'CPM Medical LLC' differs from defined party 'CPM Medical Consultants LLC Source: FUSE' (similarity 100.0%)."
+          }
+        ]
+      },
+      {
+        "doc_id": "cuad_GRANTIERRAENERGYINC_05_07_2012-EX-10.6-TRANSPORTATION CONTRACT_clean",
+        "findings": [
+          {
+            "type": "duplicate_clause_number",
+            "severity": "medium",
+            "clause_ref": "3",
+            "page": 3,
+            "evidence": "Clause 3 appears 2 times: 'VOLUMETRIC COMPENSATION FOR QUALITY - CVC' (page 1), 'Crude Oil delivered by the Pipeline' (page 3)",
+            "explanation": "Duplicate clause number: clause 3 is used multiple times in the document (2 occurrences)."
+          }
+        ]
+      },
+      {
+        "doc_id": "cuad_GSVINC_05_15_1998-EX-10-SPONSORSHIP AGREEMENT_clean",
+        "findings": [
+          {
+            "type": "dangling_reference",
+            "severity": "medium",
+            "clause_ref": "5",
+            "page": 5,
+            "evidence": "Target '7' referenced in: his Agreement as described in Sections 7(a) and 7(b). Should\nthese results differ  (and 3 other occurrence(s))",
+            "explanation": "Cross-reference to '7' in clause(s) 5 cannot be resolved: no clause with identifier '7' exists in the contract (referenced 4 times)."
+          },
+          {
+            "type": "numbering_gap",
+            "severity": "high",
+            "clause_ref": "7",
+            "page": 1,
+            "evidence": "Missing clause 7 between clause 6 and clause 8 (cross-referenced by dangling reference to '7')",
+            "explanation": "Clause numbering gap: clause 7 is missing between clause 6 and clause 8, and a cross-reference specifically points to missing clause 7."
+          }
+        ]
+      },
+      {
+        "doc_id": "cuad_HarpoonTherapeuticsInc_20200312_10-K_EX-10.18_12051356_EX-10.18_Development Agreement_clean",
+        "findings": [
+          {
+            "type": "party_name_variant",
+            "severity": "medium",
+            "clause_ref": "Schedule 10.13.8.1",
+            "page": 43,
+            "evidence": "Found 'AbbVie Inc' (expected party 'ABBVIE BIOTECHNOLOGY LTD Dated') in: (which shall not\nconstitute notice) to: AbbVie Inc. 1 North Waukegan Road North Chicago, I",
+            "explanation": "Party name variant 'AbbVie Inc' differs from defined party 'ABBVIE BIOTECHNOLOGY LTD Dated' (similarity 100.0%)."
+          },
+          {
+            "type": "numbering_gap",
+            "severity": "high",
+            "clause_ref": "1",
+            "page": 1,
+            "evidence": "Missing clause 1 between clause 0 and clause 2 (cross-referenced by dangling reference to '1')",
+            "explanation": "Clause numbering gap: clause 1 is missing between clause 0 and clause 2, and a cross-reference specifically points to missing clause 1."
+          }
+        ]
+      }
+    ]
+  },
+  "test": {
+    "split_name": "Held-out Test",
+    "total_documents": 74,
+    "recall_per_type": {
+      "amount_figure_only": {
+        "total": 3,
+        "flagged": 3,
+        "recall": 1.0,
+        "type_correct": 3,
+        "type_correctness_rate": 1.0,
+        "localized": 3,
+        "localization_rate": 1.0,
+        "page_localized": 3,
+        "page_localization_rate": 1.0
+      },
+      "date_shift": {
+        "total": 2,
+        "flagged": 2,
+        "recall": 1.0,
+        "type_correct": 2,
+        "type_correctness_rate": 1.0,
+        "localized": 2,
+        "localization_rate": 1.0,
+        "page_localized": 2,
+        "page_localization_rate": 1.0
+      },
+      "party_swap": {
+        "total": 7,
+        "flagged": 7,
+        "recall": 1.0,
+        "type_correct": 7,
+        "type_correctness_rate": 1.0,
+        "localized": 7,
+        "localization_rate": 1.0,
+        "page_localized": 7,
+        "page_localization_rate": 1.0
+      },
+      "clause_delete": {
+        "total": 9,
+        "flagged": 3,
+        "recall": 0.3333,
+        "type_correct": 2,
+        "type_correctness_rate": 0.2222,
+        "localized": 0,
+        "localization_rate": 0.0,
+        "page_localized": 0,
+        "page_localization_rate": 0.0
+      },
+      "xref_break": {
+        "total": 7,
+        "flagged": 7,
+        "recall": 1.0,
+        "type_correct": 7,
+        "type_correctness_rate": 1.0,
+        "localized": 7,
+        "localization_rate": 1.0,
+        "page_localized": 7,
+        "page_localization_rate": 1.0
+      }
+    },
+    "clean_synthetic": {
+      "total": 21,
+      "false_positives": 0,
+      "fpr": 0.0
+    },
+    "clean_cuad": {
+      "total": 2,
+      "false_positives": 0,
+      "fpr": 0.0
+    },
+    "expected_undetectable": {
+      "amount_both": {
+        "total": 8,
+        "flagged": 0,
+        "flag_rate": 0.0
+      },
+      "clause_insert": {
+        "total": 8,
+        "flagged": 1,
+        "flag_rate": 0.125
+      },
+      "incremental_edit": {
+        "total": 3,
+        "flagged": 0,
+        "flag_rate": 0.0
+      },
+      "hidden_text": {
+        "total": 6,
+        "flagged": 5,
+        "flag_rate": 0.8333
+      },
+      "metadata_anomaly": {
+        "total": 0,
+        "flagged": 0,
+        "flag_rate": 0.0
+      },
+      "active_content": {
+        "total": 0,
+        "flagged": 0,
+        "flag_rate": 0.0
+      },
+      "signature_invalid": {
+        "total": 0,
+        "flagged": 0,
+        "flag_rate": 0.0
+      },
+      "post_signature_modification": {
+        "total": 0,
+        "flagged": 0,
+        "flag_rate": 0.0
+      }
+    },
+    "latency_stats": {
+      "mean_ms": 54.51,
+      "p50_ms": 22.36,
+      "p95_ms": 374.0,
+      "p99_ms": 583.79
+    },
+    "misses_by_type": {
+      "amount_figure_only": [],
+      "date_shift": [],
+      "party_swap": [],
+      "clause_delete": [
+        {
+          "doc_id": "synth_0003_v0",
+          "tamper_types": [
+            "clause_delete"
+          ],
+          "tamper_details": [
+            {
+              "tamper_type": "clause_delete",
+              "page": null,
+              "clause_id": "2",
+              "original_value": "Force Majeure",
+              "tampered_value": "<deleted>",
+              "subtype": "clause_removed",
+              "dangling_xrefs": [],
+              "extra": {}
+            }
+          ]
+        },
+        {
+          "doc_id": "synth_0056_v0",
+          "tamper_types": [
+            "clause_delete"
+          ],
+          "tamper_details": [
+            {
+              "tamper_type": "clause_delete",
+              "page": null,
+              "clause_id": "7",
+              "original_value": "Payment Terms",
+              "tampered_value": "<deleted>",
+              "subtype": "clause_removed",
+              "dangling_xrefs": [],
+              "extra": {}
+            }
+          ]
+        },
+        {
+          "doc_id": "synth_0096_v2",
+          "tamper_types": [
+            "clause_delete"
+          ],
+          "tamper_details": [
+            {
+              "tamper_type": "clause_delete",
+              "page": null,
+              "clause_id": "3",
+              "original_value": "Limitation of Liability",
+              "tampered_value": "<deleted>",
+              "subtype": "clause_removed",
+              "dangling_xrefs": [],
+              "extra": {}
+            }
+          ]
+        },
+        {
+          "doc_id": "synth_0099_v1",
+          "tamper_types": [
+            "clause_delete"
+          ],
+          "tamper_details": [
+            {
+              "tamper_type": "clause_delete",
+              "page": null,
+              "clause_id": "8",
+              "original_value": "Entire Agreement",
+              "tampered_value": "<deleted>",
+              "subtype": "clause_removed",
+              "dangling_xrefs": [],
+              "extra": {}
+            }
+          ]
+        },
+        {
+          "doc_id": "synth_0101_v0",
+          "tamper_types": [
+            "clause_delete"
+          ],
+          "tamper_details": [
+            {
+              "tamper_type": "clause_delete",
+              "page": null,
+              "clause_id": "13",
+              "original_value": "Assignment",
+              "tampered_value": "<deleted>",
+              "subtype": "clause_removed",
+              "dangling_xrefs": [],
+              "extra": {}
+            }
+          ]
+        }
+      ],
+      "xref_break": []
+    },
+    "cuad_clean_fp_docs": []
+  }
+}

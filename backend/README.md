@@ -391,7 +391,6 @@ Module 4 checks whether a contract contradicts **itself**: verifying agreement b
    - **`DATE001` (`effective_date_conflict`, `HIGH`)**: Conflicting effective dates stated across preamble recitals and operational clauses.
    - **`DATE002` (`date_order_conflict`, `CRITICAL`)**: Termination or expiration date precedes the effective commencement date.
    - **`DATE003` (`term_length_conflict`, `MEDIUM`)**: Stated term duration (e.g. "for a period of 12 months") contradicts the computed calendar duration between effective and termination dates.
-   - **`DATE004` (`governing_law_year_conflict`, `MEDIUM`)**: Referenced statutory act year post-dates execution or effective date.
 3. **Party Name Variations** (`clauseguard.consistency.parties`):
    - **`PRT001` (`party_name_variant`, `HIGH`)**: Uses `rapidfuzz` token ratio matching ($\ge 85\%$) to detect altered entity names across clauses (e.g., swapping "Stellar Systems Pvt. Ltd." with "Stellar Networks Pvt. Ltd.").
    - **`PRT002` (`party_case_mismatch`, `LOW`)**: Capitalization variations for formal corporate names.

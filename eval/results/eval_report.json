@@ -33,10 +33,10 @@
     "incremental_evidence_tampered_value_rate": 1.0,
     "incremental_evidence_matches": 10,
     "latency_stats": {
-      "mean_ms": 16.07,
-      "p50_ms": 6.59,
-      "p95_ms": 64.09,
-      "p99_ms": 137.33
+      "mean_ms": 17.48,
+      "p50_ms": 7.43,
+      "p95_ms": 71.6,
+      "p99_ms": 141.11
     },
     "misses": [],
     "false_positives": []
@@ -75,10 +75,10 @@
     "incremental_evidence_tampered_value_rate": 1.0,
     "incremental_evidence_matches": 2,
     "latency_stats": {
-      "mean_ms": 23.49,
-      "p50_ms": 7.2,
-      "p95_ms": 78.08,
-      "p99_ms": 169.25
+      "mean_ms": 25.33,
+      "p50_ms": 8.07,
+      "p95_ms": 83.31,
+      "p99_ms": 186.35
     },
     "misses": [],
     "false_positives": []
