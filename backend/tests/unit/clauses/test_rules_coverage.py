@@ -21,6 +21,7 @@ Tests at least 5 positive and at least 3 negative sentences per label:
 """
 
 import pytest
+
 from clauseguard.clauses.rules import classify_clause_rules
 
 

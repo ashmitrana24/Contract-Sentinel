@@ -89,6 +89,29 @@ class FileStore:
         """Return True if *storage_key* is present in the store."""
         return _key_to_path(self._root, storage_key).exists()
 
+    def get_path(self, storage_key: str) -> Path:
+        """Return the filesystem path for *storage_key*."""
+        return _key_to_path(self._root, storage_key)
+
+    def delete(self, storage_key: str) -> bool:
+        """Delete file associated with *storage_key*. Returns True if deleted, False if did not exist."""
+        try:
+            path = _key_to_path(self._root, storage_key)
+            if path.exists():
+                path.unlink()
+                # Clean up parent 2-char directory if empty
+                if path.parent != self._root:
+                    try:
+                        if not any(path.parent.iterdir()):
+                            path.parent.rmdir()
+                    except OSError:
+                        pass
+                logger.debug("FileStore: deleted %s", storage_key)
+                return True
+        except Exception as exc:
+            logger.warning("Failed to delete file for key %s: %s", storage_key, exc)
+        return False
+
     @property
     def root(self) -> Path:
         return self._root

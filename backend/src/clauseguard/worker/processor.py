@@ -36,6 +36,7 @@ from clauseguard.db.models import (
     FindingRow,
     Job,
     Page,
+    RiskSummaryRow,
 )
 from clauseguard.db.session import get_session
 from clauseguard.forensics.models import ForensicsSettings
@@ -43,6 +44,7 @@ from clauseguard.forensics.run import analyze
 from clauseguard.parsing.parse_document import ParseError, parse_document
 from clauseguard.queue import backoff as qb
 from clauseguard.queue import streams as qs
+from clauseguard.risk.aggregate import summarize
 from clauseguard.storage.file_store import FileStore
 
 logger = logging.getLogger(__name__)
@@ -254,6 +256,7 @@ def _execute_parsing(
         session.execute(delete(AnalysisRun).where(AnalysisRun.document_id == document_id))
         session.execute(delete(ClauseLabelRow).where(ClauseLabelRow.document_id == document_id))
         session.execute(delete(DocumentAttributeRow).where(DocumentAttributeRow.document_id == document_id))
+        session.execute(delete(RiskSummaryRow).where(RiskSummaryRow.document_id == document_id))
 
         # Insert pages
         page_entities = [
@@ -407,6 +410,57 @@ def _execute_parsing(
                 },
             )
             session.add(cl_run_entity)
+
+        # Compute and persist Risk Summary (Module 8)
+        all_raw_findings = []
+        if forensics_report is not None:
+            all_raw_findings.extend(forensics_report.findings)
+        if consistency_report is not None:
+            all_raw_findings.extend(consistency_report.findings)
+
+        cov_runs = []
+        if forensics_report is not None:
+            cov_runs.append({
+                "module": "pdf_forensics",
+                "status": forensics_report.status,
+                "detector_status": {"detectors": [d.model_dump() for d in forensics_report.detectors]},
+            })
+        if consistency_report is not None:
+            cov_runs.append({
+                "module": "consistency",
+                "status": consistency_report.status,
+                "detector_status": {"detectors": [d.model_dump() for d in consistency_report.detectors]},
+            })
+        elif consistency_error is not None:
+            cov_runs.append({
+                "module": "consistency",
+                "status": "error",
+                "error": consistency_error,
+            })
+        if cfg.clauses_enabled:
+            cov_runs.append({
+                "module": "clauses",
+                "status": "ok" if clauses_error is None else "error",
+                "error": clauses_error,
+            })
+
+        cov_inputs = {
+            "needs_ocr": parsed.needs_ocr,
+            "clause_count": len(parsed.clauses),
+            "unsegmented": len(parsed.clauses) < 2 or any(c.kind == "unsegmented" for c in parsed.clauses),
+            "analysis_runs": cov_runs,
+        }
+
+        risk_res = summarize(all_raw_findings, cov_inputs, cfg)
+        session.add(
+            RiskSummaryRow(
+                document_id=document_id,
+                score=risk_res.score,
+                band=risk_res.band,
+                summary=risk_res.model_dump(mode="json"),
+                version=risk_res.version,
+            )
+        )
 
         # Update document metadata and OCR flag
         d = session.get(Document, document_id)

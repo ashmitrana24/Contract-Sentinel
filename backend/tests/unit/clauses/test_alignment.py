@@ -1,6 +1,5 @@
 """Unit tests for CUAD character-offset clause alignment."""
 
-import pytest
 from clauseguard.clauses.training.cuad_data import extract_contract_clauses
 
 

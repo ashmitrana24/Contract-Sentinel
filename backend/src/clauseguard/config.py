@@ -117,6 +117,29 @@ class Settings(BaseSettings):
         description="Per-document time budget for clause classification (seconds)",
     )
 
+    # --- CORS ---
+    cors_origins: list[str] | str = Field(
+        default=["http://localhost:3000"],
+        description="Allowed CORS origins",
+    )
+
+    # --- Risk Scoring (Module 8) ---
+    risk_weight_critical: int = Field(default=40, description="Weight for critical severity findings")
+    risk_weight_high: int = Field(default=20, description="Weight for high severity findings")
+    risk_weight_medium: int = Field(default=8, description="Weight for medium severity findings")
+    risk_diminishing_rate: float = Field(default=0.25, description="Multiplier for repeated findings of same type")
+    risk_type_cap_factor: float = Field(default=2.0, description="Cap multiplier on base weight per finding type")
+    risk_high_threshold: int = Field(default=60, description="Score threshold for high risk band")
+    risk_medium_threshold: int = Field(default=8, description="Score threshold for medium risk band")
+    risk_tampering_high_escalation: bool = Field(default=True, description="Whether high severity tampering findings escalate to high band")
+    risk_version: str = Field(default="1.0.0", description="Risk summary engine version")
+
+    @property
+    def cors_origins_list(self) -> list[str]:
+        if isinstance(self.cors_origins, list):
+            return self.cors_origins
+        return [o.strip() for o in self.cors_origins.split(",") if o.strip()]
+
 
 _settings: Settings | None = None
 

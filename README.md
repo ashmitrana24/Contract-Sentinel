@@ -8,9 +8,10 @@ ClauseGuard is an enterprise contract integrity and risk analysis platform desig
 
 ```
 legal-doc/
-├── README.md                      # Platform overview and quick reference
-├── DECISIONS.md                   # Architectural decisions and engineering rationales
-├── docker-compose.yml             # Postgres, Redis, API, and Worker orchestration
+├── README.md                      # Platform overview, visual gallery, and quick reference
+├── DECISIONS.md                   # Architectural decisions and engineering rationales (D-01 to D-30)
+├── docker-compose.yml             # Postgres, Redis, API, Worker, and Next.js Web App orchestration
+├── docs/screenshots/              # Full-page screenshots (Desktop/Mobile, Light/Dark)
 ├── data/generated/                # Labeled ground-truth clean & tampered contracts
 ├── datagen/                       # MODULE 1: Synthetic Dataset & Forgery Generator
 │   ├── pyproject.toml
@@ -18,36 +19,38 @@ legal-doc/
 │   ├── DECISIONS.md
 │   ├── src/datagen/               # Synthesizer, ReportLab renderer, tamper pipeline
 │   └── tests/                     # 85 tests: quality gates, labels, and tamper verifiers
-└── backend/                       # MODULES 2 & 3: Ingestion, Pipeline & Forensics Engine
-    ├── pyproject.toml
-    ├── alembic.ini                # PostgreSQL schema migrations
-    ├── Dockerfile                 # Container image for API, Worker, and Sweeper
-    ├── README.md                  # In-depth ingestion, API walkthrough, benchmarks
-    ├── DECISIONS.md               # Architecture decision records
-    ├── alembic/                   # Database migrations (0001_initial, 0002_forensics)
-    ├── eval/                      # Evaluation harness & synthetic document generators
-    │   ├── forensics_eval.py      # Real dataset benchmark runner & markdown reporter
-    │   └── synthetic.py           # 17 standalone PDF scenario builders (clean & tampered)
-    ├── src/clauseguard/
-    │   ├── config.py              # Pydantic v2 settings & dynamic environment overrides
-    │   ├── db/                    # SQLAlchemy 2.0 models (FindingRow, AnalysisRun, etc.)
-    │   ├── storage/               # SHA-256 content-addressed atomic FileStore
-    │   ├── parsing/               # PyMuPDF span extractor, NFC normalizer, clause segmenter
-    │   ├── queue/                 # Redis Streams, consumer groups, full-jitter backoff
-    │   ├── api/                   # FastAPI upload, pagination, findings query, healthz
-    │   ├── worker/                # Resilient workers, crash recovery, stuck job sweeper
-    │   ├── schemas/               # Pydantic models (Findings, ParsedDocument, API)
-    │   ├── forensics/             # MODULE 3: PDF Structure Forensics Engine
-    │   │   ├── models.py          # Typed dataclasses (ForensicsSettings, ForensicsReport)
-    │   │   ├── revisions.py       # Binary %%EOF scanner & revision prefix validator
-    │   │   ├── incremental.py     # Token diffing, monetary/date escalation, AcroForm check
-    │   │   ├── text_hiding.py     # Type=3, sub-2pt, off-page, WCAG contrast, white-outs
-    │   │   ├── signatures.py      # PyHanko cryptographic digest & DocMDP verification
-    │   │   ├── metadata.py        # Timestamp chronology, clock-skew, producer anomaly
-    │   │   ├── active_content.py  # JavaScript, /Launch, /OpenAction, annotation masks
-    │   │   └── run.py             # Time-budgeted orchestrator & standalone CLI
-    │   └── bench/                 # High-concurrency throughput and latency benchmark
-    └── tests/                     # 95 tests: Unit, Benign Suite, and Live Integration
+├── backend/                       # MODULES 2, 3, 4, 5 & 8: Pipeline, Forensics, Consistency, Clauses & Risk
+│   ├── pyproject.toml
+│   ├── alembic.ini                # PostgreSQL schema migrations
+│   ├── Dockerfile                 # Container image for API, Worker, and Sweeper
+│   ├── README.md                  # In-depth pipeline, API walkthrough, benchmarks
+│   ├── DECISIONS.md               # Architecture decision records
+│   ├── alembic/                   # Database migrations (0001_initial to 0004_risk_summary)
+│   ├── eval/                      # Evaluation harness & benchmarks (forensics, consistency, risk)
+│   ├── src/clauseguard/
+│   │   ├── config.py              # Pydantic v2 settings & dynamic environment overrides
+│   │   ├── db/                    # SQLAlchemy 2.0 models (Document, Job, Finding, RiskSummary)
+│   │   ├── storage/               # SHA-256 content-addressed atomic FileStore
+│   │   ├── parsing/               # PyMuPDF span extractor, NFC normalizer, clause segmenter
+│   │   ├── queue/                 # Redis Streams, consumer groups, full-jitter backoff
+│   │   ├── api/                   # FastAPI endpoints (upload, documents, risk, findings, clauses)
+│   │   ├── worker/                # Resilient workers, crash recovery, stuck job sweeper
+│   │   ├── forensics/             # MODULE 3: PDF Structure Forensics Engine
+│   │   ├── consistency/           # MODULE 4: Semantic & Structural Consistency Engine
+│   │   ├── clauses/               # MODULE 5: Multi-Label Clause Classifier & Key-Term Extractor
+│   │   └── risk/                  # MODULE 8: Finding Catalog, Aggregator & Highlight Locator
+│   └── tests/                     # 472+ tests: Unit (449) and Integration (23) suites
+└── frontend/                      # MODULE 9: Web Application & Review Workbench
+    ├── package.json               # Next.js 16, Tailwind CSS v4, TanStack Query, react-pdf
+    ├── Dockerfile                 # Multi-stage production container build
+    ├── README.md                  # Frontend architecture, components, and workflows
+    ├── public/                    # Bundled PDF worker and synthetic contract samples
+    ├── src/
+    │   ├── app/                   # Next.js App Router (Homepage and Document Report)
+    │   ├── components/            # UI components (Workbench, PDF Viewer, Stepper, Tabs)
+    │   └── lib/                   # API client, OpenAPI types, and PDF coordinate math
+    ├── tests/                     # Vitest unit test suite (18 tests)
+    └── e2e/                       # Playwright end-to-end and Axe accessibility tests
 ```
 
 ---
@@ -170,61 +173,118 @@ Never guesses; returns `None` / empty when terms are silent or ambiguous:
 
 Complete per-label performance, 95% Wilson intervals, and error breakdowns are recorded in [`backend/models/clauses/v1/metrics.json`](file:///c:/Users/Loq/Desktop/Projects/legal-doc/backend/models/clauses/v1/metrics.json).
 
+### [Module 8: Transparent Risk Summary (`backend/src/clauseguard/risk/`)](file:///c:/Users/Loq/Desktop/Projects/legal-doc/backend/src/clauseguard/risk/)
+Deterministic risk aggregation, human-readable cataloging, and coordinate highlight resolution:
+- **Finding Catalog**: Maps every detector finding to plain English title, `what_it_means`, and `what_to_check`.
+- **Deterministic Aggregator**: Weights (Critical: 40, High: 20, Medium: 8) with diminishing returns (1st instance 100%, each additional 25%, 2x cap per type). Low and uncertain findings are categorized as minor notes and never scored.
+- **Coverage & Reliability Warnings**: Checks `needs_ocr`, segmentation quality, and detector execution status, flagging a visible warning banner and asterisk when analysis is partial.
+- **Evidence-Driven Highlights**: Top-left PyMuPDF points with multi-span text search, exact token clipping, clause-level heading fallbacks, and rotated page support.
+- **Reviewer Feedback**: Persists reviewer verdicts (`confirmed` / `dismissed`) with notes per finding.
+
+### [Module 9: Web Application & Review Workbench (`frontend/`)](file:///c:/Users/Loq/Desktop/Projects/legal-doc/frontend/)
+A polished contract integrity review workbench built with Next.js 16 (App Router), TypeScript, Tailwind CSS v4, Radix UI, TanStack Query, and react-pdf:
+- **Review Workbench Principle**: Designed specifically as a review workbench to show human reviewers what to look at and why. **It never claims that a contract is fraudulent or legally sound.**
+- **Risk Band Guidance**: The risk band indicates how much manual review is recommended (Low = "No significant issues found", Medium = "Review recommended", High = "Needs careful review"), not whether legal fraud occurred.
+- **Privacy & Security**: Zero third-party network calls, zero tracking/analytics, no CDN scripts. PDF documents are streamed strictly inline from our own API. Local storage is strictly used for theme preference.
+- **Responsive & Accessible**: Continuous PDF scroll, zoom controls, coordinate-scaled highlight overlays (dashed for approximate, pulsing for active), split view resizable workbench (55/45 desktop, tabbed mobile), dark/light mode toggle, and WCAG AA compliance with zero axe accessibility violations.
+
+---
+
+## Web App
+
+### Visual Gallery
+
+| View | Light Theme | Dark Theme |
+| :--- | :--- | :--- |
+| **Workbench (Desktop)** | ![Report Desktop Light](docs/screenshots/home-desktop-light.png) | ![Report Desktop Dark](docs/screenshots/home-desktop-dark.png) |
+| **Contract Report (Desktop)** | ![Report Desktop Light](docs/screenshots/report-desktop-light.png) | ![Report Desktop Dark](docs/screenshots/report-desktop-dark.png) |
+| **Mobile Home (375px)** | ![Home Mobile Light](docs/screenshots/home-mobile-light.png) | ![Home Mobile Dark](docs/screenshots/home-mobile-dark.png) |
+| **Mobile Report (375px)** | ![Report Mobile Light](docs/screenshots/report-mobile-light.png) | ![Report Mobile Dark](docs/screenshots/report-mobile-dark.png) |
+
 ---
 
 ## Quickstart
 
-### 1. Start Services
+### 1. Launch with Docker Compose (Recommended)
 ```bash
-# Launch PostgreSQL 16 and Redis 7
+docker compose up --build
+```
+- **Web App**: http://localhost:3000
+- **FastAPI Documentation**: http://localhost:8000/docs
+- **PostgreSQL**: localhost:5432
+- **Redis**: localhost:6379
+
+### 2. Local Development
+
+#### Backend
+```bash
+# Launch PostgreSQL and Redis
 docker compose up -d postgres redis
 
-# Run database migrations (including 0002_forensics)
+# Apply database migrations
 cd backend
 alembic upgrade head
-```
 
-### 2. Run the Stack
-```bash
 # Terminal 1: Run FastAPI server
 uvicorn clauseguard.api.main:app --host 0.0.0.0 --port 8000 --reload
 
-# Terminal 2: Run Worker process (includes PDF parsing + Forensics analysis)
+# Terminal 2: Run Worker process
 python -m clauseguard.worker.main
 ```
 
-### 3. Standalone Forensics CLI
-Analyze any PDF file directly without web services:
+#### Frontend
 ```bash
-cd backend
-python -m clauseguard.forensics.run /path/to/contract.pdf
+cd frontend
+npm install
+npm run dev
+# App will run on http://localhost:3000
 ```
 
-### 4. Run Forensic Evaluation on Dataset
-```bash
-cd backend
-python eval/forensics_eval.py --data data/generated
-```
+---
+
+## API Reference
+
+> [!CAUTION]
+> The ClauseGuard API does not enforce authentication or user session separation. It is designed for internal network or authenticated reverse-proxy deployment only and **must not be exposed publicly to the internet**.
+
+- `GET /v1/documents?limit=20&offset=0&status=succeeded`: Paginated document list with size, page count, risk score, band, and finding counts by severity.
+- `GET /v1/documents/{id}`: Detailed document status, metadata, and latest job run.
+- `GET /v1/documents/{id}/file`: Streams the stored PDF inline as `application/pdf` directly from the secure content store.
+- `DELETE /v1/documents/{id}`: Cascading deletion of document database rows and stored disk file (HTTP 204, idempotent).
+- `GET /v1/documents/{id}/risk`: Deterministic risk score (0–100), risk band (`low`, `medium`, `high`), headline, top reasons, and coverage notes.
+- `GET /v1/documents/{id}/findings`: Comprehensive finding list enriched with catalog metadata (`category`, `title`, `what_it_means`, `what_to_check`), reviewer feedback, and localized bounding box highlights.
+- `POST /v1/findings/{id}/feedback`: Submit human review verdict (`verdict: "confirmed" | "dismissed"`, optional note).
+- `DELETE /v1/findings/{id}/feedback`: Clear human review verdict (HTTP 204).
+- `GET /v1/documents/{id}/clauses`: Segmented document clauses with confidence scores and multi-label classifications.
+- `GET /v1/documents/{id}/attributes`: Extracted structured legal attributes and key contract terms.
+- `GET /v1/jobs/{id}`: Detailed job execution progress with 6 granular stages (`upload`, `parse`, `forensics`, `consistency`, `clauses`, `summary`).
+- `GET /v1/finding-types`: Complete catalog of supported tampering and inconsistency finding types.
 
 ---
 
 ## Testing & Quality Gates
 
 ```bash
-# Module 1 (Dataset Generator) Tests — 85 passed
-pytest datagen/tests
+# Backend Unit Tests (Aggregator, Catalog, Highlights, Forensics, Consistency, Clauses) — 449 passed
+pytest backend/tests/unit
 
-# Module 2 & 3 (Backend Pipeline + Forensics) Tests — 95 passed, 1 skipped
-pytest backend/tests/unit backend/tests/integration
+# Backend Integration Tests (End-to-end API, Risk API, Feedback, Worker reliability) — 23 passed
+pytest -m integration backend/tests/integration
 
-# Benign Baseline Suite — 17 passed (0 false alarms)
-pytest backend/tests/unit/forensics/test_benign_suite.py
+# Risk Aggregation Calibration Benchmark
+python backend/eval/risk_eval.py --data data/generated
 
-# Cryptographic Signature Tests — 4 passed (real pyHanko signing, no mocks)
-pytest backend/tests/unit/forensics/test_signatures.py
+# Frontend Unit Tests (Vitest: Gauge, Badge, Findings, Coordinate scaling, Validation) — 18 passed
+cd frontend && npm test
 
-# Code Quality & Linting
-ruff check backend/src backend/tests backend/eval datagen/src datagen/tests
+# Frontend Linting
+cd frontend && npm run lint
+
+# Backend Linting
+ruff check backend/src backend/tests backend/eval
+
+# Playwright End-to-End & Accessibility Tests
+cd frontend && npx playwright test
 ```
 
-See [DECISIONS.md](file:///c:/Users/Loq/Desktop/Projects/legal-doc/DECISIONS.md) for architectural records (D-01 through D-14) and [backend/README.md](file:///c:/Users/Loq/Desktop/Projects/legal-doc/backend/README.md) for API endpoints and detailed benchmarks.
+See [DECISIONS.md](file:///c:/Users/Loq/Desktop/Projects/legal-doc/DECISIONS.md) for architectural records (D-01 through D-30).

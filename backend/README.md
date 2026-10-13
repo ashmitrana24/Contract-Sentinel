@@ -531,4 +531,78 @@ python -m clauseguard.clauses.run --text "1. Governing Law. This agreement shall
 - `uncapped_liability`: Precision **68.2%**, Recall **62.5%**, F1 **65.2%** (Support: 24)
 - `termination_for_convenience`: Precision **53.7%**, Recall **50.0%**, F1 **51.8%** (Support: 44)
 
+---
+
+## 10. Module 8: Risk Summary, Finding Catalog & Highlight Locator
+
+Module 8 delivers the transparent risk scoring, plain English finding cataloging, and precise visual bounding box resolution required by the ClauseGuard human review workbench.
+
+### 10.1 Finding Catalog (`clauseguard.risk.catalog`)
+
+Every finding type produced by Module 3 (PDF Forensics) and Module 4 (Consistency Engine) is mapped to plain English reviewer guidance:
+- **Category**: Classifies findings into `"tampering"` (structural / file-level alterations) or `"inconsistency"` (semantic / internal contract contradictions).
+- **Title**: Clear, non-technical title (e.g. `figure_words_mismatch` -> *"Amount in words doesn't match the figure"*).
+- **`what_it_means`**: One or two plain-English sentences explaining the issue.
+- **`what_to_check`**: One concise, actionable instruction for the human reviewer.
+- **Fallback**: Unknown finding types gracefully fall back to formatted string titles rather than raising errors.
+- **API Endpoint**: `GET /v1/finding-types` exposes the complete catalog.
+
+### 10.2 Deterministic Risk Aggregator (`clauseguard.risk.aggregate`)
+
+The aggregator computes a pure, deterministic `RiskSummary` without non-deterministic LLM generation:
+- **Scoring Function**: `summarize(findings, coverage_inputs, settings) -> RiskSummary`.
+- **Weights & Diminishing Returns**:
+  - `CRITICAL`: 40 points
+  - `HIGH`: 20 points
+  - `MEDIUM`: 8 points
+  - `LOW` and `uncertain` findings are separated into **minor notes** and never scored.
+  - Within each finding type, the first occurrence counts 100%, subsequent occurrences count 25%, and each type is capped at 2x base weight.
+  - Overall score is bounded to $[0, 100]$.
+- **Risk Band Calibration**:
+  - `high`: Any critical finding, forensic tampering escalation, or score $\ge 60$.
+  - `medium`: Any high finding or score $\ge 20$.
+  - `low`: Otherwise.
+- **Coverage & Reliability Warnings**: Evaluates `needs_ocr`, clause count ($< 5$), `analysis_runs` errors, and skipped detectors. Triggers a prominent "Limited analysis" banner and an asterisk on the risk band badge when document structure is degraded.
+- **Deterministic Headlines**: Template-based generation combining issue counts and highest-priority findings.
+- **Persistence**: Persisted idempotently into the `risk_summaries` table via Alembic migration `0004_risk_summary`, computed during worker execution and lazily computed on API read if missing.
+
+### 10.3 Evidence-Driven Highlight Locator (`clauseguard.risk.highlights`)
+
+Resolves visual bounding box coordinates (`[x0, y0, x1, y1]`) on rendered PDF pages for findings that lack explicit parser bounding boxes:
+- **Multi-Tier Resolution**:
+  1. Preserves existing finding bounding boxes when already populated.
+  2. Searches page span text for distinctive tokens (`figure`, `words`, `party`, `quote`, `target`), sorted longest-first.
+  3. Multi-span token matching handles phrases spanning across line and layout breaks, taking the union bounding box.
+  4. Heading fallback marks approximate highlights (`approximate=True`) at the clause start position.
+- **Coordinate System**: Pure PyMuPDF points with a top-left origin, explicitly accounting for page rotation angles (0, 90, 180, 270 degrees).
+
+### 10.4 REST API Reference
+
+- `GET /v1/documents?limit=20&offset=0&status=succeeded`: Returns document list with risk score, band, and severity counts.
+- `GET /v1/documents/{id}/risk`: Detailed deterministic risk summary, band, top reasons, and coverage notes.
+- `GET /v1/documents/{id}/file`: Streams the stored PDF inline as `application/pdf` directly from content-addressed storage.
+- `DELETE /v1/documents/{id}`: Cascading deletion of document records across all tables and stored file (HTTP 204, idempotent).
+- `GET /v1/documents/{id}/findings`: Enriched finding records with category, title, `what_it_means`, `what_to_check`, feedback, and highlights.
+- `POST /v1/findings/{id}/feedback`: Records reviewer verdict (`verdict: "confirmed" | "dismissed"`, optional note).
+- `DELETE /v1/findings/{id}/feedback`: Clears reviewer verdict.
+- `GET /v1/jobs/{id}`: Returns execution stages (`upload`, `parse`, `forensics`, `consistency`, `clauses`, `summary`) with status (`pending`, `running`, `done`, `error`, `skipped`).
+- `GET /v1/finding-types`: Complete finding catalog mapping.
+
+### 10.5 Risk Evaluation Benchmark (`eval/risk_eval.py`)
+
+Run the risk aggregator benchmark on generated datasets:
+```bash
+python eval/risk_eval.py --data data/generated
+python eval/risk_eval.py --data data/generated_seed4242
+```
+
+Results across 474 contracts in `data/generated_seed4242`:
+- `clean_synthetic`: **100.0% Low band** (Target $\ge 98.0\%$) -> **MET**
+- `tamper_incremental_edit`: **100.0% High band** (Target $\ge 95.0\%$) -> **MET**
+- `tamper_hidden_text`: **100.0% High band** (Target $\ge 95.0\%$) -> **MET**
+- `tamper_amount_figure_only`: **100.0% Med/High band** (Target $\ge 90.0\%$) -> **MET**
+- `tamper_date_shift`: **100.0% Med/High band** (Target $\ge 90.0\%$) -> **MET**
+- `tamper_xref_break`: **100.0% Med/High band** (Target $\ge 90.0\%$) -> **MET**
+
+
 

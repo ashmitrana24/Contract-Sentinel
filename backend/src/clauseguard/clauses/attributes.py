@@ -437,7 +437,7 @@ def extract_all_document_attributes(
         target_clauses: list[str] = []
         if clause_labels and len(clause_labels) == len(clauses_text):
             target_labels = {"auto_renewal", "renewal_term", "notice_period_to_terminate_renewal"}
-            for c_txt, c_lbls in zip(clauses_text, clause_labels):
+            for c_txt, c_lbls in zip(clauses_text, clause_labels, strict=True):
                 if any(lbl in target_labels for lbl in c_lbls):
                     target_clauses.append(c_txt)
         if not target_clauses:

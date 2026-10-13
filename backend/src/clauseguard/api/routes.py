@@ -18,7 +18,7 @@ from datetime import UTC, datetime
 from typing import Annotated, Any
 
 import pymupdf
-from fastapi import APIRouter, Depends, File, HTTPException, Query, UploadFile
+from fastapi import APIRouter, Depends, File, HTTPException, Query, Response, UploadFile
 from fastapi.responses import JSONResponse
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
@@ -32,12 +32,17 @@ from clauseguard.db.models import (
     ClauseLabelRow,
     Document,
     DocumentAttributeRow,
+    FindingFeedbackRow,
     FindingRow,
     Job,
     Page,
+    RiskSummaryRow,
 )
 from clauseguard.db.session import check_connection as pg_check
 from clauseguard.queue import streams as qs
+from clauseguard.risk.aggregate import RiskSummary, summarize
+from clauseguard.risk.catalog import get_catalog, get_finding_type_info
+from clauseguard.risk.highlights import compute_highlights
 from clauseguard.schemas.api import (
     AnalysisRunResponse,
     ClauseLabelItem,
@@ -45,13 +50,21 @@ from clauseguard.schemas.api import (
     ClauseTypesResponse,
     ClauseTypeSummaryItem,
     DocumentAttributesResponse,
+    DocumentListItem,
     DocumentResponse,
+    DocumentRiskSummaryBrief,
     ErrorResponse,
+    FindingFeedbackItem,
+    FindingFeedbackRequest,
+    FindingHighlightItem,
     FindingResponse,
+    FindingTypeListResponse,
     HealthResponse,
+    JobStageItem,
     JobStatusResponse,
     PageResponse,
     PaginatedClauses,
+    PaginatedDocumentsResponse,
     PaginatedFindings,
     PaginatedPages,
     UploadResponse,
@@ -220,6 +233,228 @@ async def upload_document(
 
 
 # ---------------------------------------------------------------------------
+# Helpers for Risk and Stages
+# ---------------------------------------------------------------------------
+
+
+def _compute_job_stages(job: Job, db: Session) -> list[JobStageItem]:
+    stages: list[JobStageItem] = []
+    # 1. upload
+    stages.append(JobStageItem(key="upload", label="Upload", status="done"))
+
+    # 2. parse
+    page_count = db.execute(
+        select(func.count()).where(Page.document_id == job.document_id)
+    ).scalar_one()
+    if page_count > 0:
+        parse_status = "done"
+    elif job.status == "processing":
+        parse_status = "running"
+    elif job.status == "dead":
+        parse_status = "error"
+    else:
+        parse_status = "pending"
+    stages.append(JobStageItem(key="parse", label="Document Parsing", status=parse_status))
+
+    # Fetch runs
+    runs = {
+        r.module: r
+        for r in db.execute(
+            select(AnalysisRun).where(AnalysisRun.document_id == job.document_id)
+        ).scalars().all()
+    }
+
+    def _module_status(mod: str) -> str:
+        if mod in runs:
+            r = runs[mod]
+            if r.status in ("ok", "partial"):
+                return "done"
+            if r.status == "error":
+                return "error"
+            return "done"
+        if job.status == "succeeded":
+            return "skipped"
+        if job.status == "processing" and parse_status == "done":
+            return "running"
+        if job.status == "dead":
+            return "skipped"
+        return "pending"
+
+    # 3. forensics
+    stages.append(JobStageItem(key="forensics", label="PDF Forensics", status=_module_status("pdf_forensics")))
+    # 4. consistency
+    stages.append(JobStageItem(key="consistency", label="Consistency Checks", status=_module_status("consistency")))
+    # 5. clauses
+    stages.append(JobStageItem(key="clauses", label="Clause Classification", status=_module_status("clauses")))
+
+    # 6. summary
+    has_risk = db.execute(
+        select(RiskSummaryRow.document_id).where(RiskSummaryRow.document_id == job.document_id)
+    ).scalar_one_or_none() is not None
+    if has_risk or job.status == "succeeded":
+        sum_status = "done"
+    elif job.status == "processing" and _module_status("clauses") in ("done", "skipped"):
+        sum_status = "running"
+    elif job.status == "dead":
+        sum_status = "skipped"
+    else:
+        sum_status = "pending"
+    stages.append(JobStageItem(key="summary", label="Risk Summary", status=sum_status))
+
+    return stages
+
+
+def _get_or_compute_risk_summary(db: Session, document_id: uuid.UUID, cfg: Settings) -> RiskSummary:
+    row = db.execute(
+        select(RiskSummaryRow).where(RiskSummaryRow.document_id == document_id)
+    ).scalar_one_or_none()
+
+    if row is not None and row.version == cfg.risk_version:
+        return RiskSummary.model_validate(row.summary)
+
+    doc = db.get(Document, document_id)
+    if not doc:
+        raise HTTPException(status_code=404, detail="Document not found")
+
+    findings = db.execute(
+        select(FindingRow).where(FindingRow.document_id == document_id)
+    ).scalars().all()
+
+    runs = db.execute(
+        select(AnalysisRun).where(AnalysisRun.document_id == document_id)
+    ).scalars().all()
+
+    clause_count = db.execute(
+        select(func.count()).where(Clause.document_id == document_id)
+    ).scalar_one()
+
+    unsegmented_count = db.execute(
+        select(func.count()).where(Clause.document_id == document_id, Clause.kind == "unsegmented")
+    ).scalar_one()
+
+    cov_runs = [
+        {
+            "module": r.module,
+            "status": r.status,
+            "error": r.error,
+            "detector_status": r.detector_status or {},
+        }
+        for r in runs
+    ]
+
+    cov_inputs = {
+        "needs_ocr": doc.needs_ocr,
+        "clause_count": clause_count,
+        "unsegmented": clause_count < 2 or unsegmented_count > 0,
+        "analysis_runs": cov_runs,
+    }
+
+    summary = summarize(findings, cov_inputs, cfg)
+
+    if row is not None:
+        row.score = summary.score
+        row.band = summary.band
+        row.summary = summary.model_dump(mode="json")
+        row.version = summary.version
+    else:
+        new_row = RiskSummaryRow(
+            document_id=document_id,
+            score=summary.score,
+            band=summary.band,
+            summary=summary.model_dump(mode="json"),
+            version=summary.version,
+        )
+        db.add(new_row)
+    db.commit()
+
+    return summary
+
+
+# ---------------------------------------------------------------------------
+# GET /v1/finding-types
+# ---------------------------------------------------------------------------
+
+
+@router.get("/v1/finding-types", response_model=FindingTypeListResponse)
+def list_finding_types() -> FindingTypeListResponse:
+    catalog = get_catalog()
+    return FindingTypeListResponse(items=list(catalog.values()))
+
+
+# ---------------------------------------------------------------------------
+# GET /v1/documents
+# ---------------------------------------------------------------------------
+
+
+@router.get("/v1/documents", response_model=PaginatedDocumentsResponse)
+def list_documents(
+    limit: Annotated[int, Query(ge=1, le=200)] = 20,
+    offset: Annotated[int, Query(ge=0)] = 0,
+    status: str | None = Query(None, description="Filter by latest job status"),
+    db: Session = Depends(get_db),
+    cfg: Settings = Depends(get_cfg),
+) -> PaginatedDocumentsResponse:
+    all_docs = db.execute(
+        select(Document).order_by(Document.created_at.desc())
+    ).scalars().all()
+
+    filtered_docs = []
+    doc_job_map: dict[uuid.UUID, tuple[Job | None, str]] = {}
+    for d in all_docs:
+        latest_job = db.execute(
+            select(Job).where(Job.document_id == d.id).order_by(Job.created_at.desc())
+        ).scalar_one_or_none()
+        j_status = latest_job.status if latest_job else "queued"
+        doc_job_map[d.id] = (latest_job, j_status)
+        if status is None or j_status == status.lower():
+            filtered_docs.append(d)
+
+    total = len(filtered_docs)
+    page_docs = filtered_docs[offset : offset + limit]
+
+    items = []
+    for d in page_docs:
+        latest_job, j_status = doc_job_map[d.id]
+
+        risk_brief = None
+        r_row = db.execute(
+            select(RiskSummaryRow).where(RiskSummaryRow.document_id == d.id)
+        ).scalar_one_or_none()
+        if r_row is not None:
+            risk_brief = DocumentRiskSummaryBrief(score=r_row.score, band=r_row.band)
+        elif j_status == "succeeded":
+            r_sum = _get_or_compute_risk_summary(db, d.id, cfg)
+            risk_brief = DocumentRiskSummaryBrief(score=r_sum.score, band=r_sum.band)
+
+        sev_counts_res = db.execute(
+            select(FindingRow.severity, func.count())
+            .where(FindingRow.document_id == d.id)
+            .group_by(FindingRow.severity)
+        ).all()
+        sev_counts = {str(s).lower(): int(c) for s, c in sev_counts_res}
+
+        items.append(
+            DocumentListItem(
+                id=d.id,
+                filename=d.original_filename,
+                size=d.size_bytes,
+                uploaded_at=d.created_at.isoformat(),
+                status=j_status,
+                page_count=d.page_count,
+                risk=risk_brief,
+                finding_counts_by_severity=sev_counts,
+            )
+        )
+
+    return PaginatedDocumentsResponse(
+        total=total,
+        limit=limit,
+        offset=offset,
+        items=items,
+    )
+
+
+# ---------------------------------------------------------------------------
 # GET /v1/jobs/{job_id}
 # ---------------------------------------------------------------------------
 
@@ -232,6 +467,8 @@ def get_job(
     job = db.execute(select(Job).where(Job.id == job_id)).scalar_one_or_none()
     if job is None:
         raise HTTPException(status_code=404, detail="Job not found")
+
+    stages = _compute_job_stages(job, db)
     return JobStatusResponse(
         job_id=job.id,
         document_id=job.document_id,
@@ -244,6 +481,7 @@ def get_job(
         started_at=job.started_at.isoformat() if job.started_at else None,
         finished_at=job.finished_at.isoformat() if job.finished_at else None,
         next_attempt_at=job.next_attempt_at.isoformat() if job.next_attempt_at else None,
+        stages=stages,
     )
 
 
@@ -301,6 +539,71 @@ def get_document(
 
 
 # ---------------------------------------------------------------------------
+# GET /v1/documents/{document_id}/risk
+# ---------------------------------------------------------------------------
+
+
+@router.get("/v1/documents/{document_id}/risk", response_model=RiskSummary)
+def get_document_risk(
+    document_id: uuid.UUID,
+    db: Session = Depends(get_db),
+    cfg: Settings = Depends(get_cfg),
+) -> RiskSummary:
+    _assert_doc_exists(db, document_id)
+    return _get_or_compute_risk_summary(db, document_id, cfg)
+
+
+# ---------------------------------------------------------------------------
+# GET /v1/documents/{document_id}/file
+# ---------------------------------------------------------------------------
+
+
+@router.get("/v1/documents/{document_id}/file")
+def get_document_file(
+    document_id: uuid.UUID,
+    db: Session = Depends(get_db),
+    store: FileStore = Depends(get_store),
+) -> Response:
+    doc = db.get(Document, document_id)
+    if doc is None:
+        raise HTTPException(status_code=404, detail="Document not found")
+
+    try:
+        pdf_bytes = store.read(doc.storage_key)
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="Stored PDF file not found") from None
+
+    return Response(
+        content=pdf_bytes,
+        media_type="application/pdf",
+        headers={
+            "Content-Disposition": f'inline; filename="{doc.original_filename}"',
+            "Cache-Control": "private, max-age=3600",
+        },
+    )
+
+
+# ---------------------------------------------------------------------------
+# DELETE /v1/documents/{document_id}
+# ---------------------------------------------------------------------------
+
+
+@router.delete("/v1/documents/{document_id}", status_code=204)
+def delete_document(
+    document_id: uuid.UUID,
+    db: Session = Depends(get_db),
+    store: FileStore = Depends(get_store),
+) -> Response:
+    doc = db.get(Document, document_id)
+    if doc is not None:
+        storage_key = doc.storage_key
+        db.delete(doc)
+        db.commit()
+        store.delete(storage_key)
+    return Response(status_code=204)
+
+
+# ---------------------------------------------------------------------------
 # GET /v1/documents/{document_id}/findings
 # ---------------------------------------------------------------------------
 
@@ -310,7 +613,7 @@ def get_findings(
     document_id: uuid.UUID,
     db: Session = Depends(get_db),
     severity: str | None = Query(None, description="Filter by severity: low|medium|high|critical"),
-    module: str | None = Query(None, description="Filter by module: pdf_forensics"),
+    module: str | None = Query(None, description="Filter by module: pdf_forensics|consistency"),
     limit: Annotated[int, Query(ge=1, le=500)] = 50,
     offset: Annotated[int, Query(ge=0)] = 0,
 ) -> PaginatedFindings:
@@ -337,17 +640,57 @@ def get_findings(
         .all()
     )
 
-    return PaginatedFindings(
-        total=total,
-        limit=limit,
-        offset=offset,
-        items=[
+    pages = db.execute(
+        select(Page).where(Page.document_id == document_id).order_by(Page.page_no)
+    ).scalars().all()
+
+    clauses = db.execute(
+        select(Clause).where(Clause.document_id == document_id).order_by(Clause.order_idx)
+    ).scalars().all()
+
+    # Pre-fetch feedbacks for this document
+    finding_ids = [f.id for f in rows]
+    feedback_map = {}
+    if finding_ids:
+        fbacks = db.execute(
+            select(FindingFeedbackRow).where(FindingFeedbackRow.finding_id.in_(finding_ids))
+        ).scalars().all()
+        for fb in fbacks:
+            feedback_map[fb.finding_id] = FindingFeedbackItem(
+                verdict=fb.verdict,
+                note=fb.note,
+                created_at=fb.created_at.isoformat(),
+            )
+
+    items = []
+    for f in rows:
+        info = get_finding_type_info(f.type, f.module)
+        uncertain = bool((f.details or {}).get("uncertain"))
+        hl_objs = compute_highlights(f, pages, clauses)
+        items.append(
             FindingResponse(
                 id=f.id,
                 document_id=f.document_id,
                 module=f.module,
                 type=f.type,
                 severity=f.severity,
+                category=info.category,
+                title=info.title,
+                what_it_means=info.what_it_means,
+                what_to_check=info.what_to_check,
+                uncertain=uncertain,
+                feedback=feedback_map.get(f.id),
+                highlights=[
+                    FindingHighlightItem(
+                        page=hl.page,
+                        bbox=hl.bbox,
+                        page_width=hl.page_width,
+                        page_height=hl.page_height,
+                        rotation=hl.rotation,
+                        approximate=hl.approximate,
+                    )
+                    for hl in hl_objs
+                ],
                 page=f.page,
                 clause_ref=f.clause_ref,
                 bbox=list(f.bbox) if f.bbox else None,
@@ -357,9 +700,67 @@ def get_findings(
                 details=f.details or {},
                 created_at=f.created_at.isoformat(),
             )
-            for f in rows
-        ],
+        )
+
+    return PaginatedFindings(
+        total=total,
+        limit=limit,
+        offset=offset,
+        items=items,
     )
+
+
+# ---------------------------------------------------------------------------
+# POST & DELETE /v1/findings/{finding_id}/feedback
+# ---------------------------------------------------------------------------
+
+
+@router.post("/v1/findings/{finding_id}/feedback", response_model=FindingFeedbackItem)
+def create_or_update_feedback(
+    finding_id: uuid.UUID,
+    payload: FindingFeedbackRequest,
+    db: Session = Depends(get_db),
+) -> FindingFeedbackItem:
+    f_row = db.get(FindingRow, finding_id)
+    if f_row is None:
+        raise HTTPException(status_code=404, detail="Finding not found")
+
+    if payload.verdict not in ("confirmed", "dismissed"):
+        raise HTTPException(status_code=422, detail="Verdict must be 'confirmed' or 'dismissed'")
+
+    now = datetime.now(UTC)
+    fb = db.get(FindingFeedbackRow, finding_id)
+    if fb is not None:
+        fb.verdict = payload.verdict
+        fb.note = payload.note
+        fb.created_at = now
+    else:
+        fb = FindingFeedbackRow(
+            finding_id=finding_id,
+            verdict=payload.verdict,
+            note=payload.note,
+            created_at=now,
+        )
+        db.add(fb)
+    db.commit()
+
+    return FindingFeedbackItem(
+        verdict=fb.verdict,
+        note=fb.note,
+        created_at=fb.created_at.isoformat(),
+    )
+
+
+@router.delete("/v1/findings/{finding_id}/feedback", status_code=204)
+def delete_feedback(
+    finding_id: uuid.UUID,
+    db: Session = Depends(get_db),
+) -> Response:
+    fb = db.get(FindingFeedbackRow, finding_id)
+    if fb is not None:
+        db.delete(fb)
+        db.commit()
+    return Response(status_code=204)
 
 
 # ---------------------------------------------------------------------------

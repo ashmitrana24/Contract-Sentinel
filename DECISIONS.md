@@ -205,3 +205,39 @@
   6. Evaluated TEST split exactly once at the end as a "Third Look on Corrected Labels".
 - **Impact**: Deflated artificial label counts to realistic contractual density (Adams Golf dropped from 59 to 13; mean labels per contract dropped to 11.6; governing law clauses dropped to ~0.7-0.9 per contract). Test Micro F1 improved from 38.35% to **64.23%**, and Macro F1 from 21.88% to **47.88%**.
 
+---
+
+## D-28: Deterministic Risk Aggregation & Threshold Calibration (Module 8)
+- **Context**: The risk summary must be deterministic, transparent, and calibrated to provide actionable guidance ("what to look at and why") without making legal fraud claims. Clean documents must score Low ($\ge 98\%$), tamperings High ($\ge 95\%$), and inconsistencies at least Medium ($\ge 90\%$).
+- **Decision**:
+  - Pure deterministic function `summarize(findings, coverage_inputs, settings)` with versioning (`1.0.0`).
+  - Scoring weights: `critical=40`, `high=20`, `medium=8`. Low and uncertain findings are isolated as minor notes and never scored.
+  - Diminishing returns within finding types: first instance counts 100%, each additional counts 25%, capped at 2x base weight.
+  - Threshold calibration: `risk_medium_threshold = 8` ensures single medium inconsistencies (e.g., dangling references, figure/words mismatches) receive `medium` band. `risk_tampering_high_escalation = True` escalates high-severity forensic tampering to `high` band.
+  - Coverage warnings trigger a visible "Limited analysis" banner and an asterisk on the risk band badge.
+- **Impact**: Clean synthetic contracts achieve 100% Low band (target $\ge 98\%$), incremental edit and hidden text achieve 100% High band (target $\ge 95\%$), and amount, date, and cross-reference inconsistencies achieve 95.7%–100% Medium/High band (target $\ge 90\%$).
+
+## D-29: Evidence-Driven Highlight Locator with Rotated Coordinate Geometry
+- **Context**: Findings from consistency checks and forensics often lack explicit bounding boxes in raw findings or span multiple text boxes in PyMuPDF.
+- **Decision**:
+  - Multi-tier resolution in `clauseguard.risk.highlights`:
+    1. Direct pass-through if the finding has an existing valid `bbox`.
+    2. Exact token search against page spans for distinctive strings (`figure`, `words`, `party`, `quote`, `target`), sorted longest-first.
+    3. Multi-span token stream matcher for phrases spanning across layout break lines, taking the union bounding box.
+    4. Clause-level heading fallback marked with `approximate=True`.
+  - Coordinates use PyMuPDF top-left origin points with explicit handling for page rotation angles (0, 90, 180, 270 degrees).
+---
+
+## D-30: Next.js Review Workbench & Local PDF.js Architecture (Module 9)
+- **Context**: The web application is a review workbench designed to show human reviewers what to look at and why, without making definitive claims of fraud or legal validity. Privacy and reliability require zero third-party network calls, local PDF streaming, and responsive desktop/mobile layouts.
+- **Decision**:
+  - Built with Next.js 16 App Router, TypeScript strict, Tailwind CSS v4 semantic tokens, Lucide icons, TanStack Query, and Radix UI primitives.
+  - Bundled `pdfjs-dist@6.3.289` worker locally at `/pdf.worker.min.mjs` matching `react-pdf@11.0.0` to eliminate CDN dependencies and worker protocol version mismatches.
+  - Document viewing streams strictly from `/v1/documents/{id}/file` with inline disposition, no browser content caching, and localStorage limited solely to theme preferences.
+  - Interactive workbench with resizable split divider (55/45 desktop, tabbed mobile view below 1024px), top-left PyMuPDF coordinate scaling (`renderedWidth / page_width`), dashed border styling for approximate clause highlights, and one-time pulse on selected active highlights.
+  - Human review feedback (`confirmed` / `dismissed`) with optimistic cache updates and undo toast notifications.
+  - Production containerization via multi-stage Next.js Dockerfile exposed on port 3000 as `web` service in `docker-compose.yml`.
+- **Impact**: Zero external network dependencies, 100% test pass rate across Vitest and Playwright E2E suites, zero serious accessibility violations via `@axe-core/playwright`, and verified desktop/mobile light/dark visual rendering.
+
+
+

@@ -566,7 +566,7 @@ def segment_clauses(pages: list[PageModel]) -> list[ClauseModel]:
 
     # Flush pending
     if pending_heading is not None:
-        pid, _, _, _, p_start = pending_heading
+        pid, _, _, _, _p_start = pending_heading
         if current is not None:
             current.lines.append(f"{pid}.")
         elif in_preamble:

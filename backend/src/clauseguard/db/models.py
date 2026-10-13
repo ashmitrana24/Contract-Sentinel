@@ -44,20 +44,29 @@ class Document(Base):
         DateTime(timezone=True), nullable=False, server_default=func.now()
     )
 
-    jobs: Mapped[list[Job]] = relationship("Job", back_populates="document", lazy="select")
-    pages: Mapped[list[Page]] = relationship("Page", back_populates="document", lazy="select")
-    clauses: Mapped[list[Clause]] = relationship("Clause", back_populates="document", lazy="select")
+    jobs: Mapped[list[Job]] = relationship(
+        "Job", back_populates="document", cascade="all, delete-orphan", passive_deletes=True, lazy="select"
+    )
+    pages: Mapped[list[Page]] = relationship(
+        "Page", back_populates="document", cascade="all, delete-orphan", passive_deletes=True, lazy="select"
+    )
+    clauses: Mapped[list[Clause]] = relationship(
+        "Clause", back_populates="document", cascade="all, delete-orphan", passive_deletes=True, lazy="select"
+    )
     findings: Mapped[list[FindingRow]] = relationship(
-        "FindingRow", back_populates="document", lazy="select"
+        "FindingRow", back_populates="document", cascade="all, delete-orphan", passive_deletes=True, lazy="select"
     )
     analysis_runs: Mapped[list[AnalysisRun]] = relationship(
-        "AnalysisRun", back_populates="document", lazy="select"
+        "AnalysisRun", back_populates="document", cascade="all, delete-orphan", passive_deletes=True, lazy="select"
     )
     clause_labels: Mapped[list[ClauseLabelRow]] = relationship(
-        "ClauseLabelRow", back_populates="document", lazy="select"
+        "ClauseLabelRow", back_populates="document", cascade="all, delete-orphan", passive_deletes=True, lazy="select"
     )
     attributes: Mapped[DocumentAttributeRow | None] = relationship(
-        "DocumentAttributeRow", back_populates="document", uselist=False, lazy="select"
+        "DocumentAttributeRow", back_populates="document", uselist=False, cascade="all, delete-orphan", passive_deletes=True, lazy="select"
+    )
+    risk_summary: Mapped[RiskSummaryRow | None] = relationship(
+        "RiskSummaryRow", back_populates="document", uselist=False, cascade="all, delete-orphan", passive_deletes=True, lazy="select"
     )
 
 
@@ -171,6 +180,14 @@ class FindingRow(Base):
     )
 
     document: Mapped[Document] = relationship("Document", back_populates="findings")
+    feedback: Mapped[FindingFeedbackRow | None] = relationship(
+        "FindingFeedbackRow",
+        back_populates="finding",
+        uselist=False,
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+        lazy="select",
+    )
 
     __table_args__ = (
         Index("ix_findings_document_id", "document_id"),
@@ -260,3 +277,39 @@ class DocumentAttributeRow(Base):
     )
 
     document: Mapped[Document] = relationship("Document", back_populates="attributes")
+
+
+class RiskSummaryRow(Base):
+    """Document-level aggregated risk summary."""
+
+    __tablename__ = "risk_summaries"
+
+    document_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("documents.id", ondelete="CASCADE"), primary_key=True
+    )
+    score: Mapped[int] = mapped_column(Integer, nullable=False)
+    band: Mapped[str] = mapped_column(String(16), nullable=False)
+    summary: Mapped[dict] = mapped_column(JSONB, nullable=False)
+    version: Mapped[str] = mapped_column(String(32), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, server_default=func.now()
+    )
+
+    document: Mapped[Document] = relationship("Document", back_populates="risk_summary")
+
+
+class FindingFeedbackRow(Base):
+    """User verification feedback on an individual finding."""
+
+    __tablename__ = "finding_feedback"
+
+    finding_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("findings.id", ondelete="CASCADE"), primary_key=True
+    )
+    verdict: Mapped[str] = mapped_column(String(32), nullable=False)  # confirmed|dismissed
+    note: Mapped[str | None] = mapped_column(Text, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, server_default=func.now()
+    )
+
+    finding: Mapped[FindingRow] = relationship("FindingRow", back_populates="feedback")

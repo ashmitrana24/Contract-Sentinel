@@ -7,11 +7,19 @@ from typing import Any
 
 from pydantic import BaseModel, Field
 
+from clauseguard.risk.catalog import FindingTypeInfo
+
 
 class UploadResponse(BaseModel):
     document_id: uuid.UUID
     job_id: uuid.UUID
     deduplicated: bool = False
+
+
+class JobStageItem(BaseModel):
+    key: str
+    label: str
+    status: str  # pending|running|done|error|skipped
 
 
 class JobStatusResponse(BaseModel):
@@ -26,6 +34,30 @@ class JobStatusResponse(BaseModel):
     started_at: str | None
     finished_at: str | None
     next_attempt_at: str | None
+    stages: list[JobStageItem] = Field(default_factory=list)
+
+
+class DocumentRiskSummaryBrief(BaseModel):
+    score: int
+    band: str
+
+
+class DocumentListItem(BaseModel):
+    id: uuid.UUID
+    filename: str
+    size: int
+    uploaded_at: str
+    status: str
+    page_count: int | None
+    risk: DocumentRiskSummaryBrief | None
+    finding_counts_by_severity: dict[str, int] = Field(default_factory=dict)
+
+
+class PaginatedDocumentsResponse(BaseModel):
+    total: int
+    limit: int
+    offset: int
+    items: list[DocumentListItem]
 
 
 class DocumentResponse(BaseModel):
@@ -45,19 +77,46 @@ class DocumentResponse(BaseModel):
     finding_counts_by_module: dict[str, int] = Field(default_factory=dict)
 
 
+class FindingFeedbackItem(BaseModel):
+    verdict: str  # confirmed|dismissed
+    note: str | None = None
+    created_at: str | None = None
+
+
+class FindingFeedbackRequest(BaseModel):
+    verdict: str = Field(description="'confirmed' or 'dismissed'")
+    note: str | None = None
+
+
+class FindingHighlightItem(BaseModel):
+    page: int
+    bbox: list[float]  # [x0, y0, x1, y1]
+    page_width: float
+    page_height: float
+    rotation: int = 0
+    approximate: bool = False
+
+
 class FindingResponse(BaseModel):
     id: uuid.UUID
     document_id: uuid.UUID
     module: str
     type: str
     severity: str
-    page: int | None
-    clause_ref: str | None
-    bbox: list[float] | None
+    category: str = "inconsistency"
+    title: str = ""
+    what_it_means: str = ""
+    what_to_check: str = ""
+    uncertain: bool = False
+    feedback: FindingFeedbackItem | None = None
+    highlights: list[FindingHighlightItem] = Field(default_factory=list)
+    page: int | None = None
+    clause_ref: str | None = None
+    bbox: list[float] | None = None
     evidence: str
     explanation: str
-    confidence: float | None
-    details: dict
+    confidence: float | None = None
+    details: dict = Field(default_factory=dict)
     created_at: str
 
 
@@ -66,6 +125,10 @@ class PaginatedFindings(BaseModel):
     limit: int
     offset: int
     items: list[FindingResponse]
+
+
+class FindingTypeListResponse(BaseModel):
+    items: list[FindingTypeInfo]
 
 
 class AnalysisRunResponse(BaseModel):
