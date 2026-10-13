@@ -31,41 +31,16 @@ of severity MEDIUM or higher, along with misses and false positives per tamper t
   - **Clause Ref**: 21
   - **Evidence**: `Target '14' referenced in: edial and other provisions of paragraph 14 of this Agreement.`
   - **Explanation**: Cross-reference to '14' in clause(s) 21 cannot be resolved: no clause with identifier '14' exists in the contract.
-- **Finding Type**: `numbering_gap`
-  - **Severity**: `high`
-  - **Page**: 6
-  - **Clause Ref**: 14
-  - **Evidence**: `Missing clause 14 between clause 13 and clause 15 (cross-referenced by dangling reference to '14')`
-  - **Explanation**: Clause numbering gap: clause 14 is missing between clause 13 and clause 15, and a cross-reference specifically points to missing clause 14.
-- **Finding Type**: `numbering_gap`
-  - **Severity**: `high`
-  - **Page**: 8
-  - **Clause Ref**: 22
-  - **Evidence**: `Missing clause 22 between clause 21 and clause 23 (cross-referenced by dangling reference to '22')`
-  - **Explanation**: Clause numbering gap: clause 22 is missing between clause 21 and clause 23, and a cross-reference specifically points to missing clause 22.
 
 ### Document: `cuad_AzulSa_20170303_F-1A_EX-10.3_9943903_EX-10.3_Maintenance Agreement1_clean`
 - **Finding Type**: `dangling_reference`
   - **Severity**: `medium`
-  - **Page**: 21
-  - **Clause Ref**: 23.1
+  - **Page**: 1
+  - **Clause Ref**: 0
   - **Evidence**: `Target '20' referenced in: obligation; 23.3.5 Subject to Clause 20 ("Confidentiality"), it will `
-  - **Explanation**: Cross-reference to '20' in clause(s) 23.1 cannot be resolved: no clause with identifier '20' exists in the contract.
-- **Finding Type**: `numbering_gap`
-  - **Severity**: `high`
-  - **Page**: 18
-  - **Clause Ref**: 20
-  - **Evidence**: `Missing clause 20 between clause 19 and clause 21 (cross-referenced by dangling reference to '20')`
-  - **Explanation**: Clause numbering gap: clause 20 is missing between clause 19 and clause 21, and a cross-reference specifically points to missing clause 20.
+  - **Explanation**: Cross-reference to '20' in clause(s) 0 cannot be resolved: no clause with identifier '20' exists in the contract.
 
 ### Document: `cuad_AzulSa_20170303_F-1A_EX-10.3_9943903_EX-10.3_Maintenance Agreement2_clean`
-- **Finding Type**: `dangling_reference`
-  - **Severity**: `medium`
-  - **Page**: 1
-  - **Clause Ref**: 2
-  - **Evidence**: `Target '12.1' referenced in: VOICING
-AND PAYMENT TERMS (i) Clause 12.1(ii) of the GMA shall be cancelled`
-  - **Explanation**: Cross-reference to '12.1' in clause(s) 2 cannot be resolved: no clause with identifier '12.1' exists in the contract.
 - **Finding Type**: `dangling_reference`
   - **Severity**: `medium`
   - **Page**: 1
@@ -76,17 +51,11 @@ AND PAYMENT TERMS (i) Clause 12.1(ii) of the GMA shall be cancelled`
 ### Document: `cuad_BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT_clean`
 - **Finding Type**: `dangling_reference`
   - **Severity**: `medium`
-  - **Page**: 6
-  - **Clause Ref**: 11.1
+  - **Page**: 1
+  - **Clause Ref**: 0
   - **Evidence**: `Target '13' referenced in:  including
 those set forth in paragraphs 13 - 15, and (in the case of the sepa (and 2 other occurrence(s))`
-  - **Explanation**: Cross-reference to '13' in clause(s) 11.1, 14.1 cannot be resolved: no clause with identifier '13' exists in the contract (referenced 3 times).
-- **Finding Type**: `numbering_gap`
-  - **Severity**: `high`
-  - **Page**: 1
-  - **Clause Ref**: 13
-  - **Evidence**: `Missing clause 13 between clause 12 and clause 14 (cross-referenced by dangling reference to '13')`
-  - **Explanation**: Clause numbering gap: clause 13 is missing between clause 12 and clause 14, and a cross-reference specifically points to missing clause 13.
+  - **Explanation**: Cross-reference to '13' in clause(s) 0 cannot be resolved: no clause with identifier '13' exists in the contract (referenced 3 times).
 
 ### Document: `cuad_CardlyticsInc_20180112_S-1_EX-10.16_11002987_EX-10.16_Maintenance Agreement1_clean`
 - **Finding Type**: `dangling_reference`
@@ -117,10 +86,10 @@ in Schedule A, Section B. Upon delivery, Bank of Ameri`
 - **Finding Type**: `dangling_reference`
   - **Severity**: `medium`
   - **Page**: 1
-  - **Clause Ref**: 1.1
+  - **Clause Ref**: 0
   - **Evidence**: `Target '14' referenced in: 
 generally in accordance with section 14 . 1.5 Hours of Support The no (and 1 other occurrence(s))`
-  - **Explanation**: Cross-reference to '14' in clause(s) 1.1, 14.1 cannot be resolved: no clause with identifier '14' exists in the contract (referenced 2 times).
+  - **Explanation**: Cross-reference to '14' in clause(s) 0, 14.1 cannot be resolved: no clause with identifier '14' exists in the contract (referenced 2 times).
 
 ### Document: `cuad_ENTERTAINMENTGAMINGASIAINC_02_15_2005-EX-10.5-DISTRIBUTOR AGREEMENT_clean`
 - **Finding Type**: `dangling_reference`

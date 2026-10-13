@@ -195,7 +195,7 @@ def test_ampersand_entity_name_not_split():
     )
     index = build_text_index(doc)
     settings = ConsistencySettings()
-    findings, stats = detect_party_inconsistencies(doc, index, settings)
+    findings, _stats = detect_party_inconsistencies(doc, index, settings)
 
     # Tate & Lyle Fermentation Products Ltd should not trigger a variant against itself
     assert not any(f.type == "party_name_variant" for f in findings)
@@ -216,7 +216,7 @@ def test_affiliate_and_consistent_entity_not_flagged():
     )
     index = build_text_index(doc)
     settings = ConsistencySettings()
-    findings, stats = detect_party_inconsistencies(doc, index, settings)
+    findings, _stats = detect_party_inconsistencies(doc, index, settings)
 
     # CPM Medical Consultants LLC appears consistently and is identified as affiliate, so not flagged
     assert not any(f.type == "party_name_variant" for f in findings)

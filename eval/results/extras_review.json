@@ -1,0 +1,944 @@
+[
+  {
+    "label": "indemnification",
+    "stems": [
+      "indemnif",
+      "hold harmless",
+      "defend and hold harmless"
+    ],
+    "stem_candidate_count": 202,
+    "recall_sample_count": 20,
+    "flagged_count": 12,
+    "estimated_recall": 0.6,
+    "precision_sample_count": 20,
+    "estimated_precision": 1.0,
+    "samples": [
+      {
+        "heading": "INDEMNITY.  Each party (the \"Indemnifying Party\") shall inde",
+        "text_snippet": "",
+        "flagged": true
+      },
+      {
+        "heading": "Insurance. For the duration of this Agreement and for a peri",
+        "text_snippet": "",
+        "flagged": true
+      },
+      {
+        "heading": "PRODUCT DEVELOPMENT AND PRODUCT UPDATES.   ENERGOUS will hav",
+        "text_snippet": "Page 10",
+        "flagged": true
+      },
+      {
+        "heading": "RESERVATION OF RIGHTS   a. Subject to the terms of this Agre",
+        "text_snippet": "4           d. Company agrees to defend, indemnify, and hold Talent harmless against all costs, expenses, and losses (in",
+        "flagged": true
+      },
+      {
+        "heading": "NCM General Indemnification. NCM shall defend, indemnify, an",
+        "text_snippet": "",
+        "flagged": true
+      },
+      {
+        "heading": "Contractors. Operator acknowledges and agrees that any contr",
+        "text_snippet": "",
+        "flagged": true
+      },
+      {
+        "heading": "Operator Recommendations. In the event that Operator makes a",
+        "text_snippet": "",
+        "flagged": false
+      },
+      {
+        "heading": "The Company's Indemnification of the Contractor. The provisi",
+        "text_snippet": "",
+        "flagged": true
+      },
+      {
+        "heading": "NUCLEAR, AVIATION OR LIFE SUPPORT APPLICATION. McDATA specif",
+        "text_snippet": "McDATA Corporation Standard Terms of Reseller Agreement June 2004  6  PREMIER RESELLER ADDENDUM  RESELLER AGREEMENT     ",
+        "flagged": false
+      },
+      {
+        "heading": "No Right of Indemnification under License Agreement. No righ",
+        "text_snippet": "",
+        "flagged": true
+      },
+      {
+        "heading": "Indemnification. Bioamber and Cargill agree to waive any and",
+        "text_snippet": "Cargill Confidential   - 10 -   * Confidential treatment requested  If to Cargill:   If to Bioamber:  Cargill, Incorpora",
+        "flagged": true
+      },
+      {
+        "heading": "Confidentiality and non-compete During the term of this Agre",
+        "text_snippet": "Termination This Agreement may be terminated early if mutually agreed to by both parties in writing, or for cause, which",
+        "flagged": false
+      },
+      {
+        "heading": "",
+        "text_snippet": "Usage and Definitions  Verizon Owner Trust 2020-A  Usage  The following usage rules apply to this Appendix, any document",
+        "flagged": false
+      },
+      {
+        "heading": "Notice and Payment of Claims.",
+        "text_snippet": "If any Equifax Indemnitee or Certegy Indemnitee (the \"Indemnified Party\") determines that it is or may be entitled to in",
+        "flagged": false
+      },
+      {
+        "heading": "Representations About the Funds and Shares Neither you nor a",
+        "text_snippet": "You agree to provide all such information as is reasonably necessary for the Board of Trustees of the Trust to review, a",
+        "flagged": true
+      },
+      {
+        "heading": "Exclusion. Notwithstanding the provisions of Section 12.1, E",
+        "text_snippet": "Page 17",
+        "flagged": true
+      },
+      {
+        "heading": "Infringement of Intellectual Property Rights. If any of the ",
+        "text_snippet": "Page 16",
+        "flagged": true
+      },
+      {
+        "heading": "Preamble",
+        "text_snippet": "Exhibit 10.10 CERTAIN CONFIDENTIAL PORTIONS OF THIS EXHIBIT HAVE BEEN OMITTED AND REPLACED WITH \"[***]\". SUCH IDENTIFIED",
+        "flagged": false
+      },
+      {
+        "heading": "Operator Default. Owner may terminate this Agreement at any ",
+        "text_snippet": "(a) the dissolution or bankruptcy of Operator;  (b) Operator fails to pay when due any amount due and payable hereunder,",
+        "flagged": false
+      },
+      {
+        "heading": "Procedure. If either Party is rendered unable, wholly or in ",
+        "text_snippet": "12 10.23      under this Agreement. Such notifying Party must also provide notice of the date of termination of such For",
+        "flagged": false
+      }
+    ]
+  },
+  {
+    "label": "confidentiality",
+    "stems": [
+      "confidential information",
+      "proprietary information",
+      "strict confidence"
+    ],
+    "stem_candidate_count": 194,
+    "recall_sample_count": 20,
+    "flagged_count": 19,
+    "estimated_recall": 0.95,
+    "precision_sample_count": 20,
+    "estimated_precision": 1.0,
+    "samples": [
+      {
+        "heading": "Termination by Franchisor with Notice. Franchisor may termin",
+        "text_snippet": "",
+        "flagged": true
+      },
+      {
+        "heading": "PROTECTION OF TRADE SECRETS.",
+        "text_snippet": "22.A.  CONFIDENTIAL INFORMATION.           Pretzel Time  possesses  and will further  develop and acquire  certain confi",
+        "flagged": true
+      },
+      {
+        "heading": "Taxes. Each party will be responsible to collect, bear and p",
+        "text_snippet": "Page 13",
+        "flagged": true
+      },
+      {
+        "heading": "WYZZ Covenants.",
+        "text_snippet": "WYZZ covenants that after the Effective Date and at all times during the Term:        a. Licenses, Permits, and Authoriz",
+        "flagged": false
+      },
+      {
+        "heading": "Effect of Expiration or Termination. Subject to Section 25.7",
+        "text_snippet": "",
+        "flagged": true
+      },
+      {
+        "heading": "Definitions",
+        "text_snippet": "As used herein, the following terms have the following meanings:       (a) \"Action\" means any claim, suit, arbitration, ",
+        "flagged": true
+      },
+      {
+        "heading": "PROTECTION OF CONFIDENTIAL INFORMATION. Reseller shall prote",
+        "text_snippet": "",
+        "flagged": true
+      },
+      {
+        "heading": "Confidentiality.  In order to facilitate the resolution of c",
+        "text_snippet": "",
+        "flagged": true
+      },
+      {
+        "heading": "Definitions. For purposes of this Agreement, the following t",
+        "text_snippet": "\"Acceptance\" and \"Accept\" have the meaning set forth in Article 3.4 of this Agreement.   \"Acceptance Criteria\" has the m",
+        "flagged": true
+      },
+      {
+        "heading": "Preamble",
+        "text_snippet": "Exhibit 10.1    STRATEGIC ALLIANCE AGREEMENT    This Strategic Alliance Agreement (this \"Agreement\"), effective as of 15",
+        "flagged": true
+      },
+      {
+        "heading": "Each party acknowledges that unauthorized disclosure or use ",
+        "text_snippet": "",
+        "flagged": true
+      },
+      {
+        "heading": "Confidentiality. Except as necessary for its performance und",
+        "text_snippet": "",
+        "flagged": true
+      },
+      {
+        "heading": "The obligations of confidentiality in clause 5.1 do not appl",
+        "text_snippet": "(a) in connection with the performance of each party's obligations hereunder or the enforcement of its rights hereunder;",
+        "flagged": true
+      },
+      {
+        "heading": "Confidential Information.",
+        "text_snippet": "(a) Each Party agrees to take the necessary steps to protect any Confidential Information of the other Party with at lea",
+        "flagged": true
+      },
+      {
+        "heading": "PRESERVATION OF SECRECY AND CONFIDENTIALITY. Power2Ship shal",
+        "text_snippet": "",
+        "flagged": true
+      },
+      {
+        "heading": "Confidential Information means any information disclosed by ",
+        "text_snippet": "11.1.1.1. Following prior consent of the other party, or    11.1.1.2. If the information was in the public domain at the",
+        "flagged": true
+      },
+      {
+        "heading": "Each party agrees that for a period of three (3) years follo",
+        "text_snippet": "",
+        "flagged": true
+      },
+      {
+        "heading": "INDEMNIFICATION a. WPT shall indemnify, defend, and hold har",
+        "text_snippet": "7       e. Notwithstanding any termination of this Agreement, any Approved Content that includes Zynga's Licensed Proper",
+        "flagged": true
+      },
+      {
+        "heading": "Cargill shall have the first option to prepare, file, prosec",
+        "text_snippet": "",
+        "flagged": true
+      },
+      {
+        "heading": "Preamble",
+        "text_snippet": "DIGITAL CINEMA DESTINATIONS CORP.     NETWORK AFFILIATE AGREEMENT     THIS NETWORK AFFILIATE AGREEMENT (this \"Agreement\"",
+        "flagged": true
+      }
+    ]
+  },
+  {
+    "label": "payment_terms",
+    "stems": [
+      "net 30",
+      "net 60",
+      "payment shall be due",
+      "invoiced monthly",
+      "late payment"
+    ],
+    "stem_candidate_count": 12,
+    "recall_sample_count": 12,
+    "flagged_count": 1,
+    "estimated_recall": 0.083,
+    "precision_sample_count": 13,
+    "estimated_precision": 1.0,
+    "samples": [
+      {
+        "heading": "Preamble",
+        "text_snippet": "Exhibit 10.15   THE JOINT CORP.   FRANCHISE AGREEMENT   TABLE OF CONTENTS   SECTION   PAGE   1. INTRODUCTION 1       2. ",
+        "flagged": false
+      },
+      {
+        "heading": "Payment For Service",
+        "text_snippet": "A.  Beginning with the date specified on the fee schedule attached hereto as Schedule A, or upon completion of the Insta",
+        "flagged": true
+      },
+      {
+        "heading": "Servicing of Receivables.",
+        "text_snippet": "(a) General Servicing Obligations. The Servicer will manage, service, administer and collect on the Receivables with rea",
+        "flagged": false
+      },
+      {
+        "heading": "Preamble",
+        "text_snippet": "Exhibit 10.10 CERTAIN CONFIDENTIAL PORTIONS OF THIS EXHIBIT HAVE BEEN OMITTED AND REPLACED WITH \"[***]\". SUCH IDENTIFIED",
+        "flagged": false
+      },
+      {
+        "heading": "Late Payments. Any payments due under this Agreement shall b",
+        "text_snippet": "",
+        "flagged": false
+      },
+      {
+        "heading": "Interest. Any amount not paid when due will be subject to fi",
+        "text_snippet": "",
+        "flagged": false
+      },
+      {
+        "heading": "Preamble",
+        "text_snippet": "EXHIBIT 99.2 e-business Hosting Agreement 1.0 Introduction This e-business Hosting Agreement (\"Agreement\") between Inter",
+        "flagged": false
+      },
+      {
+        "heading": "Preamble",
+        "text_snippet": "FRANCHISE AGREEMENT                                                   TABLE OF CONTENTS 1.       INTRODUCTION AND DEFINI",
+        "flagged": false
+      },
+      {
+        "heading": "Sponsor Fees. Tickets agrees to pay MP3.com, during the term",
+        "text_snippet": "",
+        "flagged": false
+      },
+      {
+        "heading": "Interest",
+        "text_snippet": "Interest on late payment by either party shall be charged at 2%             above base rate for the time being of Barcla",
+        "flagged": false
+      },
+      {
+        "heading": "ROYALTIES AND SERVICE FEES.   9.1 Royalties. DIALOG will pay",
+        "text_snippet": "Page 12",
+        "flagged": false
+      },
+      {
+        "heading": "Within thirty (30) days of the end of each calendar quarter ",
+        "text_snippet": "",
+        "flagged": false
+      }
+    ]
+  },
+  {
+    "label": "unilateral_amendment",
+    "stems": [
+      "may amend",
+      "modify at its discretion",
+      "unilaterally",
+      "amend this agreement at any time",
+      "reserves the right to update or modify"
+    ],
+    "stem_candidate_count": 6,
+    "recall_sample_count": 6,
+    "flagged_count": 0,
+    "estimated_recall": 0.0,
+    "precision_sample_count": 1,
+    "estimated_precision": 1.0,
+    "samples": [
+      {
+        "heading": "Preamble",
+        "text_snippet": "Exhibit 10.15   THE JOINT CORP.   FRANCHISE AGREEMENT   TABLE OF CONTENTS   SECTION   PAGE   1. INTRODUCTION 1       2. ",
+        "flagged": false
+      },
+      {
+        "heading": "Representations About the Funds and Shares Neither you nor a",
+        "text_snippet": "You agree to provide all such information as is reasonably necessary for the Board of Trustees of the Trust to review, a",
+        "flagged": false
+      },
+      {
+        "heading": "Improvements/Alterations to the Rail Facility. Operator shal",
+        "text_snippet": "7 10.23      Containment Pan System after Operator has modified such equipment, and if such modifications made by Operat",
+        "flagged": false
+      },
+      {
+        "heading": "PERFORMANCE STANDARDS",
+        "text_snippet": "A.   Service Availability.  The Service generally shall be publicly available to Users a minimum of 95% of the time duri",
+        "flagged": false
+      },
+      {
+        "heading": "Amendments.",
+        "text_snippet": "(a) Amendments to Clarify and Correct Errors and Defects. The parties may amend this Agreement (including Appendix A) to",
+        "flagged": false
+      },
+      {
+        "heading": "ENFORCEMENT.",
+        "text_snippet": "23.A.    UNAVOIDABLE DELAYS.           Delays in the  performance  of any duties  hereunder  which are not the fault of,",
+        "flagged": false
+      }
+    ]
+  },
+  {
+    "label": "force_majeure",
+    "stems": [
+      "force majeure",
+      "act of god",
+      "unforeseeable",
+      "causes beyond"
+    ],
+    "stem_candidate_count": 74,
+    "recall_sample_count": 20,
+    "flagged_count": 19,
+    "estimated_recall": 0.95,
+    "precision_sample_count": 20,
+    "estimated_precision": 1.0,
+    "samples": [
+      {
+        "heading": "Miscellaneous 10.1 Entire Agreement. This Agreement contains",
+        "text_snippet": "",
+        "flagged": true
+      },
+      {
+        "heading": "Neither party shall be deemed to be in default of any provis",
+        "text_snippet": "",
+        "flagged": false
+      },
+      {
+        "heading": "",
+        "text_snippet": "-1 -                                            TELKOM CONTRACT No. 076C/01   LICENCE AND MAINTENANCE AGREEMENT   entere",
+        "flagged": true
+      },
+      {
+        "heading": "Force Majeure. Any delay in or failure of performance by eit",
+        "text_snippet": "",
+        "flagged": true
+      },
+      {
+        "heading": "FORCE MAJEURE. Neither party shall be responsible for any fa",
+        "text_snippet": "24            accidents, strikes, labor disputes, or shortages. Failure to perform           shall be excused during the",
+        "flagged": true
+      },
+      {
+        "heading": "Term and Termination   10.1 Term and Renewal. [***] In addit",
+        "text_snippet": "In the event that CARDAX reasonably determines that, with Commercially Reasonable Efforts by the Parties, the developmen",
+        "flagged": true
+      },
+      {
+        "heading": "Force  Majeure.  XC and AJR  shall  not be liable to the oth",
+        "text_snippet": "-11-",
+        "flagged": true
+      },
+      {
+        "heading": "Preamble",
+        "text_snippet": "Exhibit 10.10 CERTAIN CONFIDENTIAL PORTIONS OF THIS EXHIBIT HAVE BEEN OMITTED AND REPLACED WITH \"[***]\". SUCH IDENTIFIED",
+        "flagged": true
+      },
+      {
+        "heading": "Force Majeure. Except as otherwise provided herein, neither ",
+        "text_snippet": "",
+        "flagged": true
+      },
+      {
+        "heading": "Notice of Force Majeure Event. A Party claiming a right to b",
+        "text_snippet": "",
+        "flagged": true
+      },
+      {
+        "heading": "Force Majeure. Each party shall be excused from liability fo",
+        "text_snippet": "",
+        "flagged": true
+      },
+      {
+        "heading": "Term. This Agreement shall be for a period of five (5) years",
+        "text_snippet": "successive term thereafter. For purposes of this Agreement, \"Term\" shall mean collectively the Initial Term as well as a",
+        "flagged": true
+      },
+      {
+        "heading": "Servicer Termination Events.",
+        "text_snippet": "(a) Servicer Termination Events. The following events will each be a \"Servicer Termination Event\":  (i) (x) the Servicer",
+        "flagged": true
+      },
+      {
+        "heading": "FORCE MAJEURE",
+        "text_snippet": "PPG SHANGHAI's failure or inability to make, or DISTRIBUTOR's failure or inability to take, any delivery or deliveries w",
+        "flagged": true
+      },
+      {
+        "heading": "Force Majeure. Notwithstanding any other provision of this A",
+        "text_snippet": "flood, delay of transportation or inability to obtain necessary raw materials through normal commercial channels), then ",
+        "flagged": true
+      },
+      {
+        "heading": "Force Majeure. Any delay in the performance of any duties or",
+        "text_snippet": "",
+        "flagged": true
+      },
+      {
+        "heading": "Termination for Force Majeure. Subject to Section 15.2, eith",
+        "text_snippet": "",
+        "flagged": true
+      },
+      {
+        "heading": "INDEMNIFICATION a. WPT shall indemnify, defend, and hold har",
+        "text_snippet": "7       e. Notwithstanding any termination of this Agreement, any Approved Content that includes Zynga's Licensed Proper",
+        "flagged": true
+      },
+      {
+        "heading": "Procedure. If either Party is rendered unable, wholly or in ",
+        "text_snippet": "12 10.23      under this Agreement. Such notifying Party must also provide notice of the date of termination of such For",
+        "flagged": true
+      },
+      {
+        "heading": "Termination for Failure to Perform.  By providing written no",
+        "text_snippet": "",
+        "flagged": true
+      }
+    ]
+  },
+  {
+    "label": "arbitration_or_dispute_resolution",
+    "stems": [
+      "arbitrat",
+      "binding arbitration",
+      "american arbitration association",
+      "jams",
+      "dispute resolution"
+    ],
+    "stem_candidate_count": 120,
+    "recall_sample_count": 20,
+    "flagged_count": 9,
+    "estimated_recall": 0.45,
+    "precision_sample_count": 20,
+    "estimated_precision": 1.0,
+    "samples": [
+      {
+        "heading": "",
+        "text_snippet": "REPRESENTATIONS AND WARRANTIES OF WYZZ        WYZZ hereby represents and warrants to Nexstar as follows:        1L. Orga",
+        "flagged": false
+      },
+      {
+        "heading": "Termination.",
+        "text_snippet": "(a) Material Breach. Either party shall have the right to terminate this Agreement before the end of the Term upon writt",
+        "flagged": false
+      },
+      {
+        "heading": "INJUNCTIVE RELIEF. Notwithstanding the above provisions rela",
+        "text_snippet": "",
+        "flagged": true
+      },
+      {
+        "heading": "Governing Law and Dispute Resolution.",
+        "text_snippet": "",
+        "flagged": true
+      },
+      {
+        "heading": "Dispute Resolution.",
+        "text_snippet": "(a) All disputes arising out of or in connection with this Agreement shall to the extent possible be settled amicably by",
+        "flagged": true
+      },
+      {
+        "heading": "Representations and Warranties of CARDAX. CARDAX hereby repr",
+        "text_snippet": "Disclaimer. THE REPRESENTATIONS AND WARRANTIES SET FORTH IN THIS AGREEMENT ARE THE PARTIES' ONLY WARRANTIES AND NO OTHER",
+        "flagged": false
+      },
+      {
+        "heading": "Any dispute, controversy or claim arising out of or in conne",
+        "text_snippet": "",
+        "flagged": true
+      },
+      {
+        "heading": "SIC understands that TKCI is not acting as a broker-dealer o",
+        "text_snippet": "TKCI will have First Right of Refusal with regard to any sale or disposition of any part or the whole of companies or pr",
+        "flagged": false
+      },
+      {
+        "heading": "In the event that any Affiliate of any party who has receive",
+        "text_snippet": "In this Clause 5.4, \"Litigation\" means any action, cause of action, claim, demand, suit, proceeding, citation, summons, ",
+        "flagged": false
+      },
+      {
+        "heading": "Governing Law and Jurisdiction. Without reference to choice ",
+        "text_snippet": "9       IN WITNESS WHEREOF, the Parties have executed this Agreement acting through their duly authorized representative",
+        "flagged": true
+      },
+      {
+        "heading": "There will be three arbitrators, solicitors. Each party will",
+        "text_snippet": "",
+        "flagged": false
+      },
+      {
+        "heading": "Equitable Relief.  Notwithstanding anything to the contrary ",
+        "text_snippet": "",
+        "flagged": true
+      },
+      {
+        "heading": "3(c) Allocations Monsanto and Scotts Exclusive Agency and Ma",
+        "text_snippet": "The Determination/Allocation Method for the Revenue/Expense Categories set forth on this Schedule 3.3(c)  will be review",
+        "flagged": false
+      },
+      {
+        "heading": "The place of arbitration will be Madrid.",
+        "text_snippet": "",
+        "flagged": true
+      },
+      {
+        "heading": "DISPUTE RESOLUTION",
+        "text_snippet": "",
+        "flagged": true
+      },
+      {
+        "heading": "With respect to Products sold in Stores in the Territory, XS",
+        "text_snippet": "8       The Independent Accountant shall make a determination as soon as practicable within thirty (30) days (or such ot",
+        "flagged": false
+      },
+      {
+        "heading": "",
+        "text_snippet": "Exhibit 10(xiv)  MASTER SERVICES AGREEMENT Between RadialSpark, LLC and Clear Capital Page 1 of 10      THIS MASTER SERV",
+        "flagged": true
+      },
+      {
+        "heading": "",
+        "text_snippet": "-1 -                                            TELKOM CONTRACT No. 076C/01   LICENCE AND MAINTENANCE AGREEMENT   entere",
+        "flagged": false
+      },
+      {
+        "heading": "Preamble",
+        "text_snippet": "Exhibit 4.36                               DEVELOPMENT AGREEMENT                                      between LEO PHARMA",
+        "flagged": false
+      },
+      {
+        "heading": "",
+        "text_snippet": "APPENDIX C SAMPLE OF NON-DISCLOSURE AND NON-COMPETITION AGREEMENT (BETWEEN FRANCHISEE AND ITS PERSONNEL) THIS SAMPLE OF ",
+        "flagged": false
+      }
+    ]
+  },
+  {
+    "label": "waiver_of_rights",
+    "stems": [
+      "waive",
+      "waiver",
+      "jury trial",
+      "class action",
+      "failure to enforce"
+    ],
+    "stem_candidate_count": 180,
+    "recall_sample_count": 20,
+    "flagged_count": 10,
+    "estimated_recall": 0.5,
+    "precision_sample_count": 20,
+    "estimated_precision": 1.0,
+    "samples": [
+      {
+        "heading": "EQUITABLE REMEDIES. Reseller acknowledges that TouchStar wil",
+        "text_snippet": "",
+        "flagged": false
+      },
+      {
+        "heading": "Preamble",
+        "text_snippet": "Exhibit 10.15   THE JOINT CORP.   FRANCHISE AGREEMENT   TABLE OF CONTENTS   SECTION   PAGE   1. INTRODUCTION 1       2. ",
+        "flagged": false
+      },
+      {
+        "heading": "Rights and Remedies.",
+        "text_snippet": "(a) If either party, or any member of the Group, should breach or threaten to breach any of the provisions of this Agree",
+        "flagged": false
+      },
+      {
+        "heading": "Modification and Waiver. No conditions, usage of trade, cour",
+        "text_snippet": "(a) The parties may, from time to time, enter into Commissionaire and Distributorship Agreements (\"Commissionaire Agreem",
+        "flagged": true
+      },
+      {
+        "heading": "ADDITION OF RIGHT OF FIRST REFUSAL.  The Distributor Agreeme",
+        "text_snippet": "4            refusal under this Section within such ninety (90) day period, or if           Licensee shall notify the Of",
+        "flagged": false
+      },
+      {
+        "heading": "Failure or Indulgence Not Waiver; Remedies Cumulative. No fa",
+        "text_snippet": "",
+        "flagged": true
+      },
+      {
+        "heading": "Effects of Termination.  Upon expiration or termination, all",
+        "text_snippet": "7         In addition, Boxlot acknowledges that the placement fees set forth in Exhibit A were intended to be *** in yea",
+        "flagged": true
+      },
+      {
+        "heading": "WAIVER OF JURY TRIAL. EACH PARTY HERETO HEREBY WAIVES TO THE",
+        "text_snippet": "Remainder of Page Intentionally Left Blank.     IN WITNESS WHEREOF, this Agreement is executed and effective as of the E",
+        "flagged": true
+      },
+      {
+        "heading": "Compliance with Law. Each party shall at all times comply wi",
+        "text_snippet": "reached between Zanotti and Aura regarding such worldwide sales and marketing shall prohibit competition among Zanotti a",
+        "flagged": false
+      },
+      {
+        "heading": "Waiver; Remedies. The waiver or failure of either party to e",
+        "text_snippet": "",
+        "flagged": true
+      },
+      {
+        "heading": "New Roundup Products.",
+        "text_snippet": "(a) During the term of this Agreement, Monsanto covenants and agrees to first offer (the \"Product Offer\") to the Agent, ",
+        "flagged": false
+      },
+      {
+        "heading": "Preamble",
+        "text_snippet": "Exhibit 10.1 PROMOTION AGREEMENT by and between DEPOMED, INC. and KING PHARMACEUTICALS, INC. Dated as of June 27, 2006 E",
+        "flagged": false
+      },
+      {
+        "heading": "Miscellaneous 15.1 Relationship. The relationship of the Par",
+        "text_snippet": "8",
+        "flagged": true
+      },
+      {
+        "heading": "Preamble",
+        "text_snippet": "BW-3 FRANCHISE SYSTEMS, INC.                                  FRANCHISE AGREEMENT                                   TABL",
+        "flagged": false
+      },
+      {
+        "heading": "Equitable Relief. Each Party acknowledges that a breach by a",
+        "text_snippet": "",
+        "flagged": false
+      },
+      {
+        "heading": "Miscellaneous Provisions",
+        "text_snippet": "A.   The parties to this Agreement are independent contractors with requisite corporate power and authority to enter int",
+        "flagged": false
+      },
+      {
+        "heading": "JURISDICTION/DISPUTES   This Agreement shall be deemed to ha",
+        "text_snippet": "7",
+        "flagged": true
+      },
+      {
+        "heading": "Non-Transferable Agreement. Licensed Users may not assign th",
+        "text_snippet": "LICENSEOR: HERTZ INVESTMENT GROUP, LLC 4 TRADEMARK LICENSE AGREEMENT LICENSEE: HERTZ GROUP REALTY TRUST, INC.",
+        "flagged": true
+      },
+      {
+        "heading": "WAIVER",
+        "text_snippet": "",
+        "flagged": true
+      },
+      {
+        "heading": "Severability. If any one or more of the provisions of this A",
+        "text_snippet": "of the State of Texas or exceeds the right, power or authority of MD Anderson to agree to such provision, then that prov",
+        "flagged": true
+      }
+    ]
+  },
+  {
+    "label": "termination_for_cause",
+    "stems": [
+      "terminate for cause",
+      "material breach",
+      "cure within",
+      "insolvency",
+      "material default"
+    ],
+    "stem_candidate_count": 103,
+    "recall_sample_count": 20,
+    "flagged_count": 2,
+    "estimated_recall": 0.1,
+    "precision_sample_count": 18,
+    "estimated_precision": 1.0,
+    "samples": [
+      {
+        "heading": "Term and Termination.",
+        "text_snippet": "(a) Unless earlier terminated as provided below, this Agreement shall remain in effect until the later to occur of the d",
+        "flagged": false
+      },
+      {
+        "heading": "Audit Rights.",
+        "text_snippet": "(a) During the term of this Agreement, for the longer of [***], each Party will maintain complete and accurate (in all m",
+        "flagged": false
+      },
+      {
+        "heading": "Indemnification by Life Technologies. Life Technologies here",
+        "text_snippet": "",
+        "flagged": false
+      },
+      {
+        "heading": "Upon the institution, by or against EIT, of insolvency, rece",
+        "text_snippet": "",
+        "flagged": false
+      },
+      {
+        "heading": "Termination by the Agent.",
+        "text_snippet": "(a) Material Breach, Material Fraud and Material Willful Misconduct. The Agent may terminate this Agreement in accordanc",
+        "flagged": false
+      },
+      {
+        "heading": "Non-Transferable Agreement. Licensed Users may not assign th",
+        "text_snippet": "LICENSEOR: HERTZ INVESTMENT GROUP, LLC 4 TRADEMARK LICENSE AGREEMENT LICENSEE: HERTZ GROUP REALTY TRUST, INC.",
+        "flagged": false
+      },
+      {
+        "heading": "Joint Responsibilities. The parties shall use commercially r",
+        "text_snippet": "(a) Test Development. The parties shall mutually agree on the content and composition of Phase II of the Assay, and any ",
+        "flagged": false
+      },
+      {
+        "heading": "Term and Termination.",
+        "text_snippet": "A. Unless otherwise provided for in this Agreement, the term of this Agreement shall be three years, commencing on the d",
+        "flagged": false
+      },
+      {
+        "heading": "Servicer Termination Events.",
+        "text_snippet": "(a) Servicer Termination Events. The following events will each be a \"Servicer Termination Event\":  (i) (x) the Servicer",
+        "flagged": false
+      },
+      {
+        "heading": "Term and Termination   10.1 Term and Renewal. [***] In addit",
+        "text_snippet": "In the event that CARDAX reasonably determines that, with Commercially Reasonable Efforts by the Parties, the developmen",
+        "flagged": true
+      },
+      {
+        "heading": "This Agreement and the Term shall terminate automatically, w",
+        "text_snippet": "b. the Consultant should no longer be able to provide the Services through the Principal for any reason;  c. upon the de",
+        "flagged": false
+      },
+      {
+        "heading": "Preamble",
+        "text_snippet": "STRATEGIC ALLIANCE AGREEMENT This Strategic Alliance Agreement (this \"Agreement\") is made and entered into as of May 17,",
+        "flagged": false
+      },
+      {
+        "heading": "Indemnification by Biocept. Biocept hereby agrees to defend,",
+        "text_snippet": "22",
+        "flagged": false
+      },
+      {
+        "heading": "",
+        "text_snippet": "REPRESENTATIONS AND WARRANTIES OF WYZZ        WYZZ hereby represents and warrants to Nexstar as follows:        1L. Orga",
+        "flagged": false
+      },
+      {
+        "heading": "Security Breaches. If any Party discovers (a) any material b",
+        "text_snippet": "",
+        "flagged": false
+      },
+      {
+        "heading": "REPRESENTATIONS AND COVENANTS OF THE CONTRACTOR; CONDITIONS ",
+        "text_snippet": "Contractor is conducting its business in compliance with all applicable Governmental Rules, laws, rules and regulations ",
+        "flagged": false
+      },
+      {
+        "heading": "Term. The term of this Agreement shall begin as of the Effec",
+        "text_snippet": "of future performance as a condition of assumption or assumption and assignment.   (b) Default. If any Party believes th",
+        "flagged": false
+      },
+      {
+        "heading": "Termination by Monsanto.",
+        "text_snippet": "(a) Termination Rights. In addition to its right to terminate this Agreement pursuant to Section 10.9, Monsanto shall ha",
+        "flagged": false
+      },
+      {
+        "heading": "Limitations.",
+        "text_snippet": "(a) IN NO EVENT SHALL ANY PARTY BE LIABLE TO THE OTHER PARTY FOR ANY INDIRECT, SPECIAL, EXEMPLARY, PUNITIVE OR CONSEQUEN",
+        "flagged": false
+      },
+      {
+        "heading": "Termination for Cause. Any party to this Agreement shall hav",
+        "text_snippet": "",
+        "flagged": true
+      }
+    ]
+  },
+  {
+    "label": "auto_renewal",
+    "stems": [
+      "automatically renew",
+      "auto-renewal",
+      "evergreen",
+      "successive periods",
+      "successive terms"
+    ],
+    "stem_candidate_count": 19,
+    "recall_sample_count": 19,
+    "flagged_count": 14,
+    "estimated_recall": 0.737,
+    "precision_sample_count": 14,
+    "estimated_precision": 1.0,
+    "samples": [
+      {
+        "heading": "Initial Term. This Agreement will become effective as of the",
+        "text_snippet": "",
+        "flagged": true
+      },
+      {
+        "heading": "Preamble",
+        "text_snippet": "Exhibit 10.1    STRATEGIC ALLIANCE AGREEMENT    This Strategic Alliance Agreement (this \"Agreement\"), effective as of 15",
+        "flagged": true
+      },
+      {
+        "heading": "Preamble",
+        "text_snippet": "BW-3 FRANCHISE SYSTEMS, INC.                                  FRANCHISE AGREEMENT                                   TABL",
+        "flagged": false
+      },
+      {
+        "heading": "Renewal. Unless this Agreement is terminated pursuant to Sec",
+        "text_snippet": "",
+        "flagged": true
+      },
+      {
+        "heading": "",
+        "text_snippet": "Reverse Transition Services  Section GR1: IT Service Name Description of Service Term Fee (USD) GR1.1 IT - Crossover Ser",
+        "flagged": false
+      },
+      {
+        "heading": "TERM; TERMINATION",
+        "text_snippet": "The initial term of this Agreement shall be for 3 years (the \"Initial Term\") commencing on the date first set forth abov",
+        "flagged": true
+      },
+      {
+        "heading": "Statement of Work Website (Customer Portal) Users will be ab",
+        "text_snippet": "4       \u00a7 Processing order - A driver has accepted the delivery request and the dispensary has been alerted to prepare t",
+        "flagged": false
+      },
+      {
+        "heading": "Unless otherwise terminated as provided herein, the initial ",
+        "text_snippet": "",
+        "flagged": true
+      },
+      {
+        "heading": "Preamble",
+        "text_snippet": "EXHIBIT 10.6                                   EXHIBIT 10.06                           WATCHGUARD TECHNOLOGIES, INC.    ",
+        "flagged": true
+      },
+      {
+        "heading": "DEFINITIONS \"Access Point\" means Internet access points to w",
+        "text_snippet": "Page 11 of 22 iPass Channel Partner Reseller Agreement 04.18.2018 iPass Confidential        \"Effective Date\" means the d",
+        "flagged": true
+      },
+      {
+        "heading": "TERM AND TERMINATION.   15.1 Term. This Agreement is effecti",
+        "text_snippet": "Page 19          (ii) DIALOG may terminate this Agreement, immediately upon issuance of written notice to ENERGOUS in th",
+        "flagged": true
+      },
+      {
+        "heading": "Term. This Agreement shall be for a period of five (5) years",
+        "text_snippet": "successive term thereafter. For purposes of this Agreement, \"Term\" shall mean collectively the Initial Term as well as a",
+        "flagged": true
+      },
+      {
+        "heading": "EXCLUSIONS. CHANNEL PARTNER'S PAYMENT OBLIGATIONS, LIABILITY",
+        "text_snippet": "Page 8 of 22 iPass Channel Partner Reseller Agreement 04.18.2018 iPass Confidential",
+        "flagged": true
+      },
+      {
+        "heading": "",
+        "text_snippet": "Exhibit 10.1 CONSULTING AGREEMENT This CONSULTING AGREEMENT (\"Agreement\") effective as of this 1st day of March 2020 is ",
+        "flagged": true
+      },
+      {
+        "heading": "Preamble",
+        "text_snippet": "Exhibit 10.28 PRODUCT SALE AND MARKETING AGREEMENT THIS PRODUCT SALE AND MARKETING AGREEMENT (this \"Agreement\") is made ",
+        "flagged": true
+      },
+      {
+        "heading": "TERM.  The term of this Agreement shall continue for one (1)",
+        "text_snippet": "",
+        "flagged": true
+      },
+      {
+        "heading": "TERM",
+        "text_snippet": "The initial term of this Agreement shall be for a period of one (1) year from the Effective Date unless sooner terminate",
+        "flagged": true
+      },
+      {
+        "heading": "TERM.  This Agreement shall be effective           through a",
+        "text_snippet": "(2)  Immediately upon written notice if the other party defaults in                the performance of any obligation und",
+        "flagged": false
+      },
+      {
+        "heading": "",
+        "text_snippet": "Transition Services  Section G1: IT Services12  Service Name Description of Service Term  Monthly Fee (USD) - Commenceme",
+        "flagged": false
+      }
+    ]
+  }
+]

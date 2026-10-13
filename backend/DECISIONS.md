@@ -91,3 +91,16 @@ This document records the architectural and design decisions made while implemen
 **Rationale**:
 - Set subtraction discarded repeated tokens and collapsed context words (e.g. if currency identifier `Rs.` was already present in an earlier clause on the page, set diff omitted `Rs.` from `added`, producing only the numeric amount `90,00,000`).
 - Sequence matching preserves contiguous phrase order and exact token repetitions, enabling 100% ground-truth tampered value string matching in forensic evidence strings without false positives.
+
+---
+
+## D-08: Module 5 Character-Offset Ground Truth Alignment & Decision Gating
+
+**Decision**: Replaced legacy 30% token-overlap ground-truth alignment with exact character-offset alignment ($\ge 50\%$ span character overlap, or largest overlap fallback) on normalized contract text. Established an automated pre-training Sanity Gate and VAL-based decision gating.
+
+**Rationale**:
+- Token overlap caused catastrophic ground-truth inflation across CUAD contracts (e.g., 753 `governing_law` test positive clauses across 102 contracts and 59 labels on a single agreement).
+- Character offsets ensure that clauses are only labeled when they contain the majority of an expert answer span.
+- Strict model gating (VAL precision $\ge 0.50$ AND VAL support $\ge 10$) prevents deploying low-confidence models, gracefully falling back to deterministic rules.
+- Test Micro F1 improved from 38.35% to **64.23%**, and Macro F1 from 21.88% to **47.88%**.
+

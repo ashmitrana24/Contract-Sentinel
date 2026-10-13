@@ -21,6 +21,9 @@ dependencies = [
     "python-multipart>=0.0.32",
     "pikepdf>=8.0.0",
     "pyhanko>=0.20.0",
+    "scikit-learn==1.8.0",
+    "joblib>=1.3.0",
+    "rapidfuzz>=3.0.0",
 ]
 
 [project.optional-dependencies]

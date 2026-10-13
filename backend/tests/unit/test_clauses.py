@@ -307,3 +307,57 @@ def test_clauses_article_with_nested_dotted_number_same_line():
     assert "4.1" in clause_ids
 
 
+def test_clauses_preamble_numbered_party_list_does_not_collide_with_clause_1():
+    """Regression test for ContractNLI numbered list in preamble colliding with operative Clause 1."""
+    doc_text = """NON-DISCLOSURE AGREEMENT
+Between:
+1. Last Man Stands, (the "Disclosing Party"); and
+2. Recipient Corp, (the "Receiving Party").
+
+WHEREAS the parties wish to evaluate a transaction;
+NOW, THEREFORE, the parties agree as follows:
+
+1. Confidential Information.
+The Receiving Party agrees to maintain confidentiality.
+
+2. Term and Termination.
+This agreement shall continue for two years.
+"""
+    pages = [_make_page(doc_text)]
+    clauses = segment_clauses(pages)
+    clause_ids = [c.clause_id for c in clauses]
+
+    # Exactly one preamble (0) and clauses 1 and 2
+    assert clause_ids == ["0", "1", "2"]
+    c1 = next(c for c in clauses if c.clause_id == "1")
+    assert c1.heading == "Confidential Information."
+    assert 'Last Man Stands, (the "Disclosing Party"); and' in clauses[0].text
+
+
+def test_clauses_blank_line_after_heading_preserved():
+    """Regression test: blank line after a number-only heading does not discard the heading."""
+    doc_text = """
+    Preamble text.
+
+    ARTICLE VII.
+    REPRESENTATIONS AND WARRANTIES
+    Each party represents and warrants.
+
+    ARTICLE VIII.
+
+    INTELLECTUAL PROPERTY RIGHTS
+    8.1 Limited Grant. Hydraspin hereby grants to Distributor an exclusive license.
+
+    ARTICLE IX.
+    CONFIDENTIALITY
+    Each party agrees to keep confidential.
+    """
+    pages = [_make_page(doc_text)]
+    clauses = segment_clauses(pages)
+    clause_ids = [c.clause_id for c in clauses]
+
+    assert "7" in clause_ids
+    assert "8" in clause_ids
+    assert "9" in clause_ids
+
+

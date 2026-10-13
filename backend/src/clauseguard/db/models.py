@@ -53,6 +53,12 @@ class Document(Base):
     analysis_runs: Mapped[list[AnalysisRun]] = relationship(
         "AnalysisRun", back_populates="document", lazy="select"
     )
+    clause_labels: Mapped[list[ClauseLabelRow]] = relationship(
+        "ClauseLabelRow", back_populates="document", lazy="select"
+    )
+    attributes: Mapped[DocumentAttributeRow | None] = relationship(
+        "DocumentAttributeRow", back_populates="document", uselist=False, lazy="select"
+    )
 
 
 class Job(Base):
@@ -200,3 +206,57 @@ class AnalysisRun(Base):
         UniqueConstraint("document_id", "module", "version", name="uq_analysis_runs_doc_mod_ver"),
         Index("ix_analysis_runs_document_id", "document_id"),
     )
+
+
+class ClauseLabelRow(Base):
+    """One multi-label classification tag assigned to a clause."""
+
+    __tablename__ = "clause_labels"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    document_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("documents.id", ondelete="CASCADE"), nullable=False
+    )
+    clause_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    label: Mapped[str] = mapped_column(String(64), nullable=False)
+    score: Mapped[float] = mapped_column(Float, nullable=False)
+    method: Mapped[str] = mapped_column(String(32), nullable=False)  # rules|model|both
+    evidence: Mapped[str] = mapped_column(Text, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, server_default=func.now()
+    )
+
+    document: Mapped[Document] = relationship("Document", back_populates="clause_labels")
+
+    __table_args__ = (
+        Index("ix_clause_labels_doc_clause", "document_id", "clause_id"),
+        Index("ix_clause_labels_doc_label", "document_id", "label"),
+    )
+
+
+class DocumentAttributeRow(Base):
+    """Document-level structured key-term attributes."""
+
+    __tablename__ = "document_attributes"
+
+    document_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("documents.id", ondelete="CASCADE"), primary_key=True
+    )
+    governing_law_jurisdiction: Mapped[str | None] = mapped_column(String(128), nullable=True)
+    termination_notice_days: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    auto_renews: Mapped[bool | None] = mapped_column(Boolean, nullable=True)
+    renewal_term_months: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    non_renewal_notice_days: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    liability_cap: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
+    non_compete_duration_months: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    payment_terms_days: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, server_default=func.now()
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, server_default=func.now(), onupdate=func.now()
+    )
+
+    document: Mapped[Document] = relationship("Document", back_populates="attributes")

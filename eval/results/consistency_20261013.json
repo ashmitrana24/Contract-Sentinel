@@ -29,8 +29,8 @@
         "total": 40,
         "flagged": 36,
         "recall": 0.9,
-        "type_correct": 32,
-        "type_correctness_rate": 0.8,
+        "type_correct": 31,
+        "type_correctness_rate": 0.775,
         "localized": 0,
         "localization_rate": 0.0,
         "page_localized": 0,
@@ -38,10 +38,10 @@
       },
       "clause_delete": {
         "total": 43,
-        "flagged": 17,
-        "recall": 0.3953,
-        "type_correct": 16,
-        "type_correctness_rate": 0.3721,
+        "flagged": 16,
+        "recall": 0.3721,
+        "type_correct": 15,
+        "type_correctness_rate": 0.3488,
         "localized": 0,
         "localization_rate": 0.0,
         "page_localized": 0,
@@ -112,10 +112,10 @@
       }
     },
     "latency_stats": {
-      "mean_ms": 55.2,
-      "p50_ms": 13.17,
-      "p95_ms": 323.98,
-      "p99_ms": 724.87
+      "mean_ms": 72.01,
+      "p50_ms": 14.98,
+      "p95_ms": 409.86,
+      "p99_ms": 1022.48
     },
     "misses_by_type": {
       "amount_figure_only": [],
@@ -331,22 +331,6 @@
             "page": 8,
             "evidence": "Target '14' referenced in: edial and other provisions of paragraph 14 of this Agreement.",
             "explanation": "Cross-reference to '14' in clause(s) 21 cannot be resolved: no clause with identifier '14' exists in the contract."
-          },
-          {
-            "type": "numbering_gap",
-            "severity": "high",
-            "clause_ref": "14",
-            "page": 6,
-            "evidence": "Missing clause 14 between clause 13 and clause 15 (cross-referenced by dangling reference to '14')",
-            "explanation": "Clause numbering gap: clause 14 is missing between clause 13 and clause 15, and a cross-reference specifically points to missing clause 14."
-          },
-          {
-            "type": "numbering_gap",
-            "severity": "high",
-            "clause_ref": "22",
-            "page": 8,
-            "evidence": "Missing clause 22 between clause 21 and clause 23 (cross-referenced by dangling reference to '22')",
-            "explanation": "Clause numbering gap: clause 22 is missing between clause 21 and clause 23, and a cross-reference specifically points to missing clause 22."
           }
         ]
       },
@@ -356,32 +340,16 @@
           {
             "type": "dangling_reference",
             "severity": "medium",
-            "clause_ref": "23.1",
-            "page": 21,
+            "clause_ref": "0",
+            "page": 1,
             "evidence": "Target '20' referenced in: obligation; 23.3.5 Subject to Clause 20 (\"Confidentiality\"), it will ",
-            "explanation": "Cross-reference to '20' in clause(s) 23.1 cannot be resolved: no clause with identifier '20' exists in the contract."
-          },
-          {
-            "type": "numbering_gap",
-            "severity": "high",
-            "clause_ref": "20",
-            "page": 18,
-            "evidence": "Missing clause 20 between clause 19 and clause 21 (cross-referenced by dangling reference to '20')",
-            "explanation": "Clause numbering gap: clause 20 is missing between clause 19 and clause 21, and a cross-reference specifically points to missing clause 20."
+            "explanation": "Cross-reference to '20' in clause(s) 0 cannot be resolved: no clause with identifier '20' exists in the contract."
           }
         ]
       },
       {
         "doc_id": "cuad_AzulSa_20170303_F-1A_EX-10.3_9943903_EX-10.3_Maintenance Agreement2_clean",
         "findings": [
-          {
-            "type": "dangling_reference",
-            "severity": "medium",
-            "clause_ref": "2",
-            "page": 1,
-            "evidence": "Target '12.1' referenced in: VOICING\nAND PAYMENT TERMS (i) Clause 12.1(ii) of the GMA shall be cancelled",
-            "explanation": "Cross-reference to '12.1' in clause(s) 2 cannot be resolved: no clause with identifier '12.1' exists in the contract."
-          },
           {
             "type": "dangling_reference",
             "severity": "medium",
@@ -398,18 +366,10 @@
           {
             "type": "dangling_reference",
             "severity": "medium",
-            "clause_ref": "11.1",
-            "page": 6,
-            "evidence": "Target '13' referenced in:  including\nthose set forth in paragraphs 13 - 15, and (in the case of the sepa (and 2 other occurrence(s))",
-            "explanation": "Cross-reference to '13' in clause(s) 11.1, 14.1 cannot be resolved: no clause with identifier '13' exists in the contract (referenced 3 times)."
-          },
-          {
-            "type": "numbering_gap",
-            "severity": "high",
-            "clause_ref": "13",
+            "clause_ref": "0",
             "page": 1,
-            "evidence": "Missing clause 13 between clause 12 and clause 14 (cross-referenced by dangling reference to '13')",
-            "explanation": "Clause numbering gap: clause 13 is missing between clause 12 and clause 14, and a cross-reference specifically points to missing clause 13."
+            "evidence": "Target '13' referenced in:  including\nthose set forth in paragraphs 13 - 15, and (in the case of the sepa (and 2 other occurrence(s))",
+            "explanation": "Cross-reference to '13' in clause(s) 0 cannot be resolved: no clause with identifier '13' exists in the contract (referenced 3 times)."
           }
         ]
       },
@@ -458,10 +418,10 @@
           {
             "type": "dangling_reference",
             "severity": "medium",
-            "clause_ref": "1.1",
+            "clause_ref": "0",
             "page": 1,
             "evidence": "Target '14' referenced in: \ngenerally in accordance with section 14 . 1.5 Hours of Support The no (and 1 other occurrence(s))",
-            "explanation": "Cross-reference to '14' in clause(s) 1.1, 14.1 cannot be resolved: no clause with identifier '14' exists in the contract (referenced 2 times)."
+            "explanation": "Cross-reference to '14' in clause(s) 0, 14.1 cannot be resolved: no clause with identifier '14' exists in the contract (referenced 2 times)."
           }
         ]
       },
@@ -709,10 +669,10 @@
       }
     },
     "latency_stats": {
-      "mean_ms": 54.51,
-      "p50_ms": 22.36,
-      "p95_ms": 374.0,
-      "p99_ms": 583.79
+      "mean_ms": 77.17,
+      "p50_ms": 35.2,
+      "p95_ms": 524.15,
+      "p99_ms": 761.38
     },
     "misses_by_type": {
       "amount_figure_only": [],

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import uuid
+from typing import Any
 
 from pydantic import BaseModel, Field
 
@@ -88,6 +89,13 @@ class PageResponse(BaseModel):
     spans: list[dict]
 
 
+class ClauseLabelItem(BaseModel):
+    label: str
+    score: float
+    method: str
+    evidence: str
+
+
 class ClauseResponse(BaseModel):
     order_idx: int
     clause_id: str
@@ -98,6 +106,33 @@ class ClauseResponse(BaseModel):
     page_start: int
     page_end: int
     kind: str
+    labels: list[ClauseLabelItem] = Field(default_factory=list)
+
+
+class ClauseTypeSummaryItem(BaseModel):
+    label: str
+    name: str
+    count: int
+    max_score: float
+    clause_ids: list[str] = Field(default_factory=list)
+
+
+class ClauseTypesResponse(BaseModel):
+    document_id: uuid.UUID
+    total_types: int
+    items: list[ClauseTypeSummaryItem]
+
+
+class DocumentAttributesResponse(BaseModel):
+    document_id: uuid.UUID
+    governing_law_jurisdiction: str | None = None
+    termination_notice_days: int | None = None
+    auto_renews: bool | None = None
+    renewal_term_months: int | None = None
+    non_renewal_notice_days: int | None = None
+    liability_cap: dict[str, Any] | None = None
+    non_compete_duration_months: int | None = None
+    payment_terms_days: int | None = None
 
 
 class PaginatedPages(BaseModel):

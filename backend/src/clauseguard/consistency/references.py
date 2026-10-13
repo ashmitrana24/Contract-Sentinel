@@ -367,6 +367,25 @@ def detect_cross_references(
                     stats["external_ignored"] += 1
                     continue
 
+            # Check: followed by "of <named external instrument>" (e.g. "Article 31 of REACH")
+            # Any reference followed by "of" plus a named instrument other than this Agreement,
+            # the Agreement, this Contract, this Schedule or this Exhibit is external.
+            m_of_inst = re.match(
+                r"^\s*(?:\([A-Za-z0-9]+\)\s*)*of\s+(?:the\s+|this\s+|that\s+|said\s+|any\s+)?([A-Za-z0-9\s,.&'\(\)\-]{1,60}?\b)",
+                following_context,
+                re.IGNORECASE,
+            )
+            if m_of_inst:
+                inst_norm = m_of_inst.group(1).strip().lower()
+                if not (
+                    inst_norm.startswith("agreement")
+                    or inst_norm.startswith("contract")
+                    or inst_norm.startswith("schedule")
+                    or inst_norm.startswith("exhibit")
+                ):
+                    stats["external_ignored"] += 1
+                    continue
+
             # 3. Check "thereof" referring to external agreement
             if re.search(r"^\s*(?:\([A-Za-z0-9]+\)\s*)*thereof\b", following_context, re.IGNORECASE):
                 if re.search(r"\b(?:Agreement|Contract|License|Lease)\b", preceding_context, re.IGNORECASE):

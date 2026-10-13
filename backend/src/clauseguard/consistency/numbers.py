@@ -330,6 +330,10 @@ def parse_figure(fig_str: str) -> ParsedNumber | None:
             cleaned = cleaned[: -len(sym)].strip()
             break
 
+    # Check for space-separated thousands e.g. "10 000", "1 000 000"
+    if re.fullmatch(r"\d{1,3}(?:\s+\d{3})+(?:\.\d+)?", cleaned):
+        cleaned = re.sub(r"\s+", "", cleaned)
+
     # Check for unit suffix e.g. "10.5 lakh", "1.5 million"
     parts = cleaned.split()
     multiplier = Decimal(1)

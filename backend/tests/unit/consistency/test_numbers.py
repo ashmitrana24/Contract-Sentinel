@@ -128,3 +128,25 @@ def test_words_compound_fractions_and_decimals():
     assert w_dec.value == Decimal("0.5")
     assert w_dec.is_percentage is True
 
+
+def test_figures_space_separated_thousands():
+    """Regression test for ContractNLI European space-separated thousands."""
+    f1 = parse_figure("EUR 10 000")
+    assert f1 is not None
+    assert f1.value == Decimal(10000)
+    assert f1.currency == "EUR"
+
+    f2 = parse_figure("€10 000")
+    assert f2 is not None
+    assert f2.value == Decimal(10000)
+    assert f2.currency == "EUR"
+
+    f3 = parse_figure("10 000")
+    assert f3 is not None
+    assert f3.value == Decimal(10000)
+
+    f4 = parse_figure("$1 000 000")
+    assert f4 is not None
+    assert f4.value == Decimal(1000000)
+    assert f4.currency == "USD"
+

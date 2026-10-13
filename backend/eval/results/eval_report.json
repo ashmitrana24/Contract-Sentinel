@@ -1,84 +1,84 @@
 {
   "train_val": {
     "split_name": "Train/Val",
-    "total_documents": 259,
-    "tp": 33,
+    "total_documents": 400,
+    "tp": 64,
     "fp": 0,
     "fn": 0,
-    "tn": 226,
+    "tn": 336,
     "precision": 1.0,
     "recall": 1.0,
     "f1": 1.0,
     "recall_per_type": {
       "incremental_edit": {
-        "tp": 10,
-        "total": 10,
+        "tp": 31,
+        "total": 31,
         "recall": 1.0
       },
       "hidden_text": {
-        "tp": 24,
-        "total": 24,
+        "tp": 34,
+        "total": 34,
         "recall": 1.0
       }
     },
-    "clean_documents": 85,
+    "clean_documents": 127,
     "clean_false_positive_rate": 0.0,
     "clean_false_positives": 0,
-    "content_documents": 141,
+    "content_documents": 209,
     "content_false_positive_rate": 0.0,
     "content_false_positives": 0,
-    "incremental_total": 10,
+    "incremental_total": 31,
     "incremental_page_match_rate": 1.0,
-    "incremental_page_matches": 10,
+    "incremental_page_matches": 31,
     "incremental_evidence_tampered_value_rate": 1.0,
-    "incremental_evidence_matches": 10,
+    "incremental_evidence_matches": 31,
     "latency_stats": {
-      "mean_ms": 18.04,
-      "p50_ms": 6.99,
-      "p95_ms": 78.48,
-      "p99_ms": 154.94
+      "mean_ms": 36.1,
+      "p50_ms": 14.65,
+      "p95_ms": 169.46,
+      "p99_ms": 302.16
     },
     "misses": [],
     "false_positives": []
   },
   "test": {
     "split_name": "Held-out Test",
-    "total_documents": 44,
-    "tp": 6,
+    "total_documents": 74,
+    "tp": 11,
     "fp": 0,
     "fn": 0,
-    "tn": 38,
+    "tn": 63,
     "precision": 1.0,
     "recall": 1.0,
     "f1": 1.0,
     "recall_per_type": {
       "incremental_edit": {
-        "tp": 2,
-        "total": 2,
-        "recall": 1.0
-      },
-      "hidden_text": {
         "tp": 4,
         "total": 4,
         "recall": 1.0
+      },
+      "hidden_text": {
+        "tp": 7,
+        "total": 7,
+        "recall": 1.0
       }
     },
-    "clean_documents": 15,
+    "clean_documents": 23,
     "clean_false_positive_rate": 0.0,
     "clean_false_positives": 0,
-    "content_documents": 23,
+    "content_documents": 40,
     "content_false_positive_rate": 0.0,
     "content_false_positives": 0,
-    "incremental_total": 2,
+    "incremental_total": 4,
     "incremental_page_match_rate": 1.0,
-    "incremental_page_matches": 2,
+    "incremental_page_matches": 4,
     "incremental_evidence_tampered_value_rate": 1.0,
-    "incremental_evidence_matches": 2,
+    "incremental_evidence_matches": 4,
     "latency_stats": {
-      "mean_ms": 27.3,
-      "p50_ms": 7.39,
-      "p95_ms": 106.17,
-      "p99_ms": 188.85
+      "mean_ms": 41.48,
+      "p50_ms": 20.71,
+      "p95_ms": 204.14,
+      "p99_ms": 335.1
     },
     "misses": [],
     "false_positives": []

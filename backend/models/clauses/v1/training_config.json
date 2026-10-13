@@ -1,0 +1,17 @@
+{
+  "created_at": "2026-10-13T06:06:12.535404+00:00",
+  "train_clauses_count": 11049,
+  "val_clauses_count": 3408,
+  "test_clauses_count": 2788,
+  "ngram_words": [
+    1,
+    2
+  ],
+  "ngram_chars": [
+    3,
+    5
+  ],
+  "classifier": "LogisticRegression(class_weight='balanced', C=1.0)",
+  "gating_rule": "VAL precision >= 0.50 and VAL support >= 10",
+  "decision_preference": "best VAL F1; if within 0.01, rules > hybrid > model"
+}

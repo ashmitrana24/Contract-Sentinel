@@ -18,13 +18,25 @@ from __future__ import annotations
 import logging
 import uuid
 from datetime import UTC, datetime, timedelta
+from typing import Any
 
 from sqlalchemy import delete, select
 
+from clauseguard.clauses.attributes import extract_all_document_attributes
+from clauseguard.clauses.model import classify_clause
 from clauseguard.config import Settings, get_settings
 from clauseguard.consistency import ConsistencySettings
 from clauseguard.consistency import analyze as analyze_consistency
-from clauseguard.db.models import AnalysisRun, Clause, Document, FindingRow, Job, Page
+from clauseguard.db.models import (
+    AnalysisRun,
+    Clause,
+    ClauseLabelRow,
+    Document,
+    DocumentAttributeRow,
+    FindingRow,
+    Job,
+    Page,
+)
 from clauseguard.db.session import get_session
 from clauseguard.forensics.models import ForensicsSettings
 from clauseguard.forensics.run import analyze
@@ -194,13 +206,54 @@ def _execute_parsing(
             logger.warning("Consistency analysis failed on document %s: %s", document_id, exc)
             consistency_error = str(exc)
 
+    # Clause Classification & Key-Term Extraction (Module 5)
+    clause_label_records: list[dict[str, Any]] = []
+    doc_attributes = None
+    clauses_error = None
+    clauses_duration_ms = 0
+    if cfg.clauses_enabled:
+        start_clauses_t = datetime.now(UTC)
+        try:
+            clause_labels_list = []
+            for c in parsed.clauses:
+                # check time budget
+                elapsed = (datetime.now(UTC) - start_clauses_t).total_seconds()
+                if elapsed > cfg.clauses_budget_seconds:
+                    logger.warning(
+                        "Clauses classification exceeded budget (%ss) on doc %s",
+                        cfg.clauses_budget_seconds,
+                        document_id,
+                    )
+                    break
+                preds = classify_clause(c.text, heading=c.heading)
+                clause_labels_list.append([p["label"] for p in preds])
+                for p in preds:
+                    clause_label_records.append({
+                        "clause_id": c.clause_id,
+                        "label": p["label"],
+                        "score": p["score"],
+                        "method": p["method"],
+                        "evidence": p["evidence"],
+                    })
+
+            doc_attributes = extract_all_document_attributes(
+                [c.text for c in parsed.clauses],
+                clause_labels=clause_labels_list,
+            )
+            clauses_duration_ms = round((datetime.now(UTC) - start_clauses_t).total_seconds() * 1000)
+        except Exception as exc:
+            logger.warning("Clause classification failed on document %s: %s", document_id, exc)
+            clauses_error = str(exc)
+
     # Idempotent write: atomic replace in single transaction
     with get_session() as session:
-        # Delete existing pages, clauses, findings, and analysis_runs (handles re-parse cleanly)
+        # Delete existing pages, clauses, findings, analysis_runs, labels, and attributes
         session.execute(delete(Page).where(Page.document_id == document_id))
         session.execute(delete(Clause).where(Clause.document_id == document_id))
         session.execute(delete(FindingRow).where(FindingRow.document_id == document_id))
         session.execute(delete(AnalysisRun).where(AnalysisRun.document_id == document_id))
+        session.execute(delete(ClauseLabelRow).where(ClauseLabelRow.document_id == document_id))
+        session.execute(delete(DocumentAttributeRow).where(DocumentAttributeRow.document_id == document_id))
 
         # Insert pages
         page_entities = [
@@ -308,6 +361,52 @@ def _execute_parsing(
                 detector_status={"error": consistency_error},
             )
             session.add(c_run_entity)
+
+        # Insert clause labels
+        if clause_label_records:
+            lbl_entities = [
+                ClauseLabelRow(
+                    document_id=document_id,
+                    clause_id=r["clause_id"],
+                    label=r["label"],
+                    score=r["score"],
+                    method=r["method"],
+                    evidence=r["evidence"],
+                )
+                for r in clause_label_records
+            ]
+            session.add_all(lbl_entities)
+
+        # Insert document attributes
+        if doc_attributes is not None:
+            attr_entity = DocumentAttributeRow(
+                document_id=document_id,
+                governing_law_jurisdiction=doc_attributes.governing_law_jurisdiction,
+                termination_notice_days=doc_attributes.termination_notice_days,
+                auto_renews=doc_attributes.auto_renews,
+                renewal_term_months=doc_attributes.renewal_term_months,
+                non_renewal_notice_days=doc_attributes.non_renewal_notice_days,
+                liability_cap=doc_attributes.liability_cap,
+                non_compete_duration_months=doc_attributes.non_compete_duration_months,
+                payment_terms_days=doc_attributes.payment_terms_days,
+            )
+            session.add(attr_entity)
+
+        # Insert clauses analysis run
+        if cfg.clauses_enabled:
+            cl_run_entity = AnalysisRun(
+                document_id=document_id,
+                module="clauses",
+                version="1.0.0",
+                status="ok" if clauses_error is None else "error",
+                duration_ms=clauses_duration_ms,
+                error=clauses_error[:2048] if clauses_error else None,
+                detector_status={
+                    "labels_count": len(clause_label_records),
+                    "attributes_extracted": doc_attributes is not None,
+                },
+            )
+            session.add(cl_run_entity)
 
         # Update document metadata and OCR flag
         d = session.get(Document, document_id)

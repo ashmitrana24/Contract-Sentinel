@@ -123,11 +123,52 @@ Deterministic semantic and structural consistency verification engine analyzing 
 
 *Genuine defect caught in real contract*: In `MUTUAL NON-DISCLOSURE AGREEMENT` (`ContractNLI_Test_056`), caught a real drafting conflict: *"shall expire five (2) years from the date hereof"*.
 
-#### Known Limitations
+### [Module 5: Clause Classification & Key-Term Extraction (`backend/src/clauseguard/clauses/`)](file:///c:/Users/Loq/Desktop/Projects/legal-doc/backend/README.md)
+Multi-label clause classifier and deterministic key-term extraction engine that reads clauses produced by the Module 2 parser, labels each clause across 45 legal categories, extracts structured attributes, and stores results in PostgreSQL for downstream risk analysis (Module 6).
 
-1. **Messy OCR Filings**: Complex SEC EDGAR Exhibit-10 filings containing scanning artifacts, multi-column tables, line-wrapped headers, or unescaped exhibit cross-references can confuse clause segmentation and trigger false dangling references or party variant warnings.
-2. **Unsegmented Structures**: Contracts with nested schedules, Roman numeral articles containing non-standard indentation, or unnumbered bullet agreements may not yield reliable clause trees.
-3. **Fewer Genuine-Tamper Types Detectable via Consistency**: Pure semantic consistency checks can only identify *internal contradictions* (word-digit clashes, inverted dates, unknown parties, broken references). Tampers that modify both words and numbers consistently, or insert/delete entire self-contained clauses without numbering disruption, leave zero internal inconsistency trace and must be caught via Module 3 PDF structural forensics or comparative redlining.
+#### Taxonomy Architecture
+- **36 Core Contractual Labels**: Mapped from the Atticus Project CUAD v1 expert benchmark (excluding 5 document-level metadata categories: Document Name, Parties, Agreement Date, Effective Date, Expiration Date).
+- **9 Additional Risk & Operational Labels**: High-value contract clauses evaluated via deterministic rules: `indemnification`, `confidentiality`, `payment_terms`, `unilateral_amendment`, `force_majeure`, `arbitration_or_dispute_resolution`, `waiver_of_rights`, `termination_for_cause`, `auto_renewal`.
+- **Hybrid Inference & Long-Clause Sliding Windowing**: Combines high-precision regex/keyword rules with balanced TF-IDF + LogisticRegression binary classifiers. Clauses $> 250$ words are chunked into 120-word sliding windows (stride 100) and aggregated with localized evidence snippets ($\le 300$ chars).
+
+#### 8 Deterministic Key-Term Extractors
+Never guesses; returns `None` / empty when terms are silent or ambiguous:
+1. `governing_law_jurisdiction`: Canonical jurisdiction string (e.g., "Delaware", "New York", "England and Wales").
+2. `termination_notice_days`: Notice timeframe in days for convenience or general termination.
+3. `auto_renews`: Boolean indicating auto-renewal / evergreen renewal provisions.
+4. `renewal_term_months`: Duration in months of successive renewal periods.
+5. `non_renewal_notice_days`: Notice timeframe in days required to prevent contract renewal.
+6. `liability_cap`: Structured fixed monetary cap or fee-multiple dictionary.
+7. `non_compete_duration_months`: Duration in months of restrictive non-compete covenants.
+8. `payment_terms_days`: Payment window timeframe in days (e.g., Net 30 -> 30).
+
+#### Honest Benchmark Results on Unseen TEST Split (Third Look on Corrected Labels)
+> [!IMPORTANT]
+> **Label Correction Notice**: The initial two evaluation looks used token-overlap alignment (30% span token overlap) which inflated ground-truth labels across contracts (e.g. 753 `governing_law` test positive clauses for 102 contracts, and 59 labels on a single agreement). **All previous per-label numbers from Looks 1 and 2 are officially VOID**.
+> Ground truth was rebuilt using exact character offsets ($\ge 50\%$ span character overlap, or largest overlap). The results below represent the official **Third Look** evaluated exactly once on the corrected test split:
+
+| Metric | Test Split Value (Third Look) |
+|---|---|
+| **Total Test Samples** | 2,788 clauses |
+| **True Test Label Support** | 1,052 positive instances (corrected from inflated 4,500+) |
+| **Micro Precision** | **64.89%** |
+| **Micro Recall** | **63.59%** |
+| **Micro F1** | **64.23%** |
+| **Macro Precision** | **49.30%** |
+| **Macro Recall** | **49.23%** |
+| **Macro F1** | **47.88%** |
+
+*Core High-Support Benchmark Labels (Third Look)*:
+- `governing_law` (Support: 89): Precision **96.3%**, Recall **86.5%**, F1 **91.1%** (95% CI: `[0.90, 0.99]`)
+- `anti_assignment` (Support: 86): Precision **86.8%**, Recall **83.7%**, F1 **85.2%** (95% CI: `[0.78, 0.92]`)
+- `cap_on_liability` (Support: 66): Precision **80.6%**, Recall **81.8%**, F1 **81.2%** (95% CI: `[0.70, 0.88]`)
+- `license_grant` (Support: 83): Precision **90.8%**, Recall **71.1%**, F1 **79.7%** (95% CI: `[0.81, 0.96]`)
+- `audit_rights` (Support: 57): Precision **71.6%**, Recall **84.2%**, F1 **77.4%** (95% CI: `[0.60, 0.81]`)
+- `notice_period_to_terminate_renewal` (Support: 22): Precision **72.0%**, Recall **81.8%**, F1 **76.6%** (95% CI: `[0.52, 0.86]`)
+- `uncapped_liability` (Support: 24): Precision **68.2%**, Recall **62.5%**, F1 **65.2%** (95% CI: `[0.47, 0.84]`)
+- `termination_for_convenience` (Support: 44): Precision **53.7%**, Recall **50.0%**, F1 **51.8%** (95% CI: `[0.39, 0.68]`)
+
+Complete per-label performance, 95% Wilson intervals, and error breakdowns are recorded in [`backend/models/clauses/v1/metrics.json`](file:///c:/Users/Loq/Desktop/Projects/legal-doc/backend/models/clauses/v1/metrics.json).
 
 ---
 

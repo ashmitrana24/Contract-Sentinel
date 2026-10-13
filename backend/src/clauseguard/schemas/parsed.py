@@ -45,6 +45,8 @@ class ClauseModel(BaseModel):
     page_start: int = Field(description="1-based page number where clause begins")
     page_end: int = Field(description="1-based page number where clause ends")
     kind: str = Field(description="'preamble', 'clause', or 'unsegmented'")
+    char_start: int | None = Field(default=None, description="0-based start character offset in document text")
+    char_end: int | None = Field(default=None, description="0-based end character offset in document text")
 
 
 class ParsedDocument(BaseModel):

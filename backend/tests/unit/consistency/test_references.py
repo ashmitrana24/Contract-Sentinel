@@ -375,3 +375,25 @@ def test_dotted_clause_number_not_resolved_to_parent():
     assert "4.9" in findings[0].evidence
 
 
+def test_external_named_instrument_references():
+    """Regression test for Article N / Section N of <named external instrument> like Article 31 of REACH."""
+    doc = _make_doc([
+        ("1", "Preamble and definitions."),
+        ("2", "Safety Data Sheets as defined in Article 31 of REACH shall be provided."),
+        ("3", "Compliance with Article 119 of REACH on electronic public access is required."),
+        ("4", "Obligations under Section 10 of Directive 2001/83/EC apply."),
+        ("5", "Subject to Section 99 of this Agreement, which does not exist."),
+        ("6", "Term and termination."),
+    ])
+    index = build_text_index(doc)
+    settings = ConsistencySettings()
+    findings, stats = detect_cross_references(doc, index, settings)
+
+    # Article 31 of REACH, Article 119 of REACH, Section 10 of Directive 2001/83/EC are ignored as external.
+    # Section 99 of this Agreement is INTERNAL and missing, so it MUST be flagged.
+    assert len(findings) == 1
+    assert findings[0].type == "dangling_reference"
+    assert "99" in findings[0].evidence
+    assert stats["external_ignored"] >= 3
+
+

@@ -15,7 +15,7 @@ import io
 import logging
 import uuid
 from datetime import UTC, datetime
-from typing import Annotated
+from typing import Annotated, Any
 
 import pymupdf
 from fastapi import APIRouter, Depends, File, HTTPException, Query, UploadFile
@@ -24,13 +24,27 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from clauseguard.api.deps import get_cfg, get_db, get_store
+from clauseguard.clauses.taxonomy import get_label_definition
 from clauseguard.config import Settings
-from clauseguard.db.models import AnalysisRun, Clause, Document, FindingRow, Job, Page
+from clauseguard.db.models import (
+    AnalysisRun,
+    Clause,
+    ClauseLabelRow,
+    Document,
+    DocumentAttributeRow,
+    FindingRow,
+    Job,
+    Page,
+)
 from clauseguard.db.session import check_connection as pg_check
 from clauseguard.queue import streams as qs
 from clauseguard.schemas.api import (
     AnalysisRunResponse,
+    ClauseLabelItem,
     ClauseResponse,
+    ClauseTypesResponse,
+    ClauseTypeSummaryItem,
+    DocumentAttributesResponse,
     DocumentResponse,
     ErrorResponse,
     FindingResponse,
@@ -448,6 +462,28 @@ def get_clauses(
         .limit(limit)
         .offset(offset)
     ).scalars().all()
+
+    # Fetch labels for these clauses
+    clause_ids = [c.clause_id for c in rows]
+    labels_by_clause: dict[str, list[ClauseLabelItem]] = {}
+    if clause_ids:
+        label_rows = db.execute(
+            select(ClauseLabelRow)
+            .where(
+                ClauseLabelRow.document_id == document_id,
+                ClauseLabelRow.clause_id.in_(clause_ids),
+            )
+        ).scalars().all()
+        for lr in label_rows:
+            labels_by_clause.setdefault(lr.clause_id, []).append(
+                ClauseLabelItem(
+                    label=lr.label,
+                    score=lr.score,
+                    method=lr.method,
+                    evidence=lr.evidence,
+                )
+            )
+
     return PaginatedClauses(
         total=total,
         limit=limit,
@@ -463,9 +499,92 @@ def get_clauses(
                 page_start=c.page_start,
                 page_end=c.page_end,
                 kind=c.kind,
+                labels=labels_by_clause.get(c.clause_id, []),
             )
             for c in rows
         ],
+    )
+
+
+# ---------------------------------------------------------------------------
+# GET /v1/documents/{document_id}/clause-types
+# ---------------------------------------------------------------------------
+
+
+@router.get("/v1/documents/{document_id}/clause-types", response_model=ClauseTypesResponse)
+def get_clause_types(
+    document_id: uuid.UUID,
+    db: Session = Depends(get_db),
+) -> ClauseTypesResponse:
+    _assert_doc_exists(db, document_id)
+    labels = db.execute(
+        select(ClauseLabelRow)
+        .where(ClauseLabelRow.document_id == document_id)
+    ).scalars().all()
+
+    grouped: dict[str, dict[str, Any]] = {}
+    for lr in labels:
+        if lr.label not in grouped:
+            defn = get_label_definition(lr.label)
+            name = defn.name if defn else lr.label
+            grouped[lr.label] = {
+                "label": lr.label,
+                "name": name,
+                "count": 0,
+                "max_score": 0.0,
+                "clause_ids": set(),
+            }
+        grouped[lr.label]["count"] += 1
+        grouped[lr.label]["max_score"] = max(grouped[lr.label]["max_score"], lr.score)
+        grouped[lr.label]["clause_ids"].add(lr.clause_id)
+
+    items = [
+        ClauseTypeSummaryItem(
+            label=g["label"],
+            name=g["name"],
+            count=g["count"],
+            max_score=round(g["max_score"], 4),
+            clause_ids=sorted(g["clause_ids"]),
+        )
+        for g in grouped.values()
+    ]
+    items.sort(key=lambda x: (-x.count, x.label))
+    return ClauseTypesResponse(
+        document_id=document_id,
+        total_types=len(items),
+        items=items,
+    )
+
+
+# ---------------------------------------------------------------------------
+# GET /v1/documents/{document_id}/attributes
+# ---------------------------------------------------------------------------
+
+
+@router.get("/v1/documents/{document_id}/attributes", response_model=DocumentAttributesResponse)
+def get_document_attributes(
+    document_id: uuid.UUID,
+    db: Session = Depends(get_db),
+) -> DocumentAttributesResponse:
+    _assert_doc_exists(db, document_id)
+    attr_row = db.execute(
+        select(DocumentAttributeRow)
+        .where(DocumentAttributeRow.document_id == document_id)
+    ).scalar_one_or_none()
+
+    if attr_row is None:
+        return DocumentAttributesResponse(document_id=document_id)
+
+    return DocumentAttributesResponse(
+        document_id=document_id,
+        governing_law_jurisdiction=attr_row.governing_law_jurisdiction,
+        termination_notice_days=attr_row.termination_notice_days,
+        auto_renews=attr_row.auto_renews,
+        renewal_term_months=attr_row.renewal_term_months,
+        non_renewal_notice_days=attr_row.non_renewal_notice_days,
+        liability_cap=attr_row.liability_cap,
+        non_compete_duration_months=attr_row.non_compete_duration_months,
+        payment_terms_days=attr_row.payment_terms_days,
     )
 
 

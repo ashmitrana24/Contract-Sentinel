@@ -468,3 +468,67 @@ python eval/consistency_eval.py --data data/generated
 - **Redacted SEC Exhibits**: Historical SEC EDGAR filings containing heavy confidentiality redaction markers (e.g. `Sections 2.3, , 4.4.2 [***]`) may occasionally report dangling references where entire clause sections were redacted prior to regulatory filing.
 - **Single-Party Cover Filings**: Bankruptcy court cover sheets preceding the actual agreement where fewer than 2 legal entities are named in the initial header gracefully skip party checking to avoid generating false positives.
 
+---
+
+## 9. Module 5: Clause Classification & Key-Term Extraction
+
+Module 5 provides multi-label clause classification and deterministic key-term attribute extraction across legal agreements. It consumes segmented clauses produced by Module 2, tags each clause across 45 legal categories, extracts critical commercial terms into structured key-value pairs, and persists results into PostgreSQL (`clause_labels` and `document_attributes`).
+
+### 9.1 Architecture & Taxonomy
+
+- **36 Core Contractual Labels**: Mapped from the Atticus Project CUAD v1 benchmark (`governing_law`, `anti_assignment`, `cap_on_liability`, `termination_for_convenience`, `license_grant`, etc.).
+- **9 Additional Operational & Risk Labels**: Evaluated via high-precision deterministic rules (`indemnification`, `confidentiality`, `payment_terms`, `unilateral_amendment`, `force_majeure`, `arbitration_or_dispute_resolution`, `waiver_of_rights`, `termination_for_cause`, `auto_renewal`).
+- **Character-Offset Alignment**: Ground truth is aligned using exact span character offsets ($\ge 50\%$ span character overlap, or largest overlap when spanning multiple clauses), eliminating the severe inflation caused by legacy token overlap.
+- **Hybrid Inference & Long-Clause Sliding Windows**: Combines deterministic regex/keyword pattern matchers with a class-balanced TF-IDF (word 1-2 n-grams + char 3-5 n-grams) LogisticRegression model. Clauses $> 250$ words are chunked into 120-word windows with a stride of 100 words.
+
+### 9.2 Key-Term Attribute Extractors
+
+Deterministic, anti-hallucination extractors located in `clauseguard.clauses.attributes`:
+1. `governing_law_jurisdiction`: Normalized jurisdiction name (e.g. Delaware, New York, England and Wales).
+2. `termination_notice_days`: Notice timeframe in days for convenience termination.
+3. `auto_renews`: Boolean indicating evergreen auto-renewal provisions.
+4. `renewal_term_months`: Duration in months of successive renewal periods.
+5. `non_renewal_notice_days`: Notice timeframe in days required to prevent contract renewal.
+6. `liability_cap`: Structured monetary cap or fee-multiple dictionary.
+7. `non_compete_duration_months`: Duration in months of non-compete covenants.
+8. `payment_terms_days`: Payment window timeframe in days (e.g. Net 30 -> 30).
+
+### 9.3 Endpoints & CLI Usage
+
+**REST API Endpoints**:
+- `GET /v1/documents/{id}/clauses`: Returns segmented clauses with their multi-label classification array, methods (`model`, `rules`, `both`), and scores.
+- `GET /v1/documents/{id}/clause-types`: Returns summary frequency counts and highest scores per detected clause type.
+- `GET /v1/documents/{id}/attributes`: Returns extracted key-term attributes.
+
+**Standalone CLI Runner**:
+```bash
+# Analyze any text or PDF file
+python -m clauseguard.clauses.run --input /path/to/contract.pdf
+python -m clauseguard.clauses.run --text "1. Governing Law. This agreement shall be governed by Delaware law."
+```
+
+### 9.4 Official Benchmark (Third Look on Corrected Labels)
+
+> **Notice**: Looks 1 and 2 used inflated token-overlap labels and are void. This official Third Look was evaluated once on the unseen 20% CUAD test split (102 contracts, 2,788 clauses):
+
+| Metric | Test Split Result |
+| :--- | :---: |
+| **Total Test Samples** | 2,788 clauses |
+| **True Positive Test Labels** | 1,052 positive instances |
+| **Micro Precision** | **64.89%** |
+| **Micro Recall** | **63.59%** |
+| **Micro F1** | **64.23%** |
+| **Macro Precision** | **49.30%** |
+| **Macro Recall** | **49.23%** |
+| **Macro F1** | **47.88%** |
+
+*Core High-Support Benchmark Labels*:
+- `governing_law`: Precision **96.3%**, Recall **86.5%**, F1 **91.1%** (Support: 89)
+- `anti_assignment`: Precision **86.8%**, Recall **83.7%**, F1 **85.2%** (Support: 86)
+- `cap_on_liability`: Precision **80.6%**, Recall **81.8%**, F1 **81.2%** (Support: 66)
+- `license_grant`: Precision **90.8%**, Recall **71.1%**, F1 **79.7%** (Support: 83)
+- `audit_rights`: Precision **71.6%**, Recall **84.2%**, F1 **77.4%** (Support: 57)
+- `uncapped_liability`: Precision **68.2%**, Recall **62.5%**, F1 **65.2%** (Support: 24)
+- `termination_for_convenience`: Precision **53.7%**, Recall **50.0%**, F1 **51.8%** (Support: 44)
+
+

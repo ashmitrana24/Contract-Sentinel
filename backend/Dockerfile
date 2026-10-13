@@ -11,6 +11,7 @@ COPY pyproject.toml README.md ./
 COPY src/ ./src/
 COPY alembic/ ./alembic/
 COPY alembic.ini ./
+COPY models/ ./models/
 
 RUN pip install --upgrade pip && \
     pip install -e .

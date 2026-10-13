@@ -120,3 +120,13 @@ def test_unparseable_parenthetical_counted_in_stats_no_finding():
     findings, stats = detect_pairs(index, ConsistencySettings())
     assert len(findings) == 0
     assert stats["pairs_unparseable"] >= 1
+
+
+def test_space_separated_thousands_pair_no_false_alarm():
+    """Regression test for ContractNLI EUR 10 000 (ten thousand Euro)."""
+    doc = _make_doc("The liquidated damages shall be EUR 10 000 (ten thousand Euro) for each disclosure.")
+    index = build_text_index(doc)
+    findings, stats = detect_pairs(index, ConsistencySettings())
+    assert len(findings) == 0
+    assert stats["pairs_verified"] == 1
+    assert stats["pairs_mismatched"] == 0

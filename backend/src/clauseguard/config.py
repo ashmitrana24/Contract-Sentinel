@@ -107,6 +107,16 @@ class Settings(BaseSettings):
         description="Per-document time budget for consistency analysis (seconds)",
     )
 
+    # --- Clause Classification & Key-Term Extraction (Module 5) ---
+    clauses_enabled: bool = Field(
+        default=True,
+        description="Whether to run Module 5 clause classification and key-term extraction",
+    )
+    clauses_budget_seconds: float = Field(
+        default=10.0,
+        description="Per-document time budget for clause classification (seconds)",
+    )
+
 
 _settings: Settings | None = None
 

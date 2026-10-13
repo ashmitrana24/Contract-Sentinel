@@ -118,6 +118,8 @@ _CAP_RE = re.compile(r"^[A-Z]")
 class _Line(NamedTuple):
     page_no: int  # 1-based
     text: str  # stripped text
+    char_start: int = 0
+    char_end: int = 0
 
 
 @dataclass
@@ -130,6 +132,8 @@ class _ClauseDraft:
     level: int = 1
     parent_clause_id: str | None = None
     kind: str = "clause"
+    char_start: int = 0
+    char_end: int = 0
 
 
 # ---------------------------------------------------------------------------
@@ -243,7 +247,10 @@ def _detect_heading(line: str) -> tuple[str, str, bool] | None:
         if _SEC_FILING_RE.match(remainder):
             return None
         # If remainder is a multi-item Table of Contents line (e.g. "Interpretation 3 2. Commencement 4"), ignore
-        if re.search(r"\b\d+\s+[2-9]\.\s+[A-Z]", remainder):
+        # If remainder is a list item ending with a semicolon/conjunction or party definition, ignore
+        if remainder.endswith((";", "; and", "; or", ", and", ", or")):
+            return None
+        if re.search(r'\(\s*(?:the\s+)?["\u201c\u2018][^"\u201d\u2019]+["\u201d\u2019]\s*\)\s*$', remainder):
             return None
         return num_id, remainder, False
 
@@ -352,7 +359,7 @@ def _split_embedded_headings(text: str) -> list[str]:
 
 
 def segment_clauses(pages: list[PageModel]) -> list[ClauseModel]:
-    """Segment a list of pages into clauses.
+    """Segment a list of pages into clauses with start/end character offsets.
 
     Returns list of ClauseModel sorted by order_idx.
     """
@@ -368,18 +375,57 @@ def segment_clauses(pages: list[PageModel]) -> list[ClauseModel]:
                 page_start=1,
                 page_end=1,
                 kind="unsegmented",
+                char_start=0,
+                char_end=0,
             )
         ]
 
     n_pages = len(pages)
+    doc_text = "".join(p.text for p in pages)
+    total_len = len(doc_text)
 
-    # Collect all lines with page number
+    # Collect all lines with page number and character offsets
     all_lines: list[_Line] = []
+    page_base_offset = 0
+
     for page in pages:
-        for raw_line in page.text.split("\n"):
+        p_text = page.text
+        line_cursor = page_base_offset
+        for raw_line in p_text.splitlines(keepends=True):
+            raw_start = line_cursor
+            raw_end = raw_start + len(raw_line)
+            line_cursor = raw_end
+
             sub_lines = _split_embedded_headings(raw_line)
-            for line in sub_lines:
-                all_lines.append(_Line(page_no=page.page_no, text=line))
+            if len(sub_lines) <= 1:
+                all_lines.append(
+                    _Line(
+                        page_no=page.page_no,
+                        text=raw_line.rstrip("\r\n"),
+                        char_start=raw_start,
+                        char_end=raw_end,
+                    )
+                )
+            else:
+                sub_cursor = 0
+                for sub in sub_lines:
+                    pos = raw_line.find(sub, sub_cursor)
+                    if pos != -1:
+                        s_start = raw_start + pos
+                        s_end = s_start + len(sub)
+                        sub_cursor = pos + len(sub)
+                    else:
+                        s_start = raw_start
+                        s_end = raw_end
+                    all_lines.append(
+                        _Line(
+                            page_no=page.page_no,
+                            text=sub,
+                            char_start=s_start,
+                            char_end=s_end,
+                        )
+                    )
+        page_base_offset += len(p_text)
 
     # Detect repeated headers/footers to strip
     repeated = _collect_repeated_lines(all_lines, n_pages)
@@ -398,13 +444,35 @@ def segment_clauses(pages: list[PageModel]) -> list[ClauseModel]:
     preamble_lines: list[str] = []
     in_preamble = True
     current: _ClauseDraft | None = None
-    # pending_heading: (effective_id, partial_heading, parent_id, level)
-    pending_heading: tuple[str, str, str | None, int] | None = None
+    # pending_heading: (effective_id, partial_heading, parent_id, level, char_start)
+    pending_heading: tuple[str, str, str | None, int, int] | None = None
     current_schedule: str | None = None
 
     for i, ln in enumerate(filtered_lines):
         text = ln.text
         stripped = text.strip()
+
+        # Preserve pending heading across blank lines
+        if not stripped:
+            if pending_heading is None and current is not None:
+                current.lines.append("")
+            continue
+
+        # Check if this line is an operative transition / recitals marker
+        # e.g. "NOW, THEREFORE, the parties agree:", "IT IS HEREBY AGREED"
+        if re.search(r"\b(?:NOW,?\s+THEREFORE|IT\s+IS\s+(?:HEREBY\s+)?AGREED)\b", stripped, re.IGNORECASE):
+            if drafts or current is not None:
+                if current is not None:
+                    drafts.append(current)
+                    current = None
+                for d in drafts:
+                    preamble_lines.append(f"{d.clause_id}. {d.heading}")
+                    preamble_lines.extend(d.lines)
+                drafts.clear()
+            preamble_lines.append(text)
+            in_preamble = True
+            pending_heading = None
+            continue
 
         # Check if this line is a clause heading
         result = _detect_heading(text)
@@ -413,7 +481,7 @@ def segment_clauses(pages: list[PageModel]) -> list[ClauseModel]:
             # Not a heading line.
             if pending_heading is not None:
                 # We had a number-only line before; this line might be the heading
-                pid, _, pparent, plevel = pending_heading
+                pid, _, pparent, plevel, p_char_start = pending_heading
                 # Accept as heading if starts with capital or is substantial
                 if stripped and (_CAP_RE.match(stripped) or len(stripped) > 3):
                     heading_text = stripped
@@ -429,6 +497,8 @@ def segment_clauses(pages: list[PageModel]) -> list[ClauseModel]:
                         level=plevel,
                         parent_clause_id=pparent,
                         kind="clause",
+                        char_start=p_char_start,
+                        char_end=total_len,
                     )
                     in_preamble = False
                     continue
@@ -486,15 +556,17 @@ def segment_clauses(pages: list[PageModel]) -> list[ClauseModel]:
                     level=level,
                     parent_clause_id=parent_id,
                     kind="clause",
+                    char_start=ln.char_start,
+                    char_end=total_len,
                 )
                 in_preamble = False
             else:
                 # Number-only line; defer until we see the heading on the next line
-                pending_heading = (effective_id, "", parent_id, level)
+                pending_heading = (effective_id, "", parent_id, level, ln.char_start)
 
     # Flush pending
     if pending_heading is not None:
-        pid, _, _, _ = pending_heading
+        pid, _, _, _, p_start = pending_heading
         if current is not None:
             current.lines.append(f"{pid}.")
         elif in_preamble:
@@ -518,18 +590,20 @@ def segment_clauses(pages: list[PageModel]) -> list[ClauseModel]:
                 page_start=pages[0].page_no,
                 page_end=pages[-1].page_no,
                 kind="unsegmented",
+                char_start=0,
+                char_end=total_len,
             )
         ]
 
     # ---------------------------------------------------------------------------
-    # Build final ClauseModel list
+    # Build final ClauseModel list with contiguous, exact character offsets
     # ---------------------------------------------------------------------------
     result: list[ClauseModel] = []
     order = 0
 
-    # Preamble (text before first clause)
+    first_clause_start = drafts[0].char_start if drafts else total_len
     preamble_text = "\n".join(preamble_lines).strip()
-    if preamble_text:
+    if preamble_text or first_clause_start > 0:
         result.append(
             ClauseModel(
                 order_idx=order,
@@ -541,12 +615,16 @@ def segment_clauses(pages: list[PageModel]) -> list[ClauseModel]:
                 page_start=pages[0].page_no,
                 page_end=drafts[0].page_start if drafts else pages[0].page_no,
                 kind="preamble",
+                char_start=0,
+                char_end=first_clause_start,
             )
         )
         order += 1
 
-    for draft in drafts:
+    for i, draft in enumerate(drafts):
         body = "\n".join(draft.lines).strip()
+        # Set char_end to next clause's char_start, or end of document
+        c_end = drafts[i + 1].char_start if i + 1 < len(drafts) else total_len
         result.append(
             ClauseModel(
                 order_idx=order,
@@ -558,6 +636,8 @@ def segment_clauses(pages: list[PageModel]) -> list[ClauseModel]:
                 page_start=draft.page_start,
                 page_end=draft.page_end,
                 kind="clause",
+                char_start=draft.char_start,
+                char_end=c_end,
             )
         )
         order += 1

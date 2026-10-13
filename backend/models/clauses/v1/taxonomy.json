@@ -1,0 +1,370 @@
+{
+  "version": "1.0",
+  "total_labels": 45,
+  "core_cuad_labels": [
+    "governing_law",
+    "renewal_term",
+    "notice_period_to_terminate_renewal",
+    "most_favored_nation",
+    "non_compete",
+    "exclusivity",
+    "no_solicit_of_customers",
+    "competitive_restriction_exception",
+    "no_solicit_of_employees",
+    "non_disparagement",
+    "termination_for_convenience",
+    "rofr_rofo_rofn",
+    "change_of_control",
+    "anti_assignment",
+    "revenue_profit_sharing",
+    "price_restrictions",
+    "minimum_commitment",
+    "volume_restriction",
+    "ip_ownership_assignment",
+    "joint_ip_ownership",
+    "license_grant",
+    "non_transferable_license",
+    "affiliate_license_licensor",
+    "affiliate_license_licensee",
+    "unlimited_all_you_can_eat_license",
+    "irrevocable_or_perpetual_license",
+    "source_code_escrow",
+    "post_termination_services",
+    "audit_rights",
+    "uncapped_liability",
+    "cap_on_liability",
+    "liquidated_damages",
+    "warranty_duration",
+    "insurance",
+    "covenant_not_to_sue",
+    "third_party_beneficiary"
+  ],
+  "extra_rule_labels": [
+    "indemnification",
+    "confidentiality",
+    "payment_terms",
+    "unilateral_amendment",
+    "force_majeure",
+    "arbitration_or_dispute_resolution",
+    "waiver_of_rights",
+    "termination_for_cause",
+    "auto_renewal"
+  ],
+  "labels": {
+    "governing_law": {
+      "id": "governing_law",
+      "name": "Governing Law",
+      "description": "Specifies jurisdiction, governing law, and legal forum applicable to the contract.",
+      "source": "cuad",
+      "cuad_category": "Governing Law"
+    },
+    "renewal_term": {
+      "id": "renewal_term",
+      "name": "Renewal Term",
+      "description": "Terms specifying automatic or elective extension and duration of renewal periods.",
+      "source": "cuad",
+      "cuad_category": "Renewal Term"
+    },
+    "notice_period_to_terminate_renewal": {
+      "id": "notice_period_to_terminate_renewal",
+      "name": "Notice Period To Terminate Renewal",
+      "description": "Required notice timeframe to prevent automatic renewal or extension.",
+      "source": "cuad",
+      "cuad_category": "Notice Period To Terminate Renewal"
+    },
+    "most_favored_nation": {
+      "id": "most_favored_nation",
+      "name": "Most Favored Nation",
+      "description": "Guarantees pricing, terms, or conditions no less favorable than offered to others.",
+      "source": "cuad",
+      "cuad_category": "Most Favored Nation"
+    },
+    "non_compete": {
+      "id": "non_compete",
+      "name": "Non-Compete",
+      "description": "Restricts a party from engaging in competitive business activities or markets.",
+      "source": "cuad",
+      "cuad_category": "Non-Compete"
+    },
+    "exclusivity": {
+      "id": "exclusivity",
+      "name": "Exclusivity",
+      "description": "Grants exclusive dealing, distribution, purchasing, or operational rights.",
+      "source": "cuad",
+      "cuad_category": "Exclusivity"
+    },
+    "no_solicit_of_customers": {
+      "id": "no_solicit_of_customers",
+      "name": "No-Solicit Of Customers",
+      "description": "Restricts solicitation, enticement, or diversion of customers or clients.",
+      "source": "cuad",
+      "cuad_category": "No-Solicit Of Customers"
+    },
+    "competitive_restriction_exception": {
+      "id": "competitive_restriction_exception",
+      "name": "Competitive Restriction Exception",
+      "description": "Carve-outs and exceptions to restrictive covenants or competition limitations.",
+      "source": "cuad",
+      "cuad_category": "Competitive Restriction Exception"
+    },
+    "no_solicit_of_employees": {
+      "id": "no_solicit_of_employees",
+      "name": "No-Solicit Of Employees",
+      "description": "Restricts hiring, recruitment, or inducement of personnel and contractors.",
+      "source": "cuad",
+      "cuad_category": "No-Solicit Of Employees"
+    },
+    "non_disparagement": {
+      "id": "non_disparagement",
+      "name": "Non-Disparagement",
+      "description": "Prohibits making negative, defamatory, or derogatory statements about a party.",
+      "source": "cuad",
+      "cuad_category": "Non-Disparagement"
+    },
+    "termination_for_convenience": {
+      "id": "termination_for_convenience",
+      "name": "Termination For Convenience",
+      "description": "Right to terminate the contract at will without cause or breach upon notice.",
+      "source": "cuad",
+      "cuad_category": "Termination For Convenience"
+    },
+    "rofr_rofo_rofn": {
+      "id": "rofr_rofo_rofn",
+      "name": "Right of First Refusal / Offer / Negotiation",
+      "description": "Priority rights to purchase, license, or negotiate prior to third parties.",
+      "source": "cuad",
+      "cuad_category": "Rofr/Rofo/Rofn"
+    },
+    "change_of_control": {
+      "id": "change_of_control",
+      "name": "Change Of Control",
+      "description": "Provisions triggered by mergers, acquisitions, or shifts in controlling ownership.",
+      "source": "cuad",
+      "cuad_category": "Change Of Control"
+    },
+    "anti_assignment": {
+      "id": "anti_assignment",
+      "name": "Anti-Assignment",
+      "description": "Restrictions or consent requirements for assignment or delegation of the contract.",
+      "source": "cuad",
+      "cuad_category": "Anti-Assignment"
+    },
+    "revenue_profit_sharing": {
+      "id": "revenue_profit_sharing",
+      "name": "Revenue / Profit Sharing",
+      "description": "Clauses outlining allocation of profits, revenues, or royalties between parties.",
+      "source": "cuad",
+      "cuad_category": "Revenue/Profit Sharing"
+    },
+    "price_restrictions": {
+      "id": "price_restrictions",
+      "name": "Price Restrictions",
+      "description": "Limitations on price increases, price parity, or mandated price calculation models.",
+      "source": "cuad",
+      "cuad_category": "Price Restrictions"
+    },
+    "minimum_commitment": {
+      "id": "minimum_commitment",
+      "name": "Minimum Commitment",
+      "description": "Minimum purchase, spend, or order volume commitments required of a party.",
+      "source": "cuad",
+      "cuad_category": "Minimum Commitment"
+    },
+    "volume_restriction": {
+      "id": "volume_restriction",
+      "name": "Volume Restriction",
+      "description": "Quotas, maximum usage thresholds, or capacity caps on products or services.",
+      "source": "cuad",
+      "cuad_category": "Volume Restriction"
+    },
+    "ip_ownership_assignment": {
+      "id": "ip_ownership_assignment",
+      "name": "IP Ownership Assignment",
+      "description": "Assignment or vesting of intellectual property rights and inventions.",
+      "source": "cuad",
+      "cuad_category": "Ip Ownership Assignment"
+    },
+    "joint_ip_ownership": {
+      "id": "joint_ip_ownership",
+      "name": "Joint IP Ownership",
+      "description": "Co-ownership arrangements for newly developed or shared intellectual property.",
+      "source": "cuad",
+      "cuad_category": "Joint Ip Ownership"
+    },
+    "license_grant": {
+      "id": "license_grant",
+      "name": "License Grant",
+      "description": "Terms granting rights to use software, technology, trademarks, or IP.",
+      "source": "cuad",
+      "cuad_category": "License Grant"
+    },
+    "non_transferable_license": {
+      "id": "non_transferable_license",
+      "name": "Non-Transferable License",
+      "description": "Explicit limitation prohibiting transfer or sublicensing of granted rights.",
+      "source": "cuad",
+      "cuad_category": "Non-Transferable License"
+    },
+    "affiliate_license_licensor": {
+      "id": "affiliate_license_licensor",
+      "name": "Affiliate License (Licensor)",
+      "description": "Extends licensor obligations or rights across corporate affiliates.",
+      "source": "cuad",
+      "cuad_category": "Affiliate License-Licensor"
+    },
+    "affiliate_license_licensee": {
+      "id": "affiliate_license_licensee",
+      "name": "Affiliate License (Licensee)",
+      "description": "Permits corporate affiliates of the licensee to exercise granted license rights.",
+      "source": "cuad",
+      "cuad_category": "Affiliate License-Licensee"
+    },
+    "unlimited_all_you_can_eat_license": {
+      "id": "unlimited_all_you_can_eat_license",
+      "name": "Unlimited / Enterprise License",
+      "description": "Unrestricted enterprise-wide license without seat or deployment limitations.",
+      "source": "cuad",
+      "cuad_category": "Unlimited/All-You-Can-Eat-License"
+    },
+    "irrevocable_or_perpetual_license": {
+      "id": "irrevocable_or_perpetual_license",
+      "name": "Irrevocable Or Perpetual License",
+      "description": "License grants that cannot be revoked or that continue indefinitely.",
+      "source": "cuad",
+      "cuad_category": "Irrevocable Or Perpetual License"
+    },
+    "source_code_escrow": {
+      "id": "source_code_escrow",
+      "name": "Source Code Escrow",
+      "description": "Deposit of source code with an independent escrow agent upon release triggers.",
+      "source": "cuad",
+      "cuad_category": "Source Code Escrow"
+    },
+    "post_termination_services": {
+      "id": "post_termination_services",
+      "name": "Post-Termination Services",
+      "description": "Obligations to provide transition assistance or disengagement services post-expiry.",
+      "source": "cuad",
+      "cuad_category": "Post-Termination Services"
+    },
+    "audit_rights": {
+      "id": "audit_rights",
+      "name": "Audit Rights",
+      "description": "Rights to inspect, audit, or review books, records, facilities, or security.",
+      "source": "cuad",
+      "cuad_category": "Audit Rights"
+    },
+    "uncapped_liability": {
+      "id": "uncapped_liability",
+      "name": "Uncapped Liability",
+      "description": "Explicit exclusions from liability limits (e.g. gross negligence, willful misconduct).",
+      "source": "cuad",
+      "cuad_category": "Uncapped Liability"
+    },
+    "cap_on_liability": {
+      "id": "cap_on_liability",
+      "name": "Cap On Liability",
+      "description": "Monetary limits, aggregate caps, or fee-multiple caps on contractual liability.",
+      "source": "cuad",
+      "cuad_category": "Cap On Liability"
+    },
+    "liquidated_damages": {
+      "id": "liquidated_damages",
+      "name": "Liquidated Damages",
+      "description": "Pre-agreed financial penalties or damages payable upon specified breaches.",
+      "source": "cuad",
+      "cuad_category": "Liquidated Damages"
+    },
+    "warranty_duration": {
+      "id": "warranty_duration",
+      "name": "Warranty Duration",
+      "description": "Length and scope of product, service, or representation warranty coverage.",
+      "source": "cuad",
+      "cuad_category": "Warranty Duration"
+    },
+    "insurance": {
+      "id": "insurance",
+      "name": "Insurance",
+      "description": "Mandated types, coverage levels, and maintenance of insurance policies.",
+      "source": "cuad",
+      "cuad_category": "Insurance"
+    },
+    "covenant_not_to_sue": {
+      "id": "covenant_not_to_sue",
+      "name": "Covenant Not To Sue",
+      "description": "Agreement refraining from instituting legal proceedings or patent claims.",
+      "source": "cuad",
+      "cuad_category": "Covenant Not To Sue"
+    },
+    "third_party_beneficiary": {
+      "id": "third_party_beneficiary",
+      "name": "Third Party Beneficiary",
+      "description": "Provisions conferring or disclaiming enforceable rights to third parties.",
+      "source": "cuad",
+      "cuad_category": "Third Party Beneficiary"
+    },
+    "indemnification": {
+      "id": "indemnification",
+      "name": "Indemnification",
+      "description": "Obligation to defend, hold harmless, and indemnify against third-party claims.",
+      "source": "rule_only",
+      "cuad_category": null
+    },
+    "confidentiality": {
+      "id": "confidentiality",
+      "name": "Confidentiality",
+      "description": "Protection, non-disclosure, and authorized handling of proprietary information.",
+      "source": "rule_only",
+      "cuad_category": null
+    },
+    "payment_terms": {
+      "id": "payment_terms",
+      "name": "Payment Terms",
+      "description": "Invoicing frequency, payment due windows (e.g. Net 30), and interest on late fees.",
+      "source": "rule_only",
+      "cuad_category": null
+    },
+    "unilateral_amendment": {
+      "id": "unilateral_amendment",
+      "name": "Unilateral Amendment",
+      "description": "Right of one party to unilaterally modify or update terms without mutual agreement.",
+      "source": "rule_only",
+      "cuad_category": null
+    },
+    "force_majeure": {
+      "id": "force_majeure",
+      "name": "Force Majeure",
+      "description": "Suspension of contractual obligations during unforeseeable catastrophic events.",
+      "source": "rule_only",
+      "cuad_category": null
+    },
+    "arbitration_or_dispute_resolution": {
+      "id": "arbitration_or_dispute_resolution",
+      "name": "Dispute Resolution & Arbitration",
+      "description": "Mandatory arbitration, mediation, or structured escalation procedures.",
+      "source": "rule_only",
+      "cuad_category": null
+    },
+    "waiver_of_rights": {
+      "id": "waiver_of_rights",
+      "name": "Waiver Of Rights",
+      "description": "Waiver of jury trial, class actions, or rights arising from failure to enforce terms.",
+      "source": "rule_only",
+      "cuad_category": null
+    },
+    "termination_for_cause": {
+      "id": "termination_for_cause",
+      "name": "Termination For Cause",
+      "description": "Rights to terminate immediately upon material breach, insolvency, or default.",
+      "source": "rule_only",
+      "cuad_category": null
+    },
+    "auto_renewal": {
+      "id": "auto_renewal",
+      "name": "Auto-Renewal / Evergreen",
+      "description": "Evergreen clauses specifying automatic successive renewals unless timely terminated.",
+      "source": "rule_only",
+      "cuad_category": null
+    }
+  }
+}

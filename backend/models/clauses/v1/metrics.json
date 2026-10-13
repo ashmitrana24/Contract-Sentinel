@@ -1,0 +1,2473 @@
+{
+  "created_at": "2026-10-13T06:06:54.150520+00:00",
+  "note": "Look 3 on corrected character-offset labels. Look 1 and Look 2 used inflated token-overlap labels and are void.",
+  "val_comparison": {
+    "rules": {
+      "governing_law": {
+        "tp": 73,
+        "fp": 102,
+        "fn": 20,
+        "tn": 3213,
+        "precision": 0.4171,
+        "recall": 0.7849,
+        "f1": 0.5448,
+        "support": 93,
+        "predicted_count": 175,
+        "precision_ci_95": [
+          0.3466,
+          0.4912
+        ],
+        "recall_ci_95": [
+          0.691,
+          0.8562
+        ]
+      },
+      "renewal_term": {
+        "tp": 18,
+        "fp": 21,
+        "fn": 18,
+        "tn": 3351,
+        "precision": 0.4615,
+        "recall": 0.5,
+        "f1": 0.48,
+        "support": 36,
+        "predicted_count": 39,
+        "precision_ci_95": [
+          0.3157,
+          0.6143
+        ],
+        "recall_ci_95": [
+          0.3447,
+          0.6553
+        ]
+      },
+      "notice_period_to_terminate_renewal": {
+        "tp": 2,
+        "fp": 2,
+        "fn": 18,
+        "tn": 3386,
+        "precision": 0.5,
+        "recall": 0.1,
+        "f1": 0.1667,
+        "support": 20,
+        "predicted_count": 4,
+        "precision_ci_95": [
+          0.15,
+          0.85
+        ],
+        "recall_ci_95": [
+          0.0279,
+          0.301
+        ]
+      },
+      "most_favored_nation": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 7,
+        "tn": 3400,
+        "precision": 1.0,
+        "recall": 0.125,
+        "f1": 0.2222,
+        "support": 8,
+        "predicted_count": 1,
+        "precision_ci_95": [
+          0.2065,
+          1.0
+        ],
+        "recall_ci_95": [
+          0.0224,
+          0.4709
+        ]
+      },
+      "non_compete": {
+        "tp": 8,
+        "fp": 4,
+        "fn": 22,
+        "tn": 3374,
+        "precision": 0.6667,
+        "recall": 0.2667,
+        "f1": 0.381,
+        "support": 30,
+        "predicted_count": 12,
+        "precision_ci_95": [
+          0.3906,
+          0.8619
+        ],
+        "recall_ci_95": [
+          0.1418,
+          0.4445
+        ]
+      },
+      "exclusivity": {
+        "tp": 27,
+        "fp": 40,
+        "fn": 23,
+        "tn": 3318,
+        "precision": 0.403,
+        "recall": 0.54,
+        "f1": 0.4615,
+        "support": 50,
+        "predicted_count": 67,
+        "precision_ci_95": [
+          0.2939,
+          0.5226
+        ],
+        "recall_ci_95": [
+          0.404,
+          0.6703
+        ]
+      },
+      "no_solicit_of_customers": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 9,
+        "tn": 3398,
+        "precision": 1.0,
+        "recall": 0.1,
+        "f1": 0.1818,
+        "support": 10,
+        "predicted_count": 1,
+        "precision_ci_95": [
+          0.2065,
+          1.0
+        ],
+        "recall_ci_95": [
+          0.0179,
+          0.4042
+        ]
+      },
+      "competitive_restriction_exception": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 22,
+        "tn": 3386,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 22,
+        "predicted_count": 0,
+        "precision_ci_95": [
+          0.0,
+          0.0
+        ],
+        "recall_ci_95": [
+          0.0,
+          0.1487
+        ]
+      },
+      "no_solicit_of_employees": {
+        "tp": 3,
+        "fp": 0,
+        "fn": 15,
+        "tn": 3390,
+        "precision": 1.0,
+        "recall": 0.1667,
+        "f1": 0.2857,
+        "support": 18,
+        "predicted_count": 3,
+        "precision_ci_95": [
+          0.4385,
+          1.0
+        ],
+        "recall_ci_95": [
+          0.0584,
+          0.3922
+        ]
+      },
+      "non_disparagement": {
+        "tp": 4,
+        "fp": 0,
+        "fn": 11,
+        "tn": 3393,
+        "precision": 1.0,
+        "recall": 0.2667,
+        "f1": 0.4211,
+        "support": 15,
+        "predicted_count": 4,
+        "precision_ci_95": [
+          0.5101,
+          1.0
+        ],
+        "recall_ci_95": [
+          0.109,
+          0.5195
+        ]
+      },
+      "termination_for_convenience": {
+        "tp": 8,
+        "fp": 2,
+        "fn": 33,
+        "tn": 3365,
+        "precision": 0.8,
+        "recall": 0.1951,
+        "f1": 0.3137,
+        "support": 41,
+        "predicted_count": 10,
+        "precision_ci_95": [
+          0.4902,
+          0.9433
+        ],
+        "recall_ci_95": [
+          0.1023,
+          0.3401
+        ]
+      },
+      "rofr_rofo_rofn": {
+        "tp": 13,
+        "fp": 2,
+        "fn": 32,
+        "tn": 3361,
+        "precision": 0.8667,
+        "recall": 0.2889,
+        "f1": 0.4333,
+        "support": 45,
+        "predicted_count": 15,
+        "precision_ci_95": [
+          0.6212,
+          0.9626
+        ],
+        "recall_ci_95": [
+          0.1773,
+          0.4337
+        ]
+      },
+      "change_of_control": {
+        "tp": 17,
+        "fp": 21,
+        "fn": 18,
+        "tn": 3352,
+        "precision": 0.4474,
+        "recall": 0.4857,
+        "f1": 0.4658,
+        "support": 35,
+        "predicted_count": 38,
+        "precision_ci_95": [
+          0.3015,
+          0.6029
+        ],
+        "recall_ci_95": [
+          0.3299,
+          0.6443
+        ]
+      },
+      "anti_assignment": {
+        "tp": 46,
+        "fp": 47,
+        "fn": 48,
+        "tn": 3267,
+        "precision": 0.4946,
+        "recall": 0.4894,
+        "f1": 0.492,
+        "support": 94,
+        "predicted_count": 93,
+        "precision_ci_95": [
+          0.3953,
+          0.5944
+        ],
+        "recall_ci_95": [
+          0.3907,
+          0.5888
+        ]
+      },
+      "revenue_profit_sharing": {
+        "tp": 11,
+        "fp": 21,
+        "fn": 28,
+        "tn": 3348,
+        "precision": 0.3438,
+        "recall": 0.2821,
+        "f1": 0.3099,
+        "support": 39,
+        "predicted_count": 32,
+        "precision_ci_95": [
+          0.2041,
+          0.5169
+        ],
+        "recall_ci_95": [
+          0.1654,
+          0.4378
+        ]
+      },
+      "price_restrictions": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 5,
+        "tn": 3403,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 5,
+        "predicted_count": 0,
+        "precision_ci_95": [
+          0.0,
+          0.0
+        ],
+        "recall_ci_95": [
+          0.0,
+          0.4345
+        ]
+      },
+      "minimum_commitment": {
+        "tp": 5,
+        "fp": 2,
+        "fn": 37,
+        "tn": 3364,
+        "precision": 0.7143,
+        "recall": 0.119,
+        "f1": 0.2041,
+        "support": 42,
+        "predicted_count": 7,
+        "precision_ci_95": [
+          0.3589,
+          0.9178
+        ],
+        "recall_ci_95": [
+          0.0519,
+          0.25
+        ]
+      },
+      "volume_restriction": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 17,
+        "tn": 3390,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 17,
+        "predicted_count": 1,
+        "precision_ci_95": [
+          0.0,
+          0.7935
+        ],
+        "recall_ci_95": [
+          0.0,
+          0.1843
+        ]
+      },
+      "ip_ownership_assignment": {
+        "tp": 9,
+        "fp": 16,
+        "fn": 25,
+        "tn": 3358,
+        "precision": 0.36,
+        "recall": 0.2647,
+        "f1": 0.3051,
+        "support": 34,
+        "predicted_count": 25,
+        "precision_ci_95": [
+          0.2025,
+          0.5548
+        ],
+        "recall_ci_95": [
+          0.146,
+          0.4312
+        ]
+      },
+      "joint_ip_ownership": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 11,
+        "tn": 3397,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 11,
+        "predicted_count": 0,
+        "precision_ci_95": [
+          0.0,
+          0.0
+        ],
+        "recall_ci_95": [
+          0.0,
+          0.2588
+        ]
+      },
+      "license_grant": {
+        "tp": 27,
+        "fp": 17,
+        "fn": 76,
+        "tn": 3288,
+        "precision": 0.6136,
+        "recall": 0.2621,
+        "f1": 0.3673,
+        "support": 103,
+        "predicted_count": 44,
+        "precision_ci_95": [
+          0.4662,
+          0.7428
+        ],
+        "recall_ci_95": [
+          0.1869,
+          0.3545
+        ]
+      },
+      "non_transferable_license": {
+        "tp": 6,
+        "fp": 0,
+        "fn": 46,
+        "tn": 3356,
+        "precision": 1.0,
+        "recall": 0.1154,
+        "f1": 0.2069,
+        "support": 52,
+        "predicted_count": 6,
+        "precision_ci_95": [
+          0.6097,
+          1.0
+        ],
+        "recall_ci_95": [
+          0.054,
+          0.2297
+        ]
+      },
+      "affiliate_license_licensor": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 12,
+        "tn": 3396,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 12,
+        "predicted_count": 0,
+        "precision_ci_95": [
+          0.0,
+          0.0
+        ],
+        "recall_ci_95": [
+          0.0,
+          0.2425
+        ]
+      },
+      "affiliate_license_licensee": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 23,
+        "tn": 3385,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 23,
+        "predicted_count": 0,
+        "precision_ci_95": [
+          0.0,
+          0.0
+        ],
+        "recall_ci_95": [
+          0.0,
+          0.1431
+        ]
+      },
+      "unlimited_all_you_can_eat_license": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 6,
+        "tn": 3402,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 6,
+        "predicted_count": 0,
+        "precision_ci_95": [
+          0.0,
+          0.0
+        ],
+        "recall_ci_95": [
+          0.0,
+          0.3903
+        ]
+      },
+      "irrevocable_or_perpetual_license": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 24,
+        "tn": 3384,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 24,
+        "predicted_count": 0,
+        "precision_ci_95": [
+          0.0,
+          0.0
+        ],
+        "recall_ci_95": [
+          0.0,
+          0.138
+        ]
+      },
+      "source_code_escrow": {
+        "tp": 5,
+        "fp": 16,
+        "fn": 1,
+        "tn": 3386,
+        "precision": 0.2381,
+        "recall": 0.8333,
+        "f1": 0.3704,
+        "support": 6,
+        "predicted_count": 21,
+        "precision_ci_95": [
+          0.1063,
+          0.4509
+        ],
+        "recall_ci_95": [
+          0.4365,
+          0.9699
+        ]
+      },
+      "post_termination_services": {
+        "tp": 1,
+        "fp": 1,
+        "fn": 59,
+        "tn": 3347,
+        "precision": 0.5,
+        "recall": 0.0167,
+        "f1": 0.0323,
+        "support": 60,
+        "predicted_count": 2,
+        "precision_ci_95": [
+          0.0945,
+          0.9055
+        ],
+        "recall_ci_95": [
+          0.0029,
+          0.0886
+        ]
+      },
+      "audit_rights": {
+        "tp": 22,
+        "fp": 5,
+        "fn": 39,
+        "tn": 3342,
+        "precision": 0.8148,
+        "recall": 0.3607,
+        "f1": 0.5,
+        "support": 61,
+        "predicted_count": 27,
+        "precision_ci_95": [
+          0.633,
+          0.9182
+        ],
+        "recall_ci_95": [
+          0.2517,
+          0.4861
+        ]
+      },
+      "uncapped_liability": {
+        "tp": 6,
+        "fp": 4,
+        "fn": 17,
+        "tn": 3381,
+        "precision": 0.6,
+        "recall": 0.2609,
+        "f1": 0.3636,
+        "support": 23,
+        "predicted_count": 10,
+        "precision_ci_95": [
+          0.3127,
+          0.8318
+        ],
+        "recall_ci_95": [
+          0.1255,
+          0.4647
+        ]
+      },
+      "cap_on_liability": {
+        "tp": 23,
+        "fp": 13,
+        "fn": 63,
+        "tn": 3309,
+        "precision": 0.6389,
+        "recall": 0.2674,
+        "f1": 0.377,
+        "support": 86,
+        "predicted_count": 36,
+        "precision_ci_95": [
+          0.4758,
+          0.7752
+        ],
+        "recall_ci_95": [
+          0.1853,
+          0.3695
+        ]
+      },
+      "liquidated_damages": {
+        "tp": 4,
+        "fp": 2,
+        "fn": 6,
+        "tn": 3396,
+        "precision": 0.6667,
+        "recall": 0.4,
+        "f1": 0.5,
+        "support": 10,
+        "predicted_count": 6,
+        "precision_ci_95": [
+          0.3,
+          0.9032
+        ],
+        "recall_ci_95": [
+          0.1682,
+          0.6873
+        ]
+      },
+      "warranty_duration": {
+        "tp": 2,
+        "fp": 1,
+        "fn": 18,
+        "tn": 3387,
+        "precision": 0.6667,
+        "recall": 0.1,
+        "f1": 0.1739,
+        "support": 20,
+        "predicted_count": 3,
+        "precision_ci_95": [
+          0.2077,
+          0.9385
+        ],
+        "recall_ci_95": [
+          0.0279,
+          0.301
+        ]
+      },
+      "insurance": {
+        "tp": 26,
+        "fp": 19,
+        "fn": 13,
+        "tn": 3350,
+        "precision": 0.5778,
+        "recall": 0.6667,
+        "f1": 0.619,
+        "support": 39,
+        "predicted_count": 45,
+        "precision_ci_95": [
+          0.433,
+          0.7103
+        ],
+        "recall_ci_95": [
+          0.5098,
+          0.7937
+        ]
+      },
+      "covenant_not_to_sue": {
+        "tp": 1,
+        "fp": 1,
+        "fn": 31,
+        "tn": 3375,
+        "precision": 0.5,
+        "recall": 0.0312,
+        "f1": 0.0588,
+        "support": 32,
+        "predicted_count": 2,
+        "precision_ci_95": [
+          0.0945,
+          0.9055
+        ],
+        "recall_ci_95": [
+          0.0055,
+          0.1574
+        ]
+      },
+      "third_party_beneficiary": {
+        "tp": 1,
+        "fp": 9,
+        "fn": 7,
+        "tn": 3391,
+        "precision": 0.1,
+        "recall": 0.125,
+        "f1": 0.1111,
+        "support": 8,
+        "predicted_count": 10,
+        "precision_ci_95": [
+          0.0179,
+          0.4042
+        ],
+        "recall_ci_95": [
+          0.0224,
+          0.4709
+        ]
+      }
+    },
+    "model": {
+      "governing_law": {
+        "threshold": 0.85,
+        "precision": 0.9348,
+        "recall": 0.9247,
+        "f1": 0.9297,
+        "support": 93,
+        "gated": true
+      },
+      "renewal_term": {
+        "threshold": 0.75,
+        "precision": 0.7368,
+        "recall": 0.7778,
+        "f1": 0.7568,
+        "support": 36,
+        "gated": true
+      },
+      "notice_period_to_terminate_renewal": {
+        "threshold": 0.7,
+        "precision": 0.5455,
+        "recall": 0.9,
+        "f1": 0.6792,
+        "support": 20,
+        "gated": true
+      },
+      "most_favored_nation": {
+        "threshold": 0.3,
+        "precision": 0.2,
+        "recall": 0.625,
+        "f1": 0.303,
+        "support": 8,
+        "gated": false
+      },
+      "non_compete": {
+        "threshold": 0.8,
+        "precision": 0.8261,
+        "recall": 0.6333,
+        "f1": 0.717,
+        "support": 30,
+        "gated": true
+      },
+      "exclusivity": {
+        "threshold": 0.8,
+        "precision": 0.5179,
+        "recall": 0.58,
+        "f1": 0.5472,
+        "support": 50,
+        "gated": true
+      },
+      "no_solicit_of_customers": {
+        "threshold": 0.75,
+        "precision": 0.7143,
+        "recall": 0.5,
+        "f1": 0.5882,
+        "support": 10,
+        "gated": true
+      },
+      "competitive_restriction_exception": {
+        "threshold": 0.7,
+        "precision": 0.6111,
+        "recall": 0.5,
+        "f1": 0.55,
+        "support": 22,
+        "gated": true
+      },
+      "no_solicit_of_employees": {
+        "threshold": 0.75,
+        "precision": 0.8889,
+        "recall": 0.8889,
+        "f1": 0.8889,
+        "support": 18,
+        "gated": true
+      },
+      "non_disparagement": {
+        "threshold": 0.45,
+        "precision": 0.6923,
+        "recall": 0.6,
+        "f1": 0.6429,
+        "support": 15,
+        "gated": true
+      },
+      "termination_for_convenience": {
+        "threshold": 0.8,
+        "precision": 0.8378,
+        "recall": 0.7561,
+        "f1": 0.7949,
+        "support": 41,
+        "gated": true
+      },
+      "rofr_rofo_rofn": {
+        "threshold": 0.65,
+        "precision": 0.7,
+        "recall": 0.4667,
+        "f1": 0.56,
+        "support": 45,
+        "gated": true
+      },
+      "change_of_control": {
+        "threshold": 0.9,
+        "precision": 0.5238,
+        "recall": 0.3143,
+        "f1": 0.3929,
+        "support": 35,
+        "gated": true
+      },
+      "anti_assignment": {
+        "threshold": 0.75,
+        "precision": 0.8409,
+        "recall": 0.7872,
+        "f1": 0.8132,
+        "support": 94,
+        "gated": true
+      },
+      "revenue_profit_sharing": {
+        "threshold": 0.8,
+        "precision": 0.7,
+        "recall": 0.5385,
+        "f1": 0.6087,
+        "support": 39,
+        "gated": true
+      },
+      "price_restrictions": {
+        "threshold": 0.3,
+        "precision": 0.0909,
+        "recall": 0.2,
+        "f1": 0.125,
+        "support": 5,
+        "gated": false
+      },
+      "minimum_commitment": {
+        "threshold": 0.8,
+        "precision": 0.5952,
+        "recall": 0.5952,
+        "f1": 0.5952,
+        "support": 42,
+        "gated": true
+      },
+      "volume_restriction": {
+        "threshold": 0.75,
+        "precision": 0.4545,
+        "recall": 0.2941,
+        "f1": 0.3571,
+        "support": 17,
+        "gated": false
+      },
+      "ip_ownership_assignment": {
+        "threshold": 0.85,
+        "precision": 0.8148,
+        "recall": 0.6471,
+        "f1": 0.7213,
+        "support": 34,
+        "gated": true
+      },
+      "joint_ip_ownership": {
+        "threshold": 0.65,
+        "precision": 0.6364,
+        "recall": 0.6364,
+        "f1": 0.6364,
+        "support": 11,
+        "gated": true
+      },
+      "license_grant": {
+        "threshold": 0.85,
+        "precision": 0.8936,
+        "recall": 0.8155,
+        "f1": 0.8528,
+        "support": 103,
+        "gated": true
+      },
+      "non_transferable_license": {
+        "threshold": 0.65,
+        "precision": 0.6901,
+        "recall": 0.9423,
+        "f1": 0.7967,
+        "support": 52,
+        "gated": true
+      },
+      "affiliate_license_licensor": {
+        "threshold": 0.9,
+        "precision": 1.0,
+        "recall": 0.1667,
+        "f1": 0.2857,
+        "support": 12,
+        "gated": true
+      },
+      "affiliate_license_licensee": {
+        "threshold": 0.75,
+        "precision": 0.7333,
+        "recall": 0.4783,
+        "f1": 0.5789,
+        "support": 23,
+        "gated": true
+      },
+      "unlimited_all_you_can_eat_license": {
+        "threshold": 0.3,
+        "precision": 0.6,
+        "recall": 0.5,
+        "f1": 0.5455,
+        "support": 6,
+        "gated": false
+      },
+      "irrevocable_or_perpetual_license": {
+        "threshold": 0.85,
+        "precision": 0.85,
+        "recall": 0.7083,
+        "f1": 0.7727,
+        "support": 24,
+        "gated": true
+      },
+      "source_code_escrow": {
+        "threshold": 0.3,
+        "precision": 0.6667,
+        "recall": 0.6667,
+        "f1": 0.6667,
+        "support": 6,
+        "gated": false
+      },
+      "post_termination_services": {
+        "threshold": 0.9,
+        "precision": 0.68,
+        "recall": 0.2833,
+        "f1": 0.4,
+        "support": 60,
+        "gated": true
+      },
+      "audit_rights": {
+        "threshold": 0.75,
+        "precision": 0.7407,
+        "recall": 0.6557,
+        "f1": 0.6957,
+        "support": 61,
+        "gated": true
+      },
+      "uncapped_liability": {
+        "threshold": 0.9,
+        "precision": 0.625,
+        "recall": 0.6522,
+        "f1": 0.6383,
+        "support": 23,
+        "gated": true
+      },
+      "cap_on_liability": {
+        "threshold": 0.75,
+        "precision": 0.7614,
+        "recall": 0.7791,
+        "f1": 0.7701,
+        "support": 86,
+        "gated": true
+      },
+      "liquidated_damages": {
+        "threshold": 0.8,
+        "precision": 0.625,
+        "recall": 0.5,
+        "f1": 0.5556,
+        "support": 10,
+        "gated": true
+      },
+      "warranty_duration": {
+        "threshold": 0.8,
+        "precision": 0.5,
+        "recall": 0.5,
+        "f1": 0.5,
+        "support": 20,
+        "gated": true
+      },
+      "insurance": {
+        "threshold": 0.7,
+        "precision": 0.7949,
+        "recall": 0.7949,
+        "f1": 0.7949,
+        "support": 39,
+        "gated": true
+      },
+      "covenant_not_to_sue": {
+        "threshold": 0.8,
+        "precision": 0.7407,
+        "recall": 0.625,
+        "f1": 0.678,
+        "support": 32,
+        "gated": true
+      },
+      "third_party_beneficiary": {
+        "threshold": 0.45,
+        "precision": 0.3125,
+        "recall": 0.625,
+        "f1": 0.4167,
+        "support": 8,
+        "gated": false
+      }
+    },
+    "hybrid": {
+      "governing_law": {
+        "threshold": 0.85,
+        "precision": 0.467,
+        "recall": 0.9892,
+        "f1": 0.6345,
+        "support": 93
+      },
+      "renewal_term": {
+        "threshold": 0.75,
+        "precision": 0.5179,
+        "recall": 0.8056,
+        "f1": 0.6304,
+        "support": 36
+      },
+      "notice_period_to_terminate_renewal": {
+        "threshold": 0.7,
+        "precision": 0.5294,
+        "recall": 0.9,
+        "f1": 0.6667,
+        "support": 20
+      },
+      "most_favored_nation": {
+        "threshold": 0.3,
+        "precision": 0.2,
+        "recall": 0.625,
+        "f1": 0.303,
+        "support": 8
+      },
+      "non_compete": {
+        "threshold": 0.8,
+        "precision": 0.7333,
+        "recall": 0.7333,
+        "f1": 0.7333,
+        "support": 30
+      },
+      "exclusivity": {
+        "threshold": 0.8,
+        "precision": 0.3776,
+        "recall": 0.74,
+        "f1": 0.5,
+        "support": 50
+      },
+      "no_solicit_of_customers": {
+        "threshold": 0.75,
+        "precision": 0.7143,
+        "recall": 0.5,
+        "f1": 0.5882,
+        "support": 10
+      },
+      "competitive_restriction_exception": {
+        "threshold": 0.7,
+        "precision": 0.6111,
+        "recall": 0.5,
+        "f1": 0.55,
+        "support": 22
+      },
+      "no_solicit_of_employees": {
+        "threshold": 0.75,
+        "precision": 0.8889,
+        "recall": 0.8889,
+        "f1": 0.8889,
+        "support": 18
+      },
+      "non_disparagement": {
+        "threshold": 0.45,
+        "precision": 0.7143,
+        "recall": 0.6667,
+        "f1": 0.6897,
+        "support": 15
+      },
+      "termination_for_convenience": {
+        "threshold": 0.8,
+        "precision": 0.8095,
+        "recall": 0.8293,
+        "f1": 0.8193,
+        "support": 41
+      },
+      "rofr_rofo_rofn": {
+        "threshold": 0.65,
+        "precision": 0.6667,
+        "recall": 0.4889,
+        "f1": 0.5641,
+        "support": 45
+      },
+      "change_of_control": {
+        "threshold": 0.9,
+        "precision": 0.4651,
+        "recall": 0.5714,
+        "f1": 0.5128,
+        "support": 35
+      },
+      "anti_assignment": {
+        "threshold": 0.75,
+        "precision": 0.5682,
+        "recall": 0.7979,
+        "f1": 0.6637,
+        "support": 94
+      },
+      "revenue_profit_sharing": {
+        "threshold": 0.8,
+        "precision": 0.4902,
+        "recall": 0.641,
+        "f1": 0.5556,
+        "support": 39
+      },
+      "price_restrictions": {
+        "threshold": 0.3,
+        "precision": 0.0909,
+        "recall": 0.2,
+        "f1": 0.125,
+        "support": 5
+      },
+      "minimum_commitment": {
+        "threshold": 0.8,
+        "precision": 0.587,
+        "recall": 0.6429,
+        "f1": 0.6136,
+        "support": 42
+      },
+      "volume_restriction": {
+        "threshold": 0.75,
+        "precision": 0.4167,
+        "recall": 0.2941,
+        "f1": 0.3448,
+        "support": 17
+      },
+      "ip_ownership_assignment": {
+        "threshold": 0.85,
+        "precision": 0.5476,
+        "recall": 0.6765,
+        "f1": 0.6053,
+        "support": 34
+      },
+      "joint_ip_ownership": {
+        "threshold": 0.65,
+        "precision": 0.6364,
+        "recall": 0.6364,
+        "f1": 0.6364,
+        "support": 11
+      },
+      "license_grant": {
+        "threshold": 0.85,
+        "precision": 0.7589,
+        "recall": 0.8252,
+        "f1": 0.7907,
+        "support": 103
+      },
+      "non_transferable_license": {
+        "threshold": 0.65,
+        "precision": 0.6901,
+        "recall": 0.9423,
+        "f1": 0.7967,
+        "support": 52
+      },
+      "affiliate_license_licensor": {
+        "threshold": 0.9,
+        "precision": 1.0,
+        "recall": 0.1667,
+        "f1": 0.2857,
+        "support": 12
+      },
+      "affiliate_license_licensee": {
+        "threshold": 0.75,
+        "precision": 0.7333,
+        "recall": 0.4783,
+        "f1": 0.5789,
+        "support": 23
+      },
+      "unlimited_all_you_can_eat_license": {
+        "threshold": 0.3,
+        "precision": 0.6,
+        "recall": 0.5,
+        "f1": 0.5455,
+        "support": 6
+      },
+      "irrevocable_or_perpetual_license": {
+        "threshold": 0.85,
+        "precision": 0.85,
+        "recall": 0.7083,
+        "f1": 0.7727,
+        "support": 24
+      },
+      "source_code_escrow": {
+        "threshold": 0.3,
+        "precision": 0.2273,
+        "recall": 0.8333,
+        "f1": 0.3571,
+        "support": 6
+      },
+      "post_termination_services": {
+        "threshold": 0.9,
+        "precision": 0.6538,
+        "recall": 0.2833,
+        "f1": 0.3953,
+        "support": 60
+      },
+      "audit_rights": {
+        "threshold": 0.75,
+        "precision": 0.7193,
+        "recall": 0.6721,
+        "f1": 0.6949,
+        "support": 61
+      },
+      "uncapped_liability": {
+        "threshold": 0.9,
+        "precision": 0.5517,
+        "recall": 0.6957,
+        "f1": 0.6154,
+        "support": 23
+      },
+      "cap_on_liability": {
+        "threshold": 0.75,
+        "precision": 0.6733,
+        "recall": 0.7907,
+        "f1": 0.7273,
+        "support": 86
+      },
+      "liquidated_damages": {
+        "threshold": 0.8,
+        "precision": 0.5833,
+        "recall": 0.7,
+        "f1": 0.6364,
+        "support": 10
+      },
+      "warranty_duration": {
+        "threshold": 0.8,
+        "precision": 0.5238,
+        "recall": 0.55,
+        "f1": 0.5366,
+        "support": 20
+      },
+      "insurance": {
+        "threshold": 0.7,
+        "precision": 0.5862,
+        "recall": 0.8718,
+        "f1": 0.701,
+        "support": 39
+      },
+      "covenant_not_to_sue": {
+        "threshold": 0.8,
+        "precision": 0.7143,
+        "recall": 0.625,
+        "f1": 0.6667,
+        "support": 32
+      },
+      "third_party_beneficiary": {
+        "threshold": 0.45,
+        "precision": 0.3,
+        "recall": 0.75,
+        "f1": 0.4286,
+        "support": 8
+      }
+    },
+    "shipped": {
+      "governing_law": {
+        "threshold": 0.85,
+        "precision": 0.9348,
+        "recall": 0.9247,
+        "f1": 0.9297,
+        "support": 93,
+        "gated": true
+      },
+      "renewal_term": {
+        "threshold": 0.75,
+        "precision": 0.7368,
+        "recall": 0.7778,
+        "f1": 0.7568,
+        "support": 36,
+        "gated": true
+      },
+      "notice_period_to_terminate_renewal": {
+        "threshold": 0.7,
+        "precision": 0.5455,
+        "recall": 0.9,
+        "f1": 0.6792,
+        "support": 20,
+        "gated": true
+      },
+      "most_favored_nation": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 7,
+        "tn": 3400,
+        "precision": 1.0,
+        "recall": 0.125,
+        "f1": 0.2222,
+        "support": 8,
+        "predicted_count": 1,
+        "precision_ci_95": [
+          0.2065,
+          1.0
+        ],
+        "recall_ci_95": [
+          0.0224,
+          0.4709
+        ]
+      },
+      "non_compete": {
+        "threshold": 0.8,
+        "precision": 0.7333,
+        "recall": 0.7333,
+        "f1": 0.7333,
+        "support": 30
+      },
+      "exclusivity": {
+        "threshold": 0.8,
+        "precision": 0.5179,
+        "recall": 0.58,
+        "f1": 0.5472,
+        "support": 50,
+        "gated": true
+      },
+      "no_solicit_of_customers": {
+        "threshold": 0.75,
+        "precision": 0.7143,
+        "recall": 0.5,
+        "f1": 0.5882,
+        "support": 10
+      },
+      "competitive_restriction_exception": {
+        "threshold": 0.7,
+        "precision": 0.6111,
+        "recall": 0.5,
+        "f1": 0.55,
+        "support": 22
+      },
+      "no_solicit_of_employees": {
+        "threshold": 0.75,
+        "precision": 0.8889,
+        "recall": 0.8889,
+        "f1": 0.8889,
+        "support": 18
+      },
+      "non_disparagement": {
+        "threshold": 0.45,
+        "precision": 0.7143,
+        "recall": 0.6667,
+        "f1": 0.6897,
+        "support": 15
+      },
+      "termination_for_convenience": {
+        "threshold": 0.8,
+        "precision": 0.8095,
+        "recall": 0.8293,
+        "f1": 0.8193,
+        "support": 41
+      },
+      "rofr_rofo_rofn": {
+        "threshold": 0.65,
+        "precision": 0.6667,
+        "recall": 0.4889,
+        "f1": 0.5641,
+        "support": 45
+      },
+      "change_of_control": {
+        "threshold": 0.9,
+        "precision": 0.4651,
+        "recall": 0.5714,
+        "f1": 0.5128,
+        "support": 35
+      },
+      "anti_assignment": {
+        "threshold": 0.75,
+        "precision": 0.8409,
+        "recall": 0.7872,
+        "f1": 0.8132,
+        "support": 94,
+        "gated": true
+      },
+      "revenue_profit_sharing": {
+        "threshold": 0.8,
+        "precision": 0.7,
+        "recall": 0.5385,
+        "f1": 0.6087,
+        "support": 39,
+        "gated": true
+      },
+      "price_restrictions": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 5,
+        "tn": 3403,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 5,
+        "predicted_count": 0,
+        "precision_ci_95": [
+          0.0,
+          0.0
+        ],
+        "recall_ci_95": [
+          0.0,
+          0.4345
+        ]
+      },
+      "minimum_commitment": {
+        "threshold": 0.8,
+        "precision": 0.587,
+        "recall": 0.6429,
+        "f1": 0.6136,
+        "support": 42
+      },
+      "volume_restriction": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 17,
+        "tn": 3390,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 17,
+        "predicted_count": 1,
+        "precision_ci_95": [
+          0.0,
+          0.7935
+        ],
+        "recall_ci_95": [
+          0.0,
+          0.1843
+        ]
+      },
+      "ip_ownership_assignment": {
+        "threshold": 0.85,
+        "precision": 0.8148,
+        "recall": 0.6471,
+        "f1": 0.7213,
+        "support": 34,
+        "gated": true
+      },
+      "joint_ip_ownership": {
+        "threshold": 0.65,
+        "precision": 0.6364,
+        "recall": 0.6364,
+        "f1": 0.6364,
+        "support": 11
+      },
+      "license_grant": {
+        "threshold": 0.85,
+        "precision": 0.8936,
+        "recall": 0.8155,
+        "f1": 0.8528,
+        "support": 103,
+        "gated": true
+      },
+      "non_transferable_license": {
+        "threshold": 0.65,
+        "precision": 0.6901,
+        "recall": 0.9423,
+        "f1": 0.7967,
+        "support": 52
+      },
+      "affiliate_license_licensor": {
+        "threshold": 0.9,
+        "precision": 1.0,
+        "recall": 0.1667,
+        "f1": 0.2857,
+        "support": 12
+      },
+      "affiliate_license_licensee": {
+        "threshold": 0.75,
+        "precision": 0.7333,
+        "recall": 0.4783,
+        "f1": 0.5789,
+        "support": 23
+      },
+      "unlimited_all_you_can_eat_license": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 6,
+        "tn": 3402,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 6,
+        "predicted_count": 0,
+        "precision_ci_95": [
+          0.0,
+          0.0
+        ],
+        "recall_ci_95": [
+          0.0,
+          0.3903
+        ]
+      },
+      "irrevocable_or_perpetual_license": {
+        "threshold": 0.85,
+        "precision": 0.85,
+        "recall": 0.7083,
+        "f1": 0.7727,
+        "support": 24
+      },
+      "source_code_escrow": {
+        "tp": 5,
+        "fp": 16,
+        "fn": 1,
+        "tn": 3386,
+        "precision": 0.2381,
+        "recall": 0.8333,
+        "f1": 0.3704,
+        "support": 6,
+        "predicted_count": 21,
+        "precision_ci_95": [
+          0.1063,
+          0.4509
+        ],
+        "recall_ci_95": [
+          0.4365,
+          0.9699
+        ]
+      },
+      "post_termination_services": {
+        "threshold": 0.9,
+        "precision": 0.6538,
+        "recall": 0.2833,
+        "f1": 0.3953,
+        "support": 60
+      },
+      "audit_rights": {
+        "threshold": 0.75,
+        "precision": 0.7193,
+        "recall": 0.6721,
+        "f1": 0.6949,
+        "support": 61
+      },
+      "uncapped_liability": {
+        "threshold": 0.9,
+        "precision": 0.625,
+        "recall": 0.6522,
+        "f1": 0.6383,
+        "support": 23,
+        "gated": true
+      },
+      "cap_on_liability": {
+        "threshold": 0.75,
+        "precision": 0.7614,
+        "recall": 0.7791,
+        "f1": 0.7701,
+        "support": 86,
+        "gated": true
+      },
+      "liquidated_damages": {
+        "threshold": 0.8,
+        "precision": 0.5833,
+        "recall": 0.7,
+        "f1": 0.6364,
+        "support": 10
+      },
+      "warranty_duration": {
+        "threshold": 0.8,
+        "precision": 0.5238,
+        "recall": 0.55,
+        "f1": 0.5366,
+        "support": 20
+      },
+      "insurance": {
+        "threshold": 0.7,
+        "precision": 0.7949,
+        "recall": 0.7949,
+        "f1": 0.7949,
+        "support": 39,
+        "gated": true
+      },
+      "covenant_not_to_sue": {
+        "threshold": 0.8,
+        "precision": 0.7407,
+        "recall": 0.625,
+        "f1": 0.678,
+        "support": 32,
+        "gated": true
+      },
+      "third_party_beneficiary": {
+        "tp": 1,
+        "fp": 9,
+        "fn": 7,
+        "tn": 3391,
+        "precision": 0.1,
+        "recall": 0.125,
+        "f1": 0.1111,
+        "support": 8,
+        "predicted_count": 10,
+        "precision_ci_95": [
+          0.0179,
+          0.4042
+        ],
+        "recall_ci_95": [
+          0.0224,
+          0.4709
+        ]
+      }
+    }
+  },
+  "test_results": {
+    "governing_law": {
+      "tp": 77,
+      "fp": 3,
+      "fn": 12,
+      "tn": 2696,
+      "precision": 0.9625,
+      "recall": 0.8652,
+      "f1": 0.9112,
+      "support": 89,
+      "precision_ci_95": [
+        0.8955,
+        0.9872
+      ],
+      "recall_ci_95": [
+        0.779,
+        0.9212
+      ],
+      "shipped_method": "model",
+      "threshold": 0.85,
+      "unreliable_estimate": false
+    },
+    "renewal_term": {
+      "tp": 26,
+      "fp": 15,
+      "fn": 7,
+      "tn": 2740,
+      "precision": 0.6341,
+      "recall": 0.7879,
+      "f1": 0.7027,
+      "support": 33,
+      "precision_ci_95": [
+        0.4812,
+        0.7641
+      ],
+      "recall_ci_95": [
+        0.6225,
+        0.8932
+      ],
+      "shipped_method": "model",
+      "threshold": 0.75,
+      "unreliable_estimate": false
+    },
+    "notice_period_to_terminate_renewal": {
+      "tp": 18,
+      "fp": 7,
+      "fn": 4,
+      "tn": 2759,
+      "precision": 0.72,
+      "recall": 0.8182,
+      "f1": 0.766,
+      "support": 22,
+      "precision_ci_95": [
+        0.5242,
+        0.8572
+      ],
+      "recall_ci_95": [
+        0.6148,
+        0.9269
+      ],
+      "shipped_method": "model",
+      "threshold": 0.7,
+      "unreliable_estimate": false
+    },
+    "most_favored_nation": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 7,
+      "tn": 2781,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 7,
+      "precision_ci_95": [
+        0.0,
+        0.0
+      ],
+      "recall_ci_95": [
+        0.0,
+        0.3543
+      ],
+      "shipped_method": "rules",
+      "threshold": 0.3,
+      "unreliable_estimate": true
+    },
+    "non_compete": {
+      "tp": 10,
+      "fp": 11,
+      "fn": 16,
+      "tn": 2751,
+      "precision": 0.4762,
+      "recall": 0.3846,
+      "f1": 0.4255,
+      "support": 26,
+      "precision_ci_95": [
+        0.2834,
+        0.6763
+      ],
+      "recall_ci_95": [
+        0.2243,
+        0.5747
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.8,
+      "unreliable_estimate": false
+    },
+    "exclusivity": {
+      "tp": 27,
+      "fp": 31,
+      "fn": 27,
+      "tn": 2703,
+      "precision": 0.4655,
+      "recall": 0.5,
+      "f1": 0.4821,
+      "support": 54,
+      "precision_ci_95": [
+        0.3433,
+        0.592
+      ],
+      "recall_ci_95": [
+        0.3711,
+        0.6289
+      ],
+      "shipped_method": "model",
+      "threshold": 0.8,
+      "unreliable_estimate": false
+    },
+    "no_solicit_of_customers": {
+      "tp": 1,
+      "fp": 1,
+      "fn": 5,
+      "tn": 2781,
+      "precision": 0.5,
+      "recall": 0.1667,
+      "f1": 0.25,
+      "support": 6,
+      "precision_ci_95": [
+        0.0945,
+        0.9055
+      ],
+      "recall_ci_95": [
+        0.0301,
+        0.5635
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.75,
+      "unreliable_estimate": true
+    },
+    "competitive_restriction_exception": {
+      "tp": 4,
+      "fp": 5,
+      "fn": 10,
+      "tn": 2769,
+      "precision": 0.4444,
+      "recall": 0.2857,
+      "f1": 0.3478,
+      "support": 14,
+      "precision_ci_95": [
+        0.1888,
+        0.7333
+      ],
+      "recall_ci_95": [
+        0.1172,
+        0.5465
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.7,
+      "unreliable_estimate": false
+    },
+    "no_solicit_of_employees": {
+      "tp": 6,
+      "fp": 1,
+      "fn": 2,
+      "tn": 2779,
+      "precision": 0.8571,
+      "recall": 0.75,
+      "f1": 0.8,
+      "support": 8,
+      "precision_ci_95": [
+        0.4869,
+        0.9743
+      ],
+      "recall_ci_95": [
+        0.4093,
+        0.9285
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.75,
+      "unreliable_estimate": true
+    },
+    "non_disparagement": {
+      "tp": 2,
+      "fp": 6,
+      "fn": 5,
+      "tn": 2775,
+      "precision": 0.25,
+      "recall": 0.2857,
+      "f1": 0.2667,
+      "support": 7,
+      "precision_ci_95": [
+        0.0715,
+        0.5907
+      ],
+      "recall_ci_95": [
+        0.0822,
+        0.6411
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.45,
+      "unreliable_estimate": true
+    },
+    "termination_for_convenience": {
+      "tp": 22,
+      "fp": 19,
+      "fn": 22,
+      "tn": 2725,
+      "precision": 0.5366,
+      "recall": 0.5,
+      "f1": 0.5176,
+      "support": 44,
+      "precision_ci_95": [
+        0.3875,
+        0.6794
+      ],
+      "recall_ci_95": [
+        0.3583,
+        0.6417
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.8,
+      "unreliable_estimate": false
+    },
+    "rofr_rofo_rofn": {
+      "tp": 9,
+      "fp": 21,
+      "fn": 6,
+      "tn": 2752,
+      "precision": 0.3,
+      "recall": 0.6,
+      "f1": 0.4,
+      "support": 15,
+      "precision_ci_95": [
+        0.1666,
+        0.4788
+      ],
+      "recall_ci_95": [
+        0.3575,
+        0.8018
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.65,
+      "unreliable_estimate": false
+    },
+    "change_of_control": {
+      "tp": 15,
+      "fp": 20,
+      "fn": 8,
+      "tn": 2745,
+      "precision": 0.4286,
+      "recall": 0.6522,
+      "f1": 0.5172,
+      "support": 23,
+      "precision_ci_95": [
+        0.2798,
+        0.5914
+      ],
+      "recall_ci_95": [
+        0.4489,
+        0.8119
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.9,
+      "unreliable_estimate": false
+    },
+    "anti_assignment": {
+      "tp": 72,
+      "fp": 11,
+      "fn": 14,
+      "tn": 2691,
+      "precision": 0.8675,
+      "recall": 0.8372,
+      "f1": 0.8521,
+      "support": 86,
+      "precision_ci_95": [
+        0.7781,
+        0.9244
+      ],
+      "recall_ci_95": [
+        0.7451,
+        0.9005
+      ],
+      "shipped_method": "model",
+      "threshold": 0.75,
+      "unreliable_estimate": false
+    },
+    "revenue_profit_sharing": {
+      "tp": 26,
+      "fp": 18,
+      "fn": 15,
+      "tn": 2729,
+      "precision": 0.5909,
+      "recall": 0.6341,
+      "f1": 0.6118,
+      "support": 41,
+      "precision_ci_95": [
+        0.4441,
+        0.7231
+      ],
+      "recall_ci_95": [
+        0.4812,
+        0.7641
+      ],
+      "shipped_method": "model",
+      "threshold": 0.8,
+      "unreliable_estimate": false
+    },
+    "price_restrictions": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 4,
+      "tn": 2784,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 4,
+      "precision_ci_95": [
+        0.0,
+        0.0
+      ],
+      "recall_ci_95": [
+        0.0,
+        0.4899
+      ],
+      "shipped_method": "rules",
+      "threshold": 0.3,
+      "unreliable_estimate": true
+    },
+    "minimum_commitment": {
+      "tp": 38,
+      "fp": 38,
+      "fn": 23,
+      "tn": 2689,
+      "precision": 0.5,
+      "recall": 0.623,
+      "f1": 0.5547,
+      "support": 61,
+      "precision_ci_95": [
+        0.3903,
+        0.6097
+      ],
+      "recall_ci_95": [
+        0.4975,
+        0.7339
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.8,
+      "unreliable_estimate": false
+    },
+    "volume_restriction": {
+      "tp": 0,
+      "fp": 3,
+      "fn": 22,
+      "tn": 2763,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 22,
+      "precision_ci_95": [
+        0.0,
+        0.5615
+      ],
+      "recall_ci_95": [
+        0.0,
+        0.1487
+      ],
+      "shipped_method": "rules",
+      "threshold": 0.75,
+      "unreliable_estimate": false
+    },
+    "ip_ownership_assignment": {
+      "tp": 14,
+      "fp": 4,
+      "fn": 12,
+      "tn": 2758,
+      "precision": 0.7778,
+      "recall": 0.5385,
+      "f1": 0.6364,
+      "support": 26,
+      "precision_ci_95": [
+        0.5479,
+        0.91
+      ],
+      "recall_ci_95": [
+        0.3546,
+        0.7124
+      ],
+      "shipped_method": "model",
+      "threshold": 0.85,
+      "unreliable_estimate": false
+    },
+    "joint_ip_ownership": {
+      "tp": 4,
+      "fp": 10,
+      "fn": 5,
+      "tn": 2769,
+      "precision": 0.2857,
+      "recall": 0.4444,
+      "f1": 0.3478,
+      "support": 9,
+      "precision_ci_95": [
+        0.1172,
+        0.5465
+      ],
+      "recall_ci_95": [
+        0.1888,
+        0.7333
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.65,
+      "unreliable_estimate": true
+    },
+    "license_grant": {
+      "tp": 59,
+      "fp": 6,
+      "fn": 24,
+      "tn": 2699,
+      "precision": 0.9077,
+      "recall": 0.7108,
+      "f1": 0.7973,
+      "support": 83,
+      "precision_ci_95": [
+        0.8129,
+        0.957
+      ],
+      "recall_ci_95": [
+        0.6057,
+        0.7973
+      ],
+      "shipped_method": "model",
+      "threshold": 0.85,
+      "unreliable_estimate": false
+    },
+    "non_transferable_license": {
+      "tp": 26,
+      "fp": 17,
+      "fn": 14,
+      "tn": 2731,
+      "precision": 0.6047,
+      "recall": 0.65,
+      "f1": 0.6265,
+      "support": 40,
+      "precision_ci_95": [
+        0.4558,
+        0.7363
+      ],
+      "recall_ci_95": [
+        0.4951,
+        0.7787
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.65,
+      "unreliable_estimate": false
+    },
+    "affiliate_license_licensor": {
+      "tp": 0,
+      "fp": 6,
+      "fn": 5,
+      "tn": 2777,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 5,
+      "precision_ci_95": [
+        0.0,
+        0.3903
+      ],
+      "recall_ci_95": [
+        0.0,
+        0.4345
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.9,
+      "unreliable_estimate": true
+    },
+    "affiliate_license_licensee": {
+      "tp": 9,
+      "fp": 5,
+      "fn": 8,
+      "tn": 2766,
+      "precision": 0.6429,
+      "recall": 0.5294,
+      "f1": 0.5806,
+      "support": 17,
+      "precision_ci_95": [
+        0.3876,
+        0.8366
+      ],
+      "recall_ci_95": [
+        0.3096,
+        0.7383
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.75,
+      "unreliable_estimate": false
+    },
+    "unlimited_all_you_can_eat_license": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 3,
+      "tn": 2785,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 3,
+      "precision_ci_95": [
+        0.0,
+        0.0
+      ],
+      "recall_ci_95": [
+        0.0,
+        0.5615
+      ],
+      "shipped_method": "rules",
+      "threshold": 0.3,
+      "unreliable_estimate": true
+    },
+    "irrevocable_or_perpetual_license": {
+      "tp": 8,
+      "fp": 5,
+      "fn": 5,
+      "tn": 2770,
+      "precision": 0.6154,
+      "recall": 0.6154,
+      "f1": 0.6154,
+      "support": 13,
+      "precision_ci_95": [
+        0.3552,
+        0.8229
+      ],
+      "recall_ci_95": [
+        0.3552,
+        0.8229
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.85,
+      "unreliable_estimate": false
+    },
+    "source_code_escrow": {
+      "tp": 0,
+      "fp": 2,
+      "fn": 3,
+      "tn": 2783,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 3,
+      "precision_ci_95": [
+        0.0,
+        0.6576
+      ],
+      "recall_ci_95": [
+        0.0,
+        0.5615
+      ],
+      "shipped_method": "rules",
+      "threshold": 0.3,
+      "unreliable_estimate": true
+    },
+    "post_termination_services": {
+      "tp": 14,
+      "fp": 4,
+      "fn": 32,
+      "tn": 2738,
+      "precision": 0.7778,
+      "recall": 0.3043,
+      "f1": 0.4375,
+      "support": 46,
+      "precision_ci_95": [
+        0.5479,
+        0.91
+      ],
+      "recall_ci_95": [
+        0.1908,
+        0.4481
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.9,
+      "unreliable_estimate": false
+    },
+    "audit_rights": {
+      "tp": 48,
+      "fp": 19,
+      "fn": 9,
+      "tn": 2712,
+      "precision": 0.7164,
+      "recall": 0.8421,
+      "f1": 0.7742,
+      "support": 57,
+      "precision_ci_95": [
+        0.5991,
+        0.8103
+      ],
+      "recall_ci_95": [
+        0.7264,
+        0.9146
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.75,
+      "unreliable_estimate": false
+    },
+    "uncapped_liability": {
+      "tp": 15,
+      "fp": 7,
+      "fn": 9,
+      "tn": 2757,
+      "precision": 0.6818,
+      "recall": 0.625,
+      "f1": 0.6522,
+      "support": 24,
+      "precision_ci_95": [
+        0.4732,
+        0.8364
+      ],
+      "recall_ci_95": [
+        0.4271,
+        0.7884
+      ],
+      "shipped_method": "model",
+      "threshold": 0.9,
+      "unreliable_estimate": false
+    },
+    "cap_on_liability": {
+      "tp": 54,
+      "fp": 13,
+      "fn": 12,
+      "tn": 2709,
+      "precision": 0.806,
+      "recall": 0.8182,
+      "f1": 0.812,
+      "support": 66,
+      "precision_ci_95": [
+        0.6958,
+        0.8829
+      ],
+      "recall_ci_95": [
+        0.7085,
+        0.8928
+      ],
+      "shipped_method": "model",
+      "threshold": 0.75,
+      "unreliable_estimate": false
+    },
+    "liquidated_damages": {
+      "tp": 7,
+      "fp": 6,
+      "fn": 6,
+      "tn": 2769,
+      "precision": 0.5385,
+      "recall": 0.5385,
+      "f1": 0.5385,
+      "support": 13,
+      "precision_ci_95": [
+        0.2914,
+        0.7679
+      ],
+      "recall_ci_95": [
+        0.2914,
+        0.7679
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.8,
+      "unreliable_estimate": false
+    },
+    "warranty_duration": {
+      "tp": 13,
+      "fp": 11,
+      "fn": 6,
+      "tn": 2758,
+      "precision": 0.5417,
+      "recall": 0.6842,
+      "f1": 0.6047,
+      "support": 19,
+      "precision_ci_95": [
+        0.3507,
+        0.7211
+      ],
+      "recall_ci_95": [
+        0.4601,
+        0.8464
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.8,
+      "unreliable_estimate": false
+    },
+    "insurance": {
+      "tp": 35,
+      "fp": 16,
+      "fn": 7,
+      "tn": 2730,
+      "precision": 0.6863,
+      "recall": 0.8333,
+      "f1": 0.7527,
+      "support": 42,
+      "precision_ci_95": [
+        0.5497,
+        0.7967
+      ],
+      "recall_ci_95": [
+        0.694,
+        0.9168
+      ],
+      "shipped_method": "model",
+      "threshold": 0.7,
+      "unreliable_estimate": false
+    },
+    "covenant_not_to_sue": {
+      "tp": 8,
+      "fp": 8,
+      "fn": 12,
+      "tn": 2760,
+      "precision": 0.5,
+      "recall": 0.4,
+      "f1": 0.4444,
+      "support": 20,
+      "precision_ci_95": [
+        0.28,
+        0.72
+      ],
+      "recall_ci_95": [
+        0.2188,
+        0.6134
+      ],
+      "shipped_method": "model",
+      "threshold": 0.8,
+      "unreliable_estimate": false
+    },
+    "third_party_beneficiary": {
+      "tp": 2,
+      "fp": 13,
+      "fn": 2,
+      "tn": 2771,
+      "precision": 0.1333,
+      "recall": 0.5,
+      "f1": 0.2105,
+      "support": 4,
+      "precision_ci_95": [
+        0.0374,
+        0.3788
+      ],
+      "recall_ci_95": [
+        0.15,
+        0.85
+      ],
+      "shipped_method": "rules",
+      "threshold": 0.45,
+      "unreliable_estimate": true
+    }
+  },
+  "shipped_methods": {
+    "governing_law": "model",
+    "renewal_term": "model",
+    "notice_period_to_terminate_renewal": "model",
+    "most_favored_nation": "rules",
+    "non_compete": "hybrid",
+    "exclusivity": "model",
+    "no_solicit_of_customers": "hybrid",
+    "competitive_restriction_exception": "hybrid",
+    "no_solicit_of_employees": "hybrid",
+    "non_disparagement": "hybrid",
+    "termination_for_convenience": "hybrid",
+    "rofr_rofo_rofn": "hybrid",
+    "change_of_control": "hybrid",
+    "anti_assignment": "model",
+    "revenue_profit_sharing": "model",
+    "price_restrictions": "rules",
+    "minimum_commitment": "hybrid",
+    "volume_restriction": "rules",
+    "ip_ownership_assignment": "model",
+    "joint_ip_ownership": "hybrid",
+    "license_grant": "model",
+    "non_transferable_license": "hybrid",
+    "affiliate_license_licensor": "hybrid",
+    "affiliate_license_licensee": "hybrid",
+    "unlimited_all_you_can_eat_license": "rules",
+    "irrevocable_or_perpetual_license": "hybrid",
+    "source_code_escrow": "rules",
+    "post_termination_services": "hybrid",
+    "audit_rights": "hybrid",
+    "uncapped_liability": "model",
+    "cap_on_liability": "model",
+    "liquidated_damages": "hybrid",
+    "warranty_duration": "hybrid",
+    "insurance": "model",
+    "covenant_not_to_sue": "model",
+    "third_party_beneficiary": "rules",
+    "indemnification": "rules",
+    "confidentiality": "rules",
+    "payment_terms": "rules",
+    "unilateral_amendment": "rules",
+    "force_majeure": "rules",
+    "arbitration_or_dispute_resolution": "rules",
+    "waiver_of_rights": "rules",
+    "termination_for_cause": "rules",
+    "auto_renewal": "rules"
+  },
+  "thresholds": {
+    "governing_law": 0.85,
+    "renewal_term": 0.75,
+    "notice_period_to_terminate_renewal": 0.7,
+    "most_favored_nation": 0.3,
+    "non_compete": 0.8,
+    "exclusivity": 0.8,
+    "no_solicit_of_customers": 0.75,
+    "competitive_restriction_exception": 0.7,
+    "no_solicit_of_employees": 0.75,
+    "non_disparagement": 0.45,
+    "termination_for_convenience": 0.8,
+    "rofr_rofo_rofn": 0.65,
+    "change_of_control": 0.9,
+    "anti_assignment": 0.75,
+    "revenue_profit_sharing": 0.8,
+    "price_restrictions": 0.3,
+    "minimum_commitment": 0.8,
+    "volume_restriction": 0.75,
+    "ip_ownership_assignment": 0.85,
+    "joint_ip_ownership": 0.65,
+    "license_grant": 0.85,
+    "non_transferable_license": 0.65,
+    "affiliate_license_licensor": 0.9,
+    "affiliate_license_licensee": 0.75,
+    "unlimited_all_you_can_eat_license": 0.3,
+    "irrevocable_or_perpetual_license": 0.85,
+    "source_code_escrow": 0.3,
+    "post_termination_services": 0.9,
+    "audit_rights": 0.75,
+    "uncapped_liability": 0.9,
+    "cap_on_liability": 0.75,
+    "liquidated_damages": 0.8,
+    "warranty_duration": 0.8,
+    "insurance": 0.7,
+    "covenant_not_to_sue": 0.8,
+    "third_party_beneficiary": 0.45,
+    "indemnification": 0.5,
+    "confidentiality": 0.5,
+    "payment_terms": 0.5,
+    "unilateral_amendment": 0.5,
+    "force_majeure": 0.5,
+    "arbitration_or_dispute_resolution": 0.5,
+    "waiver_of_rights": 0.5,
+    "termination_for_cause": 0.5,
+    "auto_renewal": 0.5
+  },
+  "high_precision_thresholds": {
+    "governing_law": 0.6,
+    "renewal_term": 0.9,
+    "notice_period_to_terminate_renewal": null,
+    "most_favored_nation": null,
+    "non_compete": 0.8,
+    "exclusivity": null,
+    "no_solicit_of_customers": null,
+    "competitive_restriction_exception": 0.8,
+    "no_solicit_of_employees": 0.65,
+    "non_disparagement": 0.55,
+    "termination_for_convenience": 0.8,
+    "rofr_rofo_rofn": 0.75,
+    "change_of_control": null,
+    "anti_assignment": 0.7,
+    "revenue_profit_sharing": null,
+    "price_restrictions": null,
+    "minimum_commitment": null,
+    "volume_restriction": null,
+    "ip_ownership_assignment": 0.85,
+    "joint_ip_ownership": 0.85,
+    "license_grant": 0.8,
+    "non_transferable_license": 0.85,
+    "affiliate_license_licensor": 0.9,
+    "affiliate_license_licensee": 0.85,
+    "unlimited_all_you_can_eat_license": 0.4,
+    "irrevocable_or_perpetual_license": 0.85,
+    "source_code_escrow": null,
+    "post_termination_services": null,
+    "audit_rights": 0.85,
+    "uncapped_liability": null,
+    "cap_on_liability": 0.85,
+    "liquidated_damages": 0.9,
+    "warranty_duration": null,
+    "insurance": 0.75,
+    "covenant_not_to_sue": 0.9,
+    "third_party_beneficiary": null,
+    "indemnification": null,
+    "confidentiality": null,
+    "payment_terms": null,
+    "unilateral_amendment": null,
+    "force_majeure": null,
+    "arbitration_or_dispute_resolution": null,
+    "waiver_of_rights": null,
+    "termination_for_cause": null,
+    "auto_renewal": null
+  }
+}

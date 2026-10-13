@@ -128,3 +128,41 @@ def test_duplicate_clause_suppressed_in_amendment_document():
     dup_findings = [f for f in findings if f.type == "duplicate_clause_number"]
     assert len(dup_findings) == 0
     assert stats["skipped_reason"] == "amendment_or_restated_document"
+
+
+def test_preamble_numbered_party_list_no_duplicate_clause_finding():
+    """Regression test: preamble numbered list colliding with operative Clause 1 is not flagged."""
+    doc_text = """MUTUAL NON-DISCLOSURE AGREEMENT
+Between:
+1. Alpha Corp, (the "Disclosing Party"); and
+2. Beta Inc, (the "Receiving Party").
+
+WHEREAS the parties desire to discuss a potential relationship;
+NOW, THEREFORE, the parties agree:
+
+1. Confidential Information.
+The Receiving Party shall maintain confidentiality of all proprietary information.
+
+2. Non-Disclosure.
+Information shall not be disclosed to third parties.
+
+3. Term.
+This Agreement shall expire in two years.
+
+4. Return of Materials.
+All materials shall be returned upon request.
+
+5. Governing Law.
+Governing law shall be the laws of New York.
+"""
+    from clauseguard.parsing.clauses import segment_clauses
+    from clauseguard.schemas.parsed import PageModel, ParsedDocument
+    page = PageModel(page_no=1, width=612.0, height=792.0, text=doc_text, char_count=len(doc_text), spans=[])
+    clauses = segment_clauses([page])
+    doc = ParsedDocument(page_count=1, pages=[page], clauses=clauses)
+    index = build_text_index(doc)
+    settings = ConsistencySettings()
+    findings, _ = detect_clause_numbering(doc, index, settings)
+
+    dup_findings = [f for f in findings if f.type == "duplicate_clause_number"]
+    assert len(dup_findings) == 0

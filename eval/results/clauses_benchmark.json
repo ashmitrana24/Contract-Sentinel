@@ -1,0 +1,772 @@
+{
+  "split_name": "test_corrected_look3",
+  "note": "Look 3 on corrected character-offset ground truth. Look 1 and Look 2 used inflated token-overlap labels and are void.",
+  "num_samples": 2788,
+  "macro_precision": 0.493,
+  "macro_recall": 0.4923,
+  "macro_f1": 0.4788,
+  "micro_precision": 0.6489,
+  "micro_recall": 0.6359,
+  "micro_f1": 0.6423,
+  "total_tp": 669,
+  "total_fp": 362,
+  "total_fn": 383,
+  "labels": {
+    "governing_law": {
+      "tp": 77,
+      "fp": 3,
+      "fn": 12,
+      "tn": 2696,
+      "precision": 0.9625,
+      "recall": 0.8652,
+      "f1": 0.9112,
+      "support": 89,
+      "precision_ci_95": [
+        0.8955,
+        0.9872
+      ],
+      "recall_ci_95": [
+        0.779,
+        0.9212
+      ],
+      "shipped_method": "model",
+      "threshold": 0.85,
+      "unreliable_estimate": false
+    },
+    "renewal_term": {
+      "tp": 26,
+      "fp": 15,
+      "fn": 7,
+      "tn": 2740,
+      "precision": 0.6341,
+      "recall": 0.7879,
+      "f1": 0.7027,
+      "support": 33,
+      "precision_ci_95": [
+        0.4812,
+        0.7641
+      ],
+      "recall_ci_95": [
+        0.6225,
+        0.8932
+      ],
+      "shipped_method": "model",
+      "threshold": 0.75,
+      "unreliable_estimate": false
+    },
+    "notice_period_to_terminate_renewal": {
+      "tp": 18,
+      "fp": 7,
+      "fn": 4,
+      "tn": 2759,
+      "precision": 0.72,
+      "recall": 0.8182,
+      "f1": 0.766,
+      "support": 22,
+      "precision_ci_95": [
+        0.5242,
+        0.8572
+      ],
+      "recall_ci_95": [
+        0.6148,
+        0.9269
+      ],
+      "shipped_method": "model",
+      "threshold": 0.7,
+      "unreliable_estimate": false
+    },
+    "most_favored_nation": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 7,
+      "tn": 2781,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 7,
+      "precision_ci_95": [
+        0.0,
+        0.0
+      ],
+      "recall_ci_95": [
+        0.0,
+        0.3543
+      ],
+      "shipped_method": "rules",
+      "threshold": 0.3,
+      "unreliable_estimate": true
+    },
+    "non_compete": {
+      "tp": 10,
+      "fp": 11,
+      "fn": 16,
+      "tn": 2751,
+      "precision": 0.4762,
+      "recall": 0.3846,
+      "f1": 0.4255,
+      "support": 26,
+      "precision_ci_95": [
+        0.2834,
+        0.6763
+      ],
+      "recall_ci_95": [
+        0.2243,
+        0.5747
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.8,
+      "unreliable_estimate": false
+    },
+    "exclusivity": {
+      "tp": 27,
+      "fp": 31,
+      "fn": 27,
+      "tn": 2703,
+      "precision": 0.4655,
+      "recall": 0.5,
+      "f1": 0.4821,
+      "support": 54,
+      "precision_ci_95": [
+        0.3433,
+        0.592
+      ],
+      "recall_ci_95": [
+        0.3711,
+        0.6289
+      ],
+      "shipped_method": "model",
+      "threshold": 0.8,
+      "unreliable_estimate": false
+    },
+    "no_solicit_of_customers": {
+      "tp": 1,
+      "fp": 1,
+      "fn": 5,
+      "tn": 2781,
+      "precision": 0.5,
+      "recall": 0.1667,
+      "f1": 0.25,
+      "support": 6,
+      "precision_ci_95": [
+        0.0945,
+        0.9055
+      ],
+      "recall_ci_95": [
+        0.0301,
+        0.5635
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.75,
+      "unreliable_estimate": true
+    },
+    "competitive_restriction_exception": {
+      "tp": 4,
+      "fp": 5,
+      "fn": 10,
+      "tn": 2769,
+      "precision": 0.4444,
+      "recall": 0.2857,
+      "f1": 0.3478,
+      "support": 14,
+      "precision_ci_95": [
+        0.1888,
+        0.7333
+      ],
+      "recall_ci_95": [
+        0.1172,
+        0.5465
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.7,
+      "unreliable_estimate": false
+    },
+    "no_solicit_of_employees": {
+      "tp": 6,
+      "fp": 1,
+      "fn": 2,
+      "tn": 2779,
+      "precision": 0.8571,
+      "recall": 0.75,
+      "f1": 0.8,
+      "support": 8,
+      "precision_ci_95": [
+        0.4869,
+        0.9743
+      ],
+      "recall_ci_95": [
+        0.4093,
+        0.9285
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.75,
+      "unreliable_estimate": true
+    },
+    "non_disparagement": {
+      "tp": 2,
+      "fp": 6,
+      "fn": 5,
+      "tn": 2775,
+      "precision": 0.25,
+      "recall": 0.2857,
+      "f1": 0.2667,
+      "support": 7,
+      "precision_ci_95": [
+        0.0715,
+        0.5907
+      ],
+      "recall_ci_95": [
+        0.0822,
+        0.6411
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.45,
+      "unreliable_estimate": true
+    },
+    "termination_for_convenience": {
+      "tp": 22,
+      "fp": 19,
+      "fn": 22,
+      "tn": 2725,
+      "precision": 0.5366,
+      "recall": 0.5,
+      "f1": 0.5176,
+      "support": 44,
+      "precision_ci_95": [
+        0.3875,
+        0.6794
+      ],
+      "recall_ci_95": [
+        0.3583,
+        0.6417
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.8,
+      "unreliable_estimate": false
+    },
+    "rofr_rofo_rofn": {
+      "tp": 9,
+      "fp": 21,
+      "fn": 6,
+      "tn": 2752,
+      "precision": 0.3,
+      "recall": 0.6,
+      "f1": 0.4,
+      "support": 15,
+      "precision_ci_95": [
+        0.1666,
+        0.4788
+      ],
+      "recall_ci_95": [
+        0.3575,
+        0.8018
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.65,
+      "unreliable_estimate": false
+    },
+    "change_of_control": {
+      "tp": 15,
+      "fp": 20,
+      "fn": 8,
+      "tn": 2745,
+      "precision": 0.4286,
+      "recall": 0.6522,
+      "f1": 0.5172,
+      "support": 23,
+      "precision_ci_95": [
+        0.2798,
+        0.5914
+      ],
+      "recall_ci_95": [
+        0.4489,
+        0.8119
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.9,
+      "unreliable_estimate": false
+    },
+    "anti_assignment": {
+      "tp": 72,
+      "fp": 11,
+      "fn": 14,
+      "tn": 2691,
+      "precision": 0.8675,
+      "recall": 0.8372,
+      "f1": 0.8521,
+      "support": 86,
+      "precision_ci_95": [
+        0.7781,
+        0.9244
+      ],
+      "recall_ci_95": [
+        0.7451,
+        0.9005
+      ],
+      "shipped_method": "model",
+      "threshold": 0.75,
+      "unreliable_estimate": false
+    },
+    "revenue_profit_sharing": {
+      "tp": 26,
+      "fp": 18,
+      "fn": 15,
+      "tn": 2729,
+      "precision": 0.5909,
+      "recall": 0.6341,
+      "f1": 0.6118,
+      "support": 41,
+      "precision_ci_95": [
+        0.4441,
+        0.7231
+      ],
+      "recall_ci_95": [
+        0.4812,
+        0.7641
+      ],
+      "shipped_method": "model",
+      "threshold": 0.8,
+      "unreliable_estimate": false
+    },
+    "price_restrictions": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 4,
+      "tn": 2784,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 4,
+      "precision_ci_95": [
+        0.0,
+        0.0
+      ],
+      "recall_ci_95": [
+        0.0,
+        0.4899
+      ],
+      "shipped_method": "rules",
+      "threshold": 0.3,
+      "unreliable_estimate": true
+    },
+    "minimum_commitment": {
+      "tp": 38,
+      "fp": 38,
+      "fn": 23,
+      "tn": 2689,
+      "precision": 0.5,
+      "recall": 0.623,
+      "f1": 0.5547,
+      "support": 61,
+      "precision_ci_95": [
+        0.3903,
+        0.6097
+      ],
+      "recall_ci_95": [
+        0.4975,
+        0.7339
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.8,
+      "unreliable_estimate": false
+    },
+    "volume_restriction": {
+      "tp": 0,
+      "fp": 3,
+      "fn": 22,
+      "tn": 2763,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 22,
+      "precision_ci_95": [
+        0.0,
+        0.5615
+      ],
+      "recall_ci_95": [
+        0.0,
+        0.1487
+      ],
+      "shipped_method": "rules",
+      "threshold": 0.75,
+      "unreliable_estimate": false
+    },
+    "ip_ownership_assignment": {
+      "tp": 14,
+      "fp": 4,
+      "fn": 12,
+      "tn": 2758,
+      "precision": 0.7778,
+      "recall": 0.5385,
+      "f1": 0.6364,
+      "support": 26,
+      "precision_ci_95": [
+        0.5479,
+        0.91
+      ],
+      "recall_ci_95": [
+        0.3546,
+        0.7124
+      ],
+      "shipped_method": "model",
+      "threshold": 0.85,
+      "unreliable_estimate": false
+    },
+    "joint_ip_ownership": {
+      "tp": 4,
+      "fp": 10,
+      "fn": 5,
+      "tn": 2769,
+      "precision": 0.2857,
+      "recall": 0.4444,
+      "f1": 0.3478,
+      "support": 9,
+      "precision_ci_95": [
+        0.1172,
+        0.5465
+      ],
+      "recall_ci_95": [
+        0.1888,
+        0.7333
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.65,
+      "unreliable_estimate": true
+    },
+    "license_grant": {
+      "tp": 59,
+      "fp": 6,
+      "fn": 24,
+      "tn": 2699,
+      "precision": 0.9077,
+      "recall": 0.7108,
+      "f1": 0.7973,
+      "support": 83,
+      "precision_ci_95": [
+        0.8129,
+        0.957
+      ],
+      "recall_ci_95": [
+        0.6057,
+        0.7973
+      ],
+      "shipped_method": "model",
+      "threshold": 0.85,
+      "unreliable_estimate": false
+    },
+    "non_transferable_license": {
+      "tp": 26,
+      "fp": 17,
+      "fn": 14,
+      "tn": 2731,
+      "precision": 0.6047,
+      "recall": 0.65,
+      "f1": 0.6265,
+      "support": 40,
+      "precision_ci_95": [
+        0.4558,
+        0.7363
+      ],
+      "recall_ci_95": [
+        0.4951,
+        0.7787
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.65,
+      "unreliable_estimate": false
+    },
+    "affiliate_license_licensor": {
+      "tp": 0,
+      "fp": 6,
+      "fn": 5,
+      "tn": 2777,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 5,
+      "precision_ci_95": [
+        0.0,
+        0.3903
+      ],
+      "recall_ci_95": [
+        0.0,
+        0.4345
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.9,
+      "unreliable_estimate": true
+    },
+    "affiliate_license_licensee": {
+      "tp": 9,
+      "fp": 5,
+      "fn": 8,
+      "tn": 2766,
+      "precision": 0.6429,
+      "recall": 0.5294,
+      "f1": 0.5806,
+      "support": 17,
+      "precision_ci_95": [
+        0.3876,
+        0.8366
+      ],
+      "recall_ci_95": [
+        0.3096,
+        0.7383
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.75,
+      "unreliable_estimate": false
+    },
+    "unlimited_all_you_can_eat_license": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 3,
+      "tn": 2785,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 3,
+      "precision_ci_95": [
+        0.0,
+        0.0
+      ],
+      "recall_ci_95": [
+        0.0,
+        0.5615
+      ],
+      "shipped_method": "rules",
+      "threshold": 0.3,
+      "unreliable_estimate": true
+    },
+    "irrevocable_or_perpetual_license": {
+      "tp": 8,
+      "fp": 5,
+      "fn": 5,
+      "tn": 2770,
+      "precision": 0.6154,
+      "recall": 0.6154,
+      "f1": 0.6154,
+      "support": 13,
+      "precision_ci_95": [
+        0.3552,
+        0.8229
+      ],
+      "recall_ci_95": [
+        0.3552,
+        0.8229
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.85,
+      "unreliable_estimate": false
+    },
+    "source_code_escrow": {
+      "tp": 0,
+      "fp": 2,
+      "fn": 3,
+      "tn": 2783,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 3,
+      "precision_ci_95": [
+        0.0,
+        0.6576
+      ],
+      "recall_ci_95": [
+        0.0,
+        0.5615
+      ],
+      "shipped_method": "rules",
+      "threshold": 0.3,
+      "unreliable_estimate": true
+    },
+    "post_termination_services": {
+      "tp": 14,
+      "fp": 4,
+      "fn": 32,
+      "tn": 2738,
+      "precision": 0.7778,
+      "recall": 0.3043,
+      "f1": 0.4375,
+      "support": 46,
+      "precision_ci_95": [
+        0.5479,
+        0.91
+      ],
+      "recall_ci_95": [
+        0.1908,
+        0.4481
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.9,
+      "unreliable_estimate": false
+    },
+    "audit_rights": {
+      "tp": 48,
+      "fp": 19,
+      "fn": 9,
+      "tn": 2712,
+      "precision": 0.7164,
+      "recall": 0.8421,
+      "f1": 0.7742,
+      "support": 57,
+      "precision_ci_95": [
+        0.5991,
+        0.8103
+      ],
+      "recall_ci_95": [
+        0.7264,
+        0.9146
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.75,
+      "unreliable_estimate": false
+    },
+    "uncapped_liability": {
+      "tp": 15,
+      "fp": 7,
+      "fn": 9,
+      "tn": 2757,
+      "precision": 0.6818,
+      "recall": 0.625,
+      "f1": 0.6522,
+      "support": 24,
+      "precision_ci_95": [
+        0.4732,
+        0.8364
+      ],
+      "recall_ci_95": [
+        0.4271,
+        0.7884
+      ],
+      "shipped_method": "model",
+      "threshold": 0.9,
+      "unreliable_estimate": false
+    },
+    "cap_on_liability": {
+      "tp": 54,
+      "fp": 13,
+      "fn": 12,
+      "tn": 2709,
+      "precision": 0.806,
+      "recall": 0.8182,
+      "f1": 0.812,
+      "support": 66,
+      "precision_ci_95": [
+        0.6958,
+        0.8829
+      ],
+      "recall_ci_95": [
+        0.7085,
+        0.8928
+      ],
+      "shipped_method": "model",
+      "threshold": 0.75,
+      "unreliable_estimate": false
+    },
+    "liquidated_damages": {
+      "tp": 7,
+      "fp": 6,
+      "fn": 6,
+      "tn": 2769,
+      "precision": 0.5385,
+      "recall": 0.5385,
+      "f1": 0.5385,
+      "support": 13,
+      "precision_ci_95": [
+        0.2914,
+        0.7679
+      ],
+      "recall_ci_95": [
+        0.2914,
+        0.7679
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.8,
+      "unreliable_estimate": false
+    },
+    "warranty_duration": {
+      "tp": 13,
+      "fp": 11,
+      "fn": 6,
+      "tn": 2758,
+      "precision": 0.5417,
+      "recall": 0.6842,
+      "f1": 0.6047,
+      "support": 19,
+      "precision_ci_95": [
+        0.3507,
+        0.7211
+      ],
+      "recall_ci_95": [
+        0.4601,
+        0.8464
+      ],
+      "shipped_method": "hybrid",
+      "threshold": 0.8,
+      "unreliable_estimate": false
+    },
+    "insurance": {
+      "tp": 35,
+      "fp": 16,
+      "fn": 7,
+      "tn": 2730,
+      "precision": 0.6863,
+      "recall": 0.8333,
+      "f1": 0.7527,
+      "support": 42,
+      "precision_ci_95": [
+        0.5497,
+        0.7967
+      ],
+      "recall_ci_95": [
+        0.694,
+        0.9168
+      ],
+      "shipped_method": "model",
+      "threshold": 0.7,
+      "unreliable_estimate": false
+    },
+    "covenant_not_to_sue": {
+      "tp": 8,
+      "fp": 8,
+      "fn": 12,
+      "tn": 2760,
+      "precision": 0.5,
+      "recall": 0.4,
+      "f1": 0.4444,
+      "support": 20,
+      "precision_ci_95": [
+        0.28,
+        0.72
+      ],
+      "recall_ci_95": [
+        0.2188,
+        0.6134
+      ],
+      "shipped_method": "model",
+      "threshold": 0.8,
+      "unreliable_estimate": false
+    },
+    "third_party_beneficiary": {
+      "tp": 2,
+      "fp": 13,
+      "fn": 2,
+      "tn": 2771,
+      "precision": 0.1333,
+      "recall": 0.5,
+      "f1": 0.2105,
+      "support": 4,
+      "precision_ci_95": [
+        0.0374,
+        0.3788
+      ],
+      "recall_ci_95": [
+        0.15,
+        0.85
+      ],
+      "shipped_method": "rules",
+      "threshold": 0.45,
+      "unreliable_estimate": true
+    }
+  }
+}
