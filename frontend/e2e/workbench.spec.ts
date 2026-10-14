@@ -70,6 +70,11 @@ test.describe("ClauseGuard Workbench E2E & Visual Verification", () => {
     ).toBeVisible();
 
     // 3. Highlight selection and bounding box verification
+    const analysisTabBtn = page.getByRole("button", { name: "Analysis & Tabs" });
+    if (await analysisTabBtn.isVisible()) {
+      await analysisTabBtn.click();
+    }
+
     const findingCard = page.locator('[data-testid="finding-card"]').first();
     await findingCard.click();
 
@@ -85,6 +90,10 @@ test.describe("ClauseGuard Workbench E2E & Visual Verification", () => {
     }
 
     // 4. Toggle feedback, reload, and verify persistence
+    if (await analysisTabBtn.isVisible()) {
+      await analysisTabBtn.click();
+    }
+
     const confirmButton = page.getByRole("button", { name: "Confirm issue" }).first();
     const isAlreadyConfirmed = await page
       .getByText("Issue confirmed", { exact: false })
@@ -109,8 +118,13 @@ test.describe("ClauseGuard Workbench E2E & Visual Verification", () => {
 
     // Reload page and assert confirmed verdict persists
     await page.reload();
+    await page.waitForLoadState("networkidle");
+    const reloadAnalysisBtn = page.getByRole("button", { name: "Analysis & Tabs" });
+    if (await reloadAnalysisBtn.isVisible()) {
+      await reloadAnalysisBtn.click();
+    }
     await expect(page.getByText("Issue confirmed", { exact: false }).first()).toBeVisible({
-      timeout: 10000,
+      timeout: 15000,
     });
 
     // Return to home

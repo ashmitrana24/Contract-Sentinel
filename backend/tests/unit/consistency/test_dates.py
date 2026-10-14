@@ -156,3 +156,20 @@ def test_different_events_with_different_dates_not_flagged():
     index = build_text_index(doc)
     findings, _stats = detect_dates(index, ConsistencySettings())
     assert len(findings) == 0
+
+
+def test_retroactive_effective_date_earlier_than_signing_not_flagged():
+    """Regression test: an effective date earlier than signing date is normal (retroactive) and not a conflict."""
+    text = (
+        "This Agreement is entered into on October 15, 2026, effective as of October 1, 2026. "
+        "The Agreement terminates on October 12, 2026."
+    )
+    doc = _make_doc(text)
+    index = build_text_index(doc)
+    findings, stats = detect_dates(index, ConsistencySettings())
+
+    # Effective date (Oct 1) is operative start; termination (Oct 12) is after effective date.
+    # Retroactive start before signing date is not an order conflict.
+    assert len(findings) == 0
+    assert stats["date_order_conflicts"] == 0
+

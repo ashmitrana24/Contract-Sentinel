@@ -15,6 +15,7 @@ from __future__ import annotations
 import re
 from decimal import Decimal
 
+from clauseguard.consistency.dates import parse_date
 from clauseguard.consistency.models import (
     CONSISTENCY_MODULE,
     MAX_EVIDENCE_CHARS,
@@ -72,15 +73,14 @@ def detect_pairs(
         "pairs_unparseable": 0,
     }
 
-    try:
-        from clauseguard.consistency.dates import parse_date
-    except ImportError:
-        parse_date = None
-
     for segment in text_index.segments:
+        if "(" not in segment.text:
+            continue
         sentences = split_sentences(segment.text)
 
         for sentence in sentences:
+            if "(" not in sentence:
+                continue
             # Find parenthetical groups in sentence
             for m in _PAREN_RE.finditer(sentence):
                 inside_raw = m.group(1).strip()

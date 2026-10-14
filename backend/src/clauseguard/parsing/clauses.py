@@ -350,6 +350,12 @@ def _split_embedded_headings(text: str) -> list[str]:
         t,
         flags=re.IGNORECASE,
     )
+    # Break after period/paren/quote before standalone numbered section heading (e.g. "...herein. 7. Termination")
+    t = re.sub(
+        r'([.;!?)"\u201d\u2019])\s+(?=\d{1,3}\.\s+[A-Z])',
+        r"\1\n",
+        t,
+    )
     return [ln for ln in t.split("\n") if ln.strip()]
 
 
@@ -460,7 +466,13 @@ def segment_clauses(pages: list[PageModel]) -> list[ClauseModel]:
 
         # Check if this line is an operative transition / recitals marker
         # e.g. "NOW, THEREFORE, the parties agree:", "IT IS HEREBY AGREED"
-        if re.search(r"\b(?:NOW,?\s+THEREFORE|IT\s+IS\s+(?:HEREBY\s+)?AGREED)\b", stripped, re.IGNORECASE):
+        # Only active near the start of the document (page 1 or 2, line < 80)
+        # to clear preamble lists (e.g. numbered parties/recitals) without wiping body clauses.
+        if (
+            ln.page_no <= 2
+            and i < 80
+            and re.match(r"^\s*(?:NOW,?\s+THEREFORE|IT\s+IS\s+(?:HEREBY\s+)?AGREED)\b", stripped, re.IGNORECASE)
+        ):
             if drafts or current is not None:
                 if current is not None:
                     drafts.append(current)

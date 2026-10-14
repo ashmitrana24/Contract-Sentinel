@@ -75,6 +75,11 @@ class TextIndex:
         return False
 
 
+_KV_LINE_RE = re.compile(r"^[A-Z][A-Za-z\s]{1,30}:\s*")
+_SENT_SPLIT_RE = re.compile(r"([.!?]+(?:\s+|$))")
+_ABBR_SUFFIX_RE = re.compile(r"\b([A-Za-z]+)\.?\s*$")
+
+
 def split_sentences(text: str) -> list[str]:
     """Split text into sentences while respecting common legal abbreviations."""
     if not text:
@@ -86,7 +91,7 @@ def split_sentences(text: str) -> list[str]:
     curr_lines: list[str] = []
 
     for line in raw_lines:
-        is_kv = bool(re.match(r"^[A-Z][A-Za-z\s]{1,30}:\s*", line))
+        is_kv = bool(_KV_LINE_RE.match(line))
         if is_kv:
             if curr_lines:
                 paragraphs.append(" ".join(curr_lines))
@@ -101,7 +106,7 @@ def split_sentences(text: str) -> list[str]:
 
     for para in paragraphs:
         # Candidate split on [.!?] followed by whitespace
-        chunks = re.split(r"([.!?]+(?:\s+|$))", para)
+        chunks = _SENT_SPLIT_RE.split(para)
         curr = ""
         for i in range(0, len(chunks), 2):
             chunk = chunks[i]
@@ -109,7 +114,7 @@ def split_sentences(text: str) -> list[str]:
             curr += chunk + delim
 
             # Check if chunk ends in known abbreviation
-            m = re.search(r"\b([A-Za-z]+)\.?\s*$", chunk)
+            m = _ABBR_SUFFIX_RE.search(chunk)
             if m and m.group(1).lower() in _ABBREVIATIONS:
                 continue
 

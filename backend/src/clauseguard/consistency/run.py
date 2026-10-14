@@ -77,6 +77,24 @@ def compute_segmentation_reliability(
         is_unreliable = True
         reasons.append("Document is unsegmented fallback")
 
+    # Numbering and structural noise detection:
+    num_stats = numbering_stats or {}
+    gaps_count = num_stats.get("gaps_detected", 0)
+    duplicates_count = num_stats.get("duplicates_detected", 0)
+    gaps_correlated = num_stats.get("gaps_correlated_with_xref", 0)
+
+    if gaps_count >= 2:
+        is_unreliable = True
+        reasons.append(f"Multiple clause numbering gaps ({gaps_count})")
+    elif gaps_correlated >= 1 and dangling_count >= 2:
+        is_unreliable = True
+        reasons.append(
+            f"Numbering gap correlated with dangling reference in presence of multiple dangling references ({dangling_count})"
+        )
+    elif duplicates_count >= 1 and clause_count > 20:
+        is_unreliable = True
+        reasons.append(f"Duplicate clause numbering in multi-part document ({duplicates_count})")
+
     # Reliability score on 0.0 .. 1.0 scale
     score = 1.0
     if is_unreliable:
@@ -221,18 +239,21 @@ def analyze(
     # and trim evidence to MAX_EVIDENCE_CHARS (300).
     # -----------------------------------------------------------------------
     findings_by_type: dict[str, list[Finding]] = defaultdict(list)
-    for f in raw_findings:
-        # Trim evidence
-        if f.evidence and len(f.evidence) > MAX_EVIDENCE_CHARS:
-            f = f.model_copy(update={"evidence": f.evidence[:MAX_EVIDENCE_CHARS]})
-        findings_by_type[f.type].append(f)
-
-    capped_findings: list[Finding] = []
+    counts_by_type: dict[str, int] = defaultdict(int)
     cap = settings.max_findings_per_type
 
+    for f in raw_findings:
+        counts_by_type[f.type] += 1
+        if len(findings_by_type[f.type]) < cap:
+            if f.evidence and len(f.evidence) > MAX_EVIDENCE_CHARS:
+                f = f.model_copy(update={"evidence": f.evidence[:MAX_EVIDENCE_CHARS]})
+            findings_by_type[f.type].append(f)
+
+    capped_findings: list[Finding] = []
     for ftype, items in findings_by_type.items():
-        if len(items) > cap:
-            capped_findings.extend(items[:cap])
+        capped_findings.extend(items)
+        total_count = counts_by_type[ftype]
+        if total_count > cap:
             _sev_order = [Severity.LOW, Severity.MEDIUM, Severity.HIGH, Severity.CRITICAL]
             summary_sev = max((it.severity for it in items), key=lambda s: _sev_order.index(s))
             summary_finding = Finding(
@@ -241,16 +262,14 @@ def analyze(
                 severity=summary_sev,
                 page=None,
                 clause_ref=None,
-                evidence=f"Total {len(items)} occurrences of '{ftype}' exceeded maximum cap of {cap}.",
+                evidence=f"Total {total_count} occurrences of '{ftype}' exceeded maximum cap of {cap}.",
                 explanation=(
                     f"More than {cap} instances of '{ftype}' were detected in this document. "
                     f"Showing the first {cap} occurrences."
                 ),
-                details={"total_count": len(items), "cap": cap, "rule_id": "CAP_EXCEEDED"},
+                details={"total_count": total_count, "cap": cap, "rule_id": "CAP_EXCEEDED"},
             )
             capped_findings.append(summary_finding)
-        else:
-            capped_findings.extend(items)
 
     total_duration_ms = (time.perf_counter() - start_time) * 1000.0
 

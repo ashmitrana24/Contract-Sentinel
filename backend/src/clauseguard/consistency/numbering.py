@@ -61,9 +61,17 @@ def detect_clause_numbering(
     top_level_clauses: dict[int, list[Any]] = {}
 
     for clause in doc.clauses:
+        if clause.kind == "preamble":
+            continue
         cid_str = str(clause.clause_id).strip()
         if cid_str.isdigit():
             num = int(cid_str)
+            if num == 0:
+                continue
+        elif "." in cid_str and cid_str.split(".")[0].isdigit():
+            num = int(cid_str.split(".")[0])
+            if num == 0:
+                continue
         else:
             continue
 

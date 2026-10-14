@@ -166,3 +166,69 @@ Governing law shall be the laws of New York.
 
     dup_findings = [f for f in findings if f.type == "duplicate_clause_number"]
     assert len(dup_findings) == 0
+
+
+def test_numbering_gap_preamble_clause_0_not_treated_as_gap_1():
+    """Regression test: document starting at clause 2 does not report gap for clause 1 between 0 and 2."""
+    doc_text = """AGREEMENT
+This Agreement is entered into as of January 1, 2020.
+
+2. Definitions.
+The following definitions shall apply throughout this Agreement.
+
+3. Scope of Services.
+Provider shall provide the agreed services to Client.
+
+4. Compensation.
+Client shall pay Provider the agreed fees.
+
+5. Term and Termination.
+This Agreement shall continue until terminated by either party.
+
+6. Governing Law.
+This Agreement shall be governed by Delaware law.
+"""
+    from clauseguard.parsing.clauses import segment_clauses
+    from clauseguard.schemas.parsed import PageModel, ParsedDocument
+    page = PageModel(page_no=1, width=612.0, height=792.0, text=doc_text, char_count=len(doc_text), spans=[])
+    clauses = segment_clauses([page])
+    doc = ParsedDocument(page_count=1, pages=[page], clauses=clauses)
+    index = build_text_index(doc)
+    settings = ConsistencySettings()
+    findings, _ = detect_clause_numbering(doc, index, settings, dangling_targets=["1"])
+
+    # No false gap between synthetic preamble (0) and 2
+    gap_findings = [f for f in findings if f.type == "numbering_gap"]
+    assert not any("between clause 0 and clause 2" in f.evidence for f in gap_findings)
+
+
+def test_numbering_gap_dotted_section_counts_toward_top_level():
+    """Regression test: dotted section like 20.1 prevents false gap for 20 between 19 and 21."""
+    doc_text = """CONTRACT
+18. Representations.
+Each party represents it has authority to enter into this contract.
+
+19. Indemnification.
+Each party indemnifies the other.
+
+20.1. Confidentiality Obligations.
+The receiving party shall keep all information confidential.
+
+21. Notices.
+All notices must be in writing.
+
+22. Governing Law.
+Governing law shall be New York.
+"""
+    from clauseguard.parsing.clauses import segment_clauses
+    from clauseguard.schemas.parsed import PageModel, ParsedDocument
+    page = PageModel(page_no=1, width=612.0, height=792.0, text=doc_text, char_count=len(doc_text), spans=[])
+    clauses = segment_clauses([page])
+    doc = ParsedDocument(page_count=1, pages=[page], clauses=clauses)
+    index = build_text_index(doc)
+    settings = ConsistencySettings()
+    findings, _ = detect_clause_numbering(doc, index, settings, dangling_targets=["20"])
+
+    gap_findings = [f for f in findings if f.type == "numbering_gap"]
+    assert not any("Missing clause 20" in f.evidence for f in gap_findings)
+

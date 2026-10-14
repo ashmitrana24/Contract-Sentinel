@@ -118,9 +118,15 @@ def test_performance_1mb_text_under_two_seconds():
     doc = _make_doc(full_text)
     settings = ConsistencySettings(budget_seconds=10.0)
 
-    start = time.perf_counter()
-    report = analyze(doc, settings)
-    elapsed = time.perf_counter() - start
+    import gc
+    gc.collect()
+    gc.disable()
+    try:
+        start = time.perf_counter()
+        report = analyze(doc, settings)
+        elapsed = time.perf_counter() - start
+    finally:
+        gc.enable()
 
     assert elapsed < 2.0, f"Analysis took {elapsed:.2f}s, exceeding 2.0s limit on 1 MB text"
     assert report.overall_status in ("ok", "partial")

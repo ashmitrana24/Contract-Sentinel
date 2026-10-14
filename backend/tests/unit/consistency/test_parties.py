@@ -221,3 +221,46 @@ def test_affiliate_and_consistent_entity_not_flagged():
     # CPM Medical Consultants LLC appears consistently and is identified as affiliate, so not flagged
     assert not any(f.type == "party_name_variant" for f in findings)
 
+
+def test_party_affiliate_modifier_reported_low_possible_affiliate():
+    """Regression test: party variant extending by affiliate word (e.g. Services, Consultants) is LOW."""
+    intro = 'This Agreement is between Oriental Financial Group Inc. ("Group") and Apex Tech Ltd. ("Client").'
+    doc = _make_doc(
+        intro,
+        [
+            ("1", "Deliverables shall be provided by Oriental Financial Services Corp to Client."),
+            ("2", "Apex Tech Ltd shall pay fees in accordance with the schedule."),
+            ("3", "Governing law shall be New York."),
+        ],
+    )
+    index = build_text_index(doc)
+    settings = ConsistencySettings()
+    findings, _stats = detect_party_inconsistencies(doc, index, settings)
+
+    variants = [f for f in findings if f.type == "party_name_variant"]
+    assert len(variants) == 1
+    assert variants[0].severity == Severity.LOW
+    assert "possible affiliate" in variants[0].explanation
+
+
+def test_near_identical_spelling_stays_medium():
+    """Regression test: near-identical spelling (similarity >= 0.92, e.g. one-letter typo) stays MEDIUM."""
+    intro = 'This Agreement is between Alpha Corporation ("Alpha") and Beta Systems Ltd. ("Beta").'
+    doc = _make_doc(
+        intro,
+        [
+            ("1", "Alpba Corporation shall provide software to Beta Systems Ltd."),
+            ("2", "Beta Systems Ltd shall pay fees promptly."),
+            ("3", "Term shall be one year."),
+        ],
+    )
+    index = build_text_index(doc)
+    settings = ConsistencySettings()
+    findings, _stats = detect_party_inconsistencies(doc, index, settings)
+
+    variants = [f for f in findings if f.type == "party_name_variant"]
+    assert len(variants) == 1
+    assert variants[0].severity == Severity.MEDIUM
+    assert "near-identical spelling" in variants[0].explanation
+
+

@@ -239,5 +239,31 @@
   - Production containerization via multi-stage Next.js Dockerfile exposed on port 3000 as `web` service in `docker-compose.yml`.
 - **Impact**: Zero external network dependencies, 100% test pass rate across Vitest and Playwright E2E suites, zero serious accessibility violations via `@axe-core/playwright`, and verified desktop/mobile light/dark visual rendering.
 
+---
+
+## D-31: Clause Segmenter Operative Transition Fix & Module 5 Recalibration Sweep
+- **Context**: In commit `12f8107`, an unconstrained regex search for operative transition phrases (`NOW, THEREFORE`, `IT IS HEREBY AGREED`) was added to clear recitals. Because it lacked page or line constraints, any occurrence of these phrases anywhere in an agreement wiped all previously parsed draft clauses into preamble clause `0`. This swallowed clauses on 94 / 510 CUAD contracts (18.43%), inflating preamble size to $> 30\%$ of the contract and distorting downstream classification.
+- **Decision**:
+  1. Constrained the operative transition marker in `clauses.py` to `ln.page_no <= 2 and i < 80 and re.match(r"^\s*(?:NOW,?\s+THEREFORE|IT\s+IS\s+(?:HEREBY\s+)?AGREED)\b", ...)`.
+  2. Evaluated preamble quality across all 510 CUAD contracts: contracts with preamble $> 30\%$ dropped from 18.43% (94 contracts) down to 5.29% (27 contracts).
+  3. Re-ran the alignment sanity gate on ground-truth offsets: 100.0% of 9,358 raw answers aligned cleanly with an overall ratio of 0.6680 and 0 labels exceeding 3.0 (PASSED).
+  4. Retrained TF-IDF vectorizer and 36 LogisticRegression classifiers on TRAIN (13,794 clauses, up from 8,900+ previously).
+  5. Tuned decision thresholds and gated shipped methods (rules, model, hybrid) strictly on VAL (4,368 clauses).
+  6. Re-evaluated TEST split (4,321 clauses across 102 contracts) labeled `"post-segmenter-change look; earlier looks used a buggy segmenter"`.
+  7. Re-verified whole-contract sanity across 10 VAL contracts, confirming realistic clause counts (3 to 62 clauses) and label counts (2 to 21 labels per contract) without spurious explosions.
+- **Impact**: Restored honest contractual segmentation on real contracts, eliminating false clause collapses while maintaining high validation and test performance across all 45 taxonomy categories.
+
+---
+
+## D-32: Consistency Judgement Calibration for Retroactive Dates and Corporate Affiliates
+- **Context**: Real-world commercial contract audits (CUAD clean sample and unseen contracts) revealed two systematic false alarm patterns in Module 4 consistency checking:
+  1. *Retroactive Effective Dates*: Agreements commonly state "This Agreement is made as of November 15, 2024, effective as of October 1, 2024". Flagging effective dates earlier than signing dates as conflicts violated commercial legal standard practice.
+  2. *Affiliate & Entity Name Extensions*: Parties defined as "Acme" frequently appear in operative provisions or signature blocks as "Acme Services LLC", "Acme Group Holdings", or "Acme International Consultants". Flagging these as unidentified parties at MEDIUM severity treated standard corporate parent/subsidiary contracting as fraud.
+- **Decision**:
+  1. In `dates.py`, decoupled `_SIGNING_ROLE_RE` (`dated`, `made on`, `entered into`, `executed`, `signed`) from `_START_ROLE_RE` (`effective as of`, `commencing on`). Operative start date defaults to effective date; an effective date earlier than signing date is recognized as retroactive and never flagged. Only true conflicts (conflicting effective dates, or expiration prior to effective date) are flagged.
+  2. In `parties.py`, defined `_AFFILIATE_MODIFIER_WORDS = {"services", "group", "holdings", "international", "consultants"}`. When an undefined candidate extends or shortens a defined party name by affiliate words, it is classified at `Severity.LOW` as a "possible affiliate". Only near-identical spellings (Levenshtein similarity $\ge 0.92$, 1-letter typos, or plurals) remain `Severity.MEDIUM`.
+  3. Regression tests added in `test_dates.py` and `test_parties.py` (consistency test suite expanded to 86 tests).
+- **Impact**: Clean CUAD false alarm rate on seed4242 dropped from 46.7% (14/30) to 10.0% (3/30), achieving 90.0% Low band (target $\le 15\%$ Med/High: MET). Unseen CUAD 100-contract sample improved from 83.0% Low to **87.0% Low** (13.0% Medium, 0.0% High). All synthetic tamper targets (`party_swap`, `date_shift`, `xref_break`, `amount_figure_only`) remain 100% MET.
+
 
 

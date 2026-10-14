@@ -27,6 +27,7 @@ from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any
 
 from rapidfuzz import fuzz
+from rapidfuzz.distance import Levenshtein
 
 from clauseguard.consistency.models import (
     CONSISTENCY_MODULE,
@@ -100,6 +101,10 @@ _ENTITY_SUFFIX_BODY_REGEX = re.compile(
     r"(?:Pvt\.?\s*Ltd\.?|Private\s+Limited|Private\s+Ltd\.?|Ltd\.?|Limited|"
     r"Inc\.?|Incorporated|Corp\.?|Corporation|L\.?L\.?C\.?|L\.?L\.?P\.?))\b",
     re.UNICODE,
+)
+
+_SUFFIX_QUICK_CHECK = (
+    "ltd", "inc", "corp", "llc", "llp", "limited", "private", "pvt", "plc", "l.l.c", "l.l.p",
 )
 
 # Common words to filter out if accidentally matched as entity names
@@ -436,7 +441,9 @@ def detect_party_inconsistencies(
         # -------------------------------------------------------------------
         # 1. Entity-suffix matches (e.g., "Acme Technology Pvt Ltd", "SINA International Ltd.")
         # -------------------------------------------------------------------
-        for m in _ENTITY_SUFFIX_BODY_REGEX.finditer(seg_text):
+        seg_lower = seg_text.lower()
+        entity_matches = _ENTITY_SUFFIX_BODY_REGEX.finditer(seg_text) if any(s in seg_lower for s in _SUFFIX_QUICK_CHECK) else ()
+        for m in entity_matches:
             cand_raw = m.group(1).strip()
             # If cand_raw contains a sentence boundary period followed by space (e.g. "Party. Horizon Systems Corp"),
             # trim to the portion following the sentence boundary, preserving abbreviations like Pvt., Co., Inc.
@@ -536,12 +543,50 @@ def detect_party_inconsistencies(
                     if is_affiliate:
                         continue
 
-                    is_notice_or_sig = bool(
-                        re.search(r"\b(?:notice|notices|communication|addresses)\b", str(segment.clause_ref or "").lower())
-                        or re.search(r"\b(?:If to\s+|Attention:\s*|Attn:\s*|Facsimile:|Telecopy:|notices\s+shall\s+be\s+sent|notice\s+to\s*:)\b", seg_text, re.I)
-                        or re.search(r"\b(?:IN WITNESS WHEREOF|executed as of|By:\s*|Title:\s*|Name:\s*|Authorized Signatory|Duly Authorized)\b", seg_text, re.I)
+                    _AFFILIATE_MODIFIER_WORDS = {
+                        "services", "service", "group", "holdings", "holding",
+                        "international", "consultants", "consultant",
+                    }
+
+                    cand_toks = set(cand_base.lower().split())
+                    party_toks = set(best_party.base_name.lower().split())
+                    diff_toks = cand_toks ^ party_toks
+                    diff_clean = {t.strip(".,;:()") for t in diff_toks}
+
+                    is_affiliate_word_diff = bool(
+                        diff_clean and diff_clean.issubset(_AFFILIATE_MODIFIER_WORDS)
                     )
-                    prt1_sev = Severity.LOW if (is_notice_or_sig and len(cand_raw.split()) == 1) else Severity.MEDIUM
+
+                    # Near-identical spellings (similarity >= 0.92, e.g. plural or one-letter differences)
+                    # without corporate affiliate modifiers stay MEDIUM.
+                    cb = cand_base.lower()
+                    pb = best_party.base_name.lower()
+                    base_ratio = fuzz.ratio(cb, pb) / 100.0
+                    full_ratio = fuzz.ratio(cand_norm.lower(), best_party.normalized_name.lower()) / 100.0
+                    sim_ratio = max(base_ratio, full_ratio)
+
+                    is_one_letter = Levenshtein.distance(cb, pb) <= 1 or Levenshtein.distance(cand_norm.lower(), best_party.normalized_name.lower()) <= 1
+                    is_plural = (
+                        (cb.endswith("s") and cb[:-1] == pb)
+                        or (pb.endswith("s") and pb[:-1] == cb)
+                        or (cb.endswith("es") and cb[:-2] == pb)
+                        or (pb.endswith("es") and pb[:-2] == cb)
+                        or (cb.endswith("ies") and cb[:-3] + "y" == pb)
+                        or (pb.endswith("ies") and pb[:-3] + "y" == cb)
+                    )
+
+                    if not is_affiliate_word_diff and (sim_ratio >= 0.92 or is_one_letter or is_plural):
+                        prt1_sev = Severity.MEDIUM
+                        expl = (
+                            f"Party name variant '{cand_raw}' differs slightly from defined party "
+                            f"'{best_party.raw_name}' (near-identical spelling; similarity {best_score:.1f}%)."
+                        )
+                    else:
+                        prt1_sev = Severity.LOW
+                        expl = (
+                            f"Party name variant '{cand_raw}' extends or shortens defined party "
+                            f"'{best_party.raw_name}' (possible affiliate; similarity {best_score:.1f}%)."
+                        )
 
                     v_key = f"{best_party.raw_name}::{cand_raw}::{segment.clause_ref}"
                     if v_key not in seen_variant_keys:
@@ -559,10 +604,7 @@ def detect_party_inconsistencies(
                                 page=segment.page,
                                 clause_ref=segment.clause_ref,
                                 evidence=f"Found '{cand_raw}' (expected party '{best_party.raw_name}') in: {snippet}",
-                                explanation=(
-                                    f"Party name variant '{cand_raw}' differs from defined party "
-                                    f"'{best_party.raw_name}' (similarity {best_score:.1f}%)."
-                                ),
+                                explanation=expl,
                                 details={
                                     "rule_id": "PRT001",
                                     "party_name": best_party.raw_name,

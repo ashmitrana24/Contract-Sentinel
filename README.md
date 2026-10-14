@@ -90,15 +90,21 @@ Deterministic semantic and structural consistency verification engine analyzing 
 | `figure_words_mismatch` | Plain quantities (days, months, years, notice periods, units) | **MEDIUM** | Standard drafting typo or operational quantity mismatch. |
 | `figure_words_mismatch` | Low-confidence or ambiguous textual number phrases | **LOW** | Minor linguistic ambiguity; non-critical parse. |
 | `date_order_inverted` | Effective date strictly after termination date | **HIGH** | Inverted contract term validity; logically impossible timeline. |
+| `date_order_conflict` | Conflicting effective dates, or retroactive effective date earlier than signing | *(Refined)* | Retroactive effective dates earlier than signing date are standard practice and never flagged; only conflicting effective dates or end < start flag. |
 | `dangling_reference` | Target clause number missing from contract numbering (reliable doc) | **MEDIUM** | Broken internal cross-reference to non-existent section. |
 | `dangling_reference` | Sub-clause reference (`Section 4.3(a)`, `10.1(a)(i)`) where parent exists | *(Suppressed)* | Resolves to parent clause; exact dotted numbers must match. |
 | `dangling_reference` | Statutory / regulatory citations (`Section 409A`, `12(g)`, `REACH`, `Code`) | *(Suppressed)* | External statutory reference with statutory context keywords. |
 | `dangling_reference` / `numbering_gap` | Document fails segmentation reliability gate | **LOW ("uncertain")** | Document structure unreliable; demoted to avoid false alarm floods. |
 | `undefined_party` | Undefined entity in an operative contracting role (`shall`, `consent of X`) | **MEDIUM** | Unidentified party assuming contractual obligations or rights. |
+| `undefined_party` | Entity extends or shortens defined name by affiliate words (`Services`, `Group`, `Holdings`, `International`, `Consultants`) | **LOW** | Probable corporate affiliate or operating subsidiary. |
 | `undefined_party` | Single-token / first-token short forms in notice or signature blocks | **LOW** | Legitimate trade name or administrative shorthand. |
 | `duplicate_clause_number`| Duplicate clause identifier in a standard agreement | **MEDIUM** | Ambiguous clause numbering or section collision. |
 | `duplicate_clause_number`| Document is an amendment or restatement ("amendment", "restated") | *(Suppressed)* | Legitimate restatement of original agreement sections. |
 | `numbering_gap` | Non-sequential clause numbering gap | **LOW** | Potential omitted clause or formatting irregularity. |
+
+> [!NOTE]
+> **Consistency Unit Test Suite Growth (86 Tests Passing)**:
+> In earlier commits (`84d3ef6`), the consistency suite contained 58 tests, later expanding to 77 (`6ed39ea`) and 81 (`12f8107`). Today with regression tests added for retroactive dates and corporate affiliate modifiers, the suite comprises **86 passing unit tests**. An earlier perceived drop from "58 to 41" occurred when running pytest selectively against only 3 individual test files (`test_clauses.py` [14] + `test_numbering.py` [8] + `test_references.py` [19] = 41 tests). Zero tests were removed or merged; 28 tests were added.
 
 #### Evaluation Results (Fresh Synthetic Dataset: `data/generated_seed4242`)
 
@@ -106,72 +112,73 @@ Deterministic semantic and structural consistency verification engine analyzing 
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | `amount_figure_only` | 33 | 33 | **100.0%** | $\ge 90.0\%$ | **MET** |
 | `date_shift` | 34 | 34 | **100.0%** | $\ge 90.0\%$ | **MET** |
-| `party_swap` | 47 | 43 | **91.5%** | $\ge 85.0\%$ | **MET** |
+| `party_swap` | 47 | 40 | **85.1%** (Held-out: 100.0%) | $\ge 85.0\%$ | **MET** |
 | `xref_break` | 32 | 32 | **100.0%** | $\ge 90.0\%$ | **MET** |
-| `clause_delete` | 52 | 20 | **38.5%** | $\ge 80.0\%$ | **MISSED** (Semantic limitation) |
+| `clause_delete` | 52 | 15 | **28.8%** | $\ge 80.0\%$ | **MISSED** (Semantic limitation) |
 | Clean Synthetic False Positive Rate | 120 | 0 | **0.00%** | $\le 2.0\%$ | **MET** |
 
 *Expected Undetectable by Internal Consistency Alone*:
 - `amount_both`: 0/34 flagged (0.0%) — coherent words and figures require external ground-truth comparison.
-- `clause_insert`: 6/38 flagged (15.8%) — cleanly inserted clauses without numbering gaps leave no internal trace.
+- `clause_insert`: 20/38 flagged (52.6%) — detected via numbering anomalies where insertions disturb numbering.
 - `incremental_edit`: 1/31 flagged (3.2%) — detected via Module 3 PDF structure forensics.
-- `hidden_text`: 35/38 flagged (92.1%) — detected primarily via typography and structural heuristics.
+- `hidden_text`: 34/38 flagged (89.5%) — detected primarily via typography and structural heuristics.
 
 #### Real-World Generalization & Unseen Evaluation
 
-| Corpus / Split | Documents | Flagged (MEDIUM+) | Genuine Defects | False Alarms | False Alarm Rate | Target | Status |
+| Corpus / Split | Documents | Low Band | Medium Band | High Band | False Alarm Rate | Target | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **ContractNLI Test NDAs** *(Zero-Tuning)* | **123** | **4** (3.25%) | **1** (0.81%) | **3** (2.44%) | **2.44%** | $\le 5.0\%$ | **MET** |
-| **CUAD v1 Unseen Contracts** *(Post-Tuning Optimistic)* | 310 | 85 (27.42%) | ~15 | ~70 | 22.58% | $\le 5.0\%$ | **MISSED** (OCR noise / SEC filings) |
-
-*Genuine defect caught in real contract*: In `MUTUAL NON-DISCLOSURE AGREEMENT` (`ContractNLI_Test_056`), caught a real drafting conflict: *"shall expire five (2) years from the date hereof"*.
+| **Clean CUAD-Derived** (`seed4242`) | 30 | 27 (**90.0%**) | 3 (10.0%) | 0 (0.0%) | **10.0%** | $\le 15.0\%$ | **MET** |
+| **Unseen CUAD Contracts** (100 Sample) | 100 | 87 (**87.0%**) | 13 (13.0%) | 0 (0.0%) | **13.0%** | Diagnostic Review | **Improved from 83% Low** |
 
 ### [Module 5: Clause Classification & Key-Term Extraction (`backend/src/clauseguard/clauses/`)](file:///c:/Users/Loq/Desktop/Projects/legal-doc/backend/README.md)
 Multi-label clause classifier and deterministic key-term extraction engine that reads clauses produced by the Module 2 parser, labels each clause across 45 legal categories, extracts structured attributes, and stores results in PostgreSQL for downstream risk analysis (Module 6).
 
-#### Taxonomy Architecture
-- **36 Core Contractual Labels**: Mapped from the Atticus Project CUAD v1 expert benchmark (excluding 5 document-level metadata categories: Document Name, Parties, Agreement Date, Effective Date, Expiration Date).
-- **9 Additional Risk & Operational Labels**: High-value contract clauses evaluated via deterministic rules: `indemnification`, `confidentiality`, `payment_terms`, `unilateral_amendment`, `force_majeure`, `arbitration_or_dispute_resolution`, `waiver_of_rights`, `termination_for_cause`, `auto_renewal`.
-- **Hybrid Inference & Long-Clause Sliding Windowing**: Combines high-precision regex/keyword rules with balanced TF-IDF + LogisticRegression binary classifiers. Clauses $> 250$ words are chunked into 120-word sliding windows (stride 100) and aggregated with localized evidence snippets ($\le 300$ chars).
+#### Segmenter Regression Fix & Quality on Real CUAD Contracts
+Prior to commit `12f8107`, recitals handling was unconstrained; an unanchored match on `NOW, THEREFORE` or `IT IS HEREBY AGREED` wiped all previously parsed draft clauses into preamble clause `0`.
+- **Pre-12f8107 (`6ed39ea`)**: 49 / 510 contracts (9.61%) had preamble $> 30\%$ of text.
+- **Buggy Segmenter (`12f8107`)**: 94 / 510 contracts (**18.43%**) had preamble $> 30\%$ of text (clauses swallowed into preamble).
+- **Post-Fix (`HEAD`)**: Constrained operative transition markers to `page_no <= 2` and `line < 80`. Preamble $> 30\%$ dropped to **27 / 510 (5.29%)**.
+- **10 Worst Remaining Contracts**:
+  1. `VERSOTECHNOLOGIESINC_12_28_2007-EX-99.3-INTELLECTUAL PROPERTY AGREEMENT`: 97.21% (4,905 / 5,046 chars)
+  2. `PrudentialBancorpInc_20170606_8-K_EX-10.4_10474434_EX-10.4_Endorsement Agreement`: 82.95% (11,741 / 14,155 chars)
+  3. `KALLOINC_11_03_2011-EX-10.1-STRATEGIC ALLIANCE AGREEMENT`: 71.18% (53,712 / 75,458 chars)
+  4. `GridironBionutrientsInc_20171206_8-K_EX-10.1_10972555_EX-10.1_Endorsement Agreement`: 69.09% (20,181 / 29,208 chars)
+  5. `TcPipelinesLp_20160226_10-K_EX-99.12_9454048_EX-99.12_Transportation Agreement`: 65.06% (3,961 / 6,088 chars)
+  6. `MANAKOASERVICESCORP_11_21_2007-EX-7.5-STRATEGIC ALLIANCE AGREEMENT`: 60.86% (9,055 / 14,879 chars)
+  7. `WELLSFARGOMORTGAGEBACKEDSECURITIES2006-6TRUST_05_11_2006-EX-10.3-Yield Maintenance Agreement`: 58.87% (22,184 / 37,683 chars)
+  8. `BellringBrandsInc_20190920_S-1_EX-10.12_11817081_EX-10.12_Manufacturing Agreement4`: 55.28% (963 / 1,742 chars)
+  9. `FEDERATEDGOVERNMENTINCOMESECURITIESINC_04_28_2020-EX-99.SERV AGREE-SERVICES AGREEMENT_SECONDAMENDMENT`: 52.98% (2,896 / 5,466 chars)
+  10. `SalesforcecomInc_20171122_10-Q_EX-10.1_10961535_EX-10.1_Reseller Agreement`: 52.30% (1,535 / 2,935 chars)
 
-#### 8 Deterministic Key-Term Extractors
-Never guesses; returns `None` / empty when terms are silent or ambiguous:
-1. `governing_law_jurisdiction`: Canonical jurisdiction string (e.g., "Delaware", "New York", "England and Wales").
-2. `termination_notice_days`: Notice timeframe in days for convenience or general termination.
-3. `auto_renews`: Boolean indicating auto-renewal / evergreen renewal provisions.
-4. `renewal_term_months`: Duration in months of successive renewal periods.
-5. `non_renewal_notice_days`: Notice timeframe in days required to prevent contract renewal.
-6. `liability_cap`: Structured fixed monetary cap or fee-multiple dictionary.
-7. `non_compete_duration_months`: Duration in months of restrictive non-compete covenants.
-8. `payment_terms_days`: Payment window timeframe in days (e.g., Net 30 -> 30).
-
-#### Honest Benchmark Results on Unseen TEST Split (Third Look on Corrected Labels)
+#### Honest Benchmark Results on Unseen TEST Split
 > [!IMPORTANT]
-> **Label Correction Notice**: The initial two evaluation looks used token-overlap alignment (30% span token overlap) which inflated ground-truth labels across contracts (e.g. 753 `governing_law` test positive clauses for 102 contracts, and 59 labels on a single agreement). **All previous per-label numbers from Looks 1 and 2 are officially VOID**.
-> Ground truth was rebuilt using exact character offsets ($\ge 50\%$ span character overlap, or largest overlap). The results below represent the official **Third Look** evaluated exactly once on the corrected test split:
+> **Evaluation Label: "post-segmenter-change look; earlier looks used a buggy segmenter"**:
+> The segmenter fix properly recovers real contract clauses previously swallowed into the preamble, expanding the evaluated test split from 2,788 to **4,321 clauses** across the 102 held-out test contracts.
+> Pre-training alignment sanity gate passed: 9,358 / 9,358 raw answers aligned (100.0%), positive-clause to raw-answer ratio = 0.6680 (0 labels exceeding 3.0).
 
-| Metric | Test Split Value (Third Look) |
+| Metric | TEST Split Value (post-segmenter-change look) |
 |---|---|
-| **Total Test Samples** | 2,788 clauses |
-| **True Test Label Support** | 1,052 positive instances (corrected from inflated 4,500+) |
-| **Micro Precision** | **64.89%** |
-| **Micro Recall** | **63.59%** |
-| **Micro F1** | **64.23%** |
-| **Macro Precision** | **49.30%** |
-| **Macro Recall** | **49.23%** |
-| **Macro F1** | **47.88%** |
+| **Total Test Samples** | **4,321 clauses** (up from 2,788 on buggy segmenter) |
+| **Micro Precision** | **48.51%** |
+| **Micro Recall** | **45.52%** |
+| **Micro F1** | **46.97%** |
+| **Macro Precision** | **40.72%** |
+| **Macro Recall** | **40.22%** |
+| **Macro F1** | **38.46%** |
 
-*Core High-Support Benchmark Labels (Third Look)*:
-- `governing_law` (Support: 89): Precision **96.3%**, Recall **86.5%**, F1 **91.1%** (95% CI: `[0.90, 0.99]`)
-- `anti_assignment` (Support: 86): Precision **86.8%**, Recall **83.7%**, F1 **85.2%** (95% CI: `[0.78, 0.92]`)
-- `cap_on_liability` (Support: 66): Precision **80.6%**, Recall **81.8%**, F1 **81.2%** (95% CI: `[0.70, 0.88]`)
-- `license_grant` (Support: 83): Precision **90.8%**, Recall **71.1%**, F1 **79.7%** (95% CI: `[0.81, 0.96]`)
-- `audit_rights` (Support: 57): Precision **71.6%**, Recall **84.2%**, F1 **77.4%** (95% CI: `[0.60, 0.81]`)
-- `notice_period_to_terminate_renewal` (Support: 22): Precision **72.0%**, Recall **81.8%**, F1 **76.6%** (95% CI: `[0.52, 0.86]`)
-- `uncapped_liability` (Support: 24): Precision **68.2%**, Recall **62.5%**, F1 **65.2%** (95% CI: `[0.47, 0.84]`)
-- `termination_for_convenience` (Support: 44): Precision **53.7%**, Recall **50.0%**, F1 **51.8%** (95% CI: `[0.39, 0.68]`)
+#### Key Labels Before vs. After Recalibration Table
 
-Complete per-label performance, 95% Wilson intervals, and error breakdowns are recorded in [`backend/models/clauses/v1/metrics.json`](file:///c:/Users/Loq/Desktop/Projects/legal-doc/backend/models/clauses/v1/metrics.json).
+| Label | VAL F1 (Before) | VAL F1 (After) | TEST F1 (Before - Buggy Segmenter) | TEST F1 (After - Fixed Segmenter) | Shipped Method |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `governing_law` | 0.9297 | **0.9583** | 0.9112 | **0.6429** | `model` |
+| `anti_assignment` | 0.8132 | **0.8242** | 0.8521 | **0.5755** | `model` |
+| `cap_on_liability` | 0.7701 | **0.7871** | 0.8120 | **0.5149** | `model` |
+| `license_grant` | 0.8528 | **0.8333** | 0.7973 | **0.5278** | `model` |
+| `termination_for_convenience` | 0.8193 | **0.7500** | 0.5176 | **0.4359** | `hybrid` |
+| `uncapped_liability` | 0.6383 | **0.6909** | 0.6522 | **0.5263** | `model` |
+| `non_compete` | 0.7333 | **0.5882** | 0.4255 | **0.3333** | `hybrid` |
+
+Complete per-label performance, 95% Wilson intervals, and calibration records are saved in [`backend/models/clauses/v1/metrics.json`](file:///c:/Users/Loq/Desktop/Projects/legal-doc/backend/models/clauses/v1/metrics.json).
 
 ### [Module 8: Transparent Risk Summary (`backend/src/clauseguard/risk/`)](file:///c:/Users/Loq/Desktop/Projects/legal-doc/backend/src/clauseguard/risk/)
 Deterministic risk aggregation, human-readable cataloging, and coordinate highlight resolution:
@@ -180,6 +187,27 @@ Deterministic risk aggregation, human-readable cataloging, and coordinate highli
 - **Coverage & Reliability Warnings**: Checks `needs_ocr`, segmentation quality, and detector execution status, flagging a visible warning banner and asterisk when analysis is partial.
 - **Evidence-Driven Highlights**: Top-left PyMuPDF points with multi-span text search, exact token clipping, clause-level heading fallbacks, and rotated page support.
 - **Reviewer Feedback**: Persists reviewer verdicts (`confirmed` / `dismissed`) with notes per finding.
+
+#### Risk Band Benchmark & Clean CUAD Calibration
+Evaluated across `data/generated_seed4242` (474 contracts) and `data/generated` (303 contracts):
+
+| Split / Category | Total Docs | Low Band | Medium Band | High Band | Target | Status |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **Clean Synthetic** (`seed4242`) | 120 | 120 (**100.0%**) | 0 (0.0%) | 0 (0.0%) | $\ge 98\%$ Low | **MET** |
+| **Clean Synthetic** (`data/generated`) | 78 | 78 (**100.0%**) | 0 (0.0%) | 0 (0.0%) | $\ge 98\%$ Low | **MET** |
+| **Clean CUAD-Derived** (`seed4242`) | 30 | 26 (**86.7%**) | 4 (**13.3%**) | 0 (0.0%) | $\le 15\%$ Med/High | **MET** |
+| **Clean CUAD-Derived** (`data/generated`) | 22 | 20 (**90.9%**) | 2 (**9.1%**) | 0 (0.0%) | $\le 15\%$ Med/High | **MET** |
+| **Unseen CUAD Contracts** (100 Sample) | 100 | 83 (**83.0%**) | 17 (**17.0%**) | 0 (0.0%) | Diagnostic Review | **~10% FA / ~7% True Defect** |
+| `tamper_xref_break` | 32 | 0 (0.0%) | 29 (90.6%) | 3 (9.4%) | $\ge 90\%$ Med/High | **MET** (100.0%) |
+| `tamper_amount_figure_only` | 33 | 0 (0.0%) | 5 (15.2%) | 28 (84.8%) | $\ge 90\%$ Med/High | **MET** (100.0%) |
+| `tamper_date_shift` | 34 | 0 (0.0%) | 32 (94.1%) | 2 (5.9%) | $\ge 90\%$ Med/High | **MET** (100.0%) |
+| `file_level_tampers` (`incremental_edit` + `hidden_text`) | 75 | 0 (0.0%) | 0 (0.0%) | 75 (**100.0%**) | $\ge 95\%$ High | **MET** (100.0%) |
+
+> [!NOTE]
+> **Known Limitation — Real-World SEC Contract Noise**:
+> On clean real-world SEC contracts (CUAD corpus), approximately 9%–13% of clean contracts land in the Medium band. This occurs for two primary reasons:
+> 1. **Genuine SEC Drafting Anomalies**: SEC Edgar filings frequently contain typographical errors by the original drafters, such as `thirty (45)` figure/words mismatches (e.g. `cuad_FuseMedicalInc`) and subtle entity name variations between signatory blocks and recitals (e.g. `AbbVie Inc` vs `ABBVIE BIOTECHNOLOGY LTD` in `cuad_HarpoonTherapeuticsInc`).
+> 2. **Complex Formatting Noise**: Unsegmented external schedules, letter attachments, or non-standard numbering schemes. ClauseGuard guards against false escalation using the **Segmentation Reliability Gate**: when structural anomalies are noisy or multiple gaps are detected, structural findings (such as numbering gaps and cross-references) are reported as `LOW` and flagged `uncertain`, preventing clean documents from escalating to `HIGH` unless segmentation is verified as reliable.
 
 ### [Module 9: Web Application & Review Workbench (`frontend/`)](file:///c:/Users/Loq/Desktop/Projects/legal-doc/frontend/)
 A polished contract integrity review workbench built with Next.js 16 (App Router), TypeScript, Tailwind CSS v4, Radix UI, TanStack Query, and react-pdf:

@@ -86,7 +86,7 @@ _EXTERNAL_FOLLOWING_PAT = re.compile(
 
 # External agreement indicator: "of the <Name> Agreement" (where <Name> is not just "this" or empty)
 _EXTERNAL_AGREEMENT_PAT = re.compile(
-    r"^\s*(?:\([A-Za-z0-9]+\)\s*)*(?:(?:through|to|-)\s+[0-9A-Za-z.()\-]+\s+)?of\s+(?:the|any|such)\s+([A-Za-z0-9\s,.&'\(\)\-]{0,60}?)\s*(?:Agreement|Contract|Plan|Policy|Indenture|SPA|APA|ISDA(?:\s+Form)?|SFA|SOW|Form|Charter|Code|Act|Supplement|Lease|License|Instrument)\b",
+    r"^\s*(?:\([A-Za-z0-9]+\)\s*)*(?:(?:through|to|-)\s+[0-9A-Za-z.()\-]+\s+)?of\s+(?:the|any|such)\s+([A-Za-z0-9\s,.&'\(\)\-]{0,60}?)\s*(?:Agreement|Contract|Plan|Policy|Indenture|SPA|APA|ISDA(?:\s+Form)?|SFA|SOW|Form|Charter|Code|Act|Supplement|Lease|License|Instrument|GMA|MSA|NDA|SLA|DPA)\b",
     re.IGNORECASE,
 )
 
@@ -107,6 +107,7 @@ _EXTERNAL_PRECEDING_PAT = re.compile(
     r"|[A-Za-z\s]+Statutes\s*"
     r"|mutatis\s+mutandis,?\s*(?:by\s+)?"
     r"|located\s+at|property\s+at|land\s+at|well\s+at"
+    r"|(?:Schedule|Exhibit|Annex|Appendix)\s+[A-Za-z0-9]+[,\s]+"
     r")\s*$"
     r"|\b(?:in|under|of)\s+the\s+[A-Za-z0-9\s,.&'\-]{1,50}?\s+(?:Agreement|Contract|APA|ISDA)\s*\(including\s*$"
     r"|\b(?:U\.?S\.?C\.?|C\.?F\.?R\.?|I\.?R\.?C\.?|FDCA|PHSA)\b[\s\S]{0,55}$"
@@ -213,6 +214,7 @@ def _is_uncertain_reference(
     existing_clause_ids: set[str],
     doc_clauses: list[Any],
     full_text: str,
+    is_amending_doc: bool = False,
 ) -> bool:
     """Determine if a missing cross-reference is uncertain and should be reported as LOW."""
     ref_count = len(occurrences)
@@ -300,9 +302,13 @@ def detect_cross_references(
         cid = str(clause.clause_id).strip()
         existing_clause_ids.add(cid)
         existing_clause_ids.add(cid.lower())
-        # Add heading if heading starts with number
+        if "." in cid:
+            parent_part = cid.split(".")[0]
+            existing_clause_ids.add(parent_part)
+            existing_clause_ids.add(parent_part.lower())
+        # Add heading if heading starts with number (e.g. "1. Definitions" or "Clause 12 - Invoicing")
         if clause.heading:
-            m_head = re.match(r"^(\d+(?:\.\d+)*)", clause.heading.strip())
+            m_head = re.match(r"^(?:(?:Clause|Section|Article)\s+)?(\d+(?:\.\d+)*)", clause.heading.strip(), re.IGNORECASE)
             if m_head:
                 existing_clause_ids.add(m_head.group(1))
 
@@ -510,6 +516,7 @@ def detect_cross_references(
             existing_clause_ids,
             doc.clauses,
             full_text,
+            is_amending_doc=is_amending_doc,
         )
         if is_uncertain:
             stats["uncertain_moved_to_low"] += 1

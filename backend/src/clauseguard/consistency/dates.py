@@ -116,9 +116,13 @@ _DATE_PATTERNS = [
     re.compile(r"\b(?P<num>\d{1,2}[/.-]\d{1,2}[/.-]\d{2,4})\b"),
 ]
 
-# Role detection regexes
 _START_ROLE_RE = re.compile(
-    r"\b(?:effective\s+(?:as\s+of|on|from)|commencing\s+(?:on|from)|dated\s+(?:as\s+of|on)?|made\s+on|entered\s+into\s+(?:on|as\s+of)|Effective\s+Date\b)",
+    r"\b(?:effective\s+(?:as\s+of|on|from)|commencing\s+(?:on|from)|Effective\s+Date\b)",
+    re.IGNORECASE,
+)
+
+_SIGNING_ROLE_RE = re.compile(
+    r"\b(?:dated\s+(?:as\s+of|on)?|made\s+(?:on|as\s+of)?|entered\s+into\s+(?:on|as\s+of)?|executed\s+(?:on|as\s+of)?|signed\s+(?:on|as\s+of)?)\b",
     re.IGNORECASE,
 )
 
@@ -273,9 +277,13 @@ def extract_date_occurrences(
     occurrences: list[DateOccurrence] = []
 
     for seg in text_index.segments:
+        if not re.search(r"\d", seg.text):
+            continue
         sentences = split_sentences(seg.text)
 
         for sent in sentences:
+            if not re.search(r"\d", sent):
+                continue
             # Find all date matches
             found_spans: list[tuple[int, int, str]] = []
 
@@ -287,6 +295,9 @@ def extract_date_occurrences(
                         continue
                     found_spans.append((span[0], span[1], match.group(0)))
 
+            if not found_spans:
+                continue
+
             # Sort spans by position in sentence
             found_spans.sort(key=lambda s: s[0])
 
@@ -297,25 +308,30 @@ def extract_date_occurrences(
                     prev_end = end_idx
                     continue
 
-                # Context window scoped between previous date end and this date start
-                scoped_preceding = sent[prev_end:start_idx]
+                # Context window scoped between previous date end and this date start (up to 120 chars)
+                scoped_preceding = sent[max(prev_end, start_idx - 120) : start_idx]
                 full_window = sent[max(0, start_idx - 40) : min(len(sent), end_idx + 40)]
 
-                # Find closest role phrase in preceding text
                 role = "other"
                 if _EFFECTIVE_DEF_RE.search(scoped_preceding):
                     role = "effective_def"
                 else:
                     m_start = list(_START_ROLE_RE.finditer(scoped_preceding))
                     m_end = list(_END_ROLE_RE.finditer(scoped_preceding))
+                    m_sign = list(_SIGNING_ROLE_RE.finditer(scoped_preceding))
 
                     last_start = m_start[-1].end() if m_start else -1
                     last_end = m_end[-1].end() if m_end else -1
+                    last_sign = m_sign[-1].end() if m_sign else -1
 
-                    if last_end > last_start and last_end != -1:
-                        role = "end"
-                    elif last_start > last_end and last_start != -1:
-                        role = "start"
+                    max_pos = max(last_start, last_end, last_sign)
+                    if max_pos != -1:
+                        if max_pos == last_end:
+                            role = "end"
+                        elif max_pos == last_start:
+                            role = "start"
+                        elif max_pos == last_sign:
+                            role = "signing"
 
                 occurrences.append(
                     DateOccurrence(
@@ -365,7 +381,11 @@ def detect_dates(
     # ---------------------------------------------------------------------------
     # Check (a): date_order_conflict (end date earlier than start date)
     # ---------------------------------------------------------------------------
-    start_dates = [o for o in occurrences if o.role in ("start", "effective_def")]
+    # An effective date earlier than signing/execution date is normal (retroactive)
+    # and must not be reported as a conflict. Effective dates take precedence as operative start.
+    effective_starts = [o for o in occurrences if o.role in ("start", "effective_def")]
+    signing_starts = [o for o in occurrences if o.role == "signing"]
+    start_dates = effective_starts if effective_starts else signing_starts
     end_dates = [o for o in occurrences if o.role == "end"]
 
     for ed in end_dates:

@@ -168,9 +168,13 @@ def test_tampered_pdfs_upload_and_parse(
     client: TestClient,
     test_cfg: Settings,
 ) -> None:
-    """Test that incremental_edit and hidden_text tampered PDFs process cleanly."""
-    dataset_dir = Path("data/generated")
-    if not dataset_dir.exists():
+    candidates = [
+        Path("data/generated"),
+        Path("../data/generated"),
+        Path(__file__).resolve().parent.parent.parent.parent / "data" / "generated",
+    ]
+    dataset_dir = next((c for c in candidates if c.exists()), None)
+    if dataset_dir is None:
         pytest.skip("data/generated not present")
 
     # Find sample incremental_edit and hidden_text PDFs

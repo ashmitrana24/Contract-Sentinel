@@ -1,0 +1,979 @@
+{
+  "band_counts": {
+    "low": 87,
+    "medium": 13,
+    "high": 0
+  },
+  "total": 100,
+  "med_or_high_count": 13,
+  "med_or_high_docs": [
+    {
+      "title": "VIOLINMEMORYINC_12_12_2012-EX-10.14-SPONSORSHIP AGREEMENT",
+      "band": "medium",
+      "score": 8,
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "evidence": "Target '13' referenced in: rdance with the provisions of Section 13(o) of this Agreement (the \"Term\"",
+          "explanation": "Cross-reference to '13' in clause(s) 2 cannot be resolved: no clause with identifier '13' exists in the contract.",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "title": "MidwestEnergyEmissionsCorp_20080604_8-K_EX-10.2_3093976_EX-10.2_Content License Agreement",
+      "band": "medium",
+      "score": 8,
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "low",
+          "evidence": "Target '2A' referenced in: ement is that provided for in paragraph 2A hereof and in no event will C",
+          "explanation": "Uncertain cross-reference: Cross-reference to '2A' in clause(s) 2 cannot be resolved: no clause with identifier '2A' exists in the contract.",
+          "uncertain": true
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "evidence": "Target 'o' referenced in:  operation of any other term, clause o provision and such invalid te",
+          "explanation": "Cross-reference to 'o' in clause(s) 20 cannot be resolved: no clause with identifier 'o' exists in the contract.",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "title": "CybergyHoldingsInc_20140520_10-Q_EX-10.27_8605784_EX-10.27_Affiliate Agreement",
+      "band": "medium",
+      "score": 16,
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "evidence": "Target '18' referenced in: ation provisions contained in paragraph 18 of this Agreement. Company an",
+          "explanation": "Cross-reference to '18' in clause(s) 2.2 cannot be resolved: no clause with identifier '18' exists in the contract.",
+          "uncertain": false
+        },
+        {
+          "type": "duplicate_clause_number",
+          "severity": "medium",
+          "evidence": "Clause 3 appears 2 times: 'Duties of MA.' (page 2), 'Sales Records. MA shall keep accurate records of the sales of the Technology and Maintenance, including Client Registration Cards and shall make these records available for review by a representative of Company within ten (10) business days follow",
+          "explanation": "Duplicate clause number: clause 3 is used multiple times in the document (2 occurrences).",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "title": "DIVERSINETCORP_03_01_2012-EX-4-RESELLER AGREEMENT",
+      "band": "medium",
+      "score": 8,
+      "findings": [
+        {
+          "type": "figure_words_mismatch",
+          "severity": "medium",
+          "evidence": "thirty (60) in snippet: 'roviding thirty (60) days' written notic'",
+          "explanation": "The amount in words (thirty = 30) does not match the amount in figures (60 = 60) in clause 4.",
+          "uncertain": false
+        },
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'Ontario Limited' in:  authorized representatives.    2205925 Ontario Limited  DIVERSINET CORP.\nSignature:___________",
+          "explanation": "Legal entity 'Ontario Limited' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'Ontario Limited' in: d________________________\n\nName 2205925 Ontario Limited\n\nStreet Address 111 Main Street West, S",
+          "explanation": "Legal entity 'Ontario Limited' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'Ontario Limited' in: ersinet Corp. (\"Licensor\")  and 2205925 Ontario Limited (\"Licensee\")  with  effective date of J",
+          "explanation": "Legal entity 'Ontario Limited' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "numbering_gap",
+          "severity": "low",
+          "evidence": "Missing clause 14 between clause 13 and clause 15",
+          "explanation": "Clause numbering gap: clause 14 is missing in the sequence from 1 to 16.",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "title": "SimplicityEsportsGamingCompany_20181130_8-K_EX-10.1_11444071_EX-10.1_Franchise Agreement",
+      "band": "medium",
+      "score": 28,
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "evidence": "Target '3' referenced in:  in Exhibit A), as set out in Section 3 of this Agreement, for the pu",
+          "explanation": "Cross-reference to '3' in clause(s) 0 cannot be resolved: no clause with identifier '3' exists in the contract.",
+          "uncertain": false
+        },
+        {
+          "type": "numbering_gap",
+          "severity": "high",
+          "evidence": "Missing clause 3 between clause 2 and clause 4 (cross-referenced by dangling reference to '3')",
+          "explanation": "Clause numbering gap: clause 3 is missing between clause 2 and clause 4, and a cross-reference specifically points to missing clause 3.",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "title": "GOCALLINC_03_30_2000-EX-10.7-Promotion Agreement",
+      "band": "medium",
+      "score": 8,
+      "findings": [
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'MetroCall Inc' in:              purpose of this promotion, MetroCall Inc. to provide pager and                ai",
+          "explanation": "Legal entity 'MetroCall Inc' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'Motorola, Inc' in:  and use the trademarks, logos, etc. of Motorola, Inc., PageMaster Promotions and such other ",
+          "explanation": "Legal entity 'Motorola, Inc' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'Motorola, Inc' in: l shall also have the duty to indemnify Motorola, Inc. or any affiliated entity from and agai",
+          "explanation": "Legal entity 'Motorola, Inc' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "party_name_variant",
+          "severity": "low",
+          "evidence": "Found 'At PageMaster Corporation' (expected party 'PageMaster Corporation') in: shall have no liability to one another. At PageMaster Corporation's option, an additional agreement(s) ma",
+          "explanation": "Party name variant 'At PageMaster Corporation' extends or shortens defined party 'PageMaster Corporation' (possible affiliate; similarity 90.9%).",
+          "uncertain": false
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "evidence": "Target '6b' referenced in:  consistent with the terms of paragraph 6b of this Agreement.",
+          "explanation": "Cross-reference to '6b' in clause(s) 7 cannot be resolved: no clause with identifier '6b' exists in the contract.",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "title": "WestPharmaceuticalServicesInc_20200116_8-K_EX-10.1_11947529_EX-10.1_Supply Agreement",
+      "band": "medium",
+      "score": 8,
+      "findings": [
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'Exxon Mobil Corporation' in: ations hereunder to any entity of which Exxon Mobil Corporation owns, directly or indirectly, at least ",
+          "explanation": "Legal entity 'Exxon Mobil Corporation' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'Exxon Mobil Corporation' in: onMobil Chemical Company, a division of Exxon Mobil Corporation (\"EMCC\") and/or ExxonMobil Chemical Ser",
+          "explanation": "Legal entity 'Exxon Mobil Corporation' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'ExxonMobil Asia Pacific Pte Ltd' in: il Chemical Asia Pacific, a division of ExxonMobil Asia Pacific Pte Ltd (EMCAP) 1 Harbour Front Place #06-00Har",
+          "explanation": "Legal entity 'ExxonMobil Asia Pacific Pte Ltd' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'Ireland West Pharmaceutical Products Ireland, Ltd' in: Stalberger Str. 21-41 Eschweiler 52249\n\nIreland West Pharmaceutical Products Ireland, Ltd. Carrickpherish Road Waterford, X91 R9V",
+          "explanation": "Legal entity 'Ireland West Pharmaceutical Products Ireland, Ltd' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'India West Pharmaceutical Packaging India Pvt. Ltd' in: arrickpherish Road Waterford, X91 R9V6\n\nIndia West Pharmaceutical Packaging India Pvt. Ltd. 900 Peepul Boulevard-Sector 36-Sri Cit",
+          "explanation": "Legal entity 'India West Pharmaceutical Packaging India Pvt. Ltd' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'Florida, Inc' in: 5-5128\n\nWest Pharmaceutical Services of Florida, Inc. 5111 Park Street North St. Petersburg,",
+          "explanation": "Legal entity 'Florida, Inc' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'Global Pallet Services Limited' in: e loaded onto the carrier for return to Global Pallet Services Limited (GPS) USA, Inc.\n\nBuyer/Buyer Affiliates",
+          "explanation": "Legal entity 'Global Pallet Services Limited' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'USA, Inc' in: to Global Pallet Services Limited (GPS) USA, Inc.\n\nBuyer/Buyer Affiliates must implement",
+          "explanation": "Legal entity 'USA, Inc' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'Global Pallet Services Limited' in: r each Metal Crate not received back at Global Pallet Services Limited (GPS) and where a physical inventory de",
+          "explanation": "Legal entity 'Global Pallet Services Limited' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'Global Pallet Services Limited' in: ition, if any of the charges imposed by Global Pallet Services Limited (GPS) under the agreement between the E",
+          "explanation": "Legal entity 'Global Pallet Services Limited' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "party_name_variant",
+          "severity": "medium",
+          "evidence": "Found 'A West Pharmaceutical Services, Inc' (expected party 'West Pharmaceutical Services, Inc') in: on Circle Jurong, Singapore 629046\n\nU.S.A West Pharmaceutical Services, Inc. 530 Herman O. West Drive Exton, PA 193",
+          "explanation": "Party name variant 'A West Pharmaceutical Services, Inc' differs slightly from defined party 'West Pharmaceutical Services, Inc' (near-identical spelling; similarity 97.0%).",
+          "uncertain": false
+        },
+        {
+          "type": "party_name_variant",
+          "severity": "low",
+          "evidence": "Found 'ExxonMobil Chemical Company West Pharmaceutical Services, Inc' (expected party 'ExxonMobil Chemical Company') in: ing written notice to the other party.\n\nExxonMobil Chemical Company West Pharmaceutical Services, Inc. 22777 Springwoods Village Pkwy 530 W. ",
+          "explanation": "Party name variant 'ExxonMobil Chemical Company West Pharmaceutical Services, Inc' extends or shortens defined party 'ExxonMobil Chemical Company' (possible affiliate; similarity 100.0%).",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "title": "SoupmanInc_20150814_8-K_EX-10.1_9230148_EX-10.1_Franchise Agreement1",
+      "band": "medium",
+      "score": 14,
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "evidence": "Target '687.4' referenced in:  non-waiver provisions of GBL Sections 687.4 and 687.5 be satisfied).\n3",
+          "explanation": "Cross-reference to '687.4' in clause(s) 3 cannot be resolved: no clause with identifier '687.4' exists in the contract.",
+          "uncertain": false
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "evidence": "Target '687.5' referenced in:  non-waiver provisions of GBL Sections 687.4 and 687.5 be satisfied).\n3",
+          "explanation": "Cross-reference to '687.5' in clause(s) 3 cannot be resolved: no clause with identifier '687.5' exists in the contract.",
+          "uncertain": false
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "evidence": "Target 'A' referenced in: s   The recitals set forth in Paragraphs A through C of this Agreement are true an",
+          "explanation": "Cross-reference to 'A' in clause(s) 17.2 cannot be resolved: no clause with identifier 'A' exists in the contract.",
+          "uncertain": false
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "evidence": "Target 'C' referenced in: s   The recitals set forth in Paragraphs A through C of this Agreement are true an",
+          "explanation": "Cross-reference to 'C' in clause(s) 17.2 cannot be resolved: no clause with identifier 'C' exists in the contract.",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "title": "SUCAMPOPHARMACEUTICALS,INC_11_04_2015-EX-10.2-STRATEGIC ALLIANCE AGREEMENT",
+      "band": "medium",
+      "score": 12,
+      "findings": [
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'S&R Technology Holdings, LLC' in: ment with Ryuji Ueno, MD, Sachiko Kuno, S&R Technology Holdings, LLC and S&R Foundation. (c) Withdrawal of t",
+          "explanation": "Legal entity 'S&R Technology Holdings, LLC' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'Sucampo Pharma, LLC' in:  such courier service). If to Acquiror: Sucampo Pharma, LLC. 2-2-16, Sonezakishinchi, Kita-ku, Osak",
+          "explanation": "Legal entity 'Sucampo Pharma, LLC' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'Sucampo Pharmaceuticals, Inc' in: ***\u2026] Email address: [\u2026***\u2026] If to SPI: Sucampo Pharmaceuticals, Inc. 4520 East West Highway Bethesda, MD 20",
+          "explanation": "Legal entity 'Sucampo Pharmaceuticals, Inc' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'Sucampo Pharmaceuticals, Inc' in: ent as of the date first above written. Sucampo Pharmaceuticals, Inc. By: /s/ Peter Greenleaf Name: Peter Gr",
+          "explanation": "Legal entity 'Sucampo Pharmaceuticals, Inc' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'Chief Executive Officer Sucampo Pharma, LLC' in:  Greenleaf Name: Peter Greenleaf Title: Chief Executive Officer Sucampo Pharma, LLC. By: /s/ Misako Nakata Name: Misako Nak",
+          "explanation": "Legal entity 'Chief Executive Officer Sucampo Pharma, LLC' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'Representative Executor R-Tech Ueno, Ltd' in: isako Nakata Name: Misako Nakata Title: Representative Executor R-Tech Ueno, Ltd. By: /s/ Y. Mashima Name: Yukihiko Mash",
+          "explanation": "Legal entity 'Representative Executor R-Tech Ueno, Ltd' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "low",
+          "evidence": "Target '8.10' referenced in: nt 21 Section 8.09 Notices 21 Section 8.10 Language 22 Section 8.11 Disc (and 1 other occurrence(s))",
+          "explanation": "Uncertain cross-reference: Cross-reference to '8.10' in clause(s) 0, 8.09 cannot be resolved: no clause with identifier '8.10' exists in the contract (referenced 2 times).",
+          "uncertain": true
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "evidence": "Target '27' referenced in: and applicable Law, including Articles 27-2 through 27-22 of the FIEL,  (and 1 other occurrence(s))",
+          "explanation": "Cross-reference to '27' in clause(s) 0, 2.02 cannot be resolved: no clause with identifier '27' exists in the contract (referenced 2 times).",
+          "uncertain": false
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "evidence": "Target '24' referenced in: e 24, 2015 in accordance with Article 24, Paragraph 1 of the FIEL, exc",
+          "explanation": "Cross-reference to '24' in clause(s) 0 cannot be resolved: no clause with identifier '24' exists in the contract.",
+          "uncertain": false
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "evidence": "Target '167' referenced in: r Article 166, Paragraph 1 or Article 167, Paragraph 1 of the FIEL; (xi",
+          "explanation": "Cross-reference to '167' in clause(s) 4 cannot be resolved: no clause with identifier '167' exists in the contract.",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "title": "SFGFINANCIALCORP_05_12_2009-EX-10.1-SOFTWARE LICENSE AND MAINTENANCE AGREEMENT",
+      "band": "medium",
+      "score": 22,
+      "findings": [
+        {
+          "type": "figure_words_mismatch",
+          "severity": "medium",
+          "evidence": "Six (6,000,000) in snippet: 'ceipt of Six (6,000,000) Million shares of L'",
+          "explanation": "The amount in words (Six = 6) does not match the amount in figures (6,000,000 = 6000000) in clause 5.",
+          "uncertain": false
+        },
+        {
+          "type": "figure_words_mismatch",
+          "severity": "high",
+          "evidence": "one third (33%) in snippet: 'Licensee one third (33%) of the gross  amoun'",
+          "explanation": "The amount in words (one third = 0.3333333333333333333333333333) does not match the amount in figures (33% = 33) in clause 5.",
+          "uncertain": false
+        },
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'SFG Financial Corporation' in: l: mcaska@caskaco.com\n\nWritten Notices: SFG Financial Corporation\n\n575 Madison Avenue, 8th Floor,\n\nNew Yo",
+          "explanation": "Legal entity 'SFG Financial Corporation' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'FX IB Associates LLC' in: _________________\n\nWritten Notices: 551 FX IB Associates LLC\n\n575 Madison Avenue, 8th Floor,\n\nNew Yo",
+          "explanation": "Legal entity 'FX IB Associates LLC' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'FX IB ASSOCIATES LLC' in: tives.\n\n\n\n\n\n\n\n\n\nSFG FINANCIAL CORP. 551 FX IB ASSOCIATES LLC\n\nBy: /s/ Michael C. Caska By: /s/ Fred ",
+          "explanation": "Legal entity 'FX IB ASSOCIATES LLC' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "low",
+          "evidence": "Target '13.4' referenced in: ge of  Control (as defined in Section 13.4(a)) shall be governed by the pro",
+          "explanation": "[Uncertain - low segmentation reliability]: Uncertain cross-reference: Cross-reference to '13.4' in clause(s) 24 cannot be resolved: no clause with identifier '13.4' exists in the contract.",
+          "uncertain": true
+        },
+        {
+          "type": "numbering_gap",
+          "severity": "low",
+          "evidence": "Missing clause 9 between clause 8 and clause 10",
+          "explanation": "[Uncertain - low segmentation reliability]: Clause numbering gap: clause 9 is missing in the sequence from 2 to 24.",
+          "uncertain": true
+        },
+        {
+          "type": "numbering_gap",
+          "severity": "low",
+          "evidence": "Missing clause 15 between clause 14 and clause 16",
+          "explanation": "[Uncertain - low segmentation reliability]: Clause numbering gap: clause 15 is missing in the sequence from 2 to 24.",
+          "uncertain": true
+        },
+        {
+          "type": "numbering_gap",
+          "severity": "low",
+          "evidence": "Missing clause 16 between clause 15 and clause 17",
+          "explanation": "[Uncertain - low segmentation reliability]: Clause numbering gap: clause 16 is missing in the sequence from 2 to 24.",
+          "uncertain": true
+        },
+        {
+          "type": "numbering_gap",
+          "severity": "low",
+          "evidence": "Missing clause 17 between clause 16 and clause 18",
+          "explanation": "[Uncertain - low segmentation reliability]: Clause numbering gap: clause 17 is missing in the sequence from 2 to 24.",
+          "uncertain": true
+        },
+        {
+          "type": "numbering_gap",
+          "severity": "low",
+          "evidence": "Missing clause 18 between clause 17 and clause 19",
+          "explanation": "[Uncertain - low segmentation reliability]: Clause numbering gap: clause 18 is missing in the sequence from 2 to 24.",
+          "uncertain": true
+        }
+      ]
+    },
+    {
+      "title": "INNOVIVA,INC_08_07_2014-EX-10.1-COLLABORATION AGREEMENT",
+      "band": "medium",
+      "score": 8,
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "evidence": "Target '1.17' referenced in: have the meaning set forth in Section 1.17.   1.27 \"Effective Date\" mean (and 1 other occurrence(s))",
+          "explanation": "Cross-reference to '1.17' in clause(s) 16.1 cannot be resolved: no clause with identifier '1.17' exists in the contract (referenced 2 times).",
+          "uncertain": false
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "low",
+          "evidence": "Target '15.1.1' referenced in: have the meaning set forth in Section 15.1.1.   1.29 \"FDA\" means the Unite",
+          "explanation": "Uncertain cross-reference: Cross-reference to '15.1.1' in clause(s) 16.1 cannot be resolved: no clause with identifier '15.1.1' exists in the contract.",
+          "uncertain": true
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "low",
+          "evidence": "Target '15.2.6' referenced in: have the meaning set forth in Section 15.2.6.   1.42 \"Indemnified Party\" s",
+          "explanation": "Uncertain cross-reference: Cross-reference to '15.2.6' in clause(s) 16.1 cannot be resolved: no clause with identifier '15.2.6' exists in the contract.",
+          "uncertain": true
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "low",
+          "evidence": "Target '6.2.2' referenced in: II Studies\" means, subject to Section 6.2.2, that portion of the Developm",
+          "explanation": "Uncertain cross-reference: Cross-reference to '6.2.2' in clause(s) 16.1 cannot be resolved: no clause with identifier '6.2.2' exists in the contract.",
+          "uncertain": true
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "low",
+          "evidence": "Target '15.1.2' referenced in: have the meaning set forth in Section 15.1.2.   1.80 \"Selectively\" means t",
+          "explanation": "Uncertain cross-reference: Cross-reference to '15.1.2' in clause(s) 16.1 cannot be resolved: no clause with identifier '15.1.2' exists in the contract.",
+          "uncertain": true
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "low",
+          "evidence": "Target '14.4' referenced in: have the meaning set forth in Section 14.4.   1.87 \"Terminated Developme",
+          "explanation": "Uncertain cross-reference: Cross-reference to '14.4' in clause(s) 16.1 cannot be resolved: no clause with identifier '14.4' exists in the contract.",
+          "uncertain": true
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "low",
+          "evidence": "Target '14.3' referenced in: have the meaning set forth in Section 14.3.   1.88 \"Territory\" means wor",
+          "explanation": "Uncertain cross-reference: Cross-reference to '14.3' in clause(s) 16.1 cannot be resolved: no clause with identifier '14.3' exists in the contract.",
+          "uncertain": true
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "low",
+          "evidence": "Target '13.1.4' referenced in: priority period.   Subject to Section 13.1.4, Theravance shall be responsi",
+          "explanation": "Uncertain cross-reference: Cross-reference to '13.1.4' in clause(s) 13.1 cannot be resolved: no clause with identifier '13.1.4' exists in the contract.",
+          "uncertain": true
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "low",
+          "evidence": "Target '15.2.4' referenced in: Affiliates (or in the case of Section 15.2.4, their employees) from:   15.",
+          "explanation": "Uncertain cross-reference: Cross-reference to '15.2.4' in clause(s) 15.1 cannot be resolved: no clause with identifier '15.2.4' exists in the contract.",
+          "uncertain": true
+        }
+      ]
+    },
+    {
+      "title": "EUROPEANMICROHOLDINGSINC_03_06_1998-EX-10.6-DISTRIBUTOR AGREEMENT",
+      "band": "medium",
+      "score": 20,
+      "findings": [
+        {
+          "type": "date_order_conflict",
+          "severity": "high",
+          "evidence": "Start date: 'November 5, 1997' (1997-11-05) in 's made and entered into effective as of November 5, 1997 (the \"effective Date), by and between W'; End date: 'September 30, 1997' (1997-09-30) in 'September 30, 1997 TRADEMARKS:'",
+          "explanation": "Termination/expiration date (1997-09-30) is earlier than the effective/commencement date (1997-11-05) in clause 7.0.",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "title": "GluMobileInc_20070319_S-1A_EX-10.09_436630_EX-10.09_Content License Agreement2",
+      "band": "medium",
+      "score": 20,
+      "findings": [
+        {
+          "type": "date_order_conflict",
+          "severity": "high",
+          "evidence": "Start date: 'November 11, 2005' (2005-11-11) in 'Preamble AMENDMENT NO. 1 Dated as of November 11, 2005 Reference is hereby made to that certai'; End date: 'October 29, 2005' (2005-10-29) in 'to the KOH Video Clips shall expire on October 29, 2005, and Licensee's right and license to di'",
+          "explanation": "Termination/expiration date (2005-10-29) is earlier than the effective/commencement date (2005-11-11) in clause 2.",
+          "uncertain": false
+        }
+      ]
+    }
+  ],
+  "sampled_10": [
+    {
+      "title": "SFGFINANCIALCORP_05_12_2009-EX-10.1-SOFTWARE LICENSE AND MAINTENANCE AGREEMENT",
+      "band": "medium",
+      "score": 22,
+      "findings": [
+        {
+          "type": "figure_words_mismatch",
+          "severity": "medium",
+          "evidence": "Six (6,000,000) in snippet: 'ceipt of Six (6,000,000) Million shares of L'",
+          "explanation": "The amount in words (Six = 6) does not match the amount in figures (6,000,000 = 6000000) in clause 5.",
+          "uncertain": false
+        },
+        {
+          "type": "figure_words_mismatch",
+          "severity": "high",
+          "evidence": "one third (33%) in snippet: 'Licensee one third (33%) of the gross  amoun'",
+          "explanation": "The amount in words (one third = 0.3333333333333333333333333333) does not match the amount in figures (33% = 33) in clause 5.",
+          "uncertain": false
+        },
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'SFG Financial Corporation' in: l: mcaska@caskaco.com\n\nWritten Notices: SFG Financial Corporation\n\n575 Madison Avenue, 8th Floor,\n\nNew Yo",
+          "explanation": "Legal entity 'SFG Financial Corporation' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'FX IB Associates LLC' in: _________________\n\nWritten Notices: 551 FX IB Associates LLC\n\n575 Madison Avenue, 8th Floor,\n\nNew Yo",
+          "explanation": "Legal entity 'FX IB Associates LLC' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'FX IB ASSOCIATES LLC' in: tives.\n\n\n\n\n\n\n\n\n\nSFG FINANCIAL CORP. 551 FX IB ASSOCIATES LLC\n\nBy: /s/ Michael C. Caska By: /s/ Fred ",
+          "explanation": "Legal entity 'FX IB ASSOCIATES LLC' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "low",
+          "evidence": "Target '13.4' referenced in: ge of  Control (as defined in Section 13.4(a)) shall be governed by the pro",
+          "explanation": "[Uncertain - low segmentation reliability]: Uncertain cross-reference: Cross-reference to '13.4' in clause(s) 24 cannot be resolved: no clause with identifier '13.4' exists in the contract.",
+          "uncertain": true
+        },
+        {
+          "type": "numbering_gap",
+          "severity": "low",
+          "evidence": "Missing clause 9 between clause 8 and clause 10",
+          "explanation": "[Uncertain - low segmentation reliability]: Clause numbering gap: clause 9 is missing in the sequence from 2 to 24.",
+          "uncertain": true
+        },
+        {
+          "type": "numbering_gap",
+          "severity": "low",
+          "evidence": "Missing clause 15 between clause 14 and clause 16",
+          "explanation": "[Uncertain - low segmentation reliability]: Clause numbering gap: clause 15 is missing in the sequence from 2 to 24.",
+          "uncertain": true
+        },
+        {
+          "type": "numbering_gap",
+          "severity": "low",
+          "evidence": "Missing clause 16 between clause 15 and clause 17",
+          "explanation": "[Uncertain - low segmentation reliability]: Clause numbering gap: clause 16 is missing in the sequence from 2 to 24.",
+          "uncertain": true
+        },
+        {
+          "type": "numbering_gap",
+          "severity": "low",
+          "evidence": "Missing clause 17 between clause 16 and clause 18",
+          "explanation": "[Uncertain - low segmentation reliability]: Clause numbering gap: clause 17 is missing in the sequence from 2 to 24.",
+          "uncertain": true
+        },
+        {
+          "type": "numbering_gap",
+          "severity": "low",
+          "evidence": "Missing clause 18 between clause 17 and clause 19",
+          "explanation": "[Uncertain - low segmentation reliability]: Clause numbering gap: clause 18 is missing in the sequence from 2 to 24.",
+          "uncertain": true
+        }
+      ]
+    },
+    {
+      "title": "SUCAMPOPHARMACEUTICALS,INC_11_04_2015-EX-10.2-STRATEGIC ALLIANCE AGREEMENT",
+      "band": "medium",
+      "score": 12,
+      "findings": [
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'S&R Technology Holdings, LLC' in: ment with Ryuji Ueno, MD, Sachiko Kuno, S&R Technology Holdings, LLC and S&R Foundation. (c) Withdrawal of t",
+          "explanation": "Legal entity 'S&R Technology Holdings, LLC' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'Sucampo Pharma, LLC' in:  such courier service). If to Acquiror: Sucampo Pharma, LLC. 2-2-16, Sonezakishinchi, Kita-ku, Osak",
+          "explanation": "Legal entity 'Sucampo Pharma, LLC' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'Sucampo Pharmaceuticals, Inc' in: ***\u2026] Email address: [\u2026***\u2026] If to SPI: Sucampo Pharmaceuticals, Inc. 4520 East West Highway Bethesda, MD 20",
+          "explanation": "Legal entity 'Sucampo Pharmaceuticals, Inc' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'Sucampo Pharmaceuticals, Inc' in: ent as of the date first above written. Sucampo Pharmaceuticals, Inc. By: /s/ Peter Greenleaf Name: Peter Gr",
+          "explanation": "Legal entity 'Sucampo Pharmaceuticals, Inc' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'Chief Executive Officer Sucampo Pharma, LLC' in:  Greenleaf Name: Peter Greenleaf Title: Chief Executive Officer Sucampo Pharma, LLC. By: /s/ Misako Nakata Name: Misako Nak",
+          "explanation": "Legal entity 'Chief Executive Officer Sucampo Pharma, LLC' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'Representative Executor R-Tech Ueno, Ltd' in: isako Nakata Name: Misako Nakata Title: Representative Executor R-Tech Ueno, Ltd. By: /s/ Y. Mashima Name: Yukihiko Mash",
+          "explanation": "Legal entity 'Representative Executor R-Tech Ueno, Ltd' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "low",
+          "evidence": "Target '8.10' referenced in: nt 21 Section 8.09 Notices 21 Section 8.10 Language 22 Section 8.11 Disc (and 1 other occurrence(s))",
+          "explanation": "Uncertain cross-reference: Cross-reference to '8.10' in clause(s) 0, 8.09 cannot be resolved: no clause with identifier '8.10' exists in the contract (referenced 2 times).",
+          "uncertain": true
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "evidence": "Target '27' referenced in: and applicable Law, including Articles 27-2 through 27-22 of the FIEL,  (and 1 other occurrence(s))",
+          "explanation": "Cross-reference to '27' in clause(s) 0, 2.02 cannot be resolved: no clause with identifier '27' exists in the contract (referenced 2 times).",
+          "uncertain": false
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "evidence": "Target '24' referenced in: e 24, 2015 in accordance with Article 24, Paragraph 1 of the FIEL, exc",
+          "explanation": "Cross-reference to '24' in clause(s) 0 cannot be resolved: no clause with identifier '24' exists in the contract.",
+          "uncertain": false
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "evidence": "Target '167' referenced in: r Article 166, Paragraph 1 or Article 167, Paragraph 1 of the FIEL; (xi",
+          "explanation": "Cross-reference to '167' in clause(s) 4 cannot be resolved: no clause with identifier '167' exists in the contract.",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "title": "GOCALLINC_03_30_2000-EX-10.7-Promotion Agreement",
+      "band": "medium",
+      "score": 8,
+      "findings": [
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'MetroCall Inc' in:              purpose of this promotion, MetroCall Inc. to provide pager and                ai",
+          "explanation": "Legal entity 'MetroCall Inc' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'Motorola, Inc' in:  and use the trademarks, logos, etc. of Motorola, Inc., PageMaster Promotions and such other ",
+          "explanation": "Legal entity 'Motorola, Inc' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'Motorola, Inc' in: l shall also have the duty to indemnify Motorola, Inc. or any affiliated entity from and agai",
+          "explanation": "Legal entity 'Motorola, Inc' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "party_name_variant",
+          "severity": "low",
+          "evidence": "Found 'At PageMaster Corporation' (expected party 'PageMaster Corporation') in: shall have no liability to one another. At PageMaster Corporation's option, an additional agreement(s) ma",
+          "explanation": "Party name variant 'At PageMaster Corporation' extends or shortens defined party 'PageMaster Corporation' (possible affiliate; similarity 90.9%).",
+          "uncertain": false
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "evidence": "Target '6b' referenced in:  consistent with the terms of paragraph 6b of this Agreement.",
+          "explanation": "Cross-reference to '6b' in clause(s) 7 cannot be resolved: no clause with identifier '6b' exists in the contract.",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "title": "GluMobileInc_20070319_S-1A_EX-10.09_436630_EX-10.09_Content License Agreement2",
+      "band": "medium",
+      "score": 20,
+      "findings": [
+        {
+          "type": "date_order_conflict",
+          "severity": "high",
+          "evidence": "Start date: 'November 11, 2005' (2005-11-11) in 'Preamble AMENDMENT NO. 1 Dated as of November 11, 2005 Reference is hereby made to that certai'; End date: 'October 29, 2005' (2005-10-29) in 'to the KOH Video Clips shall expire on October 29, 2005, and Licensee's right and license to di'",
+          "explanation": "Termination/expiration date (2005-10-29) is earlier than the effective/commencement date (2005-11-11) in clause 2.",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "title": "CybergyHoldingsInc_20140520_10-Q_EX-10.27_8605784_EX-10.27_Affiliate Agreement",
+      "band": "medium",
+      "score": 16,
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "evidence": "Target '18' referenced in: ation provisions contained in paragraph 18 of this Agreement. Company an",
+          "explanation": "Cross-reference to '18' in clause(s) 2.2 cannot be resolved: no clause with identifier '18' exists in the contract.",
+          "uncertain": false
+        },
+        {
+          "type": "duplicate_clause_number",
+          "severity": "medium",
+          "evidence": "Clause 3 appears 2 times: 'Duties of MA.' (page 2), 'Sales Records. MA shall keep accurate records of the sales of the Technology and Maintenance, including Client Registration Cards and shall make these records available for review by a representative of Company within ten (10) business days follow",
+          "explanation": "Duplicate clause number: clause 3 is used multiple times in the document (2 occurrences).",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "title": "INNOVIVA,INC_08_07_2014-EX-10.1-COLLABORATION AGREEMENT",
+      "band": "medium",
+      "score": 8,
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "evidence": "Target '1.17' referenced in: have the meaning set forth in Section 1.17.   1.27 \"Effective Date\" mean (and 1 other occurrence(s))",
+          "explanation": "Cross-reference to '1.17' in clause(s) 16.1 cannot be resolved: no clause with identifier '1.17' exists in the contract (referenced 2 times).",
+          "uncertain": false
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "low",
+          "evidence": "Target '15.1.1' referenced in: have the meaning set forth in Section 15.1.1.   1.29 \"FDA\" means the Unite",
+          "explanation": "Uncertain cross-reference: Cross-reference to '15.1.1' in clause(s) 16.1 cannot be resolved: no clause with identifier '15.1.1' exists in the contract.",
+          "uncertain": true
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "low",
+          "evidence": "Target '15.2.6' referenced in: have the meaning set forth in Section 15.2.6.   1.42 \"Indemnified Party\" s",
+          "explanation": "Uncertain cross-reference: Cross-reference to '15.2.6' in clause(s) 16.1 cannot be resolved: no clause with identifier '15.2.6' exists in the contract.",
+          "uncertain": true
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "low",
+          "evidence": "Target '6.2.2' referenced in: II Studies\" means, subject to Section 6.2.2, that portion of the Developm",
+          "explanation": "Uncertain cross-reference: Cross-reference to '6.2.2' in clause(s) 16.1 cannot be resolved: no clause with identifier '6.2.2' exists in the contract.",
+          "uncertain": true
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "low",
+          "evidence": "Target '15.1.2' referenced in: have the meaning set forth in Section 15.1.2.   1.80 \"Selectively\" means t",
+          "explanation": "Uncertain cross-reference: Cross-reference to '15.1.2' in clause(s) 16.1 cannot be resolved: no clause with identifier '15.1.2' exists in the contract.",
+          "uncertain": true
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "low",
+          "evidence": "Target '14.4' referenced in: have the meaning set forth in Section 14.4.   1.87 \"Terminated Developme",
+          "explanation": "Uncertain cross-reference: Cross-reference to '14.4' in clause(s) 16.1 cannot be resolved: no clause with identifier '14.4' exists in the contract.",
+          "uncertain": true
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "low",
+          "evidence": "Target '14.3' referenced in: have the meaning set forth in Section 14.3.   1.88 \"Territory\" means wor",
+          "explanation": "Uncertain cross-reference: Cross-reference to '14.3' in clause(s) 16.1 cannot be resolved: no clause with identifier '14.3' exists in the contract.",
+          "uncertain": true
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "low",
+          "evidence": "Target '13.1.4' referenced in: priority period.   Subject to Section 13.1.4, Theravance shall be responsi",
+          "explanation": "Uncertain cross-reference: Cross-reference to '13.1.4' in clause(s) 13.1 cannot be resolved: no clause with identifier '13.1.4' exists in the contract.",
+          "uncertain": true
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "low",
+          "evidence": "Target '15.2.4' referenced in: Affiliates (or in the case of Section 15.2.4, their employees) from:   15.",
+          "explanation": "Uncertain cross-reference: Cross-reference to '15.2.4' in clause(s) 15.1 cannot be resolved: no clause with identifier '15.2.4' exists in the contract.",
+          "uncertain": true
+        }
+      ]
+    },
+    {
+      "title": "DIVERSINETCORP_03_01_2012-EX-4-RESELLER AGREEMENT",
+      "band": "medium",
+      "score": 8,
+      "findings": [
+        {
+          "type": "figure_words_mismatch",
+          "severity": "medium",
+          "evidence": "thirty (60) in snippet: 'roviding thirty (60) days' written notic'",
+          "explanation": "The amount in words (thirty = 30) does not match the amount in figures (60 = 60) in clause 4.",
+          "uncertain": false
+        },
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'Ontario Limited' in:  authorized representatives.    2205925 Ontario Limited  DIVERSINET CORP.\nSignature:___________",
+          "explanation": "Legal entity 'Ontario Limited' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'Ontario Limited' in: d________________________\n\nName 2205925 Ontario Limited\n\nStreet Address 111 Main Street West, S",
+          "explanation": "Legal entity 'Ontario Limited' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "unknown_party_entity",
+          "severity": "low",
+          "evidence": "Entity name 'Ontario Limited' in: ersinet Corp. (\"Licensor\")  and 2205925 Ontario Limited (\"Licensee\")  with  effective date of J",
+          "explanation": "Legal entity 'Ontario Limited' appears in the text but is not among the defined contracting parties.",
+          "uncertain": false
+        },
+        {
+          "type": "numbering_gap",
+          "severity": "low",
+          "evidence": "Missing clause 14 between clause 13 and clause 15",
+          "explanation": "Clause numbering gap: clause 14 is missing in the sequence from 1 to 16.",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "title": "SoupmanInc_20150814_8-K_EX-10.1_9230148_EX-10.1_Franchise Agreement1",
+      "band": "medium",
+      "score": 14,
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "evidence": "Target '687.4' referenced in:  non-waiver provisions of GBL Sections 687.4 and 687.5 be satisfied).\n3",
+          "explanation": "Cross-reference to '687.4' in clause(s) 3 cannot be resolved: no clause with identifier '687.4' exists in the contract.",
+          "uncertain": false
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "evidence": "Target '687.5' referenced in:  non-waiver provisions of GBL Sections 687.4 and 687.5 be satisfied).\n3",
+          "explanation": "Cross-reference to '687.5' in clause(s) 3 cannot be resolved: no clause with identifier '687.5' exists in the contract.",
+          "uncertain": false
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "evidence": "Target 'A' referenced in: s   The recitals set forth in Paragraphs A through C of this Agreement are true an",
+          "explanation": "Cross-reference to 'A' in clause(s) 17.2 cannot be resolved: no clause with identifier 'A' exists in the contract.",
+          "uncertain": false
+        },
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "evidence": "Target 'C' referenced in: s   The recitals set forth in Paragraphs A through C of this Agreement are true an",
+          "explanation": "Cross-reference to 'C' in clause(s) 17.2 cannot be resolved: no clause with identifier 'C' exists in the contract.",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "title": "EUROPEANMICROHOLDINGSINC_03_06_1998-EX-10.6-DISTRIBUTOR AGREEMENT",
+      "band": "medium",
+      "score": 20,
+      "findings": [
+        {
+          "type": "date_order_conflict",
+          "severity": "high",
+          "evidence": "Start date: 'November 5, 1997' (1997-11-05) in 's made and entered into effective as of November 5, 1997 (the \"effective Date), by and between W'; End date: 'September 30, 1997' (1997-09-30) in 'September 30, 1997 TRADEMARKS:'",
+          "explanation": "Termination/expiration date (1997-09-30) is earlier than the effective/commencement date (1997-11-05) in clause 7.0.",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "title": "SimplicityEsportsGamingCompany_20181130_8-K_EX-10.1_11444071_EX-10.1_Franchise Agreement",
+      "band": "medium",
+      "score": 28,
+      "findings": [
+        {
+          "type": "dangling_reference",
+          "severity": "medium",
+          "evidence": "Target '3' referenced in:  in Exhibit A), as set out in Section 3 of this Agreement, for the pu",
+          "explanation": "Cross-reference to '3' in clause(s) 0 cannot be resolved: no clause with identifier '3' exists in the contract.",
+          "uncertain": false
+        },
+        {
+          "type": "numbering_gap",
+          "severity": "high",
+          "evidence": "Missing clause 3 between clause 2 and clause 4 (cross-referenced by dangling reference to '3')",
+          "explanation": "Clause numbering gap: clause 3 is missing between clause 2 and clause 4, and a cross-reference specifically points to missing clause 3.",
+          "uncertain": false
+        }
+      ]
+    }
+  ]
+}

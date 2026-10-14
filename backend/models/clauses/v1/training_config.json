@@ -1,8 +1,7 @@
 {
-  "created_at": "2026-10-13T06:06:12.535404+00:00",
-  "train_clauses_count": 11049,
-  "val_clauses_count": 3408,
-  "test_clauses_count": 2788,
+  "created_at": "2026-10-14T05:08:34.232030+00:00",
+  "train_clauses_count": 13794,
+  "val_clauses_count": 4368,
   "ngram_words": [
     1,
     2
@@ -12,6 +11,294 @@
     5
   ],
   "classifier": "LogisticRegression(class_weight='balanced', C=1.0)",
-  "gating_rule": "VAL precision >= 0.50 and VAL support >= 10",
-  "decision_preference": "best VAL F1; if within 0.01, rules > hybrid > model"
+  "tuning_stats": {
+    "governing_law": {
+      "threshold": 0.75,
+      "train_pos": 273,
+      "val_pos": 93,
+      "precision": 0.9293,
+      "recall": 0.9892,
+      "f1": 0.9583
+    },
+    "renewal_term": {
+      "threshold": 0.75,
+      "train_pos": 113,
+      "val_pos": 37,
+      "precision": 0.7368,
+      "recall": 0.7568,
+      "f1": 0.7467
+    },
+    "notice_period_to_terminate_renewal": {
+      "threshold": 0.85,
+      "train_pos": 72,
+      "val_pos": 20,
+      "precision": 0.7143,
+      "recall": 0.75,
+      "f1": 0.7317
+    },
+    "most_favored_nation": {
+      "threshold": 0.2,
+      "train_pos": 16,
+      "val_pos": 8,
+      "precision": 0.8,
+      "recall": 0.5,
+      "f1": 0.6154
+    },
+    "non_compete": {
+      "threshold": 0.8,
+      "train_pos": 117,
+      "val_pos": 37,
+      "precision": 0.6452,
+      "recall": 0.5405,
+      "f1": 0.5882
+    },
+    "exclusivity": {
+      "threshold": 0.85,
+      "train_pos": 179,
+      "val_pos": 52,
+      "precision": 0.5098,
+      "recall": 0.5,
+      "f1": 0.5049
+    },
+    "no_solicit_of_customers": {
+      "threshold": 0.75,
+      "train_pos": 27,
+      "val_pos": 10,
+      "precision": 0.6364,
+      "recall": 0.7,
+      "f1": 0.6667
+    },
+    "competitive_restriction_exception": {
+      "threshold": 0.65,
+      "train_pos": 50,
+      "val_pos": 23,
+      "precision": 0.3043,
+      "recall": 0.3043,
+      "f1": 0.3043
+    },
+    "no_solicit_of_employees": {
+      "threshold": 0.8,
+      "train_pos": 39,
+      "val_pos": 20,
+      "precision": 0.9412,
+      "recall": 0.8,
+      "f1": 0.8649
+    },
+    "non_disparagement": {
+      "threshold": 0.5,
+      "train_pos": 23,
+      "val_pos": 16,
+      "precision": 0.6364,
+      "recall": 0.4375,
+      "f1": 0.5185
+    },
+    "termination_for_convenience": {
+      "threshold": 0.75,
+      "train_pos": 117,
+      "val_pos": 43,
+      "precision": 0.7692,
+      "recall": 0.6977,
+      "f1": 0.7317
+    },
+    "rofr_rofo_rofn": {
+      "threshold": 0.75,
+      "train_pos": 78,
+      "val_pos": 48,
+      "precision": 0.8846,
+      "recall": 0.4792,
+      "f1": 0.6216
+    },
+    "change_of_control": {
+      "threshold": 0.7,
+      "train_pos": 97,
+      "val_pos": 41,
+      "precision": 0.5405,
+      "recall": 0.4878,
+      "f1": 0.5128
+    },
+    "anti_assignment": {
+      "threshold": 0.8,
+      "train_pos": 272,
+      "val_pos": 99,
+      "precision": 0.9036,
+      "recall": 0.7576,
+      "f1": 0.8242
+    },
+    "revenue_profit_sharing": {
+      "threshold": 0.6,
+      "train_pos": 160,
+      "val_pos": 49,
+      "precision": 0.5195,
+      "recall": 0.8163,
+      "f1": 0.6349
+    },
+    "price_restrictions": {
+      "threshold": 0.35,
+      "train_pos": 9,
+      "val_pos": 5,
+      "precision": 1.0,
+      "recall": 0.4,
+      "f1": 0.5714
+    },
+    "minimum_commitment": {
+      "threshold": 0.7,
+      "train_pos": 174,
+      "val_pos": 54,
+      "precision": 0.5,
+      "recall": 0.7593,
+      "f1": 0.6029
+    },
+    "volume_restriction": {
+      "threshold": 0.8,
+      "train_pos": 74,
+      "val_pos": 20,
+      "precision": 0.5,
+      "recall": 0.05,
+      "f1": 0.0909
+    },
+    "ip_ownership_assignment": {
+      "threshold": 0.9,
+      "train_pos": 119,
+      "val_pos": 38,
+      "precision": 0.913,
+      "recall": 0.5526,
+      "f1": 0.6885
+    },
+    "joint_ip_ownership": {
+      "threshold": 0.75,
+      "train_pos": 37,
+      "val_pos": 11,
+      "precision": 0.75,
+      "recall": 0.5455,
+      "f1": 0.6316
+    },
+    "license_grant": {
+      "threshold": 0.85,
+      "train_pos": 302,
+      "val_pos": 111,
+      "precision": 0.914,
+      "recall": 0.7658,
+      "f1": 0.8333
+    },
+    "non_transferable_license": {
+      "threshold": 0.75,
+      "train_pos": 112,
+      "val_pos": 53,
+      "precision": 0.7797,
+      "recall": 0.8679,
+      "f1": 0.8214
+    },
+    "affiliate_license_licensor": {
+      "threshold": 0.7,
+      "train_pos": 28,
+      "val_pos": 13,
+      "precision": 0.5714,
+      "recall": 0.3077,
+      "f1": 0.4
+    },
+    "affiliate_license_licensee": {
+      "threshold": 0.85,
+      "train_pos": 45,
+      "val_pos": 23,
+      "precision": 0.8333,
+      "recall": 0.4348,
+      "f1": 0.5714
+    },
+    "unlimited_all_you_can_eat_license": {
+      "threshold": 0.3,
+      "train_pos": 13,
+      "val_pos": 6,
+      "precision": 1.0,
+      "recall": 0.1667,
+      "f1": 0.2857
+    },
+    "irrevocable_or_perpetual_license": {
+      "threshold": 0.85,
+      "train_pos": 73,
+      "val_pos": 24,
+      "precision": 0.8421,
+      "recall": 0.6667,
+      "f1": 0.7442
+    },
+    "source_code_escrow": {
+      "threshold": 0.45,
+      "train_pos": 24,
+      "val_pos": 7,
+      "precision": 0.625,
+      "recall": 0.7143,
+      "f1": 0.6667
+    },
+    "post_termination_services": {
+      "threshold": 0.8,
+      "train_pos": 181,
+      "val_pos": 62,
+      "precision": 0.5088,
+      "recall": 0.4677,
+      "f1": 0.4874
+    },
+    "audit_rights": {
+      "threshold": 0.75,
+      "train_pos": 216,
+      "val_pos": 66,
+      "precision": 0.7705,
+      "recall": 0.7121,
+      "f1": 0.7402
+    },
+    "uncapped_liability": {
+      "threshold": 0.85,
+      "train_pos": 81,
+      "val_pos": 23,
+      "precision": 0.5938,
+      "recall": 0.8261,
+      "f1": 0.6909
+    },
+    "cap_on_liability": {
+      "threshold": 0.85,
+      "train_pos": 286,
+      "val_pos": 90,
+      "precision": 0.9385,
+      "recall": 0.6778,
+      "f1": 0.7871
+    },
+    "liquidated_damages": {
+      "threshold": 0.65,
+      "train_pos": 58,
+      "val_pos": 12,
+      "precision": 0.5,
+      "recall": 0.4167,
+      "f1": 0.4545
+    },
+    "warranty_duration": {
+      "threshold": 0.8,
+      "train_pos": 71,
+      "val_pos": 20,
+      "precision": 0.5882,
+      "recall": 0.5,
+      "f1": 0.5405
+    },
+    "insurance": {
+      "threshold": 0.75,
+      "train_pos": 143,
+      "val_pos": 44,
+      "precision": 0.7674,
+      "recall": 0.75,
+      "f1": 0.7586
+    },
+    "covenant_not_to_sue": {
+      "threshold": 0.65,
+      "train_pos": 81,
+      "val_pos": 35,
+      "precision": 0.5909,
+      "recall": 0.7429,
+      "f1": 0.6582
+    },
+    "third_party_beneficiary": {
+      "threshold": 0.6,
+      "train_pos": 26,
+      "val_pos": 8,
+      "precision": 0.2857,
+      "recall": 0.5,
+      "f1": 0.3636
+    }
+  }
 }
