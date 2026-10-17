@@ -422,3 +422,44 @@ def test_liability_cap_regression_misses():
     )
     assert extract_liability_cap(t5) is None
 
+
+def test_limitation_of_liability_types_and_evidence():
+    from clauseguard.clauses.attributes import extract_limitation_of_liability
+
+    # 1. Monetary cap
+    t1 = "In no event shall aggregate liability exceed $500,000 USD."
+    res1 = extract_limitation_of_liability(t1)
+    assert res1["type"] == "monetary_cap"
+    assert res1["amount"] == 500000.0
+    assert res1["currency"] == "USD"
+    assert "liability exceed $500,000 USD" in res1["evidence"]
+
+    # 2. Fee based cap
+    t2 = "Total liability shall not exceed the aggregate amount of fees paid in the preceding 12 months."
+    res2 = extract_limitation_of_liability(t2)
+    assert res2["type"] == "fee_based_cap"
+    assert res2["months"] == 12
+    assert "fees paid in the preceding 12 months" in res2["evidence"]
+
+    # 3. Excludes indirect or consequential
+    t3 = (
+        "Section 11. Limitation of Liability. Neither party shall be liable to the other "
+        "for any indirect, incidental, special, punitive, or consequential damages."
+    )
+    res3 = extract_limitation_of_liability(t3)
+    assert res3["type"] == "excludes_indirect_or_consequential"
+    assert "consequential damages" in res3["evidence"]
+
+    # 4. Unlimited stated
+    t4 = "Liability under this Section 8 shall be unlimited."
+    res4 = extract_limitation_of_liability(t4)
+    assert res4["type"] == "unlimited_stated"
+    assert "unlimited" in res4["evidence"]
+
+    # 5. None found
+    t5 = "This Agreement may be executed in counterparts, each of which shall be deemed an original."
+    res5 = extract_limitation_of_liability(t5)
+    assert res5["type"] == "none_found"
+    assert res5["evidence"] is None
+
+

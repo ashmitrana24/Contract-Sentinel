@@ -134,6 +134,44 @@ class Settings(BaseSettings):
     risk_tampering_high_escalation: bool = Field(default=True, description="Whether high severity tampering findings escalate to high band")
     risk_version: str = Field(default="1.0.0", description="Risk summary engine version")
 
+    # --- Module 6: Ask ClauseGuard & LLM Provider ---
+    llm_provider: str = Field(
+        default="fake",
+        description="LLM provider: none | fake | anthropic | openai | ollama",
+    )
+    llm_model: str = Field(
+        default="claude-3-5-sonnet-20241022",
+        description="Model identifier (e.g. claude-3-5-sonnet-20241022, gpt-4o, llama3)",
+    )
+    llm_api_key: str | None = Field(
+        default=None,
+        description="API key for commercial providers",
+    )
+    llm_api_base: str | None = Field(
+        default=None,
+        description="Custom base URL for OpenAI/Ollama/vLLM endpoints",
+    )
+    llm_temperature: float = Field(
+        default=0.0,
+        description="Sampling temperature (0.0 for deterministic factual answers)",
+    )
+    llm_max_tokens: int = Field(
+        default=1024,
+        description="Maximum generation tokens per response",
+    )
+    llm_timeout_seconds: float = Field(
+        default=30.0,
+        description="Request timeout in seconds",
+    )
+    ask_streaming_enabled: bool = Field(
+        default=True,
+        description="Whether to support SSE streaming responses",
+    )
+    debug_log_prompts: bool = Field(
+        default=False,
+        description="Whether to log full prompt text (NEVER enabled in production)",
+    )
+
     @property
     def cors_origins_list(self) -> list[str]:
         if isinstance(self.cors_origins, list):

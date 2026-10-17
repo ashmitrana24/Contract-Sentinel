@@ -283,7 +283,7 @@ def _execute_parsing(
                 document_id=document_id,
                 order_idx=c.order_idx,
                 clause_id=c.clause_id,
-                heading=c.heading,
+                heading=(c.heading or "")[:512],
                 text=c.text,
                 level=c.level,
                 parent_clause_id=c.parent_clause_id,
@@ -394,6 +394,7 @@ def _execute_parsing(
                 renewal_term_months=doc_attributes.renewal_term_months,
                 non_renewal_notice_days=doc_attributes.non_renewal_notice_days,
                 liability_cap=doc_attributes.liability_cap,
+                limitation_of_liability=doc_attributes.limitation_of_liability,
                 non_compete_duration_months=doc_attributes.non_compete_duration_months,
                 payment_terms_days=doc_attributes.payment_terms_days,
             )

@@ -68,6 +68,9 @@ class Document(Base):
     risk_summary: Mapped[RiskSummaryRow | None] = relationship(
         "RiskSummaryRow", back_populates="document", uselist=False, cascade="all, delete-orphan", passive_deletes=True, lazy="select"
     )
+    conversations: Mapped[list[Conversation]] = relationship(
+        "Conversation", back_populates="document", cascade="all, delete-orphan", passive_deletes=True, lazy="select"
+    )
 
 
 class Job(Base):
@@ -267,6 +270,7 @@ class DocumentAttributeRow(Base):
     renewal_term_months: Mapped[int | None] = mapped_column(Integer, nullable=True)
     non_renewal_notice_days: Mapped[int | None] = mapped_column(Integer, nullable=True)
     liability_cap: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
+    limitation_of_liability: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
     non_compete_duration_months: Mapped[int | None] = mapped_column(Integer, nullable=True)
     payment_terms_days: Mapped[int | None] = mapped_column(Integer, nullable=True)
     created_at: Mapped[datetime] = mapped_column(
@@ -313,3 +317,59 @@ class FindingFeedbackRow(Base):
     )
 
     finding: Mapped[FindingRow] = relationship("FindingRow", back_populates="feedback")
+
+
+class Conversation(Base):
+    """A persistent conversation session attached to a document."""
+
+    __tablename__ = "conversations"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    document_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("documents.id", ondelete="CASCADE"), nullable=False
+    )
+    title: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, server_default=func.now()
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, server_default=func.now(), onupdate=func.now()
+    )
+
+    document: Mapped[Document] = relationship("Document", back_populates="conversations")
+    messages: Mapped[list[Message]] = relationship(
+        "Message", back_populates="conversation", cascade="all, delete-orphan", passive_deletes=True, order_by="Message.created_at"
+    )
+
+    __table_args__ = (
+        Index("ix_conversations_document_id", "document_id"),
+    )
+
+
+class Message(Base):
+    """An individual user question or assistant answer within a conversation."""
+
+    __tablename__ = "messages"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    conversation_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("conversations.id", ondelete="CASCADE"), nullable=False
+    )
+    role: Mapped[str] = mapped_column(String(16), nullable=False)  # user | assistant
+    content: Mapped[str] = mapped_column(Text, nullable=False)
+    citations: Mapped[list[dict] | None] = mapped_column(JSONB, nullable=True)
+    token_count: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    latency_ms: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, server_default=func.now()
+    )
+
+    conversation: Mapped[Conversation] = relationship("Conversation", back_populates="messages")
+
+    __table_args__ = (
+        Index("ix_messages_conversation_id", "conversation_id"),
+    )

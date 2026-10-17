@@ -194,6 +194,7 @@ class DocumentAttributesResponse(BaseModel):
     renewal_term_months: int | None = None
     non_renewal_notice_days: int | None = None
     liability_cap: dict[str, Any] | None = None
+    limitation_of_liability: dict[str, Any] | None = None
     non_compete_duration_months: int | None = None
     payment_terms_days: int | None = None
 
@@ -221,3 +222,80 @@ class HealthResponse(BaseModel):
 class ErrorResponse(BaseModel):
     error: str = Field(description="Machine-readable error code")
     detail: str = Field(description="Human-readable message")
+
+
+# --- Module 6: Ask ClauseGuard & LLM Schemas ---
+
+class LLMStatusResponse(BaseModel):
+    provider: str
+    model: str
+    available: bool
+    streaming: bool
+    persona: str = "Aeqi"
+    disclaimer: str = "Aeqi provides automated contract analysis for informational purposes only and does not provide legal advice."
+    consent_notice: str = "Contract excerpts are processed by the configured AI provider strictly to answer your questions. No contract data is used for model training."
+
+
+class AskSuggestion(BaseModel):
+    id: str
+    question: str
+    category: str  # key_terms | risks | obligations | general
+    target_clause_id: str | None = None
+
+
+class AskSuggestionsResponse(BaseModel):
+    document_id: uuid.UUID
+    suggestions: list[AskSuggestion]
+
+
+class Citation(BaseModel):
+    chunk_id: str
+    clause_id: str
+    heading: str | None = None
+    page: int
+    text_snippet: str
+
+
+class AskRequest(BaseModel):
+    question: str = Field(..., min_length=1, max_length=2000, description="User question about the contract")
+    conversation_id: uuid.UUID | None = Field(default=None, description="Optional existing conversation UUID")
+    stream: bool = Field(default=True, description="Whether to stream response via Server-Sent Events")
+
+
+class AskAnswerResponse(BaseModel):
+    conversation_id: uuid.UUID
+    message_id: uuid.UUID
+    question: str
+    answer: str
+    citations: list[Citation]
+    status: str = Field(description="'answered' | 'insufficient_evidence' | 'retrieve_only'")
+    token_count: int | None = None
+    latency_ms: int | None = None
+
+
+class MessageItem(BaseModel):
+    id: uuid.UUID
+    role: str  # user | assistant
+    content: str
+    citations: list[Citation] | None = None
+    token_count: int | None = None
+    latency_ms: int | None = None
+    created_at: str
+
+
+class ConversationListItem(BaseModel):
+    id: uuid.UUID
+    document_id: uuid.UUID
+    title: str | None = None
+    message_count: int = 0
+    created_at: str
+    updated_at: str
+
+
+class ConversationDetailResponse(BaseModel):
+    id: uuid.UUID
+    document_id: uuid.UUID
+    title: str | None = None
+    created_at: str
+    updated_at: str
+    messages: list[MessageItem]

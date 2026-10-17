@@ -984,6 +984,7 @@ def get_document_attributes(
         renewal_term_months=attr_row.renewal_term_months,
         non_renewal_notice_days=attr_row.non_renewal_notice_days,
         liability_cap=attr_row.liability_cap,
+        limitation_of_liability=attr_row.limitation_of_liability,
         non_compete_duration_months=attr_row.non_compete_duration_months,
         payment_terms_days=attr_row.payment_terms_days,
     )

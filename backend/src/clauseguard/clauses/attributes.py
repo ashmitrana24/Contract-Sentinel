@@ -355,6 +355,51 @@ _CAP_FEES_REGEX = re.compile(
 )
 
 
+_CONSEQUENTIAL_REGEX = re.compile(
+    r"(?:"
+    r"(?:in\s+no\s+event\s+(?:shall|will)|neither\s+party\s+(?:shall|will)|not\s+(?:be\s+)?liable|no\s+liability|disclaimer\s+of\s+liability|waiver\s+of|shall\s+not\s+have\s+any\s+liability|is\s+not\s+liable|shall\s+assume\s+no\s+liability|exclusion\s+of|shall\s+in\s+no\s+event\s+have\s+any\s+liability|under\s+no\s+circumstances\s+will[^.]{0,30}be\s+liable)[^.]{0,250}?"
+    r"(?:(?:indirect|consequential|incidental|punitive|special|exemplary)\s+(?:damages|losses|pecuniary)|lost\s+(?:profits?|revenues?|data|business))|"
+    r"(?:indirect|consequential|incidental|punitive|special|exemplary)\s+(?:damages|losses|pecuniary)[^.]{0,120}?(?:shall\s+not\s+be\s+recoverable|are\s+(?:hereby\s+)?(?:excluded|waived)|shall\s+be\s+excluded)|"
+    r"(?:liability|damages)[^.]{0,100}?(?:for\s+any\s+)?(?:indirect|consequential|incidental|punitive|special|exemplary)|"
+    r"\bno\s+consequential\s+damages\b|"
+    r"\bexclusion\s+of\s+(?:consequential|indirect)\s+damages\b|"
+    r"\bconsequential\s+damages\s+waiver\b"
+    r")",
+    re.IGNORECASE,
+)
+
+_UNLIMITED_REGEX = re.compile(
+    r"\b(?:"
+    r"liability[^.]{0,50}?(?:shall|will)\s+be\s+unlimited|"
+    r"without\s+(?:any\s+)?(?:cap|limitation)\s+(?:on|of)\s+liability|"
+    r"no\s+(?:cap|limitation)\s+(?:on|of)\s+liability|"
+    r"unlimited\s+liability"
+    r")\b",
+    re.IGNORECASE,
+)
+
+
+def _extract_evidence_sentence(text: str, start: int, end: int, max_len: int = 300) -> str:
+    """Extract the sentence encompassing the match window."""
+    before = text[:start]
+    s_start = 0
+    m_prev = list(re.finditer(r"(?:\n+|[.!?]\s+)", before))
+    if m_prev:
+        s_start = m_prev[-1].end()
+
+    after = text[end:]
+    s_end = len(text)
+    m_next = re.search(r"(?:[.!?](?:\s+|$))|\n", after)
+    if m_next:
+        s_end = end + m_next.end()
+
+    sentence = text[s_start:s_end].strip()
+    sentence = " ".join(sentence.split())
+    if len(sentence) > max_len:
+        sentence = sentence[: max_len - 3] + "..."
+    return sentence
+
+
 def _parse_amount_str(val: str) -> float | None:
     v = val.replace(",", "").lower().strip()
     if v.isdigit():
@@ -375,13 +420,21 @@ def _parse_amount_str(val: str) -> float | None:
         return None
 
 
-def extract_liability_cap(text: str, heading: str = "") -> dict[str, Any] | None:
-    """Extract liability cap structure (monetary fixed amount or fee multiple)."""
+def extract_limitation_of_liability(text: str, heading: str = "") -> dict[str, Any]:
+    """Extract limitation of liability with type, amount/basis and evidence sentence.
+
+    Types:
+    - monetary_cap
+    - fee_based_cap
+    - excludes_indirect_or_consequential
+    - unlimited_stated
+    - none_found
+    """
     combined = f"{heading}\n{text}".strip() if (heading and text) else (text.strip() or heading.strip())
     if not combined:
-        return None
+        return {"type": "none_found", "amount": None, "currency": None, "basis": None, "evidence": None}
 
-    # Check fixed monetary amount
+    # 1. Fixed monetary cap
     m_fixed = _CAP_FIXED_REGEX.search(combined)
     if m_fixed:
         raw_curr = (m_fixed.group(1) or m_fixed.group(3) or "USD").strip()
@@ -394,9 +447,16 @@ def extract_liability_cap(text: str, heading: str = "") -> dict[str, Any] | None
         num_str = m_fixed.group(2)
         val = _parse_amount_str(num_str)
         if val is not None and val > 0:
-            return {"type": "fixed_amount", "amount": val, "currency": curr}
+            ev = _extract_evidence_sentence(combined, m_fixed.start(), m_fixed.end())
+            return {
+                "type": "monetary_cap",
+                "amount": val,
+                "currency": curr,
+                "basis": None,
+                "evidence": ev,
+            }
 
-    # Check fee multiplier
+    # 2. Fee multiplier / fee-based cap
     m_fees = _CAP_FEES_REGEX.search(combined)
     if m_fees:
         months_str = m_fees.group(1)
@@ -405,8 +465,60 @@ def extract_liability_cap(text: str, heading: str = "") -> dict[str, Any] | None
             parsed_m = _parse_int_str(months_str)
             if parsed_m:
                 months = parsed_m
-        return {"type": "fee_multiplier", "months": months, "basis": "fees_paid"}
+        ev = _extract_evidence_sentence(combined, m_fees.start(), m_fees.end())
+        return {
+            "type": "fee_based_cap",
+            "amount": None,
+            "currency": None,
+            "basis": f"fees_paid_{months}_months" if months else "fees_paid",
+            "months": months,
+            "evidence": ev,
+        }
 
+    # 3. Consequential / indirect damages exclusion
+    m_conseq = _CONSEQUENTIAL_REGEX.search(combined)
+    if m_conseq:
+        ev = _extract_evidence_sentence(combined, m_conseq.start(), m_conseq.end())
+        return {
+            "type": "excludes_indirect_or_consequential",
+            "amount": None,
+            "currency": None,
+            "basis": None,
+            "evidence": ev,
+        }
+
+    # 4. Unlimited stated
+    m_unlim = _UNLIMITED_REGEX.search(combined)
+    if m_unlim:
+        ev = _extract_evidence_sentence(combined, m_unlim.start(), m_unlim.end())
+        return {
+            "type": "unlimited_stated",
+            "amount": None,
+            "currency": None,
+            "basis": None,
+            "evidence": ev,
+        }
+
+    return {"type": "none_found", "amount": None, "currency": None, "basis": None, "evidence": None}
+
+
+def extract_liability_cap(text: str, heading: str = "") -> dict[str, Any] | None:
+    """Extract legacy liability cap structure (for backwards compatibility)."""
+    lim = extract_limitation_of_liability(text, heading=heading)
+    t = lim.get("type")
+    if t == "monetary_cap":
+        return {
+            "type": "fixed_amount",
+            "amount": lim.get("amount"),
+            "currency": lim.get("currency", "USD"),
+        }
+    if t == "fee_based_cap":
+        months = lim.get("months", 12)
+        return {
+            "type": "fee_multiplier",
+            "months": months,
+            "basis": "fees_paid",
+        }
     return None
 
 
@@ -474,6 +586,7 @@ class DocumentAttributes:
     renewal_term_months: int | None = None
     non_renewal_notice_days: int | None = None
     liability_cap: dict[str, Any] | None = None
+    limitation_of_liability: dict[str, Any] | None = None
     non_compete_duration_months: int | None = None
     payment_terms_days: int | None = None
 
@@ -485,7 +598,7 @@ def extract_all_document_attributes(
     clauses_text: list[str] | str,
     clause_labels: list[list[str]] | None = None,
 ) -> DocumentAttributes:
-    """Extract all 8 attributes across a document's clauses.
+    """Extract all attributes across a document's clauses.
 
     Accepts either a list of clause text strings or a single full contract string.
     Optionally accepts per-clause labels to accurately scope renewal extractors.
@@ -510,13 +623,17 @@ def extract_all_document_attributes(
         if target_clauses:
             renewal_text = "\n\n".join(target_clauses)
 
+    lim_of_liab = extract_limitation_of_liability(full_text)
+    liab_cap = extract_liability_cap(full_text)
+
     return DocumentAttributes(
         governing_law_jurisdiction=extract_governing_law_jurisdiction(full_text),
         termination_notice_days=extract_termination_notice_days(full_text),
         auto_renews=extract_auto_renews(renewal_text) or extract_auto_renews(full_text),
         renewal_term_months=extract_renewal_term_months(renewal_text),
         non_renewal_notice_days=extract_non_renewal_notice_days(renewal_text),
-        liability_cap=extract_liability_cap(full_text),
+        liability_cap=liab_cap,
+        limitation_of_liability=lim_of_liab,
         non_compete_duration_months=extract_non_compete_duration_months(full_text),
         payment_terms_days=extract_payment_terms_days(full_text),
     )

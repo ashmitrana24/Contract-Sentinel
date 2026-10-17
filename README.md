@@ -11,7 +11,9 @@ legal-doc/
 ├── README.md                      # Platform overview, visual gallery, and quick reference
 ├── DECISIONS.md                   # Architectural decisions and engineering rationales (D-01 to D-30)
 ├── docker-compose.yml             # Postgres, Redis, API, Worker, and Next.js Web App orchestration
-├── docs/screenshots/              # Full-page screenshots (Desktop/Mobile, Light/Dark)
+├── docs/                          # Architectural and API documentation
+│   ├── ask-api.md                 # Complete API contract, TypeScript types & SSE protocol
+│   └── screenshots/               # Full-page screenshots (Desktop/Mobile, Light/Dark)
 ├── data/generated/                # Labeled ground-truth clean & tampered contracts
 ├── datagen/                       # MODULE 1: Synthetic Dataset & Forgery Generator
 │   ├── pyproject.toml
@@ -19,27 +21,29 @@ legal-doc/
 │   ├── DECISIONS.md
 │   ├── src/datagen/               # Synthesizer, ReportLab renderer, tamper pipeline
 │   └── tests/                     # 85 tests: quality gates, labels, and tamper verifiers
-├── backend/                       # MODULES 2, 3, 4, 5 & 8: Pipeline, Forensics, Consistency, Clauses & Risk
+├── backend/                       # MODULES 2, 3, 4, 5, 6 & 8: Pipeline, Forensics, Consistency, Clauses, Ask & Risk
 │   ├── pyproject.toml
 │   ├── alembic.ini                # PostgreSQL schema migrations
 │   ├── Dockerfile                 # Container image for API, Worker, and Sweeper
 │   ├── README.md                  # In-depth pipeline, API walkthrough, benchmarks
 │   ├── DECISIONS.md               # Architecture decision records
-│   ├── alembic/                   # Database migrations (0001_initial to 0004_risk_summary)
+│   ├── alembic/                   # Database migrations (0001_initial to 0005_conversations)
 │   ├── eval/                      # Evaluation harness & benchmarks (forensics, consistency, risk)
 │   ├── src/clauseguard/
 │   │   ├── config.py              # Pydantic v2 settings & dynamic environment overrides
-│   │   ├── db/                    # SQLAlchemy 2.0 models (Document, Job, Finding, RiskSummary)
+│   │   ├── db/                    # SQLAlchemy 2.0 models (Document, Job, Finding, RiskSummary, Conversation, Message)
 │   │   ├── storage/               # SHA-256 content-addressed atomic FileStore
 │   │   ├── parsing/               # PyMuPDF span extractor, NFC normalizer, clause segmenter
 │   │   ├── queue/                 # Redis Streams, consumer groups, full-jitter backoff
-│   │   ├── api/                   # FastAPI endpoints (upload, documents, risk, findings, clauses)
-│   │   ├── worker/                # Resilient workers, crash recovery, stuck job sweeper
+│   │   ├── api/                   # FastAPI endpoints (upload, documents, risk, findings, clauses, ask)
+│   │   ├── worker/                # Resilient workers, crash recovery, stuck job sweeper, reprocess
 │   │   ├── forensics/             # MODULE 3: PDF Structure Forensics Engine
 │   │   ├── consistency/           # MODULE 4: Semantic & Structural Consistency Engine
 │   │   ├── clauses/               # MODULE 5: Multi-Label Clause Classifier & Key-Term Extractor
+│   │   ├── ask/                   # MODULE 6: Grounded Contract Q&A, Retrieval & Grounding Verifier
+│   │   ├── llm/                   # Pluggable LLM Provider Layer (Fake, None, Anthropic, OpenAI-compatible)
 │   │   └── risk/                  # MODULE 8: Finding Catalog, Aggregator & Highlight Locator
-│   └── tests/                     # 472+ tests: Unit (449) and Integration (23) suites
+│   └── tests/                     # 485+ tests: Unit and Integration suites
 └── frontend/                      # MODULE 9: Web Application & Review Workbench
     ├── package.json               # Next.js 16, Tailwind CSS v4, TanStack Query, react-pdf
     ├── Dockerfile                 # Multi-stage production container build
@@ -186,6 +190,25 @@ Prior to commit `12f8107`, recitals handling was unconstrained; an unanchored ma
 
 Complete per-label performance, 95% Wilson intervals, and calibration records are saved in [`backend/models/clauses/v1/metrics.json`](file:///c:/Users/Loq/Desktop/Projects/legal-doc/backend/models/clauses/v1/metrics.json).
 
+### [Module 6: Ask ClauseGuard (`backend/src/clauseguard/ask/`)](file:///c:/Users/Loq/Desktop/Projects/legal-doc/docs/ask-api.md)
+Grounded question answering about a single uploaded contract, powered by a pluggable LLM provider layer (`fake`, `none`, `anthropic`, `openai-compatible`) and an evidence-grounded contract retrieval engine.
+
+- **Persona ("Aeqi")**: Aeqi is a professional, balanced contract integrity and risk assistant. It answers questions strictly grounded in the uploaded agreement, cites exact clause IDs (`c1`, `c2`, etc.), quotes verbatim excerpts, flags internal risks and inconsistencies, never hallucinates external facts, never gives legal advice, and resists prompt injection inside contracts.
+- **Sentence-Snapped Sliding Window Chunking**: Keeps short clauses ($\le 250$ words) intact; partitions long clauses into 200-word windows with ~20-word overlap snapped to sentence boundaries (`c1.w0`, `c1.w1`). Benchmarked on a 30,000-character unsegmented contract with **100% Recall@3** for deep needles.
+- **Pure-Python BM25Okapi Retrieval**: Fast, dependency-free lexical search with intent classifier boosting (1.25x multiplier on matching clause labels), short follow-up keyword expansion (<6 words), and broad overview mode.
+- **Dual-Layer Grounding Verifier**: Automatically inspects model responses to ensure cited clause IDs exist, verbatim quotes ($\ge 6$ characters) appear in the source contract, and economic figures match retrieved evidence.
+- **Server-Sent Events (SSE) Streaming**: `POST /v1/documents/{id}/ask` delivers streaming tokens (`metadata`, `citation`, `delta`, `done`) with client disconnection detection and non-streaming fallback.
+- **Interactive Multi-Turn Conversations**: Backed by PostgreSQL (`conversations` and `messages` tables) with document cascade deletion.
+- **Dynamic Question Suggestions**: Generates 4–6 contextual questions balanced across extracted key terms, detected integrity risks, and core legal obligations.
+- **CLI Q&A Tool**: `python -m clauseguard.ask.cli --document <ID> "<question>" [--no-stream] [--verbose]` for terminal-based testing and streaming inspection.
+- **Evaluation Benchmarks**:
+  - **Retrieval Benchmark (102 Held-Out CUAD Contracts)**:
+    - *VAL Split (1,394 queries)*: Hit@1 = **24.7%**, Hit@3 = **40.2%**, Hit@5 = **47.2%**, MRR = **0.3312**
+    - *TEST Split (1,287 queries)*: Hit@1 = **26.1%**, Hit@3 = **44.3%**, Hit@5 = **53.0%**, MRR = **0.3618**
+  - **Answer Grounding Rate**: **90.0%** grounded citations on benchmark questions.
+
+Complete API specifications, SSE schemas, and TypeScript interfaces are documented in [`docs/ask-api.md`](file:///c:/Users/Loq/Desktop/Projects/legal-doc/docs/ask-api.md).
+
 ### [Module 8: Transparent Risk Summary (`backend/src/clauseguard/risk/`)](file:///c:/Users/Loq/Desktop/Projects/legal-doc/backend/src/clauseguard/risk/)
 Deterministic risk aggregation, human-readable cataloging, and coordinate highlight resolution:
 - **Finding Catalog**: Maps every detector finding to plain English title, `what_it_means`, and `what_to_check`.
@@ -293,17 +316,30 @@ npm run dev
 - `GET /v1/documents/{id}/attributes`: Extracted structured legal attributes and key contract terms.
 - `GET /v1/jobs/{id}`: Detailed job execution progress with 6 granular stages (`upload`, `parse`, `forensics`, `consistency`, `clauses`, `summary`).
 - `GET /v1/finding-types`: Complete catalog of supported tampering and inconsistency finding types.
+- `GET /v1/llm/status`: Current LLM provider status, active provider, model name, and configuration health.
+- `GET /v1/documents/{id}/ask/suggestions`: 4–6 dynamic questions balanced across key terms, risks, and obligations.
+- `POST /v1/documents/{id}/ask`: Grounded question answering supporting Server-Sent Events (`text/event-stream`) streaming or standard JSON (`stream: false`).
+- `GET /v1/documents/{id}/conversations`: List historical conversation sessions for a document with message counts.
+- `GET /v1/conversations/{id}`: Full conversation transcript with cited clauses, grounding verification, and timestamps.
+- `DELETE /v1/conversations/{id}`: Cascading deletion of a conversation and all contained messages.
 
 ---
 
 ## Testing & Quality Gates
 
 ```bash
-# Backend Unit Tests (Aggregator, Catalog, Highlights, Forensics, Consistency, Clauses) — 449 passed
+# Backend Unit Tests (Forensics, Consistency, Clauses, Risk, Ask Retrieval, LLM Providers, Schema Parity)
 pytest backend/tests/unit
 
-# Backend Integration Tests (End-to-end API, Risk API, Feedback, Worker reliability) — 23 passed
+# Backend Integration Tests (End-to-end API, Risk API, Feedback, Worker, Ask Q&A & Streaming)
 pytest -m integration backend/tests/integration
+
+# Ask ClauseGuard BM25 Retrieval Benchmark on CUAD Splits (VAL and TEST)
+python -m clauseguard.ask.eval_retrieval --split val
+python -m clauseguard.ask.eval_retrieval --split test
+
+# Ask ClauseGuard Grounding and Answer Evaluation
+python -m clauseguard.ask.eval_answers --provider fake --max-questions 20
 
 # Risk Aggregation Calibration Benchmark
 python backend/eval/risk_eval.py --data data/generated
@@ -321,4 +357,5 @@ ruff check backend/src backend/tests backend/eval
 cd frontend && npx playwright test
 ```
 
-See [DECISIONS.md](file:///c:/Users/Loq/Desktop/Projects/legal-doc/DECISIONS.md) for architectural records (D-01 through D-30).
+See [DECISIONS.md](file:///c:/Users/Loq/Desktop/Projects/legal-doc/DECISIONS.md) for architectural records (D-01 through D-37).
+
