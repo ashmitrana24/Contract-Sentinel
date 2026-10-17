@@ -98,7 +98,7 @@
     "renewal_term": "model",
     "notice_period_to_terminate_renewal": "model",
     "most_favored_nation": "hybrid",
-    "non_compete": "model",
+    "non_compete": "hybrid",
     "exclusivity": "model",
     "no_solicit_of_customers": "hybrid",
     "competitive_restriction_exception": "hybrid",

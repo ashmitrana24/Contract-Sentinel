@@ -347,3 +347,78 @@ def test_addendum_a_additional_renewal_variations():
     assert extract_auto_renews(neg_static) is None
     assert extract_renewal_term_months(neg_static) is None
     assert extract_non_renewal_notice_days(neg_static) is None
+
+
+# =============================================================================
+# Regression Tests: Module 5 Sanity Check Misses (Governing Law & Liability Cap)
+# =============================================================================
+def test_governing_law_regression_misses():
+    # Miss 1: Heading-only New York (MetLife)
+    h1 = (
+        "GOVERNING LAW. THIS REMARKETING AGREEMENT AND THE PRICING AGREEMENT "
+        "SHALL BE GOVERNED BY AND CONSTRUED IN ACCORDANCE WITH THE LAWS OF THE STATE OF NEW YORK."
+    )
+    assert extract_governing_law_jurisdiction("", heading=h1) == "New York"
+
+    # Miss 2: Heading-only Delaware (Cerence)
+    h2 = (
+        "Governing Law; Jurisdiction. Any disputes relating to, arising out of or resulting "
+        "from this Agreement shall be governed by Delaware."
+    )
+    assert extract_governing_law_jurisdiction("", heading=h2) == "Delaware"
+
+    # Miss 3: Heading-only Commonwealth of Pennsylvania (Premier Biomedical)
+    h3 = (
+        "VENUE. This Agreement and the rights of the Parties hereunder shall be "
+        "governed by and construed in accordance with the laws of the Commonwealth of Pennsylvania."
+    )
+    assert extract_governing_law_jurisdiction("", heading=h3) == "Pennsylvania"
+
+    # Miss 4: International - India (Opera Ltd)
+    t4 = (
+        "This Agreement (and any question about its subsistence, effect or termination) "
+        "is to be interpreted in accordance with the laws of India, save for that body of law "
+        "which governs the conflict of laws."
+    )
+    assert extract_governing_law_jurisdiction(t4) == "India"
+
+    # Miss 5: English law phrasing
+    t5 = (
+        "This Agreement and any dispute or claim arising out of or in connection with it "
+        "shall be governed by and construed in accordance with English law."
+    )
+    assert extract_governing_law_jurisdiction(t5) == "England and Wales"
+
+
+def test_liability_cap_regression_misses():
+    # Miss 1: Heading-only fees and expenses cap (Opera Ltd)
+    h1 = (
+        "10.2 NEITHER PARTIES' TOTAL CUMULATIVE LIABILITY IN CONNECTION WITH THIS AGREEMENT, "
+        "WHETHER IN AGREEMENT OR TORT OR OTHERWISE, WILL NOT EXCEED THE AGGREGATE AMOUNT OF "
+        "FEES AND EXPENSES OWED BY PC FINANCIAL TO MOBIMAGIC FOR SERVICES PERFORMED UNDER THIS AGREEMENT."
+    )
+    res1 = extract_liability_cap("", heading=h1)
+    assert res1 == {"type": "fee_multiplier", "months": 12, "basis": "fees_paid"}
+
+    # Miss 2: Direct damages cap
+    t2 = "Total liability for direct damages shall not exceed $100,000."
+    res2 = extract_liability_cap(t2)
+    assert res2 == {"type": "fixed_amount", "amount": 100000.0, "currency": "USD"}
+
+    # Miss 3: Written monetary cap (fifteen million)
+    t3 = "In no event shall aggregate liability exceed fifteen million dollars."
+    res3 = extract_liability_cap(t3)
+    assert res3 == {"type": "fixed_amount", "amount": 15000000.0, "currency": "USD"}
+
+    # Miss 4: Written number fifty dollars ($50)
+    t4 = "Each party's maximum liability shall not exceed fifty dollars ($50)."
+    res4 = extract_liability_cap(t4)
+    assert res4 == {"type": "fixed_amount", "amount": 50.0, "currency": "USD"}
+
+    # Miss 5: Consequential damages disclaimer (Must be None under contract!)
+    t5 = (
+        "Limitation of Liability. In no event will either party be liable to the other "
+        "for lost revenue, lost profits, or any indirect, special, or consequential damages."
+    )
+    assert extract_liability_cap(t5) is None
+

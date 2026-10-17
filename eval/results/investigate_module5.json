@@ -1,0 +1,2580 @@
+{
+  "val": {
+    "split_name": "val",
+    "num_samples": 4368,
+    "labels": {
+      "governing_law": {
+        "label": "governing_law",
+        "tp": 45,
+        "fp": 1,
+        "fn": 48,
+        "tn": 4274,
+        "precision": 0.9783,
+        "recall": 0.4839,
+        "f1": 0.6475,
+        "support": 93,
+        "predicted_count": 46,
+        "precision_ci_95": [
+          0.8866,
+          0.9962
+        ],
+        "recall_ci_95": [
+          0.385,
+          0.584
+        ]
+      },
+      "renewal_term": {
+        "label": "renewal_term",
+        "tp": 14,
+        "fp": 3,
+        "fn": 23,
+        "tn": 4328,
+        "precision": 0.8235,
+        "recall": 0.3784,
+        "f1": 0.5185,
+        "support": 37,
+        "predicted_count": 17,
+        "precision_ci_95": [
+          0.5897,
+          0.9381
+        ],
+        "recall_ci_95": [
+          0.2406,
+          0.539
+        ]
+      },
+      "notice_period_to_terminate_renewal": {
+        "label": "notice_period_to_terminate_renewal",
+        "tp": 8,
+        "fp": 2,
+        "fn": 12,
+        "tn": 4346,
+        "precision": 0.8,
+        "recall": 0.4,
+        "f1": 0.5333,
+        "support": 20,
+        "predicted_count": 10,
+        "precision_ci_95": [
+          0.4902,
+          0.9433
+        ],
+        "recall_ci_95": [
+          0.2188,
+          0.6134
+        ]
+      },
+      "most_favored_nation": {
+        "label": "most_favored_nation",
+        "tp": 1,
+        "fp": 0,
+        "fn": 7,
+        "tn": 4360,
+        "precision": 1.0,
+        "recall": 0.125,
+        "f1": 0.2222,
+        "support": 8,
+        "predicted_count": 1,
+        "precision_ci_95": [
+          0.2065,
+          1.0
+        ],
+        "recall_ci_95": [
+          0.0224,
+          0.4709
+        ]
+      },
+      "non_compete": {
+        "label": "non_compete",
+        "tp": 12,
+        "fp": 5,
+        "fn": 25,
+        "tn": 4326,
+        "precision": 0.7059,
+        "recall": 0.3243,
+        "f1": 0.4444,
+        "support": 37,
+        "predicted_count": 17,
+        "precision_ci_95": [
+          0.4687,
+          0.8672
+        ],
+        "recall_ci_95": [
+          0.1963,
+          0.4854
+        ]
+      },
+      "exclusivity": {
+        "label": "exclusivity",
+        "tp": 15,
+        "fp": 9,
+        "fn": 37,
+        "tn": 4307,
+        "precision": 0.625,
+        "recall": 0.2885,
+        "f1": 0.3947,
+        "support": 52,
+        "predicted_count": 24,
+        "precision_ci_95": [
+          0.4271,
+          0.7884
+        ],
+        "recall_ci_95": [
+          0.1833,
+          0.4227
+        ]
+      },
+      "no_solicit_of_customers": {
+        "label": "no_solicit_of_customers",
+        "tp": 4,
+        "fp": 3,
+        "fn": 6,
+        "tn": 4355,
+        "precision": 0.5714,
+        "recall": 0.4,
+        "f1": 0.4706,
+        "support": 10,
+        "predicted_count": 7,
+        "precision_ci_95": [
+          0.2505,
+          0.8418
+        ],
+        "recall_ci_95": [
+          0.1682,
+          0.6873
+        ]
+      },
+      "competitive_restriction_exception": {
+        "label": "competitive_restriction_exception",
+        "tp": 7,
+        "fp": 8,
+        "fn": 16,
+        "tn": 4337,
+        "precision": 0.4667,
+        "recall": 0.3043,
+        "f1": 0.3684,
+        "support": 23,
+        "predicted_count": 15,
+        "precision_ci_95": [
+          0.2481,
+          0.6988
+        ],
+        "recall_ci_95": [
+          0.156,
+          0.5087
+        ]
+      },
+      "no_solicit_of_employees": {
+        "label": "no_solicit_of_employees",
+        "tp": 8,
+        "fp": 1,
+        "fn": 12,
+        "tn": 4347,
+        "precision": 0.8889,
+        "recall": 0.4,
+        "f1": 0.5517,
+        "support": 20,
+        "predicted_count": 9,
+        "precision_ci_95": [
+          0.565,
+          0.9801
+        ],
+        "recall_ci_95": [
+          0.2188,
+          0.6134
+        ]
+      },
+      "non_disparagement": {
+        "label": "non_disparagement",
+        "tp": 1,
+        "fp": 0,
+        "fn": 15,
+        "tn": 4352,
+        "precision": 1.0,
+        "recall": 0.0625,
+        "f1": 0.1176,
+        "support": 16,
+        "predicted_count": 1,
+        "precision_ci_95": [
+          0.2065,
+          1.0
+        ],
+        "recall_ci_95": [
+          0.0111,
+          0.2833
+        ]
+      },
+      "termination_for_convenience": {
+        "label": "termination_for_convenience",
+        "tp": 18,
+        "fp": 8,
+        "fn": 25,
+        "tn": 4317,
+        "precision": 0.6923,
+        "recall": 0.4186,
+        "f1": 0.5217,
+        "support": 43,
+        "predicted_count": 26,
+        "precision_ci_95": [
+          0.5001,
+          0.835
+        ],
+        "recall_ci_95": [
+          0.2838,
+          0.5667
+        ]
+      },
+      "rofr_rofo_rofn": {
+        "label": "rofr_rofo_rofn",
+        "tp": 19,
+        "fp": 6,
+        "fn": 29,
+        "tn": 4314,
+        "precision": 0.76,
+        "recall": 0.3958,
+        "f1": 0.5205,
+        "support": 48,
+        "predicted_count": 25,
+        "precision_ci_95": [
+          0.5657,
+          0.885
+        ],
+        "recall_ci_95": [
+          0.2702,
+          0.5369
+        ]
+      },
+      "change_of_control": {
+        "label": "change_of_control",
+        "tp": 17,
+        "fp": 14,
+        "fn": 24,
+        "tn": 4313,
+        "precision": 0.5484,
+        "recall": 0.4146,
+        "f1": 0.4722,
+        "support": 41,
+        "predicted_count": 31,
+        "precision_ci_95": [
+          0.3777,
+          0.7084
+        ],
+        "recall_ci_95": [
+          0.2776,
+          0.5663
+        ]
+      },
+      "anti_assignment": {
+        "label": "anti_assignment",
+        "tp": 42,
+        "fp": 0,
+        "fn": 57,
+        "tn": 4269,
+        "precision": 1.0,
+        "recall": 0.4242,
+        "f1": 0.5957,
+        "support": 99,
+        "predicted_count": 42,
+        "precision_ci_95": [
+          0.9162,
+          1.0
+        ],
+        "recall_ci_95": [
+          0.3315,
+          0.5226
+        ]
+      },
+      "revenue_profit_sharing": {
+        "label": "revenue_profit_sharing",
+        "tp": 25,
+        "fp": 17,
+        "fn": 24,
+        "tn": 4302,
+        "precision": 0.5952,
+        "recall": 0.5102,
+        "f1": 0.5495,
+        "support": 49,
+        "predicted_count": 42,
+        "precision_ci_95": [
+          0.4449,
+          0.7296
+        ],
+        "recall_ci_95": [
+          0.3747,
+          0.6442
+        ]
+      },
+      "price_restrictions": {
+        "label": "price_restrictions",
+        "tp": 1,
+        "fp": 0,
+        "fn": 4,
+        "tn": 4363,
+        "precision": 1.0,
+        "recall": 0.2,
+        "f1": 0.3333,
+        "support": 5,
+        "predicted_count": 1,
+        "precision_ci_95": [
+          0.2065,
+          1.0
+        ],
+        "recall_ci_95": [
+          0.0362,
+          0.6245
+        ]
+      },
+      "minimum_commitment": {
+        "label": "minimum_commitment",
+        "tp": 28,
+        "fp": 18,
+        "fn": 26,
+        "tn": 4296,
+        "precision": 0.6087,
+        "recall": 0.5185,
+        "f1": 0.56,
+        "support": 54,
+        "predicted_count": 46,
+        "precision_ci_95": [
+          0.4646,
+          0.7361
+        ],
+        "recall_ci_95": [
+          0.3885,
+          0.6461
+        ]
+      },
+      "volume_restriction": {
+        "label": "volume_restriction",
+        "tp": 0,
+        "fp": 2,
+        "fn": 20,
+        "tn": 4346,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 20,
+        "predicted_count": 2,
+        "precision_ci_95": [
+          0.0,
+          0.6576
+        ],
+        "recall_ci_95": [
+          0.0,
+          0.1611
+        ]
+      },
+      "ip_ownership_assignment": {
+        "label": "ip_ownership_assignment",
+        "tp": 9,
+        "fp": 0,
+        "fn": 29,
+        "tn": 4330,
+        "precision": 1.0,
+        "recall": 0.2368,
+        "f1": 0.383,
+        "support": 38,
+        "predicted_count": 9,
+        "precision_ci_95": [
+          0.7009,
+          1.0
+        ],
+        "recall_ci_95": [
+          0.1299,
+          0.3921
+        ]
+      },
+      "joint_ip_ownership": {
+        "label": "joint_ip_ownership",
+        "tp": 3,
+        "fp": 0,
+        "fn": 8,
+        "tn": 4357,
+        "precision": 1.0,
+        "recall": 0.2727,
+        "f1": 0.4286,
+        "support": 11,
+        "predicted_count": 3,
+        "precision_ci_95": [
+          0.4385,
+          1.0
+        ],
+        "recall_ci_95": [
+          0.0975,
+          0.5656
+        ]
+      },
+      "license_grant": {
+        "label": "license_grant",
+        "tp": 58,
+        "fp": 4,
+        "fn": 53,
+        "tn": 4253,
+        "precision": 0.9355,
+        "recall": 0.5225,
+        "f1": 0.6705,
+        "support": 111,
+        "predicted_count": 62,
+        "precision_ci_95": [
+          0.8455,
+          0.9746
+        ],
+        "recall_ci_95": [
+          0.4304,
+          0.6131
+        ]
+      },
+      "non_transferable_license": {
+        "label": "non_transferable_license",
+        "tp": 30,
+        "fp": 8,
+        "fn": 23,
+        "tn": 4307,
+        "precision": 0.7895,
+        "recall": 0.566,
+        "f1": 0.6593,
+        "support": 53,
+        "predicted_count": 38,
+        "precision_ci_95": [
+          0.6365,
+          0.8893
+        ],
+        "recall_ci_95": [
+          0.4327,
+          0.6905
+        ]
+      },
+      "affiliate_license_licensor": {
+        "label": "affiliate_license_licensor",
+        "tp": 2,
+        "fp": 1,
+        "fn": 11,
+        "tn": 4354,
+        "precision": 0.6667,
+        "recall": 0.1538,
+        "f1": 0.25,
+        "support": 13,
+        "predicted_count": 3,
+        "precision_ci_95": [
+          0.2077,
+          0.9385
+        ],
+        "recall_ci_95": [
+          0.0433,
+          0.4223
+        ]
+      },
+      "affiliate_license_licensee": {
+        "label": "affiliate_license_licensee",
+        "tp": 4,
+        "fp": 2,
+        "fn": 19,
+        "tn": 4343,
+        "precision": 0.6667,
+        "recall": 0.1739,
+        "f1": 0.2759,
+        "support": 23,
+        "predicted_count": 6,
+        "precision_ci_95": [
+          0.3,
+          0.9032
+        ],
+        "recall_ci_95": [
+          0.0698,
+          0.3714
+        ]
+      },
+      "unlimited_all_you_can_eat_license": {
+        "label": "unlimited_all_you_can_eat_license",
+        "tp": 0,
+        "fp": 0,
+        "fn": 6,
+        "tn": 4362,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 6,
+        "predicted_count": 0,
+        "precision_ci_95": [
+          0.0,
+          0.0
+        ],
+        "recall_ci_95": [
+          0.0,
+          0.3903
+        ]
+      },
+      "irrevocable_or_perpetual_license": {
+        "label": "irrevocable_or_perpetual_license",
+        "tp": 13,
+        "fp": 2,
+        "fn": 11,
+        "tn": 4342,
+        "precision": 0.8667,
+        "recall": 0.5417,
+        "f1": 0.6667,
+        "support": 24,
+        "predicted_count": 15,
+        "precision_ci_95": [
+          0.6212,
+          0.9626
+        ],
+        "recall_ci_95": [
+          0.3507,
+          0.7211
+        ]
+      },
+      "source_code_escrow": {
+        "label": "source_code_escrow",
+        "tp": 2,
+        "fp": 3,
+        "fn": 5,
+        "tn": 4358,
+        "precision": 0.4,
+        "recall": 0.2857,
+        "f1": 0.3333,
+        "support": 7,
+        "predicted_count": 5,
+        "precision_ci_95": [
+          0.1176,
+          0.7693
+        ],
+        "recall_ci_95": [
+          0.0822,
+          0.6411
+        ]
+      },
+      "post_termination_services": {
+        "label": "post_termination_services",
+        "tp": 18,
+        "fp": 15,
+        "fn": 44,
+        "tn": 4291,
+        "precision": 0.5455,
+        "recall": 0.2903,
+        "f1": 0.3789,
+        "support": 62,
+        "predicted_count": 33,
+        "precision_ci_95": [
+          0.3799,
+          0.7016
+        ],
+        "recall_ci_95": [
+          0.1922,
+          0.4129
+        ]
+      },
+      "audit_rights": {
+        "label": "audit_rights",
+        "tp": 28,
+        "fp": 7,
+        "fn": 38,
+        "tn": 4295,
+        "precision": 0.8,
+        "recall": 0.4242,
+        "f1": 0.5545,
+        "support": 66,
+        "predicted_count": 35,
+        "precision_ci_95": [
+          0.6411,
+          0.8996
+        ],
+        "recall_ci_95": [
+          0.3124,
+          0.5444
+        ]
+      },
+      "uncapped_liability": {
+        "label": "uncapped_liability",
+        "tp": 7,
+        "fp": 8,
+        "fn": 16,
+        "tn": 4337,
+        "precision": 0.4667,
+        "recall": 0.3043,
+        "f1": 0.3684,
+        "support": 23,
+        "predicted_count": 15,
+        "precision_ci_95": [
+          0.2481,
+          0.6988
+        ],
+        "recall_ci_95": [
+          0.156,
+          0.5087
+        ]
+      },
+      "cap_on_liability": {
+        "label": "cap_on_liability",
+        "tp": 33,
+        "fp": 2,
+        "fn": 57,
+        "tn": 4276,
+        "precision": 0.9429,
+        "recall": 0.3667,
+        "f1": 0.528,
+        "support": 90,
+        "predicted_count": 35,
+        "precision_ci_95": [
+          0.8139,
+          0.9842
+        ],
+        "recall_ci_95": [
+          0.2745,
+          0.4698
+        ]
+      },
+      "liquidated_damages": {
+        "label": "liquidated_damages",
+        "tp": 1,
+        "fp": 1,
+        "fn": 11,
+        "tn": 4355,
+        "precision": 0.5,
+        "recall": 0.0833,
+        "f1": 0.1429,
+        "support": 12,
+        "predicted_count": 2,
+        "precision_ci_95": [
+          0.0945,
+          0.9055
+        ],
+        "recall_ci_95": [
+          0.0149,
+          0.3539
+        ]
+      },
+      "warranty_duration": {
+        "label": "warranty_duration",
+        "tp": 9,
+        "fp": 4,
+        "fn": 11,
+        "tn": 4344,
+        "precision": 0.6923,
+        "recall": 0.45,
+        "f1": 0.5455,
+        "support": 20,
+        "predicted_count": 13,
+        "precision_ci_95": [
+          0.4237,
+          0.8732
+        ],
+        "recall_ci_95": [
+          0.2582,
+          0.6579
+        ]
+      },
+      "insurance": {
+        "label": "insurance",
+        "tp": 18,
+        "fp": 2,
+        "fn": 26,
+        "tn": 4322,
+        "precision": 0.9,
+        "recall": 0.4091,
+        "f1": 0.5625,
+        "support": 44,
+        "predicted_count": 20,
+        "precision_ci_95": [
+          0.699,
+          0.9721
+        ],
+        "recall_ci_95": [
+          0.2769,
+          0.5559
+        ]
+      },
+      "covenant_not_to_sue": {
+        "label": "covenant_not_to_sue",
+        "tp": 18,
+        "fp": 7,
+        "fn": 17,
+        "tn": 4326,
+        "precision": 0.72,
+        "recall": 0.5143,
+        "f1": 0.6,
+        "support": 35,
+        "predicted_count": 25,
+        "precision_ci_95": [
+          0.5242,
+          0.8572
+        ],
+        "recall_ci_95": [
+          0.3557,
+          0.6701
+        ]
+      },
+      "third_party_beneficiary": {
+        "label": "third_party_beneficiary",
+        "tp": 5,
+        "fp": 3,
+        "fn": 3,
+        "tn": 4357,
+        "precision": 0.625,
+        "recall": 0.625,
+        "f1": 0.625,
+        "support": 8,
+        "predicted_count": 8,
+        "precision_ci_95": [
+          0.3057,
+          0.8632
+        ],
+        "recall_ci_95": [
+          0.3057,
+          0.8632
+        ]
+      }
+    },
+    "macro_precision": 0.7106,
+    "macro_recall": 0.3408,
+    "macro_f1": 0.4388,
+    "micro_precision": 0.7591,
+    "micro_recall": 0.3959,
+    "micro_f1": 0.5204,
+    "total_tp": 523,
+    "total_fp": 166,
+    "total_fn": 798
+  },
+  "test": {
+    "split_name": "test",
+    "num_samples": 4321,
+    "labels": {
+      "governing_law": {
+        "label": "governing_law",
+        "tp": 45,
+        "fp": 6,
+        "fn": 44,
+        "tn": 4226,
+        "precision": 0.8824,
+        "recall": 0.5056,
+        "f1": 0.6429,
+        "support": 89,
+        "predicted_count": 51,
+        "precision_ci_95": [
+          0.7662,
+          0.9449
+        ],
+        "recall_ci_95": [
+          0.4037,
+          0.6071
+        ]
+      },
+      "renewal_term": {
+        "label": "renewal_term",
+        "tp": 10,
+        "fp": 6,
+        "fn": 23,
+        "tn": 4282,
+        "precision": 0.625,
+        "recall": 0.303,
+        "f1": 0.4082,
+        "support": 33,
+        "predicted_count": 16,
+        "precision_ci_95": [
+          0.3864,
+          0.8152
+        ],
+        "recall_ci_95": [
+          0.1738,
+          0.4734
+        ]
+      },
+      "notice_period_to_terminate_renewal": {
+        "label": "notice_period_to_terminate_renewal",
+        "tp": 7,
+        "fp": 3,
+        "fn": 15,
+        "tn": 4296,
+        "precision": 0.7,
+        "recall": 0.3182,
+        "f1": 0.4375,
+        "support": 22,
+        "predicted_count": 10,
+        "precision_ci_95": [
+          0.3968,
+          0.8922
+        ],
+        "recall_ci_95": [
+          0.1636,
+          0.5268
+        ]
+      },
+      "most_favored_nation": {
+        "label": "most_favored_nation",
+        "tp": 0,
+        "fp": 0,
+        "fn": 7,
+        "tn": 4314,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 7,
+        "predicted_count": 0,
+        "precision_ci_95": [
+          0.0,
+          0.0
+        ],
+        "recall_ci_95": [
+          0.0,
+          0.3543
+        ]
+      },
+      "non_compete": {
+        "label": "non_compete",
+        "tp": 6,
+        "fp": 3,
+        "fn": 21,
+        "tn": 4291,
+        "precision": 0.6667,
+        "recall": 0.2222,
+        "f1": 0.3333,
+        "support": 27,
+        "predicted_count": 9,
+        "precision_ci_95": [
+          0.3542,
+          0.8794
+        ],
+        "recall_ci_95": [
+          0.1061,
+          0.4076
+        ]
+      },
+      "exclusivity": {
+        "label": "exclusivity",
+        "tp": 14,
+        "fp": 6,
+        "fn": 54,
+        "tn": 4247,
+        "precision": 0.7,
+        "recall": 0.2059,
+        "f1": 0.3182,
+        "support": 68,
+        "predicted_count": 20,
+        "precision_ci_95": [
+          0.481,
+          0.8545
+        ],
+        "recall_ci_95": [
+          0.1268,
+          0.3164
+        ]
+      },
+      "no_solicit_of_customers": {
+        "label": "no_solicit_of_customers",
+        "tp": 2,
+        "fp": 0,
+        "fn": 5,
+        "tn": 4314,
+        "precision": 1.0,
+        "recall": 0.2857,
+        "f1": 0.4444,
+        "support": 7,
+        "predicted_count": 2,
+        "precision_ci_95": [
+          0.3424,
+          1.0
+        ],
+        "recall_ci_95": [
+          0.0822,
+          0.6411
+        ]
+      },
+      "competitive_restriction_exception": {
+        "label": "competitive_restriction_exception",
+        "tp": 3,
+        "fp": 6,
+        "fn": 11,
+        "tn": 4301,
+        "precision": 0.3333,
+        "recall": 0.2143,
+        "f1": 0.2609,
+        "support": 14,
+        "predicted_count": 9,
+        "precision_ci_95": [
+          0.1206,
+          0.6458
+        ],
+        "recall_ci_95": [
+          0.0757,
+          0.4759
+        ]
+      },
+      "no_solicit_of_employees": {
+        "label": "no_solicit_of_employees",
+        "tp": 5,
+        "fp": 0,
+        "fn": 3,
+        "tn": 4313,
+        "precision": 1.0,
+        "recall": 0.625,
+        "f1": 0.7692,
+        "support": 8,
+        "predicted_count": 5,
+        "precision_ci_95": [
+          0.5655,
+          1.0
+        ],
+        "recall_ci_95": [
+          0.3057,
+          0.8632
+        ]
+      },
+      "non_disparagement": {
+        "label": "non_disparagement",
+        "tp": 2,
+        "fp": 1,
+        "fn": 5,
+        "tn": 4313,
+        "precision": 0.6667,
+        "recall": 0.2857,
+        "f1": 0.4,
+        "support": 7,
+        "predicted_count": 3,
+        "precision_ci_95": [
+          0.2077,
+          0.9385
+        ],
+        "recall_ci_95": [
+          0.0822,
+          0.6411
+        ]
+      },
+      "termination_for_convenience": {
+        "label": "termination_for_convenience",
+        "tp": 17,
+        "fp": 17,
+        "fn": 27,
+        "tn": 4260,
+        "precision": 0.5,
+        "recall": 0.3864,
+        "f1": 0.4359,
+        "support": 44,
+        "predicted_count": 34,
+        "precision_ci_95": [
+          0.3407,
+          0.6593
+        ],
+        "recall_ci_95": [
+          0.2572,
+          0.5338
+        ]
+      },
+      "rofr_rofo_rofn": {
+        "label": "rofr_rofo_rofn",
+        "tp": 5,
+        "fp": 8,
+        "fn": 14,
+        "tn": 4294,
+        "precision": 0.3846,
+        "recall": 0.2632,
+        "f1": 0.3125,
+        "support": 19,
+        "predicted_count": 13,
+        "precision_ci_95": [
+          0.1771,
+          0.6448
+        ],
+        "recall_ci_95": [
+          0.1181,
+          0.4879
+        ]
+      },
+      "change_of_control": {
+        "label": "change_of_control",
+        "tp": 7,
+        "fp": 23,
+        "fn": 16,
+        "tn": 4275,
+        "precision": 0.2333,
+        "recall": 0.3043,
+        "f1": 0.2642,
+        "support": 23,
+        "predicted_count": 30,
+        "precision_ci_95": [
+          0.1179,
+          0.4093
+        ],
+        "recall_ci_95": [
+          0.156,
+          0.5087
+        ]
+      },
+      "anti_assignment": {
+        "label": "anti_assignment",
+        "tp": 40,
+        "fp": 8,
+        "fn": 51,
+        "tn": 4222,
+        "precision": 0.8333,
+        "recall": 0.4396,
+        "f1": 0.5755,
+        "support": 91,
+        "predicted_count": 48,
+        "precision_ci_95": [
+          0.7042,
+          0.913
+        ],
+        "recall_ci_95": [
+          0.3421,
+          0.5419
+        ]
+      },
+      "revenue_profit_sharing": {
+        "label": "revenue_profit_sharing",
+        "tp": 20,
+        "fp": 30,
+        "fn": 24,
+        "tn": 4247,
+        "precision": 0.4,
+        "recall": 0.4545,
+        "f1": 0.4255,
+        "support": 44,
+        "predicted_count": 50,
+        "precision_ci_95": [
+          0.2761,
+          0.5382
+        ],
+        "recall_ci_95": [
+          0.3171,
+          0.5993
+        ]
+      },
+      "price_restrictions": {
+        "label": "price_restrictions",
+        "tp": 0,
+        "fp": 1,
+        "fn": 4,
+        "tn": 4316,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 4,
+        "predicted_count": 1,
+        "precision_ci_95": [
+          0.0,
+          0.7935
+        ],
+        "recall_ci_95": [
+          0.0,
+          0.4899
+        ]
+      },
+      "minimum_commitment": {
+        "label": "minimum_commitment",
+        "tp": 33,
+        "fp": 26,
+        "fn": 30,
+        "tn": 4232,
+        "precision": 0.5593,
+        "recall": 0.5238,
+        "f1": 0.541,
+        "support": 63,
+        "predicted_count": 59,
+        "precision_ci_95": [
+          0.4329,
+          0.6785
+        ],
+        "recall_ci_95": [
+          0.4027,
+          0.6422
+        ]
+      },
+      "volume_restriction": {
+        "label": "volume_restriction",
+        "tp": 4,
+        "fp": 2,
+        "fn": 18,
+        "tn": 4297,
+        "precision": 0.6667,
+        "recall": 0.1818,
+        "f1": 0.2857,
+        "support": 22,
+        "predicted_count": 6,
+        "precision_ci_95": [
+          0.3,
+          0.9032
+        ],
+        "recall_ci_95": [
+          0.0731,
+          0.3852
+        ]
+      },
+      "ip_ownership_assignment": {
+        "label": "ip_ownership_assignment",
+        "tp": 8,
+        "fp": 1,
+        "fn": 21,
+        "tn": 4291,
+        "precision": 0.8889,
+        "recall": 0.2759,
+        "f1": 0.4211,
+        "support": 29,
+        "predicted_count": 9,
+        "precision_ci_95": [
+          0.565,
+          0.9801
+        ],
+        "recall_ci_95": [
+          0.147,
+          0.4572
+        ]
+      },
+      "joint_ip_ownership": {
+        "label": "joint_ip_ownership",
+        "tp": 1,
+        "fp": 0,
+        "fn": 12,
+        "tn": 4308,
+        "precision": 1.0,
+        "recall": 0.0769,
+        "f1": 0.1429,
+        "support": 13,
+        "predicted_count": 1,
+        "precision_ci_95": [
+          0.2065,
+          1.0
+        ],
+        "recall_ci_95": [
+          0.0137,
+          0.3331
+        ]
+      },
+      "license_grant": {
+        "label": "license_grant",
+        "tp": 38,
+        "fp": 6,
+        "fn": 62,
+        "tn": 4215,
+        "precision": 0.8636,
+        "recall": 0.38,
+        "f1": 0.5278,
+        "support": 100,
+        "predicted_count": 44,
+        "precision_ci_95": [
+          0.7329,
+          0.936
+        ],
+        "recall_ci_95": [
+          0.291,
+          0.4779
+        ]
+      },
+      "non_transferable_license": {
+        "label": "non_transferable_license",
+        "tp": 14,
+        "fp": 7,
+        "fn": 28,
+        "tn": 4272,
+        "precision": 0.6667,
+        "recall": 0.3333,
+        "f1": 0.4444,
+        "support": 42,
+        "predicted_count": 21,
+        "precision_ci_95": [
+          0.4537,
+          0.8281
+        ],
+        "recall_ci_95": [
+          0.2101,
+          0.4845
+        ]
+      },
+      "affiliate_license_licensor": {
+        "label": "affiliate_license_licensor",
+        "tp": 1,
+        "fp": 4,
+        "fn": 4,
+        "tn": 4312,
+        "precision": 0.2,
+        "recall": 0.2,
+        "f1": 0.2,
+        "support": 5,
+        "predicted_count": 5,
+        "precision_ci_95": [
+          0.0362,
+          0.6245
+        ],
+        "recall_ci_95": [
+          0.0362,
+          0.6245
+        ]
+      },
+      "affiliate_license_licensee": {
+        "label": "affiliate_license_licensee",
+        "tp": 4,
+        "fp": 0,
+        "fn": 14,
+        "tn": 4303,
+        "precision": 1.0,
+        "recall": 0.2222,
+        "f1": 0.3636,
+        "support": 18,
+        "predicted_count": 4,
+        "precision_ci_95": [
+          0.5101,
+          1.0
+        ],
+        "recall_ci_95": [
+          0.09,
+          0.4521
+        ]
+      },
+      "unlimited_all_you_can_eat_license": {
+        "label": "unlimited_all_you_can_eat_license",
+        "tp": 0,
+        "fp": 0,
+        "fn": 3,
+        "tn": 4318,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 3,
+        "predicted_count": 0,
+        "precision_ci_95": [
+          0.0,
+          0.0
+        ],
+        "recall_ci_95": [
+          0.0,
+          0.5615
+        ]
+      },
+      "irrevocable_or_perpetual_license": {
+        "label": "irrevocable_or_perpetual_license",
+        "tp": 6,
+        "fp": 1,
+        "fn": 7,
+        "tn": 4307,
+        "precision": 0.8571,
+        "recall": 0.4615,
+        "f1": 0.6,
+        "support": 13,
+        "predicted_count": 7,
+        "precision_ci_95": [
+          0.4869,
+          0.9743
+        ],
+        "recall_ci_95": [
+          0.2321,
+          0.7086
+        ]
+      },
+      "source_code_escrow": {
+        "label": "source_code_escrow",
+        "tp": 0,
+        "fp": 3,
+        "fn": 3,
+        "tn": 4315,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 3,
+        "predicted_count": 3,
+        "precision_ci_95": [
+          0.0,
+          0.5615
+        ],
+        "recall_ci_95": [
+          0.0,
+          0.5615
+        ]
+      },
+      "post_termination_services": {
+        "label": "post_termination_services",
+        "tp": 13,
+        "fp": 6,
+        "fn": 41,
+        "tn": 4261,
+        "precision": 0.6842,
+        "recall": 0.2407,
+        "f1": 0.3562,
+        "support": 54,
+        "predicted_count": 19,
+        "precision_ci_95": [
+          0.4601,
+          0.8464
+        ],
+        "recall_ci_95": [
+          0.1464,
+          0.3695
+        ]
+      },
+      "audit_rights": {
+        "label": "audit_rights",
+        "tp": 30,
+        "fp": 3,
+        "fn": 42,
+        "tn": 4246,
+        "precision": 0.9091,
+        "recall": 0.4167,
+        "f1": 0.5714,
+        "support": 72,
+        "predicted_count": 33,
+        "precision_ci_95": [
+          0.7643,
+          0.9686
+        ],
+        "recall_ci_95": [
+          0.3099,
+          0.5319
+        ]
+      },
+      "uncapped_liability": {
+        "label": "uncapped_liability",
+        "tp": 10,
+        "fp": 4,
+        "fn": 14,
+        "tn": 4293,
+        "precision": 0.7143,
+        "recall": 0.4167,
+        "f1": 0.5263,
+        "support": 24,
+        "predicted_count": 14,
+        "precision_ci_95": [
+          0.4535,
+          0.8828
+        ],
+        "recall_ci_95": [
+          0.2447,
+          0.6117
+        ]
+      },
+      "cap_on_liability": {
+        "label": "cap_on_liability",
+        "tp": 26,
+        "fp": 0,
+        "fn": 49,
+        "tn": 4246,
+        "precision": 1.0,
+        "recall": 0.3467,
+        "f1": 0.5149,
+        "support": 75,
+        "predicted_count": 26,
+        "precision_ci_95": [
+          0.8713,
+          1.0
+        ],
+        "recall_ci_95": [
+          0.2488,
+          0.4595
+        ]
+      },
+      "liquidated_damages": {
+        "label": "liquidated_damages",
+        "tp": 4,
+        "fp": 0,
+        "fn": 9,
+        "tn": 4308,
+        "precision": 1.0,
+        "recall": 0.3077,
+        "f1": 0.4706,
+        "support": 13,
+        "predicted_count": 4,
+        "precision_ci_95": [
+          0.5101,
+          1.0
+        ],
+        "recall_ci_95": [
+          0.1268,
+          0.5763
+        ]
+      },
+      "warranty_duration": {
+        "label": "warranty_duration",
+        "tp": 8,
+        "fp": 3,
+        "fn": 12,
+        "tn": 4298,
+        "precision": 0.7273,
+        "recall": 0.4,
+        "f1": 0.5161,
+        "support": 20,
+        "predicted_count": 11,
+        "precision_ci_95": [
+          0.4344,
+          0.9025
+        ],
+        "recall_ci_95": [
+          0.2188,
+          0.6134
+        ]
+      },
+      "insurance": {
+        "label": "insurance",
+        "tp": 16,
+        "fp": 1,
+        "fn": 28,
+        "tn": 4276,
+        "precision": 0.9412,
+        "recall": 0.3636,
+        "f1": 0.5246,
+        "support": 44,
+        "predicted_count": 17,
+        "precision_ci_95": [
+          0.7302,
+          0.9895
+        ],
+        "recall_ci_95": [
+          0.2378,
+          0.5113
+        ]
+      },
+      "covenant_not_to_sue": {
+        "label": "covenant_not_to_sue",
+        "tp": 11,
+        "fp": 4,
+        "fn": 9,
+        "tn": 4297,
+        "precision": 0.7333,
+        "recall": 0.55,
+        "f1": 0.6286,
+        "support": 20,
+        "predicted_count": 15,
+        "precision_ci_95": [
+          0.4805,
+          0.891
+        ],
+        "recall_ci_95": [
+          0.3421,
+          0.7418
+        ]
+      },
+      "third_party_beneficiary": {
+        "label": "third_party_beneficiary",
+        "tp": 1,
+        "fp": 6,
+        "fn": 3,
+        "tn": 4311,
+        "precision": 0.1429,
+        "recall": 0.25,
+        "f1": 0.1818,
+        "support": 4,
+        "predicted_count": 7,
+        "precision_ci_95": [
+          0.0257,
+          0.5131
+        ],
+        "recall_ci_95": [
+          0.0456,
+          0.6994
+        ]
+      }
+    },
+    "macro_precision": 0.6244,
+    "macro_recall": 0.2989,
+    "macro_f1": 0.3846,
+    "micro_precision": 0.6782,
+    "micro_recall": 0.3593,
+    "micro_f1": 0.4697,
+    "total_tp": 411,
+    "total_fp": 195,
+    "total_fn": 733
+  },
+  "train": {
+    "split_name": "train",
+    "num_samples": 13794,
+    "labels": {
+      "governing_law": {
+        "label": "governing_law",
+        "tp": 143,
+        "fp": 7,
+        "fn": 130,
+        "tn": 13514,
+        "precision": 0.9533,
+        "recall": 0.5238,
+        "f1": 0.6761,
+        "support": 273,
+        "predicted_count": 150,
+        "precision_ci_95": [
+          0.9068,
+          0.9772
+        ],
+        "recall_ci_95": [
+          0.4646,
+          0.5823
+        ]
+      },
+      "renewal_term": {
+        "label": "renewal_term",
+        "tp": 61,
+        "fp": 5,
+        "fn": 52,
+        "tn": 13676,
+        "precision": 0.9242,
+        "recall": 0.5398,
+        "f1": 0.6816,
+        "support": 113,
+        "predicted_count": 66,
+        "precision_ci_95": [
+          0.8346,
+          0.9672
+        ],
+        "recall_ci_95": [
+          0.4481,
+          0.6289
+        ]
+      },
+      "notice_period_to_terminate_renewal": {
+        "label": "notice_period_to_terminate_renewal",
+        "tp": 40,
+        "fp": 14,
+        "fn": 32,
+        "tn": 13708,
+        "precision": 0.7407,
+        "recall": 0.5556,
+        "f1": 0.6349,
+        "support": 72,
+        "predicted_count": 54,
+        "precision_ci_95": [
+          0.6107,
+          0.8388
+        ],
+        "recall_ci_95": [
+          0.4409,
+          0.6646
+        ]
+      },
+      "most_favored_nation": {
+        "label": "most_favored_nation",
+        "tp": 7,
+        "fp": 3,
+        "fn": 9,
+        "tn": 13775,
+        "precision": 0.7,
+        "recall": 0.4375,
+        "f1": 0.5385,
+        "support": 16,
+        "predicted_count": 10,
+        "precision_ci_95": [
+          0.3968,
+          0.8922
+        ],
+        "recall_ci_95": [
+          0.231,
+          0.6682
+        ]
+      },
+      "non_compete": {
+        "label": "non_compete",
+        "tp": 56,
+        "fp": 8,
+        "fn": 61,
+        "tn": 13669,
+        "precision": 0.875,
+        "recall": 0.4786,
+        "f1": 0.6188,
+        "support": 117,
+        "predicted_count": 64,
+        "precision_ci_95": [
+          0.7723,
+          0.9353
+        ],
+        "recall_ci_95": [
+          0.3902,
+          0.5684
+        ]
+      },
+      "exclusivity": {
+        "label": "exclusivity",
+        "tp": 77,
+        "fp": 10,
+        "fn": 102,
+        "tn": 13605,
+        "precision": 0.8851,
+        "recall": 0.4302,
+        "f1": 0.5789,
+        "support": 179,
+        "predicted_count": 87,
+        "precision_ci_95": [
+          0.8012,
+          0.9364
+        ],
+        "recall_ci_95": [
+          0.3599,
+          0.5034
+        ]
+      },
+      "no_solicit_of_customers": {
+        "label": "no_solicit_of_customers",
+        "tp": 12,
+        "fp": 1,
+        "fn": 15,
+        "tn": 13766,
+        "precision": 0.9231,
+        "recall": 0.4444,
+        "f1": 0.6,
+        "support": 27,
+        "predicted_count": 13,
+        "precision_ci_95": [
+          0.6669,
+          0.9863
+        ],
+        "recall_ci_95": [
+          0.2759,
+          0.6269
+        ]
+      },
+      "competitive_restriction_exception": {
+        "label": "competitive_restriction_exception",
+        "tp": 28,
+        "fp": 2,
+        "fn": 22,
+        "tn": 13742,
+        "precision": 0.9333,
+        "recall": 0.56,
+        "f1": 0.7,
+        "support": 50,
+        "predicted_count": 30,
+        "precision_ci_95": [
+          0.7868,
+          0.9815
+        ],
+        "recall_ci_95": [
+          0.4231,
+          0.6884
+        ]
+      },
+      "no_solicit_of_employees": {
+        "label": "no_solicit_of_employees",
+        "tp": 20,
+        "fp": 1,
+        "fn": 19,
+        "tn": 13754,
+        "precision": 0.9524,
+        "recall": 0.5128,
+        "f1": 0.6667,
+        "support": 39,
+        "predicted_count": 21,
+        "precision_ci_95": [
+          0.7733,
+          0.9915
+        ],
+        "recall_ci_95": [
+          0.362,
+          0.6613
+        ]
+      },
+      "non_disparagement": {
+        "label": "non_disparagement",
+        "tp": 13,
+        "fp": 5,
+        "fn": 10,
+        "tn": 13766,
+        "precision": 0.7222,
+        "recall": 0.5652,
+        "f1": 0.6341,
+        "support": 23,
+        "predicted_count": 18,
+        "precision_ci_95": [
+          0.4913,
+          0.875
+        ],
+        "recall_ci_95": [
+          0.3681,
+          0.7437
+        ]
+      },
+      "termination_for_convenience": {
+        "label": "termination_for_convenience",
+        "tp": 66,
+        "fp": 25,
+        "fn": 51,
+        "tn": 13652,
+        "precision": 0.7253,
+        "recall": 0.5641,
+        "f1": 0.6346,
+        "support": 117,
+        "predicted_count": 91,
+        "precision_ci_95": [
+          0.6259,
+          0.8064
+        ],
+        "recall_ci_95": [
+          0.4736,
+          0.6505
+        ]
+      },
+      "rofr_rofo_rofn": {
+        "label": "rofr_rofo_rofn",
+        "tp": 40,
+        "fp": 16,
+        "fn": 38,
+        "tn": 13700,
+        "precision": 0.7143,
+        "recall": 0.5128,
+        "f1": 0.597,
+        "support": 78,
+        "predicted_count": 56,
+        "precision_ci_95": [
+          0.5852,
+          0.8158
+        ],
+        "recall_ci_95": [
+          0.4039,
+          0.6205
+        ]
+      },
+      "change_of_control": {
+        "label": "change_of_control",
+        "tp": 60,
+        "fp": 60,
+        "fn": 37,
+        "tn": 13637,
+        "precision": 0.5,
+        "recall": 0.6186,
+        "f1": 0.553,
+        "support": 97,
+        "predicted_count": 120,
+        "precision_ci_95": [
+          0.4119,
+          0.5881
+        ],
+        "recall_ci_95": [
+          0.5191,
+          0.709
+        ]
+      },
+      "anti_assignment": {
+        "label": "anti_assignment",
+        "tp": 136,
+        "fp": 4,
+        "fn": 136,
+        "tn": 13518,
+        "precision": 0.9714,
+        "recall": 0.5,
+        "f1": 0.6602,
+        "support": 272,
+        "predicted_count": 140,
+        "precision_ci_95": [
+          0.9288,
+          0.9888
+        ],
+        "recall_ci_95": [
+          0.441,
+          0.559
+        ]
+      },
+      "revenue_profit_sharing": {
+        "label": "revenue_profit_sharing",
+        "tp": 112,
+        "fp": 45,
+        "fn": 48,
+        "tn": 13589,
+        "precision": 0.7134,
+        "recall": 0.7,
+        "f1": 0.7066,
+        "support": 160,
+        "predicted_count": 157,
+        "precision_ci_95": [
+          0.6382,
+          0.7783
+        ],
+        "recall_ci_95": [
+          0.625,
+          0.7656
+        ]
+      },
+      "price_restrictions": {
+        "label": "price_restrictions",
+        "tp": 6,
+        "fp": 1,
+        "fn": 3,
+        "tn": 13784,
+        "precision": 0.8571,
+        "recall": 0.6667,
+        "f1": 0.75,
+        "support": 9,
+        "predicted_count": 7,
+        "precision_ci_95": [
+          0.4869,
+          0.9743
+        ],
+        "recall_ci_95": [
+          0.3542,
+          0.8794
+        ]
+      },
+      "minimum_commitment": {
+        "label": "minimum_commitment",
+        "tp": 119,
+        "fp": 38,
+        "fn": 55,
+        "tn": 13582,
+        "precision": 0.758,
+        "recall": 0.6839,
+        "f1": 0.719,
+        "support": 174,
+        "predicted_count": 157,
+        "precision_ci_95": [
+          0.6853,
+          0.8183
+        ],
+        "recall_ci_95": [
+          0.6115,
+          0.7484
+        ]
+      },
+      "volume_restriction": {
+        "label": "volume_restriction",
+        "tp": 42,
+        "fp": 11,
+        "fn": 32,
+        "tn": 13709,
+        "precision": 0.7925,
+        "recall": 0.5676,
+        "f1": 0.6614,
+        "support": 74,
+        "predicted_count": 53,
+        "precision_ci_95": [
+          0.6654,
+          0.88
+        ],
+        "recall_ci_95": [
+          0.4541,
+          0.6743
+        ]
+      },
+      "ip_ownership_assignment": {
+        "label": "ip_ownership_assignment",
+        "tp": 50,
+        "fp": 4,
+        "fn": 69,
+        "tn": 13671,
+        "precision": 0.9259,
+        "recall": 0.4202,
+        "f1": 0.578,
+        "support": 119,
+        "predicted_count": 54,
+        "precision_ci_95": [
+          0.8245,
+          0.9708
+        ],
+        "recall_ci_95": [
+          0.3353,
+          0.51
+        ]
+      },
+      "joint_ip_ownership": {
+        "label": "joint_ip_ownership",
+        "tp": 25,
+        "fp": 1,
+        "fn": 12,
+        "tn": 13756,
+        "precision": 0.9615,
+        "recall": 0.6757,
+        "f1": 0.7937,
+        "support": 37,
+        "predicted_count": 26,
+        "precision_ci_95": [
+          0.8111,
+          0.9932
+        ],
+        "recall_ci_95": [
+          0.5146,
+          0.8037
+        ]
+      },
+      "license_grant": {
+        "label": "license_grant",
+        "tp": 150,
+        "fp": 5,
+        "fn": 152,
+        "tn": 13487,
+        "precision": 0.9677,
+        "recall": 0.4967,
+        "f1": 0.6565,
+        "support": 302,
+        "predicted_count": 155,
+        "precision_ci_95": [
+          0.9267,
+          0.9861
+        ],
+        "recall_ci_95": [
+          0.4407,
+          0.5528
+        ]
+      },
+      "non_transferable_license": {
+        "label": "non_transferable_license",
+        "tp": 56,
+        "fp": 11,
+        "fn": 56,
+        "tn": 13671,
+        "precision": 0.8358,
+        "recall": 0.5,
+        "f1": 0.6257,
+        "support": 112,
+        "predicted_count": 67,
+        "precision_ci_95": [
+          0.7294,
+          0.9058
+        ],
+        "recall_ci_95": [
+          0.4089,
+          0.5911
+        ]
+      },
+      "affiliate_license_licensor": {
+        "label": "affiliate_license_licensor",
+        "tp": 13,
+        "fp": 10,
+        "fn": 15,
+        "tn": 13756,
+        "precision": 0.5652,
+        "recall": 0.4643,
+        "f1": 0.5098,
+        "support": 28,
+        "predicted_count": 23,
+        "precision_ci_95": [
+          0.3681,
+          0.7437
+        ],
+        "recall_ci_95": [
+          0.2953,
+          0.6419
+        ]
+      },
+      "affiliate_license_licensee": {
+        "label": "affiliate_license_licensee",
+        "tp": 24,
+        "fp": 9,
+        "fn": 21,
+        "tn": 13740,
+        "precision": 0.7273,
+        "recall": 0.5333,
+        "f1": 0.6154,
+        "support": 45,
+        "predicted_count": 33,
+        "precision_ci_95": [
+          0.5578,
+          0.8493
+        ],
+        "recall_ci_95": [
+          0.3908,
+          0.6706
+        ]
+      },
+      "unlimited_all_you_can_eat_license": {
+        "label": "unlimited_all_you_can_eat_license",
+        "tp": 7,
+        "fp": 6,
+        "fn": 6,
+        "tn": 13775,
+        "precision": 0.5385,
+        "recall": 0.5385,
+        "f1": 0.5385,
+        "support": 13,
+        "predicted_count": 13,
+        "precision_ci_95": [
+          0.2914,
+          0.7679
+        ],
+        "recall_ci_95": [
+          0.2914,
+          0.7679
+        ]
+      },
+      "irrevocable_or_perpetual_license": {
+        "label": "irrevocable_or_perpetual_license",
+        "tp": 44,
+        "fp": 4,
+        "fn": 29,
+        "tn": 13717,
+        "precision": 0.9167,
+        "recall": 0.6027,
+        "f1": 0.7273,
+        "support": 73,
+        "predicted_count": 48,
+        "precision_ci_95": [
+          0.8045,
+          0.9671
+        ],
+        "recall_ci_95": [
+          0.4881,
+          0.7071
+        ]
+      },
+      "source_code_escrow": {
+        "label": "source_code_escrow",
+        "tp": 13,
+        "fp": 13,
+        "fn": 11,
+        "tn": 13757,
+        "precision": 0.5,
+        "recall": 0.5417,
+        "f1": 0.52,
+        "support": 24,
+        "predicted_count": 26,
+        "precision_ci_95": [
+          0.3206,
+          0.6794
+        ],
+        "recall_ci_95": [
+          0.3507,
+          0.7211
+        ]
+      },
+      "post_termination_services": {
+        "label": "post_termination_services",
+        "tp": 84,
+        "fp": 33,
+        "fn": 97,
+        "tn": 13580,
+        "precision": 0.7179,
+        "recall": 0.4641,
+        "f1": 0.5638,
+        "support": 181,
+        "predicted_count": 117,
+        "precision_ci_95": [
+          0.6305,
+          0.7916
+        ],
+        "recall_ci_95": [
+          0.3929,
+          0.5367
+        ]
+      },
+      "audit_rights": {
+        "label": "audit_rights",
+        "tp": 117,
+        "fp": 9,
+        "fn": 99,
+        "tn": 13569,
+        "precision": 0.9286,
+        "recall": 0.5417,
+        "f1": 0.6842,
+        "support": 216,
+        "predicted_count": 126,
+        "precision_ci_95": [
+          0.8698,
+          0.962
+        ],
+        "recall_ci_95": [
+          0.4751,
+          0.6068
+        ]
+      },
+      "uncapped_liability": {
+        "label": "uncapped_liability",
+        "tp": 46,
+        "fp": 17,
+        "fn": 35,
+        "tn": 13696,
+        "precision": 0.7302,
+        "recall": 0.5679,
+        "f1": 0.6389,
+        "support": 81,
+        "predicted_count": 63,
+        "precision_ci_95": [
+          0.6097,
+          0.8242
+        ],
+        "recall_ci_95": [
+          0.4594,
+          0.6703
+        ]
+      },
+      "cap_on_liability": {
+        "label": "cap_on_liability",
+        "tp": 136,
+        "fp": 3,
+        "fn": 150,
+        "tn": 13505,
+        "precision": 0.9784,
+        "recall": 0.4755,
+        "f1": 0.64,
+        "support": 286,
+        "predicted_count": 139,
+        "precision_ci_95": [
+          0.9385,
+          0.9926
+        ],
+        "recall_ci_95": [
+          0.4184,
+          0.5333
+        ]
+      },
+      "liquidated_damages": {
+        "label": "liquidated_damages",
+        "tp": 18,
+        "fp": 10,
+        "fn": 40,
+        "tn": 13726,
+        "precision": 0.6429,
+        "recall": 0.3103,
+        "f1": 0.4186,
+        "support": 58,
+        "predicted_count": 28,
+        "precision_ci_95": [
+          0.4583,
+          0.7929
+        ],
+        "recall_ci_95": [
+          0.2062,
+          0.438
+        ]
+      },
+      "warranty_duration": {
+        "label": "warranty_duration",
+        "tp": 41,
+        "fp": 10,
+        "fn": 30,
+        "tn": 13713,
+        "precision": 0.8039,
+        "recall": 0.5775,
+        "f1": 0.6721,
+        "support": 71,
+        "predicted_count": 51,
+        "precision_ci_95": [
+          0.6754,
+          0.8898
+        ],
+        "recall_ci_95": [
+          0.4615,
+          0.6855
+        ]
+      },
+      "insurance": {
+        "label": "insurance",
+        "tp": 83,
+        "fp": 4,
+        "fn": 60,
+        "tn": 13647,
+        "precision": 0.954,
+        "recall": 0.5804,
+        "f1": 0.7217,
+        "support": 143,
+        "predicted_count": 87,
+        "precision_ci_95": [
+          0.8877,
+          0.982
+        ],
+        "recall_ci_95": [
+          0.4985,
+          0.6582
+        ]
+      },
+      "covenant_not_to_sue": {
+        "label": "covenant_not_to_sue",
+        "tp": 38,
+        "fp": 8,
+        "fn": 43,
+        "tn": 13705,
+        "precision": 0.8261,
+        "recall": 0.4691,
+        "f1": 0.5984,
+        "support": 81,
+        "predicted_count": 46,
+        "precision_ci_95": [
+          0.6928,
+          0.9091
+        ],
+        "recall_ci_95": [
+          0.3643,
+          0.5767
+        ]
+      },
+      "third_party_beneficiary": {
+        "label": "third_party_beneficiary",
+        "tp": 14,
+        "fp": 22,
+        "fn": 12,
+        "tn": 13746,
+        "precision": 0.3889,
+        "recall": 0.5385,
+        "f1": 0.4516,
+        "support": 26,
+        "predicted_count": 36,
+        "precision_ci_95": [
+          0.2478,
+          0.5514
+        ],
+        "recall_ci_95": [
+          0.3546,
+          0.7124
+        ]
+      }
+    },
+    "macro_precision": 0.7931,
+    "macro_recall": 0.5322,
+    "macro_f1": 0.6268,
+    "micro_precision": 0.8211,
+    "micro_recall": 0.5275,
+    "micro_f1": 0.6423,
+    "total_tp": 1997,
+    "total_fp": 435,
+    "total_fn": 1789
+  },
+  "short_clause_docs": [
+    {
+      "title": "RareElementResourcesLtd_20171019_SC 13D_EX-99.4_10897534_EX-99.4_Intellectual Property Agreement",
+      "char_length": 34461,
+      "clause_count": 1,
+      "clauses_per_10k_chars": 0.29,
+      "headings": [
+        ""
+      ]
+    },
+    {
+      "title": "PhoenixNewMediaLtd_20110421_F-1_EX-10.17_6958322_EX-10.17_Content License Agreement",
+      "char_length": 25060,
+      "clause_count": 1,
+      "clauses_per_10k_chars": 0.4,
+      "headings": [
+        ""
+      ]
+    },
+    {
+      "title": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement",
+      "char_length": 22721,
+      "clause_count": 1,
+      "clauses_per_10k_chars": 0.44,
+      "headings": [
+        ""
+      ]
+    },
+    {
+      "title": "PacificapEntertainmentHoldingsInc_20051115_8-KA_EX-1.01_4300894_EX-1.01_Content License Agreement",
+      "char_length": 18138,
+      "clause_count": 1,
+      "clauses_per_10k_chars": 0.55,
+      "headings": [
+        ""
+      ]
+    },
+    {
+      "title": "PAXMEDICA,INC_07_02_2020-EX-10.12-Master Service Agreement",
+      "char_length": 16792,
+      "clause_count": 1,
+      "clauses_per_10k_chars": 0.6,
+      "headings": [
+        ""
+      ]
+    },
+    {
+      "title": "ON4COMMUNICATIONSINC_07_02_2009-EX-10.1-PROMOTION AGREEMENT",
+      "char_length": 15103,
+      "clause_count": 1,
+      "clauses_per_10k_chars": 0.66,
+      "headings": [
+        ""
+      ]
+    },
+    {
+      "title": "FEDERATEDGOVERNMENTINCOMESECURITIESINC_04_28_2020-EX-99.SERV AGREE-SERVICES AGREEMENT_POWEROF",
+      "char_length": 14384,
+      "clause_count": 1,
+      "clauses_per_10k_chars": 0.7,
+      "headings": [
+        ""
+      ]
+    },
+    {
+      "title": "ScansourceInc_20190822_10-K_EX-10.38_11793958_EX-10.38_Distributor Agreement2",
+      "char_length": 13330,
+      "clause_count": 1,
+      "clauses_per_10k_chars": 0.75,
+      "headings": [
+        ""
+      ]
+    },
+    {
+      "title": "SPHERE3DCORP_06_24_2020-EX-10.12-CONSULTING AGREEMENT",
+      "char_length": 12394,
+      "clause_count": 1,
+      "clauses_per_10k_chars": 0.81,
+      "headings": [
+        ""
+      ]
+    },
+    {
+      "title": "BOLIVARMININGCORP_05_23_2003-EX-2.1-VISP WEB SITE BUILDING AND HOSTING AGREEMENT",
+      "char_length": 11539,
+      "clause_count": 1,
+      "clauses_per_10k_chars": 0.87,
+      "headings": [
+        ""
+      ]
+    },
+    {
+      "title": "HUBEIMINKANGPHARMACEUTICALLTD_09_19_2006-EX-10.1-OUTSOURCING AGREEMENT",
+      "char_length": 11322,
+      "clause_count": 1,
+      "clauses_per_10k_chars": 0.88,
+      "headings": [
+        ""
+      ]
+    },
+    {
+      "title": "KALLOINC_11_03_2011-EX-10.1-STRATEGIC ALLIANCE AGREEMENT",
+      "char_length": 75458,
+      "clause_count": 3,
+      "clauses_per_10k_chars": 0.4,
+      "headings": [
+        "Preamble",
+        "Codes and Standards adherence for International compliance:    1. JCAHO Comprehensive Accreditation Manual  2. AABB  3. NFPA 99  a. Gas and Vacuum Systems  b. Electrical Systems  4. FDA  5. SMDA  6. OSHA",
+        "Tighe P. Improving the quality of urine strip testing: The Clinitek 50 urine chemistry analyser. Euro Clin Lab, June 1997,16:20."
+      ]
+    },
+    {
+      "title": "DeltathreeInc_19991102_S-1A_EX-10.19_6227850_EX-10.19_Co-Branding Agreement_ Service Agreement",
+      "char_length": 28825,
+      "clause_count": 3,
+      "clauses_per_10k_chars": 1.04,
+      "headings": [
+        "Preamble",
+        "Term. The term of this Agreement shall be effective as of the date first stated above and shall continue for a term of three (3) years, unless terminated earlier in accordance with the provisions of this Agreement (the \"Term\"); provided, however, that PrimeCall may elect to terminate this Agreement, upon thirty (30) days' written notice, at any time from and after the time that collectively RSL Communications, Ltd. and/or its Affiliates holds less than fifty percent (50%) of the voting control of DeltaThree's outstanding shares. \"Affiliate\" as used in this Agreement shall mean any person directly or indirectly controlling or controlled by or under direct or indirect common control with such person.",
+        "Payment Terms. Any amounts due hereunder shall be calculated and paid in U.S. dollars on a monthly basis within twenty-five (25) business days following the receipt of the reports detailed in Sections 3.06  [Reporting] and 4.02  [Reporting] hereof or any other invoices provided for herein. All payments shall be made via wire transfer in accordance with written instructions from the parties."
+      ]
+    },
+    {
+      "title": "CENTRACKINTERNATIONALINC_10_29_1999-EX-10.3-WEB SITE HOSTING AGREEMENT",
+      "char_length": 15176,
+      "clause_count": 3,
+      "clauses_per_10k_chars": 1.98,
+      "headings": [
+        "Preamble",
+        "up to 1 hour per month of Web site administration services at no              additional charge, limited to:",
+        "a monthly report of user activity on the Hosted Site."
+      ]
+    },
+    {
+      "title": "MANAKOASERVICESCORP_11_21_2007-EX-7.5-STRATEGIC ALLIANCE AGREEMENT",
+      "char_length": 14879,
+      "clause_count": 3,
+      "clauses_per_10k_chars": 2.02,
+      "headings": [
+        "Preamble",
+        "UTEK shall indemnify, defend and hold harmless MKOS from and against any and all losses incurred by MKOS which arise out of or result from misrepresentation, breach of warranty or breach or non- fulfillment of any covenant contained herein or Schedules annexed hereto or in any other documents or instruments furnished by UTEK pursuant hereto or in connection with this Agreement.",
+        "MKOS shall indemnify, defend and hold harmless UTEK from and against any and all losses incurred by UTEK which arise out of or result from misrepresentation, breach of warranty or breach or non-fulfillment of any covenant contained herein or Schedules annexed hereto or in any other documents or instruments furnished by MKOS pursuant hereto or in connection with this Agreement."
+      ]
+    },
+    {
+      "title": "ZONDWINDSYSTEMPARTNERSLTDSERIES85-B_04_03_2006-EX-10-MANAGEMENT AND MAINTENANCE AGREEMENT",
+      "char_length": 17712,
+      "clause_count": 4,
+      "clauses_per_10k_chars": 2.26,
+      "headings": [
+        "Preamble",
+        "Amendment.           ---------",
+        "Continuing Validity. Except as expressly modified by Section 1 of this          ------------------- Amendment, all of the terms and conditions of the Agreement shall remain in full force and effect. By execution of this Amendment, Alpha Mariah (Prime), Inc. and Beta Mariah (Prime), Inc. hereby become parties to the Agreement and agree to be bound by all of the terms of the Agreement and this Amendment.",
+        "Miscellaneous. The provisions contained in Article 10 of the Agreement           ------------- are hereby incorporated herein by this cross-reference."
+      ]
+    },
+    {
+      "title": "WELLSFARGOMORTGAGEBACKEDSECURITIES2006-6TRUST_05_11_2006-EX-10.3-Yield Maintenance Agreement",
+      "char_length": 37683,
+      "clause_count": 5,
+      "clauses_per_10k_chars": 1.33,
+      "headings": [
+        "Preamble",
+        "Ratings Event. If a Ratings Event (as defined below) has occurred and UBS AG has not complied with the requirements set forth in the succeeding paragraph within the 30 day time period specified therein, then an Additional Termination Event shall have occurred with respect to UBS AG and UBS AG shall be the sole Affected Party with respect to such an Additional Termination Event.",
+        "Swap Disclosure Event. If upon the occurrence of a Swap Disclosure Event (as defined in paragraph (xxiii) above), UBS AG has not, within 5 business days after such Swap Disclosure Event complied with any of the provisions set forth in paragraph (xxiii) above, then an Additional Termination Event shall have occurred with respect to UBS AG with UBS AG as the sole Affected Party with respect to such Additional Termination Event.",
+        "The Counterparty is a New York common law trust and is regarded as a          Real Estate Mortgage Investment Conduit for federal income tax          purposes.",
+        "It is a \"U.S. person\" (as that term is used in section          1.1441-4(a)(3)(ii) of the United States Treasury Regulations for United          States federal income tax purposes."
+      ]
+    },
+    {
+      "title": "PrudentialBancorpInc_20170606_8-K_EX-10.4_10474434_EX-10.4_Endorsement Agreement",
+      "char_length": 14155,
+      "clause_count": 5,
+      "clauses_per_10k_chars": 3.53,
+      "headings": [
+        "Preamble",
+        "Upon the death of the Employee, proceeds shall be paid in one sum to the Owner, its successors or assigns, to the extent of its interest in the Policy as described in the Agreement. It is hereby provided that the Insurer may rely solely upon a statement from the Owner as to the amount of proceeds it is entitled to receive under this paragraph.",
+        "Any proceeds at the death of the Employee in excess of the amount paid under the provisions of the preceding paragraph shall be paid in one sum to the following beneficiaries designated by the Employee:     Primary Beneficiary, Relationship, Address     Contingent Beneficiary, Relationship, Address",
+        "It is agreed by the undersigned that this designation and limited assignment of rights shall be subject in all respects to the contractual terms of the Policy.",
+        "Any payment directed by the Owner under this endorsement shall be a full discharge of the Insurer, and such discharge shall be binding on all parties claiming any interest under the policy."
+      ]
+    },
+    {
+      "title": "IMPCOTECHNOLOGIESINC_04_15_2003-EX-10.65-JOINT VENTURE AGREEMENT",
+      "char_length": 63439,
+      "clause_count": 6,
+      "clauses_per_10k_chars": 0.95,
+      "headings": [
+        "Preamble",
+        "Pledge of shares    The Parties agree that the shares held by them shall not be pledged to a third party or otherwise encumbered during the term of this Agreement. In the event the pledge of shares of any Party is necessitated for the purposes of the JVC, such pledge will be made only with the prior written consent and on terms acceptable to the other Parties.    ARTICLE - 7 BUSINESS ACTIVITIES   7.1   General Purpose: IMPCO and MIL/MINDA have entered into this Agreement for the purpose of establishing the JVC with the main objects of, inter alia, marketing and selling of the Products and providing other associated and incidental services to customers, and undertake other activities as mentioned in its M&A.   7.2   The JVC will be permitted to use the following words in Products which are manufactured by MINDA IMPCO Limited. \"Manufactured by MINDA IMPCO Limited, an Indo American Joint Venture\". Subject to the provisions of this Agreement, all products, will carry the trademark of MINDA IMPCO.   ARTICLE - 8 ROLE OF CONTRACTING PARTIES   8.1   Each of the Parties to this Agreement shall give their assistance to the JVC according to their respective roles to make the JVC a successful venture.   8.2   MIL/MINDA at its sole discretion will assist without any legal obligation the JVC in the following:     -   Business contacts in India and the neighboring countries;     -   Access to Indian Know-how;     -   Procurement of Indian equipment;     -   Financing from Indian sources;     -   Personnel recruitment; and     -   Administration and fiscal.     -   Support for additional business from Indian/Foreign customers; and     -   Setting up of the business of the JVC.   8.3 a)   IMPCO, at its sole discretion and without any legal obligation may assist the JVC with the following:     i)   Sales and service training     ii)   After sales services .",
+        "In addition to anything contained hereinabove, this Agreement may be terminated by either Party upon the following:",
+        "/s/ Rob Mercer",
+        "/s/ Don Dominic"
+      ]
+    },
+    {
+      "title": "ArtaraTherapeuticsInc_20200110_8-K_EX-10.5_11943350_EX-10.5_License Agreement",
+      "char_length": 38330,
+      "clause_count": 6,
+      "clauses_per_10k_chars": 1.57,
+      "headings": [
+        "Preamble",
+        "Royalties. Royalties will be payable by ArTara on Net Sales of Product in the Indication. ArTara will, no later than [\u2026***\u2026] following the close of each calendar quarter, pay tiered Royalties based on annual Net Sales of Product in the Indication as set forth below:",
+        "Royalty Reduction. In the event the Regulatory Authorities determine that the Program Data is not sufficient for Regulatory Approvals on its own and additional pediatric efficacy and safety clinical studies are required, Royalties set forth above will be reduced by [\u2026***\u2026] percent ([\u2026 ***\u2026]%). 3.5 Sales Milestone Payments. In the event that Annual Net Sales, as detailed in Section 3.3, surpass certain thresholds, ArTara will make the following payments no later than [\u2026***\u2026] following the close of the calendar quarter in which each milestone is reached as set forth below:",
+        "Payments. All payments under Articles 3.2, 3.3 and 3.5 shall be sent to the following address: Checks will be sent to: The University of Iowa Research Foundation ATTN: Accounting 6 Gilmore Hall 112 North Capitol St. Iowa City, IA 52242-5500 Wire transfers will be sent to: [\u2026***\u2026]",
+        "No Consequential Damages. IN NO EVENT SHALL EITHER PARTY BE LIABLE TO THE OTHER PARTY UNDER THIS AGREEMENT IN A DIRECT ACTION BETWEEN THE PARTIES FOR SPECIAL, INDIRECT, INCIDENTAL OR CONSEQUENTIAL DAMAGES (INCLUDING, WITHOUT LIMITATION, LOSS OF PROFITS) SUFFERED BY THE OTHER PARTY. ARTICLE SEVEN INSURANCE 7.1 ArTara, Affiliates, and sublicensees will obtain and maintain commercial general liability insurance with a reputable and financially secure insurance carrier prior to clinical testing, making, using, importing, offering to sell, or selling any licensed Product or engaging in any other act involving any licensed Product or the patent rights, if such act could possibly create risk of a claim against University Indemnitees for personal injury or property damage. (a) The insurance will identify University Indemnitees as additional insureds and will provide that the carrier will notify University in writing at least [\u2026***\u2026] prior to cancellation, non-renewal, or material change in coverage. Should ArTara fail to obtain replacement insurance providing comparable coverage within such [\u2026***\u2026] period, University will have the right to termination this Agreement effective as of the end of the [\u2026***\u2026] period without notice or any additional cure period. (b) The insurance will include coverage for product liability with a minimum of [\u2026***\u2026] dollars ($[\u2026***\u2026]) per occurrence and [\u2026 ***\u2026] dollars ($[\u2026***\u2026]) annual aggregate, coverage for contractual liability, clinical trials liability if any such trial is performed, bodily injury and property damage, including completed operations, personal injury, coverage for contractual employees, blanket contractual and products, and all other coverages standard for such policies. Such insurance will additionally include errors and omissions insurance with a minimum of [\u2026***\u2026] dollars ($[\u2026***\u2026]) per occurrence. (c) Insurance policies purchased to comply with this Article Seven will be kept in force for at least [\u2026***\u2026] after the last sale of licensed Product. 7.2 At University's request, such request to be made no more than annually, ArTara will provide University with a certificate of insurance and notices of subsequent renewals for its insurance and that of Affiliates extended rights under this Agreement and of sublicensees. 7.6 The specified minimum coverages and other provisions of this Article Seven do not constitute a limitation on ArTara's obligation to indemnify the University Indemnitees under this Agreement."
+      ]
+    },
+    {
+      "title": "GridironBionutrientsInc_20171206_8-K_EX-10.1_10972555_EX-10.1_Endorsement Agreement",
+      "char_length": 29208,
+      "clause_count": 6,
+      "clauses_per_10k_chars": 2.05,
+      "headings": [
+        "Preamble",
+        "Company may liquidate and sell its inventory of Licensed Products (including any inventory then in production) for a period of ninety (90) days after the termination date of the Contract Period, subject to the Company's continued obligation to pay the Fee as provided above, and will deliver the Sales Report with respect to such liquidation sales within 30 days following the end of the first reached full quarter following termination.",
+        "If Company has not disposed of all Licensed Products as provided in subparagraph 1 above by the end of the 90 day period, Company, at its option, may either: (a) remove or obliterate entirely from such Licensed Products (and any labels, tags, riders and the like) all references to any NFLA Identification, and then sell the same; or (b) destroy all such remaining Licensed Products.   7",
+        "PRO FOOTBALL LEGENDS LOGO",
+        "NFLA agrees to promote Company and Company's products to NFLA database by:    1. E-blasts: NFLA to send a minimum of two (2) dedicated e-blasts per year to NFLA database. All e-blast communications must be approved in writing by Company;"
+      ]
+    },
+    {
+      "title": "GWG HOLDINGS, INC. - ORDERLY MARKETING AGREEMENT",
+      "char_length": 25450,
+      "clause_count": 6,
+      "clauses_per_10k_chars": 2.36,
+      "headings": [
+        "Preamble",
+        "Each such Distribution Agreement shall set out the customary terms and conditions for the sale and distribution of the respective Tranche, including customary representations, warranties, covenants and indemnification provisions. For the avoidance of doubt, each Distribution Agreement shall include provisions to the following effect: (i) GWG shall have no responsibility for the payment of fees or commissions payable to the Bank, which fees and commissions shall be the responsibility of certain affiliates of the Seller Trusts as set forth in the applicable Distribution Agreement; and (ii) each of GWG and the Seller Trusts shall agree to provide a customary indemnity in favor of the Bank and its affiliates. 1.7 If, in connection with the marketing, sale and distribution of a Tranche, the Bank determines that the number of Shares of Stock proposed to be included in the Tranche exceeds the number that can reasonably be sold, then the number of Shares of Stock shall be reduced accordingly on a pro-rata basis with respect to each of the Seller Trusts. 1.8 Prior to the offering of each Tranche, GWG shall provide the placement agents or underwriters in such Offering a list of the top 100 institutional holders of the Common Stock. In connection with any Offering, the Seller Trusts shall instruct the placement agents or underwriters to use their reasonable best efforts to (i) effect as wide a distribution of the Shares as is reasonably practicable without adversely affecting the pricing thereof and (ii) not sell any Shares to any person or Group (as such terms is used in Section 13(d)(3) of the Securities Exchange Act of 1934, as amended (the \"Exchange Act\")) who, upon completion of the Offering, would have Beneficial Ownership (as defined in Rule 13d-3 under the Exchange Act) of shares of Common Stock representing in the aggregate 5.0% or more the total number of outstanding shares of Common Stock (or in the case of a person of the type described in Rule 13d-1(b)(1)(i) under the Exchange Act, 10% or more of the Total Voting Power).",
+        "Compensation. The Engagement Letter shall provide that the Bank shall not be entitled to any compensation for its advice hereunder or reimbursement of its expenses in connection with this OMA and shall only be entitled to compensation in connection with an Offering as provided in the Engagement Letter and related Distribution Agreement with respect to such Offering.",
+        "Assignments and Transfers by Seller Trusts. The provisions of this OMA shall be binding upon and inure to the benefit of the Seller Trusts and their respective successors and assigns. A Seller Trust may transfer or assign, in whole or from time to time in part, to one or more liquidating trusts its rights hereunder in connection with the transfer or resale of Stock held by such Seller Trust, provided that such Seller Trust complies with all laws applicable thereto and provides written notice of assignment to GWG promptly after such assignment is effected, and provided further that such liquidating trust and each beneficiary thereof executes a joinder to this OMA effective as of the date of such assignment or transfer. 4.5 Counterparts. This OMA may be executed in two or more counterparts, each of which shall be deemed an original, but all of which together shall constitute one and the same instrument. 4.6 Severability. Any provision of this OMA that is prohibited or unenforceable in any jurisdiction shall, as to such jurisdiction, be ineffective to the extent of such prohibition or unenforceability without invalidating the remaining provisions hereof but shall be interpreted as if it were written so as to be enforceable to the maximum extent permitted by applicable law, and any such prohibition or unenforceability in any jurisdiction shall not invalidate or render unenforceable such provision in any other jurisdiction. To the extent permitted by applicable law, the Parties hereby waive any provision of law which renders any provisions hereof prohibited or unenforceable in any respect. 4.7 Further Assurances. The Parties shall execute and deliver all such further instruments and documents and take all such other actions as may reasonably be required to carry out the transactions contemplated hereby and to evidence the fulfillment of the agreements herein contained. 4.8 Entire Agreement. This OMA is intended by the Parties as a final expression of their agreement and intended to be a complete and exclusive statement of the agreement and understanding of the Parties hereto in respect of the subject matter contained herein. This OMA supersedes all prior agreements and understandings between the Parties with respect to such subject matter. 4.9 Governing Law; Consent to Jurisdiction; Waiver of Jury Trial. This OMA, and all claims or causes of action (whether in contract or tort) that may be based upon, arise out of or relate to this OMA or the negotiation, execution or performance of this OMA (including any claim or cause of action based upon, arising out of or related to any representation or warranty made in or in connection with this OMA), will be construed in accordance with and governed by the law of the State of New York without regard to principles of conflicts of laws that would result in the application of the law of any other jurisdiction. Any action against any Party relating to the foregoing shall be brought in any federal or state court of competent jurisdiction located within the State of New York, and the Parties hereto hereby irrevocably submit to the non-exclusive jurisdiction of any federal or state court located within the State of New York over any such action. The Parties hereby irrevocably waive, to the fullest extent permitted by applicable law, any objection which they may now or hereafter have to the laying of venue of any such dispute brought in such court or any defense of inconvenient forum for the maintenance of such dispute. Each of the Parties hereto agrees that a judgment in any such dispute may be enforced in other jurisdictions by suit on the judgment or in any other manner provided by law.",
+        "List of Seller Trusts and Shares of Stock"
+      ]
+    },
+    {
+      "title": "ORBSATCORP_08_17_2007-EX-7.3-STRATEGIC ALLIANCE AGREEMENT",
+      "char_length": 18445,
+      "clause_count": 6,
+      "clauses_per_10k_chars": 3.25,
+      "headings": [
+        "Preamble",
+        "Make itself available at the offices of AVDU or at another mutually agreed upon place, during normal business hours, for reasonable periods of time, subject to reasonable advance notice and mutually convenient scheduling.",
+        "Make itself available for telephone conferences with the principal officer(s) of AVDU during normal business hours.",
+        "UTK shall indemnify, defend and hold harmless AVDU from and against any and all losses incurred by AVDU which arise out of or result from misrepresentation, breach of warranty or breach or non- fulfillment of any covenant contained herein or Schedules annexed hereto or in any other documents or instruments furnished by UTK pursuant hereto or in connection with this Agreement.",
+        "AVDU shall indemnify, defend and hold harmless UTK from and against any and all losses incurred by UTK which arise out of or result from misrepresentation, breach of warranty or breach or non-fulfillment of any covenant contained herein or Schedules annexed hereto or in any other documents or instruments furnished by AVDU pursuant hereto or in connection with this Agreement."
+      ]
+    },
+    {
+      "title": "NmfSlfIInc_20200115_10-12GA_EX-10.5_11946987_EX-10.5_Trademark License Agreement",
+      "char_length": 17064,
+      "clause_count": 6,
+      "clauses_per_10k_chars": 3.52,
+      "headings": [
+        "Preamble",
+        "COMPLIANCE 2.1. Quality Control. In order to preserve the inherent value of the Licensed Mark, the Licensee agrees to use reasonable efforts to ensure that it maintains the quality of its business and the operation thereof equal to the standards prevailing in the operation of the Licensor's and the Licensee's businesses as of the date of this Agreement. The Licensee further agrees to use the Licensed Mark in accordance with such quality standards as may be reasonably established by the Licensor and communicated to the Licensee from time to time in writing, or as may be agreed to by the Licensor and the Licensee from time to time in writing. The Licensee agrees to allow the Licensor to conduct reasonable inspection of the quality of the Licensee's services from time to time. 2.2. Compliance With Laws. The Licensee agrees that the business operated by it in connection with the Licensed Mark shall comply with all laws, rules, regulations and requirements of any governmental body in the Territory or elsewhere as may be applicable to the operation, advertising, and promotion of the business and that it shall notify the Licensor of any action that must be taken by the Licensee to comply with such law, rules, regulations or requirements. 2.3. Notification of Infringement. Each party shall immediately notify the other party and provide to the other party all relevant background facts upon becoming aware of (a) any registrations of, or applications for registration of, marks in the Territory that do or may conflict with the Licensor's rights in the Licensed Mark or the rights granted to the Licensee under this Agreement, (b) any infringements or misuses of the Licensed Mark in the Territory by any third party (\"Third Party Infringement\") or (c) any claim that Licensee's use of the Licensed Mark infringes the intellectual property rights of any third party in the Territory (\"Third Party Claim\"). The Licensor shall have the exclusive right, but not the obligation, to prosecute, defend and/or settle in its sole discretion, all actions, proceedings and claims involving any Third Party Infringement or Third Party Claim, and to take any other action that it deems necessary or proper for the protection and preservation of its rights in the Licensed Mark. The Licensee shall cooperate with the Licensor in the prosecution, defense or settlement of such actions, proceedings or claims.",
+        "REPRESENTATIONS AND WARRANTIES 3.1. Disclaimer of Representation and Warranties. The Licensee hereby accepts this license on an \"as is\" basis. The Licensee acknowledges that the Licensor makes no explicit or implicit representation or warranty as to the registrability, validity, enforceability or ownership of the Licensed Mark, or as to the Licensee's ability to use the Licensed Mark without infringing or otherwise violating the rights of others, and the Licensor has no obligation 2",
+        "TERM AND TERMINATION 4.1. Term. The license granted to the Licensee under this Agreement shall continue perpetually. Notwithstanding the foregoing, this Agreement shall expire if the Investment Advisor or one of its affiliates ceases to serve as investment adviser to the Licensee. This Agreement shall be terminable (a) by the Licensor (i) at any time and in its sole discretion in the event that the Licensor or the Licensee receives notice of any Third Party Claim arising out of the Licensee's use of the Licensed Mark or (ii) upon sixty (60) days' written notice by the Licensor to the Licensee or (b) by the Licensee (i) at any time in the event such Licensee assigns or attempts to assign or sublicense this Agreement or any of the Licensee's rights or duties hereunder without the prior written consent of the Licensor or (ii) upon sixty (60) days' written notice by the Licensee to the Licensor. 4.2. Effect of Termination. Upon expiration or termination of this Agreement, all rights granted to the Licensee under this Agreement with respect to the Licensed Mark shall cease, and the Licensee shall immediately delete the term \"NMF\" from its corporate name and shall discontinue all other use of the Licensed Mark. For twenty-four (24) months following termination of this Agreement, the Licensee shall specify on all public- facing materials in a prominent place and in prominent typeface that the Licensee is no longer operating under the Licensed Mark, is no longer associated with the Licensor, or such other notice as may be deemed necessary by the Licensor in its sole discretion in its prosecution, defense, and/or settlement of any Third Party Claim.",
+        "MISCELLANEOUS 5.1. Third Party Beneficiaries. The parties agree that the Investment Advisor shall be a third party beneficiary of this Agreement, and shall have the rights and protections provided to the Licensee under this Agreement. Nothing in this Agreement, either express or implied, is intended to or shall confer upon any third party other than the Investment Advisor any legal or equitable right, benefit or remedy of any nature whatsoever under or by reason of this Agreement. 5.2. Assignment. The Licensee shall not sublicense, assign, pledge or grant as security or otherwise encumber or transfer to any third party all or any part of its rights or duties under this Agreement, in whole or in part, without the prior written consent from the Licensor, which consent the Licensor may grant or withhold in its 3"
+      ]
+    },
+    {
+      "title": "PalmerSquareCapitalBdcInc_20200116_10-12GA_EX-10.6_11949289_EX-10.6_Trademark License Agreement",
+      "char_length": 14764,
+      "clause_count": 6,
+      "clauses_per_10k_chars": 4.06,
+      "headings": [
+        "Preamble",
+        "COMPLIANCE 2.1. Quality Control. In order to preserve the inherent value of the Licensed Mark, Licensee agrees to use reasonable efforts to ensure that it maintains the quality of the Licensee's business and the operation thereof equal to the standards prevailing in the operation of Licensee's business as of the Effective Date. The Licensee further agrees to use the Licensed Mark in accordance with such quality standards as may be reasonably established by Licensor and communicated to the Licensee from time to time in writing, or as may be agreed to by Licensor and the Licensee from time to time in writing. 2.2. Compliance With Laws. Licensee agrees that the business operated by it in connection with the Licensed Mark shall comply with all laws, rules, regulations and requirements of any governmental body in the Territory or elsewhere as may be applicable to the operation, marketing, and promotion of the business and shall notify Licensor of any action that must be taken by Licensee to comply with such law, rules, regulations or requirements. 2.3. Notification of Infringement. Each party shall immediately notify the other party and provide to the other party all relevant background facts upon becoming aware of (a) any registrations of, or applications for registration of, marks in the Territory that do or may conflict with the Licensor's rights in the Licensed Mark or the rights granted to the Licensee under this Agreement, (b) any infringements or misuse of the Licensed Mark in the Territory by any third party (\"Third Party Infringement\"), or (c) any claim that Licensee's use of the Licensed Mark infringes the intellectual property rights of any third party in the Territory (\"Third Party Claim\"). Licensor shall have the exclusive right, but not the obligation, to prosecute, defend and/or settle in its sole discretion, all actions, proceedings and claims involving any Third Party Infringement or Third Party Claim, and to take any other action that it deems necessary or proper for the protection and preservation of its rights in the Licensed Mark. Licensee shall cooperate with Licensor in the prosecution, defense or settlement of such actions, proceedings or claims.",
+        "REPRESENTATIONS AND WARRANTIES 3.1. Licensee accepts this license on an \"as is\" basis. Licensee acknowledges that Licensor makes no explicit or implicit representation or warranty as to the registrability, validity, enforceability, ownership of the Licensed Mark, or as to Licensee's ability to use the Licensed Mark without infringing or otherwise violating the rights of others, and Licensor has no obligation to indemnify Licensee with respect to any claims arising from Licensee's use of the Licensed Mark, including without limitation any Third Party Claim. 3.2. Mutual Representations. Each party hereby represents and warrants to the other party as follows: (a) Due Authorization. Such party is a limited liability company duly formed or a corporation duly incorporated, as applicable, and is in good standing as of the Effective Date, and the execution, delivery and performance of this Agreement by such party have been duly authorized by all necessary action on the part of such party. (b) Due Execution. This Agreement has been duly executed and delivered by such party and, upon due authorization, execution and delivery of this Agreement by the other party, constitutes a legal, valid and binding obligation of such party, enforceable against such party in accordance with its terms. (c) No Conflict. Such party's execution, delivery and performance of this Agreement do not: (i) violate, conflict with or result in the breach of any provision of the operating agreement, charter or bylaws (or similar organizational documents) of such party; (ii) conflict with or violate any governmental order applicable to such party or any of its assets, properties or businesses; or (iii) conflict with, result in any breach of, constitute a default (or event which with the giving of notice or lapse of time, or both, would become a default) under, require any consent under, or give to others any rights of termination, amendment, acceleration, suspension, revocation or cancellation of any contract, agreement, lease, sublease, license, permit, franchise or other instrument or arrangement to which it is a party.",
+        "TERM AND TERMINATION 4.1. Term. This Agreement shall expire if the Investment Advisor or one of its affiliates ceases to serve as investment adviser to the Licensee. This Agreement shall be terminable by Licensor at any time and in its sole discretion in the event that Licensor or Licensee receives notice of any Third Party Claim arising out of Licensee's use of the Licensed Mark; by Licensor or Licensee upon sixty (60) days' written notice to the other party; or by Licensee at any time in the event Licensee assigns or attempts to assign or sublicense this Agreement or any of Licensee's rights or duties hereunder without the prior written consent of Licensor.",
+        "Upon Termination. Upon expiration or termination of this Agreement, all rights granted to Licensee under this Agreement with respect to the Licensed Mark shall cease, and Licensee shall immediately delete the term \"Palmer Square\" from its corporate name and shall discontinue all other use of the Licensed Mark. For twenty-four (24) months following termination of this Agreement, Licensee shall specify on all public-facing materials in a prominent place and in prominent typeface that Licensee is no longer operating under the Licensed Mark, is no longer associated with Licensor, or such other notice as may be deemed necessary by Licensor in its sole discretion in its prosecution, defense, and/or settlement of any Third Party Claim."
+      ]
+    },
+    {
+      "title": "GluMobileInc_20070319_S-1A_EX-10.09_436630_EX-10.09_Content License Agreement2",
+      "char_length": 11954,
+      "clause_count": 6,
+      "clauses_per_10k_chars": 5.02,
+      "headings": [
+        "Preamble",
+        "PARTIES",
+        "WIRELESS PRODUCTS",
+        "GUARANTEE PAYMENT: Consistent with paragraph 15(c) of the Agreement, Licensee shall forfeit the Guarantee paid to date of ***** dollars",
+        "DIRECT-TO-CONSUMER DISTRIBUTION: Fox hereby reserves the right to distribute all Wireless Products through Fox's direct-to-consumer distribution channels, for which Fox shall retain a Distribution Fee as defined in Paragraph 4(a) of this Amendment."
+      ]
+    },
+    {
+      "title": "CHERRYHILLMORTGAGEINVESTMENTCORP_09_26_2013-EX-10.1-Strategic Alliance Agreement",
+      "char_length": 27741,
+      "clause_count": 7,
+      "clauses_per_10k_chars": 2.52,
+      "headings": [
+        "Preamble",
+        "Definitions.",
+        "The Acknowledgement Agreement",
+        "Ancillary Agreements.",
+        "Representations and Warranties."
+      ]
+    },
+    {
+      "title": "PelicanDeliversInc_20200211_S-1_EX-10.3_11975895_EX-10.3_Development Agreement1",
+      "char_length": 16590,
+      "clause_count": 7,
+      "clauses_per_10k_chars": 4.22,
+      "headings": [
+        "Preamble",
+        "Project Overview The purpose of this project is to develop additional features for the Pelican Delivers software. This includes POS integration, Google Maps API, payment processing features, ID verification, reporting, driver app improvement and workflow, and a front facing web application for customers to find, order, and receive products via deliver or pickup.",
+        "Specifications Number of applications included in Phase 1:1 Tech Stack: iOS (Objective - C or Swift), PhP, MySQL, AWS Hosting, jQuery, and JavaScript language: English Design: Custom to client",
+        "Delivery Schedule Based on the current requirements and this SOW, Seattle Software Developers estimates that this project will take around six [4] months of development, testing, and deployment. This estimate may change depending on unforeseen circumstances or requirements. We estimate that the website (Customer Portal) will take 3 months to complete because this will be the priority.",
+        "Fee Payment Schedule Fees: The Fees for the Project shall be $279,000.00 Payment Schedule: Client shall pay Developer: 20% Deposit ($55,800.00) to be paid at the start of the project. 20% ($55,800.00) to be paid upon completion of Milestone #1. 20% ($55,800.00) to be paid upon completion of Milestone #2. 20% ($55,800.00) to be paid upon completion of Milestone #3. 20% ($55,800.00) to be paid upon completion of Milestone #4."
+      ]
+    },
+    {
+      "title": "HertzGroupRealtyTrustInc_20190920_S-11A_EX-10.8_11816941_EX-10.8_Trademark License Agreement",
+      "char_length": 14313,
+      "clause_count": 7,
+      "clauses_per_10k_chars": 4.89,
+      "headings": [
+        "Preamble",
+        "LICENSE GRANT AND CONDITIONS OF LICENSED USE 2.1 Licensor hereby grants Licensed Users a nonexclusive, nontransferable, nonsublicensable, royalty-free license, during the term of this Agreement, to use and display the Licensed Trade Name and the Licensed Mark in the United States solely in connection with the Licensee's corporate name and identifying mark.",
+        "The Licensed Mark shall remain the exclusive property of Licensor and nothing in this Agreement shall give Licensed Users any right or interest in the Licensed Mark except the licenses expressly granted in this Agreement. 2.3 All of Licensor's rights in and to the Licensed Mark, including, but not limited to, the right to use and to grant others the right to use the Licensed Mark, are reserved by Licensor. 2.4 No license, right, or immunity is granted by either Party to the other, either expressly or by implication, or by estoppel, or otherwise with respect to any trademarks, copyrights, or trade dress, or other property right, other than with respect to the Licensed Trade Name and the Licensed Mark in accordance with Article 2.1 of this Agreement. 2.5 All use of the Licensed Mark by Licensed Users, and all goodwill associated with such use, shall inure to the benefit of Licensor. 2.6 Licensed Users acknowledge that Licensor is the sole owner of all right, title and interest in and to the Licensed Mark, and that Licensed Users have not acquired, and shall not acquire, any right, title or interest in or to the Licensed Mark except the right to use the Licensed Mark in accordance with the terms of this Agreement. 2.7 Licensed Users shall not register the Licensed Mark in any jurisdiction without Licensor's express prior written consent, and Licensor shall retain the exclusive right to apply for and obtain registrations for the Licensed Mark throughout the world. 2.8 Licensed Users shall not challenge the validity of the Licensed Mark, nor shall Licensed Users challenge Licensor's ownership of the Licensed Mark or the enforceability of Licensor's rights therein. 2.9 Licensed Users shall use the Licensed Mark in a form which is in accordance with sound trademark practice so as not to weaken the value of the Licensed Mark. Licensed Users shall use the Licensed Mark in a manner that does not derogate, based on an objective business standard, Licensor's rights in the Licensed Mark or the value of the Licensed Mark, and shall take no action that would, based on an objective standard, interfere with, diminish or tarnish those rights or value. 2.10 Licensed Users agree to cooperate with Licensor's preparation and filing of any applications, renewals or other documentation necessary or useful to protect and/or enforce Licensor's intellectual property rights in the Licensed Mark. 2.10.1 Licensed Users shall notify Licensor promptly of any actual or threatened infringements, imitations or unauthorized uses of the Licensed Mark of which Licensed Users become aware. 2.10.2 Licensor shall have the sole right, though it is under no obligation, to bring any action for any past, present and future infringements of its intellectual property rights in the Licensed Mark. 2.10.3 Licensed Users shall cooperate with Licensor, at Licensor's expense for any out-of-pocket costs incurred by Licensed Users, in any efforts by Licensor to enforce its rights in the Licensed Mark or to prosecute third party infringers of the Licensed Mark. 2.10.4 Licensor shall be entitled to retain any and all damages and other monies awarded or otherwise paid in connection with any such action.",
+        "TERM AND TERMINATION 3.1 Either Party may terminate this Agreement by giving the other Party thirty (30) days' prior written notice. 3.2 This Agreement and all rights and licenses granted under this Agreement shall terminate as soon as practicable, but no longer than thirty (30) days, after: 3.2.1 Licensee is acquired by a third party; or 3.2.2 Licensor or any affiliate of Licensor ceases to manage Licensee. 3.3 Upon termination of this Agreement, Licensed Users shall immediately cease use of the Licensed Trade Name and Licensed Mark as soon as practicable, but no longer than thirty (30) days, after termination.",
+        "GENERAL PROVISIONS 4.1 Indemnification. Licensed Users, at Licensed Users' own expense, shall indemnify, hold harmless and defend Licensor, its affiliates, successors and assigns, and its and their directors, officers, employees and agents, against any claim, demand, cause of action, debt, expense or liability (including attorneys' fees and costs), to the extent that the foregoing (a) is based on a claim resulting solely from any service provided or offered by Licensed Users, (b) results from a material breach, or is based on a claim that, if true, would be a material breach, of this Agreement by Licensed Users, or (c) is based upon Licensed Users' unauthorized or improper use of the Licensed Mark. 4.2 LIMITATION OF WARRANTY AND LIABILITY. LICENSOR DOES NOT MAKE WARRANTIES OF ANY KIND, WHETHER EXPRESS, IMPLIED, RELATED TO OR ARISING OUT OF THE LICENSED MARK OR THIS AGREEMENT. 4.2.1 LICENSOR SPECIFICALLY DISCLAIMS ANY IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT AND TITLE, AND ALL OTHER WARRANTIES THAT MAY OTHERWISE ARISE FROM COURSE OF DEALING, USAGE OF TRADE OR CUSTOM. 4.2.2 IN NO EVENT SHALL LICENSOR OR ANY OF ITS DIRECTORS, OFFICERS, EMPLOYEES, LICENSORS, SUPPLIERS OR OTHER REPRESENTATIVES BE LIABLE FOR ANY INDIRECT, SPECIAL OR CONSEQUENTIAL DAMAGES, OR DAMAGES FOR LOSS OF PROFITS, BUSINESS INTERRUPTION, LOSS OF GOODWILL, COMPUTER FAILURE OR MALFUNCTION OR OTHERWISE, ARISING FROM OR RELATING TO THIS AGREEMENT OR THE LICENSED MARK, EVEN IF LICENSOR IS EXPRESSLY ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. The foregoing limitation of liability and exclusion of certain damages shall apply regardless of the failure of essential purpose of any remedies available to either party."
+      ]
+    },
+    {
+      "title": "TubeMediaCorp_20060310_8-K_EX-10.1_513921_EX-10.1_Affiliate Agreement",
+      "char_length": 69973,
+      "clause_count": 8,
+      "clauses_per_10k_chars": 1.14,
+      "headings": [
+        "Preamble",
+        "DEFINITIONS:   In addition to any other defined terms in this Agreement, the following terms shall have the following meanings when used in this Agreement:   \"Acquired Station\" means any Broadcast Television station that is acquired by Affiliate after the Effective Date.   \"Affiliate Advertising Share\" has the meaning set forth in Exhibit D.   \"Affiliate Launch Date\" means the date on which the Service is initially transmitted by the first of Affiliate's Stations.   \"Affiliate Transactional Share\" has the meaning set forth in Exhibit D.   \"Broadcast Television\" means traditional, free, FCC-licensed, over-the-air broadcast television.   \"Charter Affiliate\" means a Broadcast Television station or station group that (i) entered into an affiliation agreement with the Network on or before the date of this Agreement, and/or (ii) is owned, operated or licensed to Sinclair Television Group, Inc. or an affiliate thereof.   \"Costs\" means all losses, liabilities, claims, costs, damages and expenses, including fines, forfeitures, reasonable attorneys' and expert witness fees, disbursements and court or administrative costs.   \"Designated Market Area\" or \"DMA\" means a particular market area or classification to demarcate local television markets as defined by Nielsen Media Research, Inc. from time-to-time, or, if DMA falls from general or standardized usage, a replacement term to demarcate local television markets in a substantially similar manner which shall be determined by the parties in good faith.   \"Licensed Community\" has the meaning set forth in Section 3(a).   \"Local Advertising\" has the meaning set forth in Section 8(c).   \"MVPD\" means a multichannel video program distributor as such term is set forth in 47 C.F.R. \u00a776.905(d) of the rules of the Federal Communications Commission (\"FCC\").",
+        "NOTICES   Any notice given under this Agreement shall be in writing, shall be sent postage prepaid by certified mail, return receipt requested, or by hand delivery, or by Federal Express or similar overnight delivery service, to the other party, at the following address (unless either party at any time or times designates another address for itself by notifying the other party pursuant to the provisions of this Section 11, in which case all notices to such party thereafter shall be given at its most recently so designated address):",
+        "CONFIDENTIALITY:",
+        "To Affiliation Agreement By and Between   Tribune Broadcasting Company and   The TUBE Music Network, Inc.   Dated as of March 6, 2006   STATION IDENTIFICATION       Call   Street Address   Launch DMA   Letters     Date New York    WPIX    220 E. 42nd St., 10th floor, New York, NY 10017    6/1/06 Los Angeles    KTLA    5800 Sunset Blvd., Los Angeles, CA 90028    6/1/06 Chicago    WGN    2501 W. Bradley Pl., Chicago, IL 60618    7/1/06 Philadelphia    WPHL    5001 Wynnefield Ave., Philadelphia, PA 19131    7/1/06 Boston    WLVI    75 Morrissey Blvd., Boston, MA 02138    6/1/06 Dallas-Fort Worth    KDAF    8001 John Carpenter Fwy., Dallas, TX 75247    7/1/06 Washington, D.C.    WBDC    2121 Wisconsin Ave. N.W., Washington, DC 20007    8/15/06 Atlanta    WATL    One Monroe Place, Atlanta, GA 30324    7/15/06 Houston    KHWB    7700 Westpark Dr., Houston, TX 77063    7/15/06 Seattle-Tacoma   KCPQKTWB   1813 Westlake Ave. N., Seattle, WA 98109    7/15/06"
+      ]
+    },
+    {
+      "title": "SPOKHOLDINGS,INC_06_19_2020-EX-10.1-COOPERATION AGREEMENT",
+      "char_length": 17710,
+      "clause_count": 8,
+      "clauses_per_10k_chars": 4.52,
+      "headings": [
+        "Preamble",
+        "Board Nominations; Certain Information.",
+        "Representations of the White Hat Parties. The White Hat Parties represent and warrant to the Company as of the date hereof as follows: (a) The White Hat Parties are the beneficial owners of 319,708 shares of Common Stock, such shares of Common Stock constitute all of the Common Stock beneficially owned by the White Hat Parties and the White Hat Parties have no agreements, understandings or undertakings with any third party to share or delegate disposition or voting control over such shares of Common Stock, or to transfer, hypothecate or lend such shares Common Stock. (b) Each of the White Hat Parties has the power and authority to execute and deliver this Agreement. This Agreement (i) has been duly and validly authorized by each of the White Hat Parties, and constitutes a legal, valid and binding obligation of each of the White Hat Parties, enforceable against each of the White Hat Parties in accordance with its terms except as may be limited by bankruptcy, insolvency or similar laws affecting creditors' rights and general equitable principles, (ii) does not require the approval of any investor in or member of the White Hat Parties and (iii) does not violate any law, order of any court or any governmental agency or regulation or the charter or any organizational document",
+        "Representations of the Company. The Company represents and warrants to the White Hat Parties as of the date hereof that it has the corporate power and authority to execute and deliver this Agreement. This Agreement (i) has been duly and validly authorized by the Company and constitutes a legal, valid and binding obligations of the Company, enforceable against the Company in accordance with its terms except as may be limited by bankruptcy, insolvency or similar laws affecting creditors' rights and general equitable principles and (ii) does not violate any law, order of any court or any agency or regulation or the Company's Certificate of Incorporation or the Bylaws, or conflict with, result in a breach of or constitute a default under any agreement or instrument by which the Company or any of its assets or the assets of its subsidiaries are bound.",
+        "Voting Commitments. The White Hat Parties shall appear in person or by proxy for quorum purposes at the 2020 Annual Meeting, including any adjournment or postponement thereof, to vote all of the shares of Common Stock beneficially owned by the White Hat Parties on the record date (if the 2020 Annual Meeting is within thirty (30) days of the anniversary of the Company's 2019 Annual Meeting of Stockholders, such number of shares shall be no less than 90% of the Current Position) for such meeting (i) in favor of all persons nominated by the Board to serve as directors of the Company and against any stockholder nominated candidate not endorsed by the Board, (ii) against the stockholder proposal made pursuant to Rule 14a-8 under the Exchange Act as disclosed to the White Hat Parties prior to the execution of this Agreement, (iii) to ratify the appointment of the Company's independent registered public accounting firm, and (iv) in accordance with the Board's recommendation with respect to the Company's \"say-on-pay\" proposal and new equity compensation plan (collectively, the \"2020 Proposals\"), provided, that with respect to the proposals described in clauses (ii) through (iv) of this Section 4, the White Hat Parties may vote in accordance with the recommendation of Institutional Shareholders Services to the extent such recommendation differs from the voting commitments set forth herein and provided that the White Hat Parties do not publicly disclose their vote on such proposals if it differs from the Board's recommendation; and provided, further, that White Hat Parties shall have the right to vote the shares of Common Stock beneficially owned by the White Hat Parties in their sole discretion with respect to all other proposals brought before the 2020 Annual Meeting. The White Hat Parties shall provide written evidence of the votes made in accordance with the foregoing sentence to the Company no later than ten business days before the 2020 Annual Meeting."
+      ]
+    },
+    {
+      "title": "UnionDentalHoldingsInc_20050204_8-KA_EX-10_3345577_EX-10_Affiliate Agreement",
+      "char_length": 14083,
+      "clause_count": 8,
+      "clauses_per_10k_chars": 5.68,
+      "headings": [
+        "Preamble",
+        "Definitions.  A  Confidential  Information@  shall  mean  any  and  all information  that a Party may reasonably  expect to remain  confidential and not shared with the general public at any time or that information that is protected by law.",
+        "Services.  It is anticipated  that the Business  Affiliate will provide services both for clients of the Business Affiliate and UDC that involve the use and disclosure of Confidential Information (the \"Services\"). Except as otherwise specified  herein,  the  Parties  may  make  any  and all  uses of  Confidential Information  necessary to perform the  Services.  Additionally,  the Parties may disclose Confidential  Information for the purposes authorized by this Agreement only (a) to its employees,  subcontractors  and agents,  in accordance with this Agreement,  or (b) as directed by the other Party.  The Parties  expressly agree that any and all uses or disclosures of the Confidential  Information by a Party will be done in accordance  with the terms of this  Agreement and the provisions of all applicable federal and state laws and regulations.",
+        "Responsibilities  of  the  Parties.  With  regard  to  its  use  and/or disclosure  of  Confidential  Information,  each Party  hereby  agrees to do the following:",
+        "Mutual  Representation and Warranty.  Each Party represents and warrants to the  other  Party  that all of its  employees,  agents,  representatives  and members of its work force,  whose  services  may be used to fulfill  obligations under this  Agreement,  are or shall be  appropriately  informed of the terms of this  Agreement  and are  under  legal  obligation  to  comply  fully  with  all provisions of this Agreement."
+      ]
+    }
+  ],
+  "gov_stats": {
+    "total": 89,
+    "hits": 26
+  },
+  "cap_stats": {
+    "total": 75,
+    "hits": 0
+  }
+}

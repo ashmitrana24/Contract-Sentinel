@@ -75,7 +75,8 @@ def analyze_clauses(clauses: list[Any]) -> dict[str, Any]:
     clause_texts = []
 
     for c in clauses:
-        clause_texts.append(c.text)
+        combined_text = f"{c.heading}\n{c.text}".strip() if c.heading else c.text
+        clause_texts.append(combined_text)
         preds = classify_clause(c.text, heading=c.heading)
         clause_results.append({
             "order_idx": c.order_idx,

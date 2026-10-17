@@ -1,8 +1,5 @@
 # Clause Classification Error Analysis (TEST Split)
 
-> [!NOTE]
-> **Notice on Ground-Truth Recalibration**: Initial runs of this error analysis were collected during Preliminary Looks 1 and 2, which used inflated token-overlap alignment. For the official Third Look metrics evaluated on corrected character-offset labels, refer to [`backend/models/clauses/v1/metrics.json`](file:///c:/Users/Loq/Desktop/Projects/legal-doc/backend/models/clauses/v1/metrics.json) and [`eval/results/clauses_benchmark.json`](file:///c:/Users/Loq/Desktop/Projects/legal-doc/eval/results/clauses_benchmark.json).
-
 Honest error analysis on the 20% unseen CUAD test split (102 contracts, 2,788 clauses).
 Below are the 5 weakest labels by F1 score (with support >= 5), with concrete False Positive
 and False Negative examples analyzing failure modes.
@@ -11,323 +8,253 @@ and False Negative examples analyzing failure modes.
 
 | Label | Support | Pred Count | Precision (95% CI) | Recall (95% CI) | F1 |
 |---|---|---|---|---|---|
-| `no_solicit_of_customers` | 31 | 4 | 0.000 [0.00, 0.49] | 0.000 [0.00, 0.11] | 0.000 |
-| `unlimited_all_you_can_eat_license` | 14 | 8 | 0.000 [0.00, 0.32] | 0.000 [0.00, 0.22] | 0.000 |
-| `competitive_restriction_exception` | 131 | 20 | 0.050 [0.01, 0.24] | 0.008 [0.00, 0.04] | 0.013 |
-| `price_restrictions` | 50 | 21 | 0.048 [0.01, 0.23] | 0.020 [0.00, 0.10] | 0.028 |
-| `third_party_beneficiary` | 49 | 13 | 0.077 [0.01, 0.33] | 0.020 [0.00, 0.11] | 0.032 |
+| `most_favored_nation` | 7 | 0 | 0.000 [0.00, 0.00] | 0.000 [0.00, 0.35] | 0.000 |
+| `affiliate_license_licensor` | 5 | 9 | 0.111 [0.02, 0.43] | 0.200 [0.04, 0.62] | 0.143 |
+| `competitive_restriction_exception` | 14 | 21 | 0.191 [0.08, 0.40] | 0.286 [0.12, 0.55] | 0.229 |
+| `joint_ip_ownership` | 13 | 3 | 0.667 [0.21, 0.94] | 0.154 [0.04, 0.42] | 0.250 |
+| `volume_restriction` | 22 | 7 | 0.571 [0.25, 0.84] | 0.182 [0.07, 0.39] | 0.276 |
 
 ---
 
 ## Detailed Error Analysis per Weak Label
 
-### Label: `no_solicit_of_customers` (F1: 0.000, Support: 31)
+### Label: `most_favored_nation` (F1: 0.000, Support: 7)
 
 #### False Positives (Predicted, but not in CUAD expert annotations):
-**FP #1** - Contract: `NETGEAR,INC_04_21_2003-EX-10.16-AMENDMEN...`, Clause: `19`
-- **Method:** `model` (Score: 0.9775)
-- **Evidence:** "the NETGEAR Price List in effect on the Effective Date of this Agreement is [*] off of the then current NETGEAR list price. Distributor agrees that th..."
-- **Clause Text:** "This Agreement, including its attachment and order acknowledgments under the Agreement, constitutes the entire agreement between Distributor and NETGEAR with respect to the purchase, resale and distri..."
-- **Root Cause:** Clause discusses related concepts or generic legal vocabulary that triggered model/rules without rising to CUAD's specific expert annotation threshold.
-
-**FP #2** - Contract: `GSVINC_05_15_1998-EX-10-SPONSORSHIP AGRE...`, Clause: `12`
-- **Method:** `model` (Score: 0.6784)
-- **Evidence:** "a) For the purposes of this Agreement, "Confidential Information" means information about the disclosing party's (or its suppliers') business or activ..."
-- **Clause Text:** "a) For the purposes of this Agreement, "Confidential Information" means information about the disclosing party's (or its suppliers') business or activities that is proprietary and confidential, which ..."
-- **Root Cause:** Clause discusses related concepts or generic legal vocabulary that triggered model/rules without rising to CUAD's specific expert annotation threshold.
-
-**FP #3** - Contract: `NETGEAR,INC_04_21_2003-EX-10.16- AMENDME...`, Clause: `0`
-- **Method:** `model` (Score: 0.8903)
-- **Evidence:** "This Amendment is entered into effective October 1,1996 ("Amendment Date") by and between NETGEAR, Inc. ("NETGEAR"), a wholly owned subsidiary of Bay ..."
-- **Clause Text:** "This Amendment is entered into effective October 1,1996 ("Amendment Date") by and between NETGEAR, Inc. ("NETGEAR"), a wholly owned subsidiary of Bay Networks, Inc., and Ingram Micro ("Distributor") a..."
-- **Root Cause:** Clause discusses related concepts or generic legal vocabulary that triggered model/rules without rising to CUAD's specific expert annotation threshold.
-
-**FP #4** - Contract: `VITAMINSHOPPECOMINC_09_13_1999-EX-10.26-...`, Clause: `12`
-- **Method:** `model` (Score: 0.7698)
-- **Evidence:** "a) For the purposes of this Agreement, "Confidential Information" means information about the disclosing party's (or its suppliers') business or activ..."
-- **Clause Text:** "a) For the purposes of this Agreement, "Confidential Information" means information about the disclosing party's (or its suppliers') business or activities that is proprietary and confidential, which ..."
-- **Root Cause:** Clause discusses related concepts or generic legal vocabulary that triggered model/rules without rising to CUAD's specific expert annotation threshold.
-
+- *No False Positives observed.*
 #### False Negatives (In CUAD expert annotations, but missed by detector):
-**FN #1** - Contract: `WPPPLC_04_30_2020-EX-4.28-SERVICE AGREEM...`, Clause: `0`
-- **Expert Target Span:** "(c) solicit or attempt to solicit, canvass, interfere with or entice away from the Company or any Re..."
-- **Clause Text:** "Exhibit 4.28 SERVICE AGREEMENT 1 OCTOBER 2019 WPP 2005 LIMITED and JOHN ROGERS CONTENTS Clause Page 1. Interpretation 3 2. Commencement of Appointment 4 3. Executive's Duties 4 4. Place of Work 5 5. W..."
+**FN #1** - Contract: `NANOPHASETECHNOLOGIESCORP_11_01_2005-EX-...`, Clause: `3`
+- **Expert Target Span:** "NTC agrees that the Product Prices, benefits and allowances offered to ALFA AESAR shall not be less ..."
+- **Clause Text:** "Product Prices. Any such increase in the Product Price shall not be effective for any unshipped portion of an order previously placed by ALFA AESAR prior to the end of the calendar year in which such ..."
 - **Root Cause:** Atypical drafting vocabulary or domain-specific phrasing not captured by TF-IDF n-grams or regular expressions.
 
-**FN #2** - Contract: `WPPPLC_04_30_2020-EX-4.28-SERVICE AGREEM...`, Clause: `2`
-- **Expert Target Span:** "(c) solicit or attempt to solicit, canvass, interfere with or entice away from the Company or any Re..."
-- **Clause Text:** "(l) comply with all requirements, recommendations or regulations, as amended from time to time, of the UK Listing Authority, the Market Abuse Regulation (596/2014/EU), the FCA and all other regulatory..."
+**FN #2** - Contract: `USASYNTHETICFUELCORP_10_21_2010-EX-10.10...`, Clause: `7`
+- **Expert Target Span:** "If at any time on or prior to the earlier of (i) December 31, 2007, or (ii) the date on which Global..."
+- **Clause Text:** "(ii) those advisors, agents, contractors or lenders with a need to know the Confidential Information for the purpose of performing work related to the transactions contemplated by this Agreement; prov..."
 - **Root Cause:** Atypical drafting vocabulary or domain-specific phrasing not captured by TF-IDF n-grams or regular expressions.
 
-**FN #3** - Contract: `WPPPLC_04_30_2020-EX-4.28-SERVICE AGREEM...`, Clause: `10`
-- **Expert Target Span:** "(c) solicit or attempt to solicit, canvass, interfere with or entice away from the Company or any Re..."
-- **Clause Text:** "During the Appointment, the Executive may not accept any employment with or appointment to any office, whether paid or unpaid, in relation to anybody, whether corporate or not (other than a Group Comp..."
+**FN #3** - Contract: `ASHWORTHINC_01_29_1999-EX-10.(D)-PROMOTI...`, Clause: `9`
+- **Expert Target Span:** "The Company acknowledges that Nantz Communications' and      Nantz's obligations to CBS or any other..."
+- **Clause Text:** "INDEMNIFICATION Neither Nantz Communications nor Nantz shall be liable for any obligations of the Company resulting directly or indirectly from the Endorsement of Ashworth Products. The Company shall ..."
 - **Root Cause:** Atypical drafting vocabulary or domain-specific phrasing not captured by TF-IDF n-grams or regular expressions.
 
-**FN #4** - Contract: `WPPPLC_04_30_2020-EX-4.28-SERVICE AGREEM...`, Clause: `15`
-- **Expert Target Span:** "(c) solicit or attempt to solicit, canvass, interfere with or entice away from the Company or any Re..."
-- **Clause Text:** "any Group Company into disrepute or affects or is likely to affect prejudicially the interests of the Company or the Group; (c) is convicted of an arrestable offence (other than a road traffic offence..."
+**FN #4** - Contract: `MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION...`, Clause: `10.4`
+- **Expert Target Span:** "Upon termination of this Agreement for reasons other than a default by Shipper, pursuant to any prov..."
+- **Clause Text:** "..."
 - **Root Cause:** Atypical drafting vocabulary or domain-specific phrasing not captured by TF-IDF n-grams or regular expressions.
 
-**FN #5** - Contract: `WPPPLC_04_30_2020-EX-4.28-SERVICE AGREEM...`, Clause: `21`
-- **Expert Target Span:** "(c) solicit or attempt to solicit, canvass, interfere with or entice away from the Company or any Re..."
-- **Clause Text:** "The Company is not a party to any collective agreement which affects the Executive's employment. 22. GENERAL 22.1 This Agreement is governed by and construed in accordance with English law, save where..."
+**FN #5** - Contract: `IntegrityMediaInc_20010329_10-K405_EX-10...`, Clause: `3`
+- **Expert Target Span:** "If for any reason, Integrity and TL are subject to lower "free                   goods" limits by an..."
+- **Clause Text:** "a. Integrity will, upon receipt of approved purchase orders from TL, sell to TL in non-returnable box lot quantities, TL's requirements products rates calculated on the following basis (plus freight)...."
 - **Root Cause:** Atypical drafting vocabulary or domain-specific phrasing not captured by TF-IDF n-grams or regular expressions.
 
 ---
 
-### Label: `unlimited_all_you_can_eat_license` (F1: 0.000, Support: 14)
+### Label: `affiliate_license_licensor` (F1: 0.143, Support: 5)
 
 #### False Positives (Predicted, but not in CUAD expert annotations):
-**FP #1** - Contract: `INKTOMICORP_06_08_1998-EX-10.14-SOFTWARE...`, Clause: `10.4`
-- **Method:** `model` (Score: 0.4685)
-- **Evidence:** "(a) Inktomi is in [*] of this Agreement (excluding Section [*]) and fails to cure that breach within [*] ([*]) days after written notice thereof; or (..."
-- **Clause Text:** "(a) Inktomi is in [*] of this Agreement (excluding Section [*]) and fails to cure that breach within [*] ([*]) days after written notice thereof; or (b) Inktomi is in material breach of Section [*]; o..."
+**FP #1** - Contract: `CerenceInc_20191002_8-K_EX-10.4_11827494...`, Clause: `Schedule G.3.01`
+- **Method:** `model` (Score: 0.9621)
+- **Evidence:** "(a) Patents. Subject to the terms and conditions of this Agreement, as of the Distribution Date, Nuance hereby grants to SpinCo and the members of the..."
+- **Clause Text:** "(a) Patents. Subject to the terms and conditions of this Agreement, as of the Distribution Date, Nuance hereby grants to SpinCo and the members of the SpinCo Group a worldwide, non-exclusive, fully pa..."
 - **Root Cause:** Clause discusses related concepts or generic legal vocabulary that triggered model/rules without rising to CUAD's specific expert annotation threshold.
 
-**FP #2** - Contract: `INKTOMICORP_06_08_1998-EX-10.14-SOFTWARE...`, Clause: `Exhibit D`
-- **Method:** `model` (Score: 0.3828)
-- **Evidence:** "INKTOMI MAINTENANCE EMPLOYEES [*] and [*] [*]=CERTAIN INFORMATION IN THIS EXHIBIT HAS BEEN OMITTED AND FILED SEPARATELY WITH THE COMMISSION. CONFIDENT..."
-- **Clause Text:** "INKTOMI MAINTENANCE EMPLOYEES [*] and [*] [*]=CERTAIN INFORMATION IN THIS EXHIBIT HAS BEEN OMITTED AND FILED SEPARATELY WITH THE COMMISSION. CONFIDENTIAL TREATMENT HAS BEEN REQUESTED WITH RESPECT TO T..."
+**FP #2** - Contract: `CerenceInc_20191002_8-K_EX-10.4_11827494...`, Clause: `Schedule G.4.01`
+- **Method:** `model` (Score: 0.9469)
+- **Evidence:** "(a) Patents. Subject to the terms and conditions of this Agreement, as of the Distribution Date, SpinCo hereby grants to Nuance and the members of the..."
+- **Clause Text:** "(a) Patents. Subject to the terms and conditions of this Agreement, as of the Distribution Date, SpinCo hereby grants to Nuance and the members of the Nuance Group a worldwide, non-exclusive, fully pa..."
 - **Root Cause:** Clause discusses related concepts or generic legal vocabulary that triggered model/rules without rising to CUAD's specific expert annotation threshold.
 
-**FP #3** - Contract: `GpaqAcquisitionHoldingsInc_20200123_S-4A...`, Clause: `5.2`
-- **Method:** `model` (Score: 0.4988)
-- **Evidence:** "subject to a joint venture agreement or other mutual arrangement between the Parties. 7.10 Entire Agreement. This Agreement constitutes the entire agr..."
-- **Clause Text:** "10 (b) Each Receiving Party agrees: (i) not to disclose, make public, or authorize any disclosure or publication of such Confidential Information of the Disclosing Party except as expressly permitted ..."
+**FP #3** - Contract: `CytodynInc_20200109_10-Q_EX-10.5_1194163...`, Clause: `2.1`
+- **Method:** `model` (Score: 0.7938)
+- **Evidence:** "Grant of Licenses. (a) License to Vyera. CytoDyn hereby grants to Vyera, and Vyera hereby accepts, an exclusive royalty-bearing license (or sublicense..."
+- **Clause Text:** "..."
 - **Root Cause:** Clause discusses related concepts or generic legal vocabulary that triggered model/rules without rising to CUAD's specific expert annotation threshold.
 
-**FP #4** - Contract: `SUMMAFOURINC_06_19_1998-EX-10.3-SOFTWARE...`, Clause: `2.2`
-- **Method:** `model` (Score: 0.4367)
-- **Evidence:** "been paid for by Licensee's end-user customer in the prior quarter. To the extent Licensee accepts returns or is required to provide refunds to its cu..."
-- **Clause Text:** "(i) Subject to the terms and conditions of this Agreement, D2 hereby grants LICENSEE a perpetual non-exclusive, worldwide license, to use Licensed Technology in Object Code format only as an incorpora..."
+**FP #4** - Contract: `RareElementResourcesLtd_20171019_SC 13D_...`, Clause: `U`
+- **Method:** `model` (Score: 0.8121)
+- **Evidence:** "to grant sublicenses to Affiliates) under the Patents to practice the methods therein described and claimed and to make and have made, use, offer to s..."
+- **Clause Text:** "Exhibit 4 Rare Element Resources Ltd. EXECUTION COPY IP Rights Agreement INTELLECTUAL PROPERTY RIGHTS AGREEMENT Synchron, a California corporation having a principal place of business at 3550 General ..."
 - **Root Cause:** Clause discusses related concepts or generic legal vocabulary that triggered model/rules without rising to CUAD's specific expert annotation threshold.
 
-**FP #5** - Contract: `SUMMAFOURINC_06_19_1998-EX-10.3-SOFTWARE...`, Clause: `10.1`
-- **Method:** `model` (Score: 0.3711)
-- **Evidence:** "13 adjudicatively determined to be, or in either party's reasonable opinion will be, the subject of any claim, suit or proceeding for infringement of ..."
-- **Clause Text:** "13 adjudicatively determined to be, or in either party's reasonable opinion will be, the subject of any claim, suit or proceeding for infringement of any third party's patent, copyright or trade secre..."
+**FP #5** - Contract: `Sonos, Inc. - Manufacturing Agreement ...`, Clause: `3.3.1`
+- **Method:** `model` (Score: 0.87)
+- **Evidence:** "License to Manufacture. Subject to all terms and conditions of this Agreement, Sonos hereby grants to IAC and its Affiliates a non-exclusive, worldwid..."
+- **Clause Text:** "..."
 - **Root Cause:** Clause discusses related concepts or generic legal vocabulary that triggered model/rules without rising to CUAD's specific expert annotation threshold.
 
 #### False Negatives (In CUAD expert annotations, but missed by detector):
-**FN #1** - Contract: `ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-R...`, Clause: `0`
-- **Expert Target Span:** "Table 1
-
-  Business Partner Pricing
-
-VoIP Services One-Time Fee Monthly Service Fee
-
-VoIP Connectivi..."
-- **Clause Text:** "Exhibit 10.5 Reseller Agreement This Agreement is made and entered into by and between 695014 B.C. Ltd. dba Galaxy Telecom, having a principal office at 200 - 375 Water Street, Vancouver, British Colu..."
+**FN #1** - Contract: `Array BioPharma Inc. - LICENSE, DEVELOPM...`, Clause: `2.4`
+- **Expert Target Span:** "If after the Effective Date, Array retains a Third Party Partner for the Product in one or more coun..."
+- **Clause Text:** "17 (a) Array and Pierre Fabre Medicament SAS ("PFM") have previously entered into that certain Development and Commercialization Agreement, dated as of November 10, 2015 (such agreement, as subsequent..."
 - **Root Cause:** Atypical drafting vocabulary or domain-specific phrasing not captured by TF-IDF n-grams or regular expressions.
 
-**FN #2** - Contract: `ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-R...`, Clause: `5`
-- **Expert Target Span:** "Note 4 Unlimited calling FROM Virtual Calling Zone only. Long distance charges apply when calling to..."
-- **Clause Text:** "6. PRODUCTS 6.1 Approved Products Galaxy shall, at its sole discretion, determine the technical specifications and the brand and model of those devices which it will support in providing the Services ..."
+**FN #2** - Contract: `Array BioPharma Inc. - LICENSE, DEVELOPM...`, Clause: `12.2`
+- **Expert Target Span:** "Subject to the terms and conditions of this Agreement, following registration of the Product Tradema..."
+- **Clause Text:** "..."
 - **Root Cause:** Atypical drafting vocabulary or domain-specific phrasing not captured by TF-IDF n-grams or regular expressions.
 
-**FN #3** - Contract: `ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-R...`, Clause: `14`
-- **Expert Target Span:** "Table 1
-
-  Business Partner Pricing
-
-VoIP Services One-Time Fee Monthly Service Fee
-
-VoIP Connectivi..."
-- **Clause Text:** "IN WITNESS WHEREOF, the parties have caused this Agreement to be executed by their duly authorized representatives as of the date first written above: 695014 B.C. LTD. GALAXY TELNET SRL Per: "Peter Wi..."
+**FN #3** - Contract: `CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTS...`, Clause: `5.03`
+- **Expert Target Span:** "Solely to the extent necessary to enable Contractor to provide the Services in accordance with the t..."
+- **Clause Text:** "..."
 - **Root Cause:** Atypical drafting vocabulary or domain-specific phrasing not captured by TF-IDF n-grams or regular expressions.
 
-**FN #4** - Contract: `NakedBrandGroupInc_20150731_POS AM (on S...`, Clause: `3`
-- **Expert Target Span:** "During the Term, Naked shall have the right in the Territory to the unlimited broadcast use and re-u..."
-- **Clause Text:** "During the Term and subject to the limitations set forth in this Agreement, Naked shall have an exclusive right and license in the Territory to use Athlete's name, nickname, initials, autograph, image..."
-- **Root Cause:** Atypical drafting vocabulary or domain-specific phrasing not captured by TF-IDF n-grams or regular expressions.
-
-**FN #5** - Contract: `NakedBrandGroupInc_20150731_POS AM (on S...`, Clause: `5`
-- **Expert Target Span:** "During the Term, Naked shall have the right in the Territory to the unlimited broadcast use and re-u..."
-- **Clause Text:** "A. During the first Contract Year, Wade will be available for (i) one production day for the purpose of creating marketing assets for Naked Products for unlimited use in advertisements and the media a..."
+**FN #4** - Contract: `BERKELEYLIGHTS,INC_06_26_2020-EX-10.12-C...`, Clause: `8.1`
+- **Expert Target Span:** "With respect to any Intellectual Property developed by BLI or its Affiliates in collaboration or on ..."
+- **Clause Text:** "..."
 - **Root Cause:** Atypical drafting vocabulary or domain-specific phrasing not captured by TF-IDF n-grams or regular expressions.
 
 ---
 
-### Label: `competitive_restriction_exception` (F1: 0.013, Support: 131)
+### Label: `competitive_restriction_exception` (F1: 0.229, Support: 14)
 
 #### False Positives (Predicted, but not in CUAD expert annotations):
-**FP #1** - Contract: `ELECTRAMECCANICA VEHICLES CORP. - Manufa...`, Clause: `10.8`
-- **Method:** `model` (Score: 0.8166)
-- **Evidence:** "IN WITNESS WHEREOF, each party to this agreement has caused it to be executed on the date indicated above. ELECTRAMECCANICA VEHICLES CORP. s/ Jerry Kr..."
-- **Clause Text:** "IN WITNESS WHEREOF, each party to this agreement has caused it to be executed on the date indicated above. ELECTRAMECCANICA VEHICLES CORP. s/ Jerry Kroll Name: Jerry Kroll Title: CEO and General Manag..."
+**FP #1** - Contract: `TUNIUCORP_03_06_2014-EX-10-COOPERATION A...`, Clause: `2`
+- **Method:** `model` (Score: 0.7736)
+- **Evidence:** "Exclusive Cooperation..."
+- **Clause Text:** "..."
 - **Root Cause:** Clause discusses related concepts or generic legal vocabulary that triggered model/rules without rising to CUAD's specific expert annotation threshold.
 
-**FP #2** - Contract: `GSVINC_05_15_1998-EX-10-SPONSORSHIP AGRE...`, Clause: `0`
-- **Method:** `model` (Score: 0.9662)
-- **Evidence:** "TREATMENT WITH RESPECT TO CERTAIN PORTIONS OF THIS AGREEMENT ACCORDINGLY, CERTAIN PORTIONS HAVE BEEN REDACTED Exhibit 10.1 SPONSORSHIP AGREEMENT This ..."
-- **Clause Text:** "TREATMENT WITH RESPECT TO CERTAIN PORTIONS OF THIS AGREEMENT ACCORDINGLY, CERTAIN PORTIONS HAVE BEEN REDACTED Exhibit 10.1 SPONSORSHIP AGREEMENT This agreement ("Agreement") is entered into as of the ..."
+**FP #2** - Contract: `CytodynInc_20200109_10-Q_EX-10.5_1194163...`, Clause: `1`
+- **Method:** `model` (Score: 0.8091)
+- **Evidence:** "Licensed Product in the Field in the Territory, including any registrations and licenses, regulatory drug lists, advertising and promotion documents s..."
+- **Clause Text:** "1.1 "AAA" has the meaning set forth in Section 12.3(a). 1.2 "AAI Agreement" has the meaning set forth in Section 9.2(o). 1.3 "Affiliate" means, with respect to a particular Party, a Person that contro..."
 - **Root Cause:** Clause discusses related concepts or generic legal vocabulary that triggered model/rules without rising to CUAD's specific expert annotation threshold.
 
-**FP #3** - Contract: `GSVINC_05_15_1998-EX-10-SPONSORSHIP AGRE...`, Clause: `6`
-- **Method:** `model` (Score: 0.82)
-- **Evidence:** "a) Client and Excite will use reasonable efforts to implement the display of the promotional placements and advertising described in the Agreement by ..."
-- **Clause Text:** "a) Client and Excite will use reasonable efforts to implement the display of the promotional placements and advertising described in the Agreement by April 15, 1998 (the "Launch Date"). b) Excite will..."
+**FP #3** - Contract: `CytodynInc_20200109_10-Q_EX-10.5_1194163...`, Clause: `2.5`
+- **Method:** `model` (Score: 0.726)
+- **Evidence:** "Field and Territory Restrictions. (a) Nothing in this Agreement is intended to, nor shall it, prevent CytoDyn from (i) Developing, Manufacturing and o..."
+- **Clause Text:** "..."
 - **Root Cause:** Clause discusses related concepts or generic legal vocabulary that triggered model/rules without rising to CUAD's specific expert annotation threshold.
 
-**FP #4** - Contract: `GSVINC_05_15_1998-EX-10-SPONSORSHIP AGRE...`, Clause: `8`
-- **Method:** `model` (Score: 0.8917)
-- **Evidence:** "Unless required by law, neither party will make any public statement, press release or other announcement relating to the terms of or existence of thi..."
-- **Clause Text:** "Unless required by law, neither party will make any public statement, press release or other announcement relating to the terms of or existence of this Agreement without the prior written approval of ..."
+**FP #4** - Contract: `WPPPLC_04_30_2020-EX-4.28-SERVICE AGREEM...`, Clause: `Schedule 3`
+- **Method:** `model` (Score: 0.8918)
+- **Evidence:** "any time during the Relevant Period. Relevant Capacity means either alone or jointly with another or others, whether as principal, agent, consultant, ..."
+- **Clause Text:** "(j) encourage, assist or procure any Person to do anything which if done by the Executive would be a breach of sub clauses 1 (a) to (i). 2 The Executive agrees that updating his profile and/or connect..."
 - **Root Cause:** Clause discusses related concepts or generic legal vocabulary that triggered model/rules without rising to CUAD's specific expert annotation threshold.
 
-**FP #5** - Contract: `GSVINC_05_15_1998-EX-10-SPONSORSHIP AGRE...`, Clause: `10`
-- **Method:** `model` (Score: 0.8561)
-- **Evidence:** "a) Client will retain all right, title and interest in and to its trademarks, service marks and trade names worldwide, subject to the limited license ..."
-- **Clause Text:** "a) Client will retain all right, title and interest in and to its trademarks, service marks and trade names worldwide, subject to the limited license granted to Excite hereunder. b) Excite will retain..."
+**FP #5** - Contract: `ELECTRAMECCANICA VEHICLES CORP. - Manufa...`, Clause: `2.5`
+- **Method:** `model` (Score: 0.7808)
+- **Evidence:** "other proprietary rights notices placed by EMV on or in the Products. 2.8 Exclusivity The manufacturing license granted in this Agreement is exclusive..."
+- **Clause Text:** "..."
 - **Root Cause:** Clause discusses related concepts or generic legal vocabulary that triggered model/rules without rising to CUAD's specific expert annotation threshold.
 
 #### False Negatives (In CUAD expert annotations, but missed by detector):
-**FN #1** - Contract: `WPPPLC_04_30_2020-EX-4.28-SERVICE AGREEM...`, Clause: `0`
-- **Expert Target Span:** "(a) as holder or beneficial owner (for investment purposes only) of any class of securities in a com..."
-- **Clause Text:** "Exhibit 4.28 SERVICE AGREEMENT 1 OCTOBER 2019 WPP 2005 LIMITED and JOHN ROGERS CONTENTS Clause Page 1. Interpretation 3 2. Commencement of Appointment 4 3. Executive's Duties 4 4. Place of Work 5 5. W..."
-- **Root Cause:** Atypical drafting vocabulary or domain-specific phrasing not captured by TF-IDF n-grams or regular expressions.
-
-**FN #2** - Contract: `WPPPLC_04_30_2020-EX-4.28-SERVICE AGREEM...`, Clause: `2`
-- **Expert Target Span:** "(a) as holder or beneficial owner (for investment purposes only) of any class of securities in a com..."
-- **Clause Text:** "(l) comply with all requirements, recommendations or regulations, as amended from time to time, of the UK Listing Authority, the Market Abuse Regulation (596/2014/EU), the FCA and all other regulatory..."
-- **Root Cause:** Atypical drafting vocabulary or domain-specific phrasing not captured by TF-IDF n-grams or regular expressions.
-
-**FN #3** - Contract: `WPPPLC_04_30_2020-EX-4.28-SERVICE AGREEM...`, Clause: `10`
+**FN #1** - Contract: `WPPPLC_04_30_2020-EX-4.28-SERVICE AGREEM...`, Clause: `12`
 - **Expert Target Span:** "(a) as holder or beneficial owner (for investment purposes only) of any class of securities in a com..."
 - **Clause Text:** "During the Appointment, the Executive may not accept any employment with or appointment to any office, whether paid or unpaid, in relation to anybody, whether corporate or not (other than a Group Comp..."
 - **Root Cause:** Atypical drafting vocabulary or domain-specific phrasing not captured by TF-IDF n-grams or regular expressions.
 
-**FN #4** - Contract: `WPPPLC_04_30_2020-EX-4.28-SERVICE AGREEM...`, Clause: `15`
-- **Expert Target Span:** "(a) as holder or beneficial owner (for investment purposes only) of any class of securities in a com..."
-- **Clause Text:** "any Group Company into disrepute or affects or is likely to affect prejudicially the interests of the Company or the Group; (c) is convicted of an arrestable offence (other than a road traffic offence..."
+**FN #2** - Contract: `CERES,INC_01_25_2012-EX-10.20-Collaborat...`, Clause: `3`
+- **Expert Target Span:** "IGER will have the right to make available germplasm of CERTAIN MISCANTHUS ACCESSIONS to third parti..."
+- **Clause Text:** "CERES-IGER Collaboration Agreement Page 8 of 75 a. CERES will not unreasonably withhold its consent for collaborations with small companies (less than fifty (50) employees including world-wide affilia..."
 - **Root Cause:** Atypical drafting vocabulary or domain-specific phrasing not captured by TF-IDF n-grams or regular expressions.
 
-**FN #5** - Contract: `WPPPLC_04_30_2020-EX-4.28-SERVICE AGREEM...`, Clause: `21`
-- **Expert Target Span:** "(a) as holder or beneficial owner (for investment purposes only) of any class of securities in a com..."
-- **Clause Text:** "The Company is not a party to any collective agreement which affects the Executive's employment. 22. GENERAL 22.1 This Agreement is governed by and construed in accordance with English law, save where..."
+**FN #3** - Contract: `ASHWORTHINC_01_29_1999-EX-10.(D)-PROMOTI...`, Clause: `15`
+- **Expert Target Span:** "Notwithstanding the foregoing Nantz shall be permitted to wear a Lynx hat or clothing logo when perf..."
+- **Clause Text:** "16. The second Option to purchase up to an additional 40,000 shares upon payment of the aggregate Option Share Price for the number of Shares so purchased shall become exercisable on June 1, 2000, unl..."
+- **Root Cause:** Atypical drafting vocabulary or domain-specific phrasing not captured by TF-IDF n-grams or regular expressions.
+
+**FN #4** - Contract: `VAXCYTE,INC_05_22_2020-EX-10.19-SUPPLY A...`, Clause: `2.20`
+- **Expert Target Span:** "SutroVax agrees to purchase all its requirements of Extract from Sutro in accordance with this Agree..."
+- **Clause Text:** "..."
+- **Root Cause:** Atypical drafting vocabulary or domain-specific phrasing not captured by TF-IDF n-grams or regular expressions.
+
+**FN #5** - Contract: `AIRTECHINTERNATIONALGROUPINC_05_08_2000-...`, Clause: `16.04`
+- **Expert Target Span:** "AIRSOPURE covenants and agrees that the restrictions set forth above in Paragraphs 16.02.C and 16.03..."
+- **Clause Text:** "..."
 - **Root Cause:** Atypical drafting vocabulary or domain-specific phrasing not captured by TF-IDF n-grams or regular expressions.
 
 ---
 
-### Label: `price_restrictions` (F1: 0.028, Support: 50)
+### Label: `joint_ip_ownership` (F1: 0.250, Support: 13)
 
 #### False Positives (Predicted, but not in CUAD expert annotations):
-**FP #1** - Contract: `ELECTRAMECCANICA VEHICLES CORP. - Manufa...`, Clause: `1`
-- **Method:** `model` (Score: 0.2625)
-- **Evidence:** "and manufacturing of the Product only in accordance with the Specifications. In addition, EMV shall provide the Manufacturer with the performance test..."
-- **Clause Text:** "License to EMV Firmware. Subject to the terms of this Agreement, subject to Manufacturer meeting EMV's requirements for quality, price and lead- time, EMV hereby grants Manufacturer an exclusive, non-..."
-- **Root Cause:** Clause discusses related concepts or generic legal vocabulary that triggered model/rules without rising to CUAD's specific expert annotation threshold.
-
-**FP #2** - Contract: `AzulSa_20170303_F-1A_EX-10.3_9943903_EX-...`, Clause: `0`
-- **Method:** `model` (Score: 0.2594)
-- **Evidence:** "be considered. In any case, any notice or communication shall be also transmitted by an e-mail with attached copy of such (in format PDF or similar su..."
-- **Clause Text:** "Execution version Exhibit 10.3 CONFIDENTIAL TREATMENT REQUESTED - REDACTED COPY Confidential Treatment has been requested for portions of this Exhibit. Confidential portions of this Exhibit are design..."
-- **Root Cause:** Clause discusses related concepts or generic legal vocabulary that triggered model/rules without rising to CUAD's specific expert annotation threshold.
-
-**FP #3** - Contract: `BELLICUMPHARMACEUTICALS,INC_05_07_2019-E...`, Clause: `5.1`
-- **Method:** `model` (Score: 0.2381)
-- **Evidence:** "production planning for Miltenyi Products during such period. Each Long-Term Forecast shall show anticipated quantity requirements on an annual basis...."
-- **Clause Text:** "(a) Rolling Monthly Forecast; Firm Zone. Within [...***...] Business Days of the Effective Date, and thereafter by the [...***...] day of each Calendar Month during the Term, Bellicum shall submit a m..."
-- **Root Cause:** Clause discusses related concepts or generic legal vocabulary that triggered model/rules without rising to CUAD's specific expert annotation threshold.
-
-**FP #4** - Contract: `BELLICUMPHARMACEUTICALS,INC_05_07_2019-E...`, Clause: `6.1`
-- **Method:** `model` (Score: 0.4552)
-- **Evidence:** "(a) Each quantity of Miltenyi Product(s) ordered by Bellicum in a particular Purchase Order pursuant to this Agreement shall be delivered FCA (Incoter..."
-- **Clause Text:** "(a) Each quantity of Miltenyi Product(s) ordered by Bellicum in a particular Purchase Order pursuant to this Agreement shall be delivered FCA (Incoterms 2010) Miltenyi's Facility by delivery 20 of the..."
-- **Root Cause:** Clause discusses related concepts or generic legal vocabulary that triggered model/rules without rising to CUAD's specific expert annotation threshold.
-
-**FP #5** - Contract: `ACCURAYINC_09_01_2010-EX-10.31-DISTRIBUT...`, Clause: `3.13`
-- **Method:** `model` (Score: 0.24)
-- **Evidence:** "the services required to be performed under such Service Agreement. 4.9. Customer Training. If training of Customer's personnel is included in a Purch..."
-- **Clause Text:** "connection with Multiple LINAC or Multi-Modality Purchases, including any upgrades to or expanded usage of the Products; provided, however, that if Accuray does not have a direct presence in or Accura..."
+**FP #1** - Contract: `BERKELEYLIGHTS,INC_06_26_2020-EX-10.12-C...`, Clause: `8.3`
+- **Method:** `model` (Score: 0.7885)
+- **Evidence:** "Ownership of Remaining Collaboration Intellectual Property. Subject to Section 8.2 (Ownership of Ginkgo Inventions and BLI Inventions), as between the..."
+- **Clause Text:** "..."
 - **Root Cause:** Clause discusses related concepts or generic legal vocabulary that triggered model/rules without rising to CUAD's specific expert annotation threshold.
 
 #### False Negatives (In CUAD expert annotations, but missed by detector):
-**FN #1** - Contract: `GpaqAcquisitionHoldingsInc_20200123_S-4A...`, Clause: `0`
-- **Expert Target Span:** "To the extent that the Village Media Company and PFHOF work collaboratively on media projects, the E..."
-- **Clause Text:** "Exhibit 10.6 EXECUTION COPY MEDIA LICENSE AGREEMENT THIS MEDIA LICENSE AGREEMENT (this "Agreement") is made and effective as of the date of the Closing (as defined in the Merger Agreement (as defined ..."
+**FN #1** - Contract: `INKTOMICORP_06_08_1998-EX-10.14-SOFTWARE...`, Clause: `2.3.2`
+- **Expert Target Span:** "All Usage Data shall be owned jointly by Microsoft and
+
+
+
+
+
+Inktomi, and Inktomi hereby irrevocably ..."
+- **Clause Text:** "Inktomi, and Inktomi hereby irrevocably assigns to Microsoft an [*] interest therein. However, Inktomi shall not have the right to share any of such Usage Data with third parties (except that Inktomi ..."
 - **Root Cause:** Atypical drafting vocabulary or domain-specific phrasing not captured by TF-IDF n-grams or regular expressions.
 
-**FN #2** - Contract: `GpaqAcquisitionHoldingsInc_20200123_S-4A...`, Clause: `5.2`
-- **Expert Target Span:** "To the extent that the Village Media Company and PFHOF work collaboratively on media projects, the E..."
-- **Clause Text:** "10 (b) Each Receiving Party agrees: (i) not to disclose, make public, or authorize any disclosure or publication of such Confidential Information of the Disclosing Party except as expressly permitted ..."
+**FN #2** - Contract: `CERES,INC_01_25_2012-EX-10.20-Collaborat...`, Clause: `3.3.3`
+- **Expert Target Span:** ""JOINT INTELLECTUAL PROPERTY" shall mean (a) all patentable inventions conceived, discovered, develo..."
+- **Clause Text:** "4.1 "JOINT INTELLECTUAL PROPERTY" shall mean (a) all patentable inventions conceived, discovered, developed and/or reduced to practice (i) jointly by one or more employees, agents, or students of CERE..."
 - **Root Cause:** Atypical drafting vocabulary or domain-specific phrasing not captured by TF-IDF n-grams or regular expressions.
 
-**FN #3** - Contract: `ParatekPharmaceuticalsInc_20170505_10-KA...`, Clause: `3.10`
-- **Expert Target Span:** "During the Term of this Agreement, either Party may request an increase or decrease of the Fees spec..."
-- **Clause Text:** "At any time during the Term, Customer may provide written notice to Supplier of its intent to expand the Territory under this Agreement to include one or more additional countries or territories. Prom..."
+**FN #3** - Contract: `CERES,INC_01_25_2012-EX-10.20-Collaborat...`, Clause: `4.6`
+- **Expert Target Span:** "CERES and IGER shall have an undivided interest in JOINT INTELLECTUAL PROPERTY. Consequently, any an..."
+- **Clause Text:** "..."
 - **Root Cause:** Atypical drafting vocabulary or domain-specific phrasing not captured by TF-IDF n-grams or regular expressions.
 
-**FN #4** - Contract: `ParatekPharmaceuticalsInc_20170505_10-KA...`, Clause: `3.11`
-- **Expert Target Span:** "During the Term of this Agreement, either Party may request an increase or decrease of the Fees spec..."
-- **Clause Text:** "In the event Customer delivers a written request to Supplier requesting that Supplier engage in negotiations with a Customer Licensee on the terms of a definitive agreement pursuant to which Supplier ..."
+**FN #4** - Contract: `CERES,INC_01_25_2012-EX-10.20-Collaborat...`, Clause: `4.7`
+- **Expert Target Span:** "Each Party will notify the other Party, in writing ("INVENTION NOTICE"), within thirty (30) days of ..."
+- **Clause Text:** "..."
 - **Root Cause:** Atypical drafting vocabulary or domain-specific phrasing not captured by TF-IDF n-grams or regular expressions.
 
-**FN #5** - Contract: `ParatekPharmaceuticalsInc_20170505_10-KA...`, Clause: `3.12`
-- **Expert Target Span:** "During the Term of this Agreement, either Party may request an increase or decrease of the Fees spec..."
-- **Clause Text:** "At any time during the Term, Customer may elect to qualify one or more alternative Manufacturing facilities (whether owned by a Third Party, Customer or by one of Customer's Affiliates) to Manufacture..."
+**FN #5** - Contract: `CERES,INC_01_25_2012-EX-10.20-Collaborat...`, Clause: `4.8.2`
+- **Expert Target Span:** "The ADMINISTERING PARTY shall keep the non-administering Party advised as to all developments with r..."
+- **Clause Text:** "..."
 - **Root Cause:** Atypical drafting vocabulary or domain-specific phrasing not captured by TF-IDF n-grams or regular expressions.
 
 ---
 
-### Label: `third_party_beneficiary` (F1: 0.032, Support: 49)
+### Label: `volume_restriction` (F1: 0.276, Support: 22)
 
 #### False Positives (Predicted, but not in CUAD expert annotations):
-**FP #1** - Contract: `MetLife, Inc. - Remarketing Agreement...`, Clause: `5`
-- **Method:** `model` (Score: 0.8385)
-- **Evidence:** "the Disclosure Package, the effect of which, in any such case described in clause (i) or (ii), is in the judgment of the Remarketing Agents so materia..."
-- **Clause Text:** "(a) The Final Prospectus shall have been filed with the Commission pursuant to Rule 424(b) under the Act within the applicable time period prescribed for such filing by the rules and regulations under..."
-- **Root Cause:** Clause discusses related concepts or generic legal vocabulary that triggered model/rules without rising to CUAD's specific expert annotation threshold.
-
-**FP #2** - Contract: `MetLife, Inc. - Remarketing Agreement...`, Clause: `11`
-- **Method:** `model` (Score: 0.8692)
-- **Evidence:** "obligations of the Remarketing Agents may be terminated by them by notice given to the Company prior to 12:00 noon, New York City time on the Remarket..."
-- **Clause Text:** "obligations of the Remarketing Agents may be terminated by them by notice given to the Company prior to 12:00 noon, New York City time on the Remarketing Settlement Date if, prior to that time, any of..."
-- **Root Cause:** Clause discusses related concepts or generic legal vocabulary that triggered model/rules without rising to CUAD's specific expert annotation threshold.
-
-**FP #3** - Contract: `NUVEEN - REMARKETING AGREEMENT...`, Clause: `Exhibit A`
-- **Method:** `model` (Score: 0.7158)
-- **Evidence:** "NUVEEN AMT-FREE QUALITY MUNICIPAL INCOME FUND (NVG) (THE "FUND") SERIES [●] MUNIFUND PREFERRED SHARES IN THE VARIABLE RATE REMARKETED MODE ("VRRM-MFP ..."
-- **Clause Text:** "NUVEEN AMT-FREE QUALITY MUNICIPAL INCOME FUND (NVG) (THE "FUND") SERIES [●] MUNIFUND PREFERRED SHARES IN THE VARIABLE RATE REMARKETED MODE ("VRRM-MFP SHARES") TENDER NOTICE Note: The substance of this..."
-- **Root Cause:** Clause discusses related concepts or generic legal vocabulary that triggered model/rules without rising to CUAD's specific expert annotation threshold.
-
-**FP #4** - Contract: `NUVEEN - REMARKETING AGREEMENT...`, Clause: `Schedule 1`
-- **Method:** `model` (Score: 0.8463)
-- **Evidence:** "TENDER NOTICE DELIVERY INFORMATION FOR THE REMARKETING AGENT This Tender Notice must be delivered by the Beneficial Owner or its Agent Member to [●] (..."
-- **Clause Text:** "TENDER NOTICE DELIVERY INFORMATION FOR THE REMARKETING AGENT This Tender Notice must be delivered by the Beneficial Owner or its Agent Member to [●] (the "Remarketing Agent") by email transmission at ..."
-- **Root Cause:** Clause discusses related concepts or generic legal vocabulary that triggered model/rules without rising to CUAD's specific expert annotation threshold.
-
-**FP #5** - Contract: `Sonos, Inc. - Manufacturing Agreement ...`, Clause: `0`
+**FP #1** - Contract: `BELLICUMPHARMACEUTICALS,INC_05_07_2019-E...`, Clause: `5.2`
 - **Method:** `rules` (Score: 0.9)
-- **Evidence:** "y upon written notice to the other Party. 16.2. No Third Party Beneficiaries. Unless otherwise expressly provided, no provisions of this Agreement are..."
-- **Clause Text:** "Exhibit 10.07 [*] Certain confidential information contained in this document, marked by brackets, has been omitted and filed separately with the Securities and Exchange Commission pursuant to Rule 40..."
+- **Evidence:** "Volume Limitations. (a) Subject to Bellicum's adherence to its Forecast obligations pursuant to Section 5.1 abov..."
+- **Clause Text:** "(a) Subject to Bellicum's adherence to its Forecast obligations pursuant to Section 5.1 above, or as specifically modified in a specific Module, Miltenyi shall meet the demands of any Purchase Orders ..."
+- **Root Cause:** Clause discusses related concepts or generic legal vocabulary that triggered model/rules without rising to CUAD's specific expert annotation threshold.
+
+**FP #2** - Contract: `BELLICUMPHARMACEUTICALS,INC_05_07_2019-E...`, Clause: `6.2`
+- **Method:** `rules` (Score: 0.9)
+- **Evidence:** "Miltenyi Products shall be fulfilled, even if the volume limitations defined in Section 5.2 are exceeded, by Miltenyi in good faith and as soon as pra..."
+- **Clause Text:** "..."
+- **Root Cause:** Clause discusses related concepts or generic legal vocabulary that triggered model/rules without rising to CUAD's specific expert annotation threshold.
+
+**FP #3** - Contract: `BellringBrandsInc_20190920_S-1_EX-10.12_...`, Clause: `2`
+- **Method:** `rules` (Score: 0.9)
+- **Evidence:** "ood faith estimated maximum monthly unit volume ("Maximum Volume") for each Facility during such [***] period. Modifications to the Maximum Volume sha..."
+- **Clause Text:** "(a) Heritage shall produce the products described on Schedule A attached hereto, as may be amended by the Parties hereafter from time to time (the "Products"), for Premier at [***] Heritage's or Herit..."
 - **Root Cause:** Clause discusses related concepts or generic legal vocabulary that triggered model/rules without rising to CUAD's specific expert annotation threshold.
 
 #### False Negatives (In CUAD expert annotations, but missed by detector):
-**FN #1** - Contract: `ORBSATCORP_08_17_2007-EX-7.3-STRATEGIC A...`, Clause: `0`
-- **Expert Target Span:** "Notwithstanding the foregoing, UTK may assign this Agreement or any portion of its Compensation as o..."
-- **Clause Text:** "Exhibit 7.3 STRATEGIC ALLIANCE AGREEMENT This Strategic Alliance Agreement is made and entered into this 9th day of September 2005, by and between UTEK Corporation ("UTK"), 202 South Wheeler Street, P..."
+**FN #1** - Contract: `SUMMAFOURINC_06_19_1998-EX-10.3-SOFTWARE...`, Clause: `3.2`
+- **Expert Target Span:** "The CAP for Licensed Technology shall be cumulative across all "Supported Processors" (including "ad..."
+- **Clause Text:** "(A) "Supported Processors": If D2 offers or plans to offer all or part of Licensed Technology on a processor ("Supported Processor") different from the Texas Instruments (TI) TMS320C54x family of proc..."
 - **Root Cause:** Atypical drafting vocabulary or domain-specific phrasing not captured by TF-IDF n-grams or regular expressions.
 
-**FN #2** - Contract: `ORBSATCORP_08_17_2007-EX-7.3-STRATEGIC A...`, Clause: `2`
-- **Expert Target Span:** "Notwithstanding the foregoing, UTK may assign this Agreement or any portion of its Compensation as o..."
-- **Clause Text:** "IV. EXPENSES It is expressly agreed and understood that each party shall be responsible for its own normal and reasonable out-of-pocket expenses. V. COMPENSATION A. In consideration for the services t..."
+**FN #2** - Contract: `SUMMAFOURINC_06_19_1998-EX-10.3-SOFTWARE...`, Clause: `Exhibit A.3`
+- **Expert Target Span:** "There shall be fewer than 1 talkoff in 5 hours of voice when the          detector is programmed wit..."
+- **Clause Text:** "A.5.3.1.9 Unknown Tone Any single tone, dual tone, amplitude modulated tone or single tone sequence that is not classified as a CP, SIT, CNG or modem ANS tone, shall be reported as an unknown tone. Pe..."
 - **Root Cause:** Atypical drafting vocabulary or domain-specific phrasing not captured by TF-IDF n-grams or regular expressions.
 
-**FN #3** - Contract: `ORBSATCORP_08_17_2007-EX-7.3-STRATEGIC A...`, Clause: `2`
-- **Expert Target Span:** "Notwithstanding the foregoing, UTK may assign this Agreement or any portion of its Compensation as o..."
-- **Clause Text:** "B. PROVISIONS. Neither termination nor completion of the assignment shall affect the provisions of this Agreement, and the Indemnification Provisions that are incorporated herein, which shall remain o..."
+**FN #3** - Contract: `MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION...`, Clause: `3.6`
+- **Expert Target Span:** "If, during any Quarter of the Contract Year, Shipper deliveries on the Pipeline exceed the applicabl..."
+- **Clause Text:** "..."
 - **Root Cause:** Atypical drafting vocabulary or domain-specific phrasing not captured by TF-IDF n-grams or regular expressions.
 
-**FN #4** - Contract: `ORBSATCORP_08_17_2007-EX-7.3-STRATEGIC A...`, Clause: `Exhibit A`
-- **Expert Target Span:** "Notwithstanding the foregoing, UTK may assign this Agreement or any portion of its Compensation as o..."
-- **Clause Text:** "CONFIDENTIAL TERM SHEET PROPOSED STRATEGIC ALLIANCE BETWEEN UTEK CORPORATION (UTK) & WORLD ENERGY SOLUTIONS (AVDU) Statement of Work: To identify technology acquisition opportunities for AVDU from res..."
+**FN #4** - Contract: `MPLXLP_06_17_2015-EX-10.1-TRANSPORTATION...`, Clause: `6.6`
+- **Expert Target Span:** "The amount of expansion capacity available for volume commitments pursuant to this Section 6.6 shall..."
+- **Clause Text:** "(a) MPL will provide each Shipper with notice of such proposed expansion not less than one hundred and eighty (180) days prior to the expected in-service date of such proposed expansion ("Expansion No..."
 - **Root Cause:** Atypical drafting vocabulary or domain-specific phrasing not captured by TF-IDF n-grams or regular expressions.
 
-**FN #5** - Contract: `PalmerSquareCapitalBdcInc_20200116_10-12...`, Clause: `0`
-- **Expert Target Span:** "The parties agree that Investment Advisor shall be a third party beneficiary of this Agreement, and ..."
-- **Clause Text:** "Exhibit 10.6 TRADEMARK LICENSE AGREEMENT This TRADEMARK LICENSE AGREEMENT (this "Agreement") is made and effective as of [ ] day of [ ], 2020 ("Effective Date"), by and between Palmer Square Capital M..."
+**FN #5** - Contract: `DIVERSINETCORP_03_01_2012-EX-4-RESELLER ...`, Clause: `1`
+- **Expert Target Span:** "Diversinet will arrange for the initial personal technical and sales instruction of up to three (3) ..."
+- **Clause Text:** "..."
 - **Root Cause:** Atypical drafting vocabulary or domain-specific phrasing not captured by TF-IDF n-grams or regular expressions.
 
 ---

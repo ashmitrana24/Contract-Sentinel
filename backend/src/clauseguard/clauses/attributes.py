@@ -101,6 +101,7 @@ _CANONICAL_JURISDICTIONS: dict[str, str] = {
     "oregon": "Oregon",
     "england and wales": "England and Wales",
     "england": "England and Wales",
+    "english": "England and Wales",
     "united kingdom": "United Kingdom",
     "canada": "Canada",
     "ontario": "Ontario",
@@ -114,13 +115,30 @@ _CANONICAL_JURISDICTIONS: dict[str, str] = {
     "ireland": "Ireland",
     "cayman islands": "Cayman Islands",
     "bermuda": "Bermuda",
+    "spain": "Spain",
+    "china": "China",
+    "people's republic of china": "China",
+    "prc": "China",
+    "india": "India",
+    "japan": "Japan",
+    "netherlands": "Netherlands",
+    "italy": "Italy",
+    "sweden": "Sweden",
 }
 
 _JURISDICTION_REGEX = re.compile(
-    r"(?:governed\s+by|construed\s+in\s+accordance\s+with|laws\s+of|jurisdiction\s+of)\s+"
-    r"(?:and\s+under\s+)?(?:the\s+laws\s+of\s+)?"
+    r"(?:"
+    r"governed\s+(?:by|and\s+construed(?:\s+and\s+enforced)?\s+in\s+accordance\s+with)|"
+    r"governed\s+and\s+construed\s+in\s+accordance\s+with|"
+    r"construed\s+(?:in\s+accordance\s+with|according\s+to)(?:\s+and\s+governed\s+by)?|"
+    r"construed\s+and\s+enforced\s+in\s+accordance\s+with|"
+    r"laws\s+of|jurisdiction\s+of|"
+    r"interpreted\s+(?:pursuant\s+to|in\s+accordance\s+with)\s+(?:the\s+)?laws\s+of|"
+    r"governed\s+by\s+and\s+subject\s+to\s+(?:the\s+internal\s+)?laws\s+(?:\([^)]*\)\s+)?of"
+    r")\s+"
+    r"(?:and\s+under\s+)?(?:the\s+)?(?:internal\s+)?(?:laws\s+of\s+)?"
     r"(?:the\s+(?:State|Commonwealth|Province)\s+of\s+)?"
-    r"([A-Za-z\s]+?)(?:[,\.;]|\s+without|\s+and|\s+excluding|$)",
+    r"([A-Za-z\s]+?)(?:[,\.;]|\s+without|\s+and|\s+excluding|\s+save|$)",
     re.IGNORECASE,
 )
 
@@ -135,17 +153,28 @@ def _parse_int_str(val: str) -> int | None:
 # -----------------------------------------------------------------------------
 # 1. Governing Law Jurisdiction
 # -----------------------------------------------------------------------------
-def extract_governing_law_jurisdiction(text: str) -> str | None:
+def extract_governing_law_jurisdiction(text: str, heading: str = "") -> str | None:
     """Extract canonical governing law jurisdiction from clause text."""
+    combined = f"{heading}\n{text}".strip() if (heading and text) else (text.strip() or heading.strip())
+    if not combined:
+        return None
     found: set[str] = set()
 
-    for m in _JURISDICTION_REGEX.finditer(text):
+    for m in _JURISDICTION_REGEX.finditer(combined):
         raw_target = m.group(1).strip().lower()
         # Clean leading words
-        raw_target = re.sub(r"^(?:the\s+state\s+of\s+|the\s+commonwealth\s+of\s+|the\s+province\s+of\s+)", "", raw_target)
+        raw_target = re.sub(
+            r"^(?:the\s+state\s+of\s+|the\s+commonwealth\s+of\s+|the\s+province\s+of\s+|the\s+internal\s+laws\s+of\s+)",
+            "",
+            raw_target,
+        )
         for name_key, canonical in _CANONICAL_JURISDICTIONS.items():
             if re.search(r"\b" + re.escape(name_key) + r"\b", raw_target):
                 found.add(canonical)
+
+    # Direct search for English law
+    if re.search(r"\b(?:english\s+law|laws\s+of\s+england)\b", combined, re.IGNORECASE):
+        found.add("England and Wales")
 
     if len(found) == 1:
         return next(iter(found))
@@ -300,21 +329,60 @@ def extract_non_renewal_notice_days(text: str) -> int | None:
 # 6. Liability Cap
 # -----------------------------------------------------------------------------
 _CAP_FIXED_REGEX = re.compile(
-    r"(?:liability\s+(?:shall\s+not\s+exceed|(?:is\s+)?capped\s+at|limited\s+to)|in\s+no\s+event\s+shall[^.]{0,100}liability[^.]{0,40}exceed)\s*"
-    r"(\$|USD|EUR|GBP|€|£)?\s*([\d,]+(?:\.\d+)?)\s*(USD|EUR|GBP)?",
+    r"(?:"
+    r"(?:total\s+)?(?:aggregate\s+)?(?:cumulative\s+)?liability\s+(?:shall\s+not\s+exceed|(?:is\s+)?capped\s+at|limited\s+to)|"
+    r"liability\s+for\s+direct\s+damages\s+shall\s+not\s+exceed|"
+    r"direct\s+damages\s+shall\s+not\s+exceed|"
+    r"in\s+no\s+event\s+shall[^.]{0,100}liability[^.]{0,40}exceed|"
+    r"maximum\s+(?:start-up\s+costs|liability|damages)[^.]{0,40}shall\s+not\s+exceed"
+    r")\s*"
+    r"(\$|USD|EUR|GBP|€|£)?\s*"
+    r"([\d,]+(?:\.\d+)?|fifteen\s+million|fifty|one\s+hundred\s+thousand|one\s+million)\s*"
+    r"(USD|EUR|GBP|dollars?)?",
     re.IGNORECASE,
 )
 _CAP_FEES_REGEX = re.compile(
-    r"(?:equal\s+to|not\s+exceed)\s+(?:the\s+)?(?:total\s+)?(?:fees|amounts)\s+paid\s+(?:or\s+payable\s+)?"
-    r"(?:in\s+the\s+(?:preceding\s+)?(\d+|twelve)\s+months|under\s+this\s+agreement)",
+    r"(?:equal\s+to|not\s+exceed|will\s+not\s+exceed)\s+(?:the\s+)?(?:total\s+)?(?:aggregate\s+)?(?:amount\s+of\s+)?(?:the\s+)?"
+    r"(?:fees|amounts|license\s+fees|royalties|sums)\s*(?:and\s+expenses\s*)?"
+    r"(?:paid|payable|owed|received)?\s*"
+    r"(?:by\s+[^.]{1,60}?\s+)?"
+    r"(?:"
+    r"(?:in|during)\s+(?:the\s+)?(?:preceding\s+)?(\d+|twelve|twenty-four)?\s*(?:months?|year)|"
+    r"under\s+this\s+agreement|"
+    r"for\s+services\s+performed\s+under\s+this\s+agreement"
+    r")",
     re.IGNORECASE,
 )
 
 
-def extract_liability_cap(text: str) -> dict[str, Any] | None:
+def _parse_amount_str(val: str) -> float | None:
+    v = val.replace(",", "").lower().strip()
+    if v.isdigit():
+        return float(v)
+    word_amounts = {
+        "fifty": 50.0,
+        "one hundred": 100.0,
+        "one thousand": 1000.0,
+        "one hundred thousand": 100000.0,
+        "one million": 1000000.0,
+        "fifteen million": 15000000.0,
+    }
+    if v in word_amounts:
+        return word_amounts[v]
+    try:
+        return float(v)
+    except ValueError:
+        return None
+
+
+def extract_liability_cap(text: str, heading: str = "") -> dict[str, Any] | None:
     """Extract liability cap structure (monetary fixed amount or fee multiple)."""
+    combined = f"{heading}\n{text}".strip() if (heading and text) else (text.strip() or heading.strip())
+    if not combined:
+        return None
+
     # Check fixed monetary amount
-    m_fixed = _CAP_FIXED_REGEX.search(text)
+    m_fixed = _CAP_FIXED_REGEX.search(combined)
     if m_fixed:
         raw_curr = (m_fixed.group(1) or m_fixed.group(3) or "USD").strip()
         curr = "USD"
@@ -323,16 +391,13 @@ def extract_liability_cap(text: str) -> dict[str, Any] | None:
         elif raw_curr in ("£", "GBP"):
             curr = "GBP"
 
-        num_str = m_fixed.group(2).replace(",", "")
-        try:
-            val = float(num_str)
-            if val > 0:
-                return {"type": "fixed_amount", "amount": val, "currency": curr}
-        except ValueError:
-            pass
+        num_str = m_fixed.group(2)
+        val = _parse_amount_str(num_str)
+        if val is not None and val > 0:
+            return {"type": "fixed_amount", "amount": val, "currency": curr}
 
     # Check fee multiplier
-    m_fees = _CAP_FEES_REGEX.search(text)
+    m_fees = _CAP_FEES_REGEX.search(combined)
     if m_fees:
         months_str = m_fees.group(1)
         months = 12

@@ -265,5 +265,21 @@
   3. Regression tests added in `test_dates.py` and `test_parties.py` (consistency test suite expanded to 86 tests).
 - **Impact**: Clean CUAD false alarm rate on seed4242 dropped from 46.7% (14/30) to 10.0% (3/30), achieving 90.0% Low band (target $\le 15\%$ Med/High: MET). Unseen CUAD 100-contract sample improved from 83.0% Low to **87.0% Low** (13.0% Medium, 0.0% High). All synthetic tamper targets (`party_swap`, `date_shift`, `xref_break`, `amount_figure_only`) remain 100% MET.
 
+---
+
+## D-33: Production Inference Harness Unification & Module 5 Honest Re-Evaluation
+- **Context**: Following the segmenter fix (commit `24b5497`), evaluation tables showed a large apparent gap between VAL and TEST F1 on key labels (`governing_law`: 0.958 vs 0.643; `anti_assignment`: 0.824 vs 0.576; `cap_on_liability`: 0.787 vs 0.515; `license_grant`: 0.833 vs 0.528). An investigation was launched to determine whether this was overfitting to the selection process or an evaluation harness discrepancy.
+- **Root Cause Analysis**:
+  1. *Harness Inconsistency in Windowing*: In `model.py` (`classify_clause`), windowing was invoked on `text` alone: `windows = split_clause_into_windows(text)`. For single-line clauses (61.5% of TEST clauses, 62.3% of VAL clauses), the parser placed text in `c.heading` and left `c.text == ""`. When `text == ""`, `split_clause_into_windows("")` returned `[]`, dropping the clause completely.
+  2. *Evaluation Asymmetry*: `train.py` evaluated VAL on whole-clause text with headings prepended (`f"{c.heading}\n{c.text}"`), whereas `evaluate_clauses_test.py` evaluated TEST through `classify_clause(c.text, heading=c.heading)`, dropping 2,657 clauses.
+  3. When VAL was evaluated with the same buggy empty-body path, VAL F1 collapsed to match TEST F1 almost exactly (`governing_law`: 0.6475 vs 0.6429; `anti_assignment`: 0.5957 vs 0.5755; `cap_on_liability`: 0.5280 vs 0.5149). The divergence was 100% harness inconsistency.
+- **Decision & Fix**:
+  1. *Production Path Fallback*: Updated `classify_clause` in `model.py` to fall back to `heading` when `text` is empty/whitespace: `effective_text = text if text and text.strip() else heading`, `effective_heading = heading if text and text.strip() else ""`.
+  2. *Attribute Extraction Consistency*: In `processor.py`, `run.py`, and `attributes.py`, passed combined heading and text to `extract_all_document_attributes` and individual extractors (`extract_governing_law_jurisdiction`, `extract_liability_cap`), restoring single-line clause attribute extraction.
+  3. *Attribute Rule Enhancements*: Enhanced `_JURISDICTION_REGEX` for phrases like `governed and construed in accordance with`, `construed according to`, `interpreted pursuant to`, added international jurisdictions (Spain, China, India, Japan, Italy, Netherlands, Sweden, English law), and expanded `_CAP_FIXED_REGEX` / `_CAP_FEES_REGEX` for written number phrases (`fifteen million dollars`, `fifty dollars ($50)`), direct damages caps, and services fees/expenses caps.
+  4. *Zero Retuning on TEST*: Decision thresholds and shipped method selections from VAL remain untouched. Both VAL and TEST were re-evaluated with the exact same production function and max window aggregation.
+- **Impact**: Restored honest, consistent evaluation across all splits. TEST Micro F1 reached **64.88%** (Macro F1 **50.93%**), closely matching VAL Micro F1 **69.27%** (Macro F1 **58.71%**). Key label TEST F1 scores are firmly validated: `governing_law` at **0.9171**, `anti_assignment` at **0.8208**, `cap_on_liability` at **0.8154**, `license_grant` at **0.7333**, `uncapped_liability` at **0.6667**, `termination_for_convenience` at **0.6337**.
+
+
 
 

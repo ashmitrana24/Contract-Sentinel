@@ -129,16 +129,19 @@ class ClauseClassifier:
 
     def classify_clause(self, text: str, heading: str = "") -> list[dict[str, Any]]:
         """Classify a clause with automatic windowing for long texts (>250 words)."""
-        windows = split_clause_into_windows(text, max_words_threshold=250, window_size=120, stride=100)
+        # Fall back to heading if body text is empty/whitespace
+        effective_text = text if text and text.strip() else heading
+        effective_heading = heading if text and text.strip() else ""
+        windows = split_clause_into_windows(effective_text, max_words_threshold=250, window_size=120, stride=100)
         if not windows:
             return []
 
         if len(windows) == 1:
-            return self.classify_window(windows[0].text, heading=heading)
+            return self.classify_window(windows[0].text, heading=effective_heading)
 
         window_predictions: list[list[dict[str, Any]]] = []
         for w in windows:
-            w_preds = self.classify_window(w.text, heading=heading)
+            w_preds = self.classify_window(w.text, heading=effective_heading)
             window_predictions.append(w_preds)
 
         return aggregate_window_predictions(window_predictions, max_evidence_chars=300)

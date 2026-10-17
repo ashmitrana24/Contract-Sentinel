@@ -238,8 +238,12 @@ def _execute_parsing(
                         "evidence": p["evidence"],
                     })
 
+            clause_combined_texts = [
+                f"{c.heading}\n{c.text}".strip() if c.heading else c.text
+                for c in parsed.clauses
+            ]
             doc_attributes = extract_all_document_attributes(
-                [c.text for c in parsed.clauses],
+                clause_combined_texts,
                 clause_labels=clause_labels_list,
             )
             clauses_duration_ms = round((datetime.now(UTC) - start_clauses_t).total_seconds() * 1000)
