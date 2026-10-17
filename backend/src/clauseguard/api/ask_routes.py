@@ -28,9 +28,14 @@ from clauseguard.ask.answer import (
     build_citations,
     construct_prompt,
     execute_ask,
+    is_abstention_answer,
     verify_grounding,
 )
-from clauseguard.ask.privacy import AEQI_SYSTEM_PROMPT
+from clauseguard.ask.privacy import (
+    AEQI_SYSTEM_PROMPT,
+    redact_sensitive_pii,
+    restore_sensitive_pii,
+)
 from clauseguard.ask.retrieval import retrieve_evidence
 from clauseguard.ask.suggestions import generate_document_suggestions
 from clauseguard.config import Settings
@@ -57,20 +62,45 @@ from clauseguard.schemas.api import (
 logger = logging.getLogger(__name__)
 ask_router = APIRouter(tags=["Ask ClauseGuard"])
 
+# Per-document in-memory rate limiter (sliding window of timestamps)
+_DOC_RATE_LIMITS: dict[uuid.UUID, list[float]] = {}
+
+
+def check_document_rate_limit(document_id: uuid.UUID, max_per_min: int = 20) -> None:
+    """Enforce a sliding window per-document request rate limit."""
+    now = time.time()
+    timestamps = _DOC_RATE_LIMITS.setdefault(document_id, [])
+    # Retain only timestamps from the last 60 seconds
+    valid_timestamps = [t for t in timestamps if now - t < 60.0]
+    _DOC_RATE_LIMITS[document_id] = valid_timestamps
+
+    if len(valid_timestamps) >= max_per_min:
+        raise HTTPException(
+            status_code=429,
+            detail="Rate limit exceeded for this document. Please wait before asking another question.",
+            headers={"Retry-After": "60"},
+        )
+    _DOC_RATE_LIMITS[document_id].append(now)
+
 
 @ask_router.get("/v1/llm/status", response_model=LLMStatusResponse)
 def get_llm_status(cfg: Annotated[Settings, Depends(get_cfg)]) -> LLMStatusResponse:
     """Return LLM provider availability, model name, and Aeqi persona info without secrets."""
     provider = get_provider(cfg)
     info = provider.get_model_info()
+    is_external = not getattr(cfg, "llm_is_local", False) and info.provider not in ("fake", "none")
+
     return LLMStatusResponse(
         provider=info.provider,
         model=info.model,
         available=provider.is_available(),
         streaming=info.streaming_supported and cfg.ask_streaming_enabled,
+        assistant_name="Aeqi",
         persona="Aeqi",
-        disclaimer="Aeqi provides automated contract analysis for informational purposes only and does not provide legal advice.",
+        consent_required=is_external,
+        consent_text="Contract excerpts are processed by the configured AI provider strictly to answer your questions. No contract data is used for model training.",
         consent_notice="Contract excerpts are processed by the configured AI provider strictly to answer your questions. No contract data is used for model training.",
+        disclaimer="Aeqi provides automated contract analysis for informational purposes only and does not provide legal advice.",
     )
 
 
@@ -94,7 +124,10 @@ def get_ask_suggestions(
 @ask_router.post(
     "/v1/documents/{document_id}/ask",
     response_model=AskAnswerResponse,
-    responses={404: {"model": ErrorResponse}},
+    responses={
+        404: {"model": ErrorResponse},
+        429: {"model": ErrorResponse},
+    },
 )
 async def ask_clauseguard(
     document_id: uuid.UUID,
@@ -104,6 +137,9 @@ async def ask_clauseguard(
     cfg: Annotated[Settings, Depends(get_cfg)],
 ) -> Any:
     """Grounded question answering over an uploaded contract with verified citations and SSE support."""
+    # 1. Enforce per-document rate limit
+    check_document_rate_limit(document_id, max_per_min=cfg.ask_rate_limit_per_minute)
+
     doc = db.get(Document, document_id)
     if not doc:
         raise HTTPException(status_code=404, detail="Document not found")
@@ -189,6 +225,8 @@ async def ask_clauseguard(
             status=exec_res.status,
             token_count=exec_res.token_count,
             latency_ms=exec_res.latency_ms,
+            hidden_text_excluded=exec_res.hidden_text_excluded,
+            verification_kind=exec_res.verification.kind,
         )
 
     # SSE Streaming mode
@@ -222,7 +260,7 @@ async def _stream_ask_generator(
     last_assistant_heading: str | None,
     hidden_findings: list[FindingRow],
 ) -> AsyncIterator[str]:
-    """Asynchronous SSE generator with disconnect detection and message persistence."""
+    """Asynchronous SSE generator with disconnect detection, keep-alive, and message persistence."""
     t0 = time.perf_counter()
     assistant_msg_id = uuid.uuid4()
 
@@ -232,6 +270,9 @@ async def _stream_ask_generator(
         "message_id": str(assistant_msg_id),
     }
     yield f"event: metadata\ndata: {json.dumps(meta_payload)}\n\n"
+
+    # Yield SSE keep-alive comment so intermediate proxies maintain connection
+    yield ": keep-alive\n\n"
 
     # Separate DB session for background streaming
     with get_session() as session:
@@ -252,13 +293,16 @@ async def _stream_ask_generator(
 
         # Check sufficient evidence
         if not retrieval.has_sufficient_evidence or (not retrieval.chunks and not retrieval.overview_block):
-            no_info_text = "The provided contract excerpts do not contain sufficient information to answer this question."
+            topic = question.rstrip("?").strip()
+            no_info_text = f"The contract does not say what is specified regarding {topic}."
             yield f"event: delta\ndata: {json.dumps({'text': no_info_text})}\n\n"
             elapsed_ms = int((time.perf_counter() - t0) * 1000)
             done_payload = {
                 "status": "insufficient_evidence",
                 "token_count": 0,
                 "latency_ms": elapsed_ms,
+                "hidden_text_excluded": False,
+                "verification_kind": "abstention",
             }
             yield f"event: done\ndata: {json.dumps(done_payload)}\n\n"
 
@@ -268,7 +312,7 @@ async def _stream_ask_generator(
                 conversation_id=conversation_id,
                 role="assistant",
                 content=no_info_text,
-                citations=[c.model_dump() for c in citations],
+                citations=[],
                 token_count=0,
                 latency_ms=elapsed_ms,
             )
@@ -276,15 +320,16 @@ async def _stream_ask_generator(
             session.commit()
             return
 
-        # Stream from LLM provider
+        # Build prompt with hidden text exclusion and PII protection
         provider = get_provider(cfg)
-        prompt = construct_prompt(question, retrieval, hidden_findings=hidden_findings)
+        prompt, hidden_excluded = construct_prompt(question, retrieval, hidden_findings=hidden_findings)
+        redacted_prompt, pii_mapping = redact_sensitive_pii(prompt)
 
         full_content: list[str] = []
         status = "answered"
 
         try:
-            for token_chunk in provider.stream(prompt, system=AEQI_SYSTEM_PROMPT):
+            for token_chunk in provider.stream(redacted_prompt, system=AEQI_SYSTEM_PROMPT):
                 if await request.is_disconnected():
                     logger.info("Client disconnected during Ask SSE stream.")
                     return
@@ -298,15 +343,20 @@ async def _stream_ask_generator(
             yield f"event: delta\ndata: {json.dumps({'text': err_msg})}\n\n"
             full_content.append(err_msg)
 
-        complete_text = "".join(full_content)
+        raw_complete_text = "".join(full_content)
+        # Restore any redacted PII in the final assistant answer
+        complete_text = restore_sensitive_pii(raw_complete_text, pii_mapping)
         elapsed_ms = int((time.perf_counter() - t0) * 1000)
         token_count = max(1, len(complete_text.split()))
 
-        # Yield done event
+        # Yield done event with hidden_text_excluded flag and verification_kind
+        v_kind = "abstention" if is_abstention_answer(complete_text) else "answered"
         done_payload = {
             "status": status,
             "token_count": token_count,
             "latency_ms": elapsed_ms,
+            "hidden_text_excluded": hidden_excluded,
+            "verification_kind": v_kind,
         }
         yield f"event: done\ndata: {json.dumps(done_payload)}\n\n"
 
@@ -341,22 +391,20 @@ def list_document_conversations(
     convs = db.execute(
         select(Conversation)
         .where(Conversation.document_id == document_id)
-        .order_by(Conversation.updated_at.desc())
+        .order_by(Conversation.created_at.desc())
     ).scalars().all()
 
     items: list[ConversationListItem] = []
     for c in convs:
         msg_count = db.execute(
-            select(func.count()).where(Message.conversation_id == c.id)
+            select(func.count(Message.id)).where(Message.conversation_id == c.id)
         ).scalar_one()
         items.append(
             ConversationListItem(
                 id=c.id,
-                document_id=c.document_id,
                 title=c.title,
                 message_count=msg_count,
                 created_at=c.created_at.isoformat(),
-                updated_at=c.updated_at.isoformat(),
             )
         )
     return items
@@ -371,26 +419,28 @@ def get_conversation_detail(
     conversation_id: uuid.UUID,
     db: Annotated[Session, Depends(get_db)],
 ) -> ConversationDetailResponse:
-    """Get full conversation history and cited messages for a conversation."""
+    """Retrieve full transcript of a conversation."""
     conv = db.get(Conversation, conversation_id)
     if not conv:
         raise HTTPException(status_code=404, detail="Conversation not found")
 
-    messages = db.execute(
+    msgs = db.execute(
         select(Message)
         .where(Message.conversation_id == conversation_id)
         .order_by(Message.created_at.asc())
     ).scalars().all()
 
-    msg_items: list[MessageItem] = []
-    for m in messages:
-        cits = [Citation(**c) for c in m.citations] if m.citations else None
-        msg_items.append(
+    message_items: list[MessageItem] = []
+    for m in msgs:
+        cites: list[Citation] | None = None
+        if m.citations and isinstance(m.citations, list):
+            cites = [Citation(**c) for c in m.citations if isinstance(c, dict)]
+        message_items.append(
             MessageItem(
                 id=m.id,
                 role=m.role,
                 content=m.content,
-                citations=cits,
+                citations=cites,
                 token_count=m.token_count,
                 latency_ms=m.latency_ms,
                 created_at=m.created_at.isoformat(),
@@ -402,8 +452,7 @@ def get_conversation_detail(
         document_id=conv.document_id,
         title=conv.title,
         created_at=conv.created_at.isoformat(),
-        updated_at=conv.updated_at.isoformat(),
-        messages=msg_items,
+        messages=message_items,
     )
 
 

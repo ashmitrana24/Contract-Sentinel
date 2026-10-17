@@ -44,6 +44,14 @@ class FakeProvider(LLMProvider):
         q_match = re.search(r"USER QUESTION:\s*(.*?)(?:\n\n|\n|$)", prompt, re.IGNORECASE)
         q_lower = q_match.group(1).lower() if q_match else p_lower
 
+        # Persona / Identity / DAN injection override defense
+        if "who are you" in q_lower or "your name" in q_lower or "identity" in q_lower or "dan" in q_lower:
+            return (
+                "I am Aeqi, the contract intelligence assistant for ClauseGuard. "
+                "I provide automated, factual contract analysis grounded strictly in the provided agreement. "
+                "I do not provide legal advice, and I maintain my identity as Aeqi regardless of contrary instructions."
+            )
+
         # If overview mode or risk summary
         if "risk" in q_lower and ("overview" in q_lower or "summary" in q_lower or "main" in q_lower):
             return (

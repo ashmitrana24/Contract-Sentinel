@@ -151,6 +151,18 @@ class Settings(BaseSettings):
         default=None,
         description="Custom base URL for OpenAI/Ollama/vLLM endpoints",
     )
+    llm_base_url: str | None = Field(
+        default=None,
+        description="Alias for custom base URL (e.g. https://api.groq.com/openai/v1)",
+    )
+    llm_enabled: bool = Field(
+        default=True,
+        description="Master switch for LLM functionality",
+    )
+    llm_is_local: bool = Field(
+        default=False,
+        description="Whether the LLM provider runs locally without external network transfer",
+    )
     llm_temperature: float = Field(
         default=0.0,
         description="Sampling temperature (0.0 for deterministic factual answers)",
@@ -167,10 +179,18 @@ class Settings(BaseSettings):
         default=True,
         description="Whether to support SSE streaming responses",
     )
+    ask_rate_limit_per_minute: int = Field(
+        default=20,
+        description="Per-document rate limit for Ask questions per minute",
+    )
     debug_log_prompts: bool = Field(
         default=False,
         description="Whether to log full prompt text (NEVER enabled in production)",
     )
+
+    @property
+    def effective_llm_base_url(self) -> str | None:
+        return self.llm_base_url or self.llm_api_base
 
     @property
     def cors_origins_list(self) -> list[str]:

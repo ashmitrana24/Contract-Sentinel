@@ -72,6 +72,23 @@ def reprocess_document(
     if doc is None:
         raise ValueError(f"Document {document_id} not found in database.")
 
+    if not store.exists(doc.storage_key):
+        logger.warning(
+            "Document %s skipped: file not found in storage (key=%s)",
+            document_id,
+            doc.storage_key,
+        )
+        return {
+            "document_id": str(document_id),
+            "storage_key": doc.storage_key,
+            "stages": sorted(stages),
+            "total_clauses": 0,
+            "total_labels": 0,
+            "risk_band": "skipped",
+            "risk_score": 0,
+            "skipped": True,
+        }
+
     try:
         pdf_bytes = store.read(doc.storage_key)
     except FileNotFoundError as exc:
@@ -430,6 +447,11 @@ def main() -> None:
             try:
                 res = reprocess_document(doc_id, stages, session=session, store=store, cfg=cfg)
                 dur = (datetime.now(UTC) - t0).total_seconds()
+                if res.get("skipped"):
+                    print(
+                        f"[{idx}/{total_docs}] {doc_id} -> WARNING: Skipped (no PDF in storage for key {res.get('storage_key')}) ({dur:.2f}s)"
+                    )
+                    continue
                 results.append(res)
                 print(
                     f"[{idx}/{total_docs}] {doc_id} -> clauses={res['total_clauses']}, "

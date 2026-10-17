@@ -51,15 +51,17 @@ def get_provider(cfg: Settings | None = None) -> LLMProvider:
             timeout_seconds=settings.llm_timeout_seconds,
             api_base=settings.llm_api_base,
         )
-    elif provider_type in ("openai", "ollama"):
-        default_base = "http://localhost:11434/v1" if provider_type == "ollama" else None
+    elif provider_type in ("openai", "openai_compat", "ollama", "groq"):
+        api_base = settings.effective_llm_base_url
+        if not api_base and provider_type == "ollama":
+            api_base = "http://localhost:11434/v1"
         return OpenAICompatProvider(
             api_key=settings.llm_api_key or ("ollama" if provider_type == "ollama" else None),
             model=settings.llm_model,
             temperature=settings.llm_temperature,
             max_tokens=settings.llm_max_tokens,
             timeout_seconds=settings.llm_timeout_seconds,
-            api_base=settings.llm_api_base or default_base,
+            api_base=api_base,
             provider_name=provider_type,
         )
     else:

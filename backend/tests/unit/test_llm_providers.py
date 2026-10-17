@@ -158,10 +158,16 @@ def test_privacy_hidden_text_warning() -> None:
         "Notice of breach: Secret hidden waiver of all claims without recourse.",
     ]
 
-    context = sanitize_contract_context(chunks, hidden_findings=[DummyFinding()])
+    res = sanitize_contract_context(chunks, hidden_findings=[DummyFinding()])
+    if isinstance(res, tuple):
+        context, hidden_excluded = res
+        assert hidden_excluded is True
+    else:
+        context = res
     assert "<contract_context>" in context
     assert "</contract_context>" in context
-    assert "[SECURITY NOTICE: The following text was detected as HIDDEN/OCCLUDED" in context
+    assert "Normal clause text regarding payment." in context
+    assert "Secret hidden waiver" not in context
 
 
 def test_llm_status_endpoint() -> None:

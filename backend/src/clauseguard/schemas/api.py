@@ -231,9 +231,12 @@ class LLMStatusResponse(BaseModel):
     model: str
     available: bool
     streaming: bool
+    assistant_name: str = "Aeqi"
     persona: str = "Aeqi"
-    disclaimer: str = "Aeqi provides automated contract analysis for informational purposes only and does not provide legal advice."
+    consent_required: bool = True
+    consent_text: str = "Contract excerpts are processed by the configured AI provider strictly to answer your questions. No contract data is used for model training."
     consent_notice: str = "Contract excerpts are processed by the configured AI provider strictly to answer your questions. No contract data is used for model training."
+    disclaimer: str = "Aeqi provides automated contract analysis for informational purposes only and does not provide legal advice."
 
 
 class AskSuggestion(BaseModel):
@@ -271,6 +274,8 @@ class AskAnswerResponse(BaseModel):
     status: str = Field(description="'answered' | 'insufficient_evidence' | 'retrieve_only'")
     token_count: int | None = None
     latency_ms: int | None = None
+    hidden_text_excluded: bool = False
+    verification_kind: str = Field(default="answered", description="'answered' | 'abstention'")
 
 
 class MessageItem(BaseModel):

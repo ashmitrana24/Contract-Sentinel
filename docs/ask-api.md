@@ -44,9 +44,12 @@ Returns service availability, persona information, and mandatory disclaimers. Do
   "model": "claude-3-5-sonnet-20241022",
   "available": true,
   "streaming": true,
+  "assistant_name": "Aeqi",
   "persona": "Aeqi",
-  "disclaimer": "Aeqi provides automated contract analysis for informational purposes only and does not provide legal advice.",
-  "consent_notice": "Contract excerpts are processed by the configured AI provider strictly to answer your questions. No contract data is used for model training."
+  "consent_required": true,
+  "consent_text": "Contract excerpts are processed by the configured AI provider strictly to answer your questions. No contract data is used for model training.",
+  "consent_notice": "Contract excerpts are processed by the configured AI provider strictly to answer your questions. No contract data is used for model training.",
+  "disclaimer": "Aeqi provides automated contract analysis for informational purposes only and does not provide legal advice."
 }
 ```
 
@@ -123,10 +126,15 @@ Submits a user question for grounded question answering.
     }
   ],
   "status": "answered",
+  "verification_kind": "answered",
   "token_count": 42,
   "latency_ms": 310
 }
 ```
+
+- `verification_kind` (string, `"answered"` | `"abstention"`): Indicates whether the answer is substantive grounding against contract excerpts (`"answered"`) or an explicit declaration that the contract does not contain the requested information (`"abstention"`).
+- When `verification_kind == "abstention"`, the answer begins with `"The contract does not say "` followed by a clause naming what was searched for. Abstentions need no citation and do not count as ungrounded citations. The verifier marks them `verified=true` with `kind="abstention"`.
+
 
 ---
 
@@ -167,7 +175,10 @@ Sent immediately after request validation.
 event: metadata
 data: {"conversation_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6", "message_id": "7c9e6679-7425-40de-944b-e07fc1f90ae7"}
 
+: keep-alive
+
 ```
+*(Note: An immediate SSE `: keep-alive\n\n` comment is emitted right after `metadata` to prevent intermediary proxy timeouts while the LLM provider completes its initial reasoning step).*
 
 #### `event: citation`
 Sent for each retrieved citation backing the answer before tokens begin streaming.
@@ -189,12 +200,38 @@ data: {"text": "law, the agreement..."}
 ```
 
 #### `event: done`
-Signals completion of response and reports token counts and latency.
+Signals completion of response and reports token counts, latency, verification kind, and whether suspicious hidden text was detected and excluded.
 ```
 event: done
-data: {"status": "answered", "token_count": 42, "latency_ms": 312}
+data: {"status": "answered", "verification_kind": "answered", "token_count": 42, "latency_ms": 312, "hidden_text_excluded": false}
 
 ```
+
+---
+
+## 5. Security, Rate Limiting & Privacy
+
+### 5.1 Per-Document Rate Limiting
+To prevent denial-of-service and avoid exhausting upstream LLM quota, `POST /v1/documents/{document_id}/ask` implements an in-memory sliding window rate limiter:
+- **Limit**: 20 requests per document per minute (`max_per_min = 20`).
+- **Response**: `HTTP 429 Too Many Requests` with header `Retry-After: 60` and payload:
+  ```json
+  {"detail": "Rate limit exceeded for this document. Please wait a minute before asking more questions."}
+  ```
+
+### 5.2 Hidden Text Exclusion
+Text detected as suspicious or hidden by Module 3 PDF forensics (such as `white_on_white` contrast evasion, `render_mode_3` invisible text, or `sub_1pt_font` microscopic spans) is **strictly excluded** from the model prompt context to prevent invisible prompt injection attacks.
+When hidden spans are detected, the API sets `hidden_text_excluded: true` in the final response and SSE `done` event.
+
+### 5.3 Algorithmic & Contextual PII Redaction
+Before contract excerpts reach any external provider, sensitive identifiers are sanitized:
+- **Aadhaar**: 12-digit numbers with or without delimiters, cryptographically validated using the **Verhoeff checksum algorithm**.
+- **PAN**: Permanent Account Numbers matching `[A-Z]{5}[0-9]{4}[A-Z]`.
+- **Payment Cards**: 13 to 19 digit card numbers validated via the **Luhn algorithm**.
+- **Bank Account Numbers**: 9 to 18 digits masked strictly when near context keywords (`account`, `a/c`, `acct`, `ifsc`, `banking`).
+- **IFSC Codes**: `[A-Z]{4}0[A-Z0-9]{6}`.
+- **Negative Guardrails**: Genuine contract numbers (`AGR-2024-001`), invoice IDs, amounts in lakh/crore, clause numbers (`Section 4.1.2`), dates, PIN codes, and non-phone 10-digit numbers are preserved untouched.
+- **Reversible Restoration**: Masked tokens are restored in the final user-visible response after verification.
 
 *Possible `status` values:*
 - `"answered"`: Normal grounded answer generated with citations.
@@ -279,9 +316,12 @@ export interface LLMStatusResponse {
   model: string;
   available: boolean;
   streaming: boolean;
+  assistant_name: string;
   persona: string;
-  disclaimer: string;
+  consent_required: boolean;
+  consent_text: string;
   consent_notice: string;
+  disclaimer: string;
 }
 
 export interface AskSuggestion {
@@ -317,8 +357,10 @@ export interface AskAnswerResponse {
   answer: string;
   citations: Citation[];
   status: 'answered' | 'insufficient_evidence' | 'retrieve_only';
+  verification_kind?: 'answered' | 'abstention' | null;
   token_count?: number | null;
   latency_ms?: number | null;
+  hidden_text_excluded?: boolean;
 }
 
 export interface MessageItem {

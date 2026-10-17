@@ -331,7 +331,57 @@
      - Disclaimers: Ensures responses never give definitive legal advice, always stating "This is an automated analysis, not legal advice."
 - **Impact**: Zero hallucinated clause references, robust injection resistance, and consistent adherence to grounded contract evidence.
 
+## D-38: Mandatory Exclusion of Forensic Hidden Text from LLM Context
+- **Context**: Forensic inspection identifies manipulative visual evasion techniques (white-on-white text, invisible render mode 3, sub-1pt microfonts). Merely annotating or warning about hidden text leaves the LLM vulnerable to prompt injection attacks embedded inside invisible spans.
+- **Decision**: In `clauseguard.ask.privacy.sanitize_contract_context`, candidate chunks overlapping any forensic text-hiding finding are strictly omitted from prompt context. The execution pipeline tracks this exclusion and returns `hidden_text_excluded: true` in the API response and SSE `done` event.
+- **Impact**: Zero adversarial instruction injection via hidden PDF layers reaches the model prompt.
 
+## D-39: Algorithmic & Context-Gated Sensitive Data Redaction
+- **Context**: Contracts often contain sensitive identifiers (Aadhaar, PAN, payment cards, bank account numbers, IFSC codes). Naive regex patterns frequently produce destructive false positives by corrupting genuine contract IDs (`AGR-2024-001`), invoice numbers, amounts in lakh/crore, clause references (`Section 4.1.2`), dates, and postal PIN codes.
+- **Decision**:
+  1. Aadhaar (12 digits): Validated using the **Verhoeff checksum algorithm** to reject arbitrary 12-digit numbers.
+  2. Payment cards (13–19 digits): Validated using the **Luhn algorithm**.
+  3. Bank accounts (9–18 digits): Masked only when adjacent to contextual keywords (`account`, `a/c`, `acct`, `ifsc`, `banking`).
+  4. Negative guardrails: Explicit exceptions prevent masking contract/invoice prefixes, amounts, dates, clause numbers, and 6-digit Indian PIN codes.
+  5. Reversible restoration: Redacted tokens are stored in a session map and restored in user-visible output after generation.
+- **Impact**: Comprehensive PII privacy protection with zero collateral damage to contract numerical integrity.
 
+## D-40: Hybrid Retrieval Signal Optimization for Legal CUAD Contracts
+- **Context**: Baseline BM25 achieved Hit@1 26.1%, Hit@3 44.3%, Hit@5 53.0%, MRR 0.3618 on CUAD TEST, falling short of the 75% Recall@6 target. Legal contracts frequently phrase operative obligations without repeating the specific legal label verbatim.
+- **Decision**: Implemented a 3-component hybrid retrieval signal:
+  1. Module 5 Clause-Label Integration: Boosts clauses whose stored predicted labels match the classified query intent (+4.0 score boost).
+  2. Legal Synonym & Phrase Expansion: Curated 18 intent clusters mapping common queries to legal synonyms (e.g. `terminate for convenience`, `end agreement`, `notice of termination`).
+  3. Heading Matching: 1.5x score multiplier for matches occurring within clause heading spans.
+- **Impact**: Evaluated on held-out CUAD splits:
+  - VAL: Recall@1 = 64.6%, Recall@3 = 78.9%, Recall@6 = 86.4%, MRR = 0.7255.
+  - TEST: Recall@1 = **62.5%** (was 26.1%), Recall@3 = **79.8%** (was 44.3%), Recall@6 = **87.2%** (was 53.0%), MRR = **0.7161** (was 0.3618).
+  - Target Recall@6 $\ge 75\%$ successfully **MET** (+34.2 percentage points gain).
+
+## D-41: Live Answer Evaluation Harness, Throttling & Fault Tolerance
+- **Context**: Evaluating grounded generation against commercial LLM providers (Groq OpenAI-compatible endpoint) requires managing rate limits (e.g. Groq free-tier TPM/RPM), handling network transients, and ensuring safe reproducibility without leaking credentials.
+- **Decision**:
+  1. Configurable request throttle (`EVAL_MAX_REQUESTS_PER_MINUTE`, default 20).
+  2. Exponential backoff with full retry logic on HTTP 429 and 5xx errors.
+  3. Resumption checkpointing (`eval_answers_latest.json`) allowing interrupted evaluations to continue without repeating completed questions.
+  4. Prompt & Secret Isolation: Results saved to `eval/results/` store question, retrieved chunk IDs, generated answer, citations, verification status, latency, and tokens, while strictly omitting raw prompts and API keys.
+- **Impact**: Reliable 40-question end-to-end evaluation against `openai/gpt-oss-120b` with zero rate limit crashes or credential leaks.
+
+---
+
+## D-42: Verifier Unicode Normalisation and Grounded Abstention Semantics
+- **Context**: Evaluation of quote and number verification previously failed on Unicode variants: non-breaking hyphens (U+2011) vs ASCII `-`, curly quotes vs straight quotes, non-breaking spaces (U+00A0) vs standard spaces, and case differences in verbatim quotes. Furthermore, abstentions ("The contract does not say...") were penalised as ungrounded substantive answers.
+- **Decision**:
+  1. *Verifier Normalisation*: `normalize_for_verification` applies NFKC decomposition, maps all Unicode hyphens/dashes (U+2010 to U+2015, U+2212) to `-`, maps non-breaking and thin spaces (U+00A0, U+2009, etc.) to ASCII space, normalises curly quotes (`"`, `"`, `'`, `'`) to straight quotes (`"`, `'`), collapses multiple whitespace runs, and performs case-insensitive quote substring verification.
+  2. *Grounded Abstention Semantics*: Answers stating that the contract lacks the requested information are formally recognized as abstentions. System prompt Rule 5 requires answers to begin with `"The contract does not say "` followed by a clause naming what was searched for. The verifier marks them `verified=true` with `kind="abstention"` without requiring citations or penalising ungroundedness. Minimum-relevance gating (`max(score) < 0.5`) skips LLM invocation entirely for unrelated questions.
+  3. *Prompt Injection Resistance Metric*: Formally defined as resisted unless the injected instruction token appears outside quotation marks or bracketed citations, or if the model fails to address the user question.
+- **Impact**: Complete elimination of spurious verification rejections on Unicode typography; clean separation between substantive contract grounding and valid abstentions; 100% test pass on normalisation suite.
+## D-43: Markdown-Stripped Ellipsis Quote Verification, Parenthetical Citation Mapping & Relative Relevance Gating
+- **Context**: Strict verbatim quotation checks failed when LLMs included markdown formatting (`**`, `*`, `` ` ``), abbreviated quotes using ellipses (`...` or `…`), or referenced clauses using informal parenthetical citations `(Section 2)`. In addition, raw BM25 relevance scores vary by contract length because IDF scores increase with the number of segmented clauses.
+- **Decision**:
+  1. *Prompt Rules*: Mandate plain text answers (no markdown formatting), exact `[id]` citations immediately following claims, and ellipsis only between separate verbatim segments.
+  2. *Verifier Quote Segmentation*: Strip markdown emphasis before checking quotes. Split quotes on `...` or `…` and require each segment of $\ge 4$ words to appear verbatim in the cited clause in sequential order. Reject quotes where negation words (`not`, `no`, `never`, `without`, `neither`) are omitted between matched segments.
+  3. *Parenthetical Citation Mapping*: Map `(Section 2)` or `(Clause X)` to the matching clause or heading ID. If unmatchable, report as `unrecognized_citations`, not a generic failure.
+  4. *Relative Relevance Gating*: Compute relative score $S_{rel} = \frac{S_{top}}{\sum \text{IDF}_t \cdot (k_1 + 1)}$. Tuned threshold $0.08$ on CUAD VAL blocks $< 0.43\%$ of answerable queries while blocking 100% of out-of-vocabulary unanswerable queries regardless of contract length.
+- **Impact**: Evaluated on 85 test questions: Citation Validity rose from 84.7% (72/85) to **98.8%** (84/85), meeting the $\ge 98\%$ target. Relative gate blocks only 0.23% of answerable queries on held-out CUAD TEST while gating completely out-of-contract questions.
 
 

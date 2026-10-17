@@ -37,6 +37,12 @@ htmlcov/
 # Misc
 *.log
 
+# Environment / Secrets
+.env
+.env.*
+!.env.example
+*.env
+
 # Node / Frontend
 node_modules/
 .next/
